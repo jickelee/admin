@@ -2183,21 +2183,22 @@ function localizeHardcoded(root=document.body) {
   });
 }
 
-function applyI18n() {
+function applyI18n(root=document) {
+  const scope = root || document;
   // text content
-  document.querySelectorAll('[data-i18n]').forEach(el => {
+  scope.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     const val = t(key);
     if (typeof val === 'string') el.textContent = val;
   });
   // placeholders
-  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+  scope.querySelectorAll('[data-i18n-ph]').forEach(el => {
     const key = el.getAttribute('data-i18n-ph');
     el.placeholder = t(key);
   });
   // lang toggle label
   document.getElementById('lang-label').textContent = t('header.lang');
-  localizeHardcoded(document.body);
+  localizeHardcoded(scope === document ? document.body : scope);
 }
 
 function toggleLang() {
@@ -2404,7 +2405,7 @@ function navigate(page) {
   const m = pageMap[page] || { titleKey: page, subKey: '' };
   document.getElementById('header-title').textContent = m.titleKey ? t(m.titleKey) : page;
   document.getElementById('header-sub').textContent = m.subKey ? t(m.subKey) : '';
-  applyI18n();
+  applyI18n(document.getElementById('page-' + page));
   if (page === 'users')       renderUsers();
   if (page === 'roles')       renderRoles();
   if (page === 'permissions') renderPermTree();
@@ -2731,7 +2732,10 @@ function saveAssignPerms() {
 // ============================================================
 function renderPermTree() {
   const tbody = document.getElementById('perm-tree-tbody');
+  i18nObserver?.disconnect();
   tbody.innerHTML = renderPermRows(0, 0);
+  localizeHardcoded(tbody);
+  i18nObserver?.observe(document.body, { childList:true, subtree:true });
 }
 
 function renderPermRows(parentId, depth) {
@@ -3503,7 +3507,7 @@ Object.assign(i18n.en,{
   'th.changeNo':'Change No.','th.changeType2':'Change Type','th.sourceType':'Source Type','th.sourceNo':'Source No.','th.changeAmount':'Change Amount','th.paidChange':'Paid Change','th.operatorId':'Operator','th.createdAt':'Created At',
   'th.repaymentOrderNo':'Repayment Order No.','th.periodNo':'Period','th.originalBillAmount':'Original Bill','th.billRemainingAmount':'Bill Remaining','th.couponAmount':'Coupon Amount','th.allocatedAmount':'Allocated Amount','th.differenceAmount':'Difference Amount',
   'th.allocationNo':'Allocation No.','th.allocationOrder':'Allocation Order','th.overdueRecordNo':'Overdue Record No.','th.overdueDate':'Overdue Date','th.overdueRate':'Overdue Rate','th.overduePrincipal':'Overdue Principal','th.baseAmount':'Base Amount','th.feeAmount':'Fee Amount','th.originalFee':'Original Fee','th.postedFee':'Posted Fee','th.postedTime':'Posted Time',
-  'tab.overdueOrders':'Overdue Orders','tab.dailyRecords':'Daily Records (loan_overdue_record)','section.creditRecords':'Credit Records','section.creditChanges':'Credit Changes'
+  'tab.overdueOrders':'Overdue Orders','tab.dailyRecords':'Daily Records','section.creditRecords':'Credit Records','section.creditChanges':'Credit Changes'
 });
 Object.assign(i18n.zh,{
   'nav.loanBillFees':'费用明细','nav.loanFeeChanges':'费用变更','nav.repaymentBills':'还款明细','nav.repaymentAllocations':'还款分配',
@@ -3515,7 +3519,7 @@ Object.assign(i18n.zh,{
   'th.changeNo':'变更号','th.changeType2':'变更类型','th.sourceType':'来源类型','th.sourceNo':'来源单号','th.changeAmount':'变更金额','th.paidChange':'实付变更','th.operatorId':'操作人','th.createdAt':'创建时间',
   'th.repaymentOrderNo':'还款单号','th.periodNo':'期次','th.originalBillAmount':'原账单金额','th.billRemainingAmount':'账单剩余快照','th.couponAmount':'优惠券金额','th.allocatedAmount':'分配金额','th.differenceAmount':'差额',
   'th.allocationNo':'分配单号','th.allocationOrder':'分配顺序','th.overdueRecordNo':'逾期记录号','th.overdueDate':'逾期日期','th.overdueRate':'逾期费率','th.overduePrincipal':'逾期本金','th.baseAmount':'计费基数','th.feeAmount':'费用金额','th.originalFee':'原始费用','th.postedFee':'入账费用','th.postedTime':'入账时间',
-  'tab.overdueOrders':'逾期订单','tab.dailyRecords':'每日逾期记录 (loan_overdue_record)','section.creditRecords':'授信记录','section.creditChanges':'授信变更'
+  'tab.overdueOrders':'逾期订单','tab.dailyRecords':'每日逾期记录','section.creditRecords':'授信记录','section.creditChanges':'授信变更'
 });
 
 // ============================================================
