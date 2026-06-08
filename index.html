@@ -221,9 +221,6 @@
     <a class="nav-link-item" onclick="navigate('customers')">
       <i class="bi bi-people-fill"></i> <span data-i18n="nav.customers">Customers</span>
     </a>
-    <a class="nav-link-item" onclick="navigate('walletAccounts')" id="nav-walletAccounts">
-      <i class="bi bi-wallet2"></i> <span data-i18n="nav.walletAccounts">Wallet Accounts</span>
-    </a>
     <a class="nav-link-item" onclick="navigate('accountCancel')" id="nav-accountCancel">
       <i class="bi bi-person-x-fill"></i> <span data-i18n="nav.accountCancel">Account Cancellation</span>
     </a>
@@ -479,44 +476,6 @@
         <div id="cust-table-container"></div>
         <div class="px-3 py-2 border-top d-flex align-items-center justify-content-between">
           <span style="font-size:12.5px;color:#718096;" id="cust-count-label"></span>
-          <nav><ul class="pagination pagination-sm mb-0">
-            <li class="page-item disabled"><a class="page-link">Prev</a></li>
-            <li class="page-item active"><a class="page-link">1</a></li>
-            <li class="page-item disabled"><a class="page-link">Next</a></li>
-          </ul></nav>
-        </div>
-      </div>
-    </div>
-
-    <!-- WALLET / RECEIVING ACCOUNTS -->
-    <div class="page" id="page-walletAccounts">
-      <div class="table-card">
-        <div class="table-card-header">
-          <span class="title" data-i18n="page.walletAccounts">Wallet Accounts</span>
-          <div class="search-row ms-auto">
-            <input type="text" class="form-control form-control-sm" data-i18n-ph="filter.searchWalletPh" placeholder="Name / Mobile / Account..." style="width:220px;" id="wallet-search" oninput="filterWalletAccounts()">
-            <select class="form-select form-select-sm" style="width:135px;" id="wallet-type-filter" onchange="filterWalletAccounts()">
-              <option value="" data-i18n="filter.allChannels">All Channels</option>
-              <option value="Easypaisa">Easypaisa</option>
-              <option value="JazzCash">JazzCash</option>
-              <option value="Bank">Bank</option>
-            </select>
-            <select class="form-select form-select-sm" style="width:150px;" id="wallet-verify-filter" onchange="filterWalletAccounts()">
-              <option value="" data-i18n="filter.allVerifyStatus">All Verify Status</option>
-              <option value="Verified">Verified</option>
-              <option value="Pending">Pending</option>
-              <option value="Failed">Failed</option>
-            </select>
-            <select class="form-select form-select-sm" style="width:130px;" id="wallet-status-filter" onchange="filterWalletAccounts()">
-              <option value="" data-i18n="filter.allStatus">All Status</option>
-              <option value="Active">Active</option>
-              <option value="Disabled">Disabled</option>
-            </select>
-          </div>
-        </div>
-        <div id="wallet-table-container"></div>
-        <div class="px-3 py-2 border-top d-flex align-items-center justify-content-between">
-          <span style="font-size:12.5px;color:#718096;" id="wallet-count-label"></span>
           <nav><ul class="pagination pagination-sm mb-0">
             <li class="page-item disabled"><a class="page-link">Prev</a></li>
             <li class="page-item active"><a class="page-link">1</a></li>
@@ -2526,7 +2485,6 @@ const avatarColors = ['#3a5bdf','#0ea5e9','#10b981','#f59e0b','#ef4444','#8b5cf6
 const pageMap = {
   dashboard:   { titleKey:'nav.dashboard',    subKey:'page.sub.dashboard' },
   customers:   { titleKey:'nav.customers',    subKey:'page.sub.customers' },
-  walletAccounts: { titleKey:'nav.walletAccounts', subKey:'page.sub.walletAccounts' },
   accountCancel:  { titleKey:'nav.accountCancel',  subKey:'page.sub.accountCancel' },
   loans:       { titleKey:'nav.loans',        subKey:'page.sub.loans' },
   repayments:  { titleKey:'nav.repayments',   subKey:'page.sub.repayments' },
@@ -2574,7 +2532,6 @@ function navigate(page) {
   if (page === 'roles')       renderRoles();
   if (page === 'permissions') renderPermTree();
   if (page === 'customers')   renderCustomers();
-  if (page === 'walletAccounts') filterWalletAccounts();
   if (page === 'accountCancel')  filterAccountCancel();
   if (page === 'loans')       renderLoans();
   if (page === 'repayments')  renderRepayments();
@@ -3127,6 +3084,8 @@ function toggleBlacklist(id) {
 // ============================================================
 let walletAccounts = [
   { id:'WA1001001', userId:1001, custName:'Ali Hassan', mobile:'+92 321 4561234', type:'Easypaisa', accountNo:'+92 321 4561234', boundMobile:'+92 321 4561234', relation:'Self', verifyStatus:'Verified', isDefault:true, status:'Active', lastVerifiedAt:'2024-05-20 13:50', updatedAt:'2024-05-20 13:50', failReason:'-' },
+  { id:'WA1001002', userId:1001, custName:'Ali Hassan', mobile:'+92 321 4561234', type:'JazzCash', accountNo:'+92 300 9911223', boundMobile:'+92 300 9911223', relation:'Self', verifyStatus:'Verified', isDefault:false, status:'Active', lastVerifiedAt:'2024-05-18 09:20', updatedAt:'2024-05-18 09:20', failReason:'-' },
+  { id:'WA1001003', userId:1001, custName:'Ali Hassan', mobile:'+92 321 4561234', type:'Bank', accountNo:'PK84MEZN00000099887766', boundMobile:'+92 321 4561234', relation:'Self', verifyStatus:'Pending', isDefault:false, status:'Active', lastVerifiedAt:'-', updatedAt:'2024-06-02 15:35', failReason:'Bank callback pending' },
   { id:'WA1002001', userId:1002, custName:'Fatima Malik', mobile:'+92 333 9876543', type:'JazzCash', accountNo:'+92 333 9876543', boundMobile:'+92 333 9876543', relation:'Self', verifyStatus:'Pending', isDefault:true, status:'Active', lastVerifiedAt:'-', updatedAt:'2024-06-04 09:15', failReason:'Awaiting OTP' },
   { id:'WA1003001', userId:1003, custName:'Muhammad Raza', mobile:'+92 311 2223333', type:'Easypaisa', accountNo:'+92 311 2223333', boundMobile:'+92 311 2223333', relation:'Self', verifyStatus:'Verified', isDefault:true, status:'Active', lastVerifiedAt:'2024-05-25 10:05', updatedAt:'2024-05-25 10:05', failReason:'-' },
   { id:'WA1005001', userId:1005, custName:'Usman Khan', mobile:'+92 300 1234567', type:'Bank', accountNo:'PK36HABB00000001234567', boundMobile:'+92 300 1234567', relation:'Self', verifyStatus:'Verified', isDefault:true, status:'Active', lastVerifiedAt:'2024-05-01 10:40', updatedAt:'2024-05-01 10:40', failReason:'-' },
@@ -3157,70 +3116,14 @@ function findWalletForLoan(l) {
       || null;
 }
 
-function renderWalletAccounts(list) {
-  const data = list || walletAccounts;
-  document.getElementById('wallet-count-label').textContent = t('count.showing')(data.length, data.length);
-  const rows = data.map(w => `
-    <tr>
-      <td>
-        <div style="font-weight:600;">${w.custName}</div>
-        <div style="font-size:11.5px;color:#94a3b8;">#${w.userId} · ${w.mobile}</div>
-      </td>
-      <td><span class="role-tag">${w.type}</span></td>
-      <td style="font-size:12.5px;font-family:monospace;">${w.accountNo}</td>
-      <td style="font-size:12.5px;">${w.boundMobile}</td>
-      <td>${w.relation}</td>
-      <td>${statusBadge(w.verifyStatus)}</td>
-      <td>${w.isDefault ? '<span class="status-badge badge-active">Yes</span>' : '-'}</td>
-      <td>${statusBadge(w.status)}</td>
-      <td style="font-size:12px;color:#94a3b8;">${w.lastVerifiedAt}</td>
-      <td style="font-size:12px;color:#94a3b8;">${w.updatedAt}</td>
-      <td>
-        <div class="d-flex gap-1 flex-wrap">
-          <button class="btn btn-sm btn-outline-primary action-btn" onclick="verifyWalletAccount('${w.id}')"><i class="bi bi-patch-check"></i> ${t('btn.verify')}</button>
-          <button class="btn btn-sm ${w.status === 'Active' ? 'btn-outline-danger' : 'btn-outline-success'} action-btn" onclick="toggleWalletAccount('${w.id}')">
-            <i class="bi ${w.status === 'Active' ? 'bi-slash-circle' : 'bi-check-circle'}"></i> ${w.status === 'Active' ? t('btn.disable') : t('btn.enable')}
-          </button>
-        </div>
-      </td>
-    </tr>`).join('');
-  document.getElementById('wallet-table-container').innerHTML = `
-    <div class="table-scroll"><table class="table table-hover mb-0">
-      <thead><tr><th>${t('th.customer')}</th><th>${t('th.accountType')}</th><th>${t('th.accountNo')}</th><th>${t('th.boundMobile')}</th><th>${t('th.relation')}</th><th>${t('th.verifyStatus')}</th><th>${t('th.default')}</th><th>${t('th.status')}</th><th>${t('th.lastVerified')}</th><th>${t('th.updatedAt')}</th><th>${t('th.actions')}</th></tr></thead>
-      <tbody>${rows || '<tr><td colspan="11"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
-    </table></div>`;
-}
-
-function filterWalletAccounts() {
-  const q = document.getElementById('wallet-search').value.toLowerCase();
-  const type = document.getElementById('wallet-type-filter').value;
-  const verify = document.getElementById('wallet-verify-filter').value;
-  const status = document.getElementById('wallet-status-filter').value;
-  renderWalletAccounts(walletAccounts.filter(w =>
-    (!q || w.id.toLowerCase().includes(q) || w.custName.toLowerCase().includes(q) || w.mobile.includes(q) || w.accountNo.toLowerCase().includes(q)) &&
-    (!type || w.type === type) && (!verify || w.verifyStatus === verify) && (!status || w.status === status)
-  ));
-}
-
-function verifyWalletAccount(id) {
-  const w = walletAccounts.find(x=>x.id===id);
-  if (!w) return;
-  w.verifyStatus = 'Verified';
-  w.status = 'Active';
-  w.failReason = '-';
-  w.lastVerifiedAt = new Date().toISOString().slice(0,16).replace('T',' ');
-  w.updatedAt = w.lastVerifiedAt;
-  toast('Wallet account verified');
-  filterWalletAccounts();
-}
-
-function toggleWalletAccount(id) {
-  const w = walletAccounts.find(x=>x.id===id);
-  if (!w) return;
-  w.status = w.status === 'Active' ? 'Disabled' : 'Active';
-  w.updatedAt = new Date().toISOString().slice(0,16).replace('T',' ');
-  toast(`Wallet account ${w.status.toLowerCase()}`);
-  filterWalletAccounts();
+function maskAccount(account) {
+  const value = String(account || '-');
+  if (value === '-') return value;
+  if (value.startsWith('PK')) return value.slice(0, 6) + '********' + value.slice(-4);
+  if (value.startsWith('+')) return value.slice(0, 5) + '****' + value.slice(-4);
+  const digits = value.replace(/\D/g, '');
+  if (digits.length >= 7) return digits.slice(0, 3) + '****' + digits.slice(-4);
+  return value.slice(0, 2) + '****' + value.slice(-2);
 }
 
 // ============================================================
@@ -4442,35 +4345,22 @@ function renderCustDetailTab(tab,id) {
     const accounts = walletAccounts.filter(w => w.userId === id);
     if(!accounts.length){body.innerHTML='<div class="empty-state"><i class="bi bi-wallet2"></i>No wallet accounts</div>';return;}
     body.innerHTML=`<div style="background:#f8fafc;border-radius:8px;padding:16px;">
-      <div class="d-flex align-items-center justify-content-between mb-2">
+      <div class="mb-2">
         <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;">${localizePhrase('WALLET / RECEIVING ACCOUNT')} (${accounts.length})</div>
-        <button class="btn btn-sm btn-outline-primary action-btn" onclick="navigate('walletAccounts'); bootstrap.Modal.getInstance(document.getElementById('custDetailModal')).hide();">
-          <i class="bi bi-box-arrow-up-right"></i> ${localizePhrase('Open Management')}
-        </button>
       </div>
-      <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1120px;">
+      <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:860px;">
         <thead><tr>
-          <th>${t('th.accountType')}</th><th>${t('th.accountNo')}</th><th>${t('th.boundMobile')}</th><th>${t('th.relation')}</th><th>${t('th.verifyStatus')}</th><th>${t('th.default')}</th><th>${t('th.status')}</th><th>${t('th.lastVerified')}</th><th>${t('th.updatedAt')}</th><th>${t('th.failReason')}</th><th>${t('th.actions')}</th>
+          <th>${t('th.accountType')}</th><th>${t('th.accountNo')}</th><th>${t('th.verifyStatus')}</th><th>${t('th.default')}</th><th>${t('th.status')}</th><th>${t('th.lastVerified')}</th><th>${t('th.updatedAt')}</th><th>${t('th.failReason')}</th>
         </tr></thead>
         <tbody>${accounts.map(w=>`<tr>
           <td><span class="role-tag">${w.type}</span></td>
-          <td style="font-family:monospace;">${w.accountNo}</td>
-          <td>${w.boundMobile}</td>
-          <td>${localizePhrase(w.relation)}</td>
+          <td style="font-family:monospace;">${maskAccount(w.accountNo)}</td>
           <td>${statusBadge(w.verifyStatus)}</td>
           <td>${w.isDefault ? '<span class="status-badge badge-active">Yes</span>' : '-'}</td>
           <td>${statusBadge(w.status)}</td>
           <td style="color:#94a3b8;white-space:nowrap;">${w.lastVerifiedAt}</td>
           <td style="color:#94a3b8;white-space:nowrap;">${w.updatedAt}</td>
           <td style="color:#64748b;">${localizePhrase(w.failReason)}</td>
-          <td>
-            <div class="d-flex gap-1 flex-wrap">
-              <button class="btn btn-sm btn-outline-primary action-btn" onclick="verifyWalletAccount('${w.id}'); renderCustDetailTab('wallet',${id})"><i class="bi bi-patch-check"></i> ${t('btn.verify')}</button>
-              <button class="btn btn-sm ${w.status === 'Active' ? 'btn-outline-danger' : 'btn-outline-success'} action-btn" onclick="toggleWalletAccount('${w.id}'); renderCustDetailTab('wallet',${id})">
-                <i class="bi ${w.status === 'Active' ? 'bi-slash-circle' : 'bi-check-circle'}"></i> ${w.status === 'Active' ? t('btn.disable') : t('btn.enable')}
-              </button>
-            </div>
-          </td>
         </tr>`).join('')}</tbody>
       </table></div>
     </div>`;
