@@ -1547,6 +1547,7 @@
           <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('credit',this)">Credit Info</a></li>
           <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('identity',this)">Identity</a></li>
           <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('contacts',this)">Contacts</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('wallet',this)">Wallet Accounts</a></li>
           <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('creditlog',this)">Credit Records</a></li>
         </ul>
         <div id="cust-detail-body" style="font-size:13.5px;padding:20px;min-height:260px;"></div>
@@ -2250,7 +2251,7 @@ const phraseZh = {
   'REPAYMENT ORDER':'还款订单','PAYMENT DETAILS':'支付信息','Repayment No.':'还款单号','Channel':'渠道','Reconcile':'对账状态','Pay Time':'支付时间','Channel Txn No.':'渠道流水号',
   'Summary':'摘要','Bill Allocation':'账单分配','Fee Allocation':'费用分配',
   'APPLICATION BASIC INFO':'申请基础信息','IDENTITY VERIFICATION':'身份认证','EMERGENCY CONTACTS':'紧急联系人','CREDIT & WALLET':'授信 & 钱包','BASIC INFO':'基础信息','LOAN INFO':'借款信息','STATUS & PAYMENT':'状态 & 支付','WALLET / RECEIVING ACCOUNT':'钱包 / 收款账号',
-  'Account Type':'账号类型','Account No.':'账号','Verify Status':'验证状态','Bound Mobile':'绑定手机号','Account Status':'账号状态','Last Verified':'最近验证',
+  'Account Type':'账号类型','Account No.':'账号','Verify Status':'验证状态','Bound Mobile':'绑定手机号','Account Status':'账号状态','Last Verified':'最近验证','Open Management':'打开管理页',
   'This adjustment requires supervisor approval before taking effect.':'该费用调整需要主管审批后才会生效。',
   'Hold Ctrl/Cmd to select multiple':'按住 Ctrl/Cmd 可多选','Uppercase letters, underscores only. Cannot be changed after creation.':'仅支持大写字母和下划线，创建后不可修改。',
   'Number of installments the customer can choose from.':'客户可选择的分期期数。','Days per installment cycle.':'每个分期周期的天数。','Overrides the global amount rules for this user.':'覆盖该用户的全局金额期数规则。',
@@ -2290,7 +2291,7 @@ const phraseZh = {
   'Next Follow-up':'下次跟进时间','Promise Details':'承诺详情','Keep Current':'保持当前',
   'No Contact':'无联系','All Overdue Days':'全部逾期天数','All Collectors':'全部催收员','All Last Results':'全部跟进结果',
   'All Results':'全部结果','All Types':'全部类型','All Status':'全部状态',
-  'No credit records':'暂无授信记录','No application basic info':'暂无申请基础信息','No identity verification data':'暂无身份认证数据','No emergency contacts':'暂无紧急联系人','No credit change history':'暂无授信变更记录',
+  'No credit records':'暂无授信记录','No application basic info':'暂无申请基础信息','No identity verification data':'暂无身份认证数据','No emergency contacts':'暂无紧急联系人','No wallet accounts':'暂无收款账号','No credit change history':'暂无授信变更记录',
   'No results':'暂无结果','No fee details':'暂无费用明细','No change records':'暂无变更记录','No bill allocation data':'暂无账单分配数据','No fee allocation data':'暂无费用分配数据',
 };
 
@@ -4436,6 +4437,42 @@ function renderCustDetailTab(tab,id) {
         </div>
         <div style="font-size:13px;color:#64748b;margin-top:4px;"><i class="bi bi-phone me-1"></i>${ct.mobile}</div>
       </div>`).join('')}
+    </div>`;
+  } else if(tab==='wallet') {
+    const accounts = walletAccounts.filter(w => w.userId === id);
+    if(!accounts.length){body.innerHTML='<div class="empty-state"><i class="bi bi-wallet2"></i>No wallet accounts</div>';return;}
+    body.innerHTML=`<div style="background:#f8fafc;border-radius:8px;padding:16px;">
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;">${localizePhrase('WALLET / RECEIVING ACCOUNT')} (${accounts.length})</div>
+        <button class="btn btn-sm btn-outline-primary action-btn" onclick="navigate('walletAccounts'); bootstrap.Modal.getInstance(document.getElementById('custDetailModal')).hide();">
+          <i class="bi bi-box-arrow-up-right"></i> ${localizePhrase('Open Management')}
+        </button>
+      </div>
+      <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1120px;">
+        <thead><tr>
+          <th>${t('th.accountType')}</th><th>${t('th.accountNo')}</th><th>${t('th.boundMobile')}</th><th>${t('th.relation')}</th><th>${t('th.verifyStatus')}</th><th>${t('th.default')}</th><th>${t('th.status')}</th><th>${t('th.lastVerified')}</th><th>${t('th.updatedAt')}</th><th>${t('th.failReason')}</th><th>${t('th.actions')}</th>
+        </tr></thead>
+        <tbody>${accounts.map(w=>`<tr>
+          <td><span class="role-tag">${w.type}</span></td>
+          <td style="font-family:monospace;">${w.accountNo}</td>
+          <td>${w.boundMobile}</td>
+          <td>${localizePhrase(w.relation)}</td>
+          <td>${statusBadge(w.verifyStatus)}</td>
+          <td>${w.isDefault ? '<span class="status-badge badge-active">Yes</span>' : '-'}</td>
+          <td>${statusBadge(w.status)}</td>
+          <td style="color:#94a3b8;white-space:nowrap;">${w.lastVerifiedAt}</td>
+          <td style="color:#94a3b8;white-space:nowrap;">${w.updatedAt}</td>
+          <td style="color:#64748b;">${localizePhrase(w.failReason)}</td>
+          <td>
+            <div class="d-flex gap-1 flex-wrap">
+              <button class="btn btn-sm btn-outline-primary action-btn" onclick="verifyWalletAccount('${w.id}'); renderCustDetailTab('wallet',${id})"><i class="bi bi-patch-check"></i> ${t('btn.verify')}</button>
+              <button class="btn btn-sm ${w.status === 'Active' ? 'btn-outline-danger' : 'btn-outline-success'} action-btn" onclick="toggleWalletAccount('${w.id}'); renderCustDetailTab('wallet',${id})">
+                <i class="bi ${w.status === 'Active' ? 'bi-slash-circle' : 'bi-check-circle'}"></i> ${w.status === 'Active' ? t('btn.disable') : t('btn.enable')}
+              </button>
+            </div>
+          </td>
+        </tr>`).join('')}</tbody>
+      </table></div>
     </div>`;
   } else if(tab==='creditlog') {
     const logs=creditChangeLogs[id];
