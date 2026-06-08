@@ -221,6 +221,12 @@
     <a class="nav-link-item" onclick="navigate('customers')">
       <i class="bi bi-people-fill"></i> <span data-i18n="nav.customers">Customers</span>
     </a>
+    <a class="nav-link-item" onclick="navigate('walletAccounts')" id="nav-walletAccounts">
+      <i class="bi bi-wallet2"></i> <span data-i18n="nav.walletAccounts">Wallet Accounts</span>
+    </a>
+    <a class="nav-link-item" onclick="navigate('accountCancel')" id="nav-accountCancel">
+      <i class="bi bi-person-x-fill"></i> <span data-i18n="nav.accountCancel">Account Cancellation</span>
+    </a>
     <a class="nav-link-item" onclick="navigate('loans')">
       <i class="bi bi-cash-stack"></i> <span data-i18n="nav.loans">Loan Orders</span>
     </a>
@@ -298,6 +304,12 @@
     </a>
     <a class="nav-link-item" onclick="navigate('permissions')" id="nav-permissions">
       <i class="bi bi-key-fill"></i> <span data-i18n="nav.permissions">Permission Management</span>
+    </a>
+    <a class="nav-link-item" onclick="navigate('otpLogs')" id="nav-otpLogs">
+      <i class="bi bi-chat-dots-fill"></i> <span data-i18n="nav.otpLogs">OTP Logs</span>
+    </a>
+    <a class="nav-link-item" onclick="navigate('devices')" id="nav-devices">
+      <i class="bi bi-phone-fill"></i> <span data-i18n="nav.devices">Device Management</span>
     </a>
     <a class="nav-link-item" onclick="navigate('auditlog')">
       <i class="bi bi-journal-text"></i> <span data-i18n="nav.auditlog">Audit Log</span>
@@ -467,6 +479,77 @@
         <div id="cust-table-container"></div>
         <div class="px-3 py-2 border-top d-flex align-items-center justify-content-between">
           <span style="font-size:12.5px;color:#718096;" id="cust-count-label"></span>
+          <nav><ul class="pagination pagination-sm mb-0">
+            <li class="page-item disabled"><a class="page-link">Prev</a></li>
+            <li class="page-item active"><a class="page-link">1</a></li>
+            <li class="page-item disabled"><a class="page-link">Next</a></li>
+          </ul></nav>
+        </div>
+      </div>
+    </div>
+
+    <!-- WALLET / RECEIVING ACCOUNTS -->
+    <div class="page" id="page-walletAccounts">
+      <div class="table-card">
+        <div class="table-card-header">
+          <span class="title" data-i18n="page.walletAccounts">Wallet Accounts</span>
+          <div class="search-row ms-auto">
+            <input type="text" class="form-control form-control-sm" data-i18n-ph="filter.searchWalletPh" placeholder="Name / Mobile / Account..." style="width:220px;" id="wallet-search" oninput="filterWalletAccounts()">
+            <select class="form-select form-select-sm" style="width:135px;" id="wallet-type-filter" onchange="filterWalletAccounts()">
+              <option value="" data-i18n="filter.allChannels">All Channels</option>
+              <option value="Easypaisa">Easypaisa</option>
+              <option value="JazzCash">JazzCash</option>
+              <option value="Bank">Bank</option>
+            </select>
+            <select class="form-select form-select-sm" style="width:150px;" id="wallet-verify-filter" onchange="filterWalletAccounts()">
+              <option value="" data-i18n="filter.allVerifyStatus">All Verify Status</option>
+              <option value="Verified">Verified</option>
+              <option value="Pending">Pending</option>
+              <option value="Failed">Failed</option>
+            </select>
+            <select class="form-select form-select-sm" style="width:130px;" id="wallet-status-filter" onchange="filterWalletAccounts()">
+              <option value="" data-i18n="filter.allStatus">All Status</option>
+              <option value="Active">Active</option>
+              <option value="Disabled">Disabled</option>
+            </select>
+          </div>
+        </div>
+        <div id="wallet-table-container"></div>
+        <div class="px-3 py-2 border-top d-flex align-items-center justify-content-between">
+          <span style="font-size:12.5px;color:#718096;" id="wallet-count-label"></span>
+          <nav><ul class="pagination pagination-sm mb-0">
+            <li class="page-item disabled"><a class="page-link">Prev</a></li>
+            <li class="page-item active"><a class="page-link">1</a></li>
+            <li class="page-item disabled"><a class="page-link">Next</a></li>
+          </ul></nav>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACCOUNT CANCELLATION -->
+    <div class="page" id="page-accountCancel">
+      <div class="table-card">
+        <div class="table-card-header">
+          <span class="title" data-i18n="page.accountCancel">Account Cancellation</span>
+          <div class="search-row ms-auto">
+            <input type="text" class="form-control form-control-sm" data-i18n-ph="filter.searchCancelPh" placeholder="Request No / Name / Mobile..." style="width:230px;" id="cancel-search" oninput="filterAccountCancel()">
+            <select class="form-select form-select-sm" style="width:145px;" id="cancel-status-filter" onchange="filterAccountCancel()">
+              <option value="" data-i18n="filter.allStatus">All Status</option>
+              <option value="Pending">Pending</option>
+              <option value="Approved">Approved</option>
+              <option value="Rejected">Rejected</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+            <select class="form-select form-select-sm" style="width:145px;" id="cancel-check-filter" onchange="filterAccountCancel()">
+              <option value="" data-i18n="filter.allEligibility">All Eligibility</option>
+              <option value="Pass">Pass</option>
+              <option value="Blocked">Blocked</option>
+            </select>
+          </div>
+        </div>
+        <div id="cancel-table-container"></div>
+        <div class="px-3 py-2 border-top d-flex align-items-center justify-content-between">
+          <span style="font-size:12.5px;color:#718096;" id="cancel-count-label"></span>
           <nav><ul class="pagination pagination-sm mb-0">
             <li class="page-item disabled"><a class="page-link">Prev</a></li>
             <li class="page-item active"><a class="page-link">1</a></li>
@@ -1163,6 +1246,81 @@
     </div>
   </div>
 </div>
+
+    <!-- OTP / SMS / WHATSAPP VERIFICATION -->
+    <div class="page" id="page-otpLogs">
+      <div class="table-card">
+        <div class="table-card-header">
+          <span class="title" data-i18n="page.otpLogs">OTP Logs</span>
+          <div class="search-row ms-auto">
+            <input type="text" class="form-control form-control-sm" data-i18n-ph="filter.searchOtpPh" placeholder="Request ID / Mobile / Device..." style="width:230px;" id="otp-search" oninput="filterOtpLogs()">
+            <select class="form-select form-select-sm" style="width:135px;" id="otp-channel-filter" onchange="filterOtpLogs()">
+              <option value="" data-i18n="filter.allChannels">All Channels</option>
+              <option value="SMS">SMS</option>
+              <option value="WhatsApp">WhatsApp</option>
+            </select>
+            <select class="form-select form-select-sm" style="width:140px;" id="otp-scene-filter" onchange="filterOtpLogs()">
+              <option value="" data-i18n="filter.allScenes">All Scenes</option>
+              <option value="Login">Login</option>
+              <option value="Loan Apply">Loan Apply</option>
+              <option value="Wallet Verify">Wallet Verify</option>
+              <option value="Account Cancel">Account Cancel</option>
+            </select>
+            <select class="form-select form-select-sm" style="width:130px;" id="otp-result-filter" onchange="filterOtpLogs()">
+              <option value="" data-i18n="filter.allResults">All Results</option>
+              <option value="Verified">Verified</option>
+              <option value="Sent">Sent</option>
+              <option value="Failed">Failed</option>
+              <option value="Expired">Expired</option>
+              <option value="Locked">Locked</option>
+            </select>
+          </div>
+        </div>
+        <div id="otp-table-container"></div>
+        <div class="px-3 py-2 border-top d-flex align-items-center justify-content-between">
+          <span style="font-size:12.5px;color:#718096;" id="otp-count-label"></span>
+          <nav><ul class="pagination pagination-sm mb-0">
+            <li class="page-item disabled"><a class="page-link">Prev</a></li>
+            <li class="page-item active"><a class="page-link">1</a></li>
+            <li class="page-item disabled"><a class="page-link">Next</a></li>
+          </ul></nav>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEVICE MANAGEMENT -->
+    <div class="page" id="page-devices">
+      <div class="table-card">
+        <div class="table-card-header">
+          <span class="title" data-i18n="page.devices">Device Management</span>
+          <div class="search-row ms-auto">
+            <input type="text" class="form-control form-control-sm" data-i18n-ph="filter.searchDevicePh" placeholder="Device ID / Name / Mobile..." style="width:230px;" id="device-search" oninput="filterDevices()">
+            <select class="form-select form-select-sm" style="width:130px;" id="device-status-filter" onchange="filterDevices()">
+              <option value="" data-i18n="filter.allStatus">All Status</option>
+              <option value="Trusted">Trusted</option>
+              <option value="Active">Active</option>
+              <option value="Invalidated">Invalidated</option>
+              <option value="Blocked">Blocked</option>
+            </select>
+            <select class="form-select form-select-sm" style="width:120px;" id="device-risk-filter" onchange="filterDevices()">
+              <option value="" data-i18n="filter.allRisk">All Risk</option>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+        </div>
+        <div id="device-table-container"></div>
+        <div class="px-3 py-2 border-top d-flex align-items-center justify-content-between">
+          <span style="font-size:12.5px;color:#718096;" id="device-count-label"></span>
+          <nav><ul class="pagination pagination-sm mb-0">
+            <li class="page-item disabled"><a class="page-link">Prev</a></li>
+            <li class="page-item active"><a class="page-link">1</a></li>
+            <li class="page-item disabled"><a class="page-link">Next</a></li>
+          </ul></nav>
+        </div>
+      </div>
+    </div>
 
   </div><!-- /content -->
 </div><!-- /main -->
@@ -1976,13 +2134,13 @@
 let currentLang = 'en';
 const i18n = {
   en: {
-    'logo.sub':'Admin Platform','nav.overview':'Overview','nav.dashboard':'Dashboard','nav.business':'Business','nav.customers':'Customers','nav.loans':'Loan Orders','nav.repayments':'Repayments','nav.overdue':'Overdue','nav.coupons':'Coupons','nav.system':'System','nav.users':'User Management','nav.roles':'Role Management','nav.permissions':'Permission Management','nav.auditlog':'Audit Log',
+    'logo.sub':'Admin Platform','nav.overview':'Overview','nav.dashboard':'Dashboard','nav.business':'Business','nav.customers':'Customers','nav.walletAccounts':'Wallet Accounts','nav.accountCancel':'Account Cancellation','nav.loans':'Loan Orders','nav.repayments':'Repayments','nav.overdue':'Overdue','nav.coupons':'Coupons','nav.system':'System','nav.users':'User Management','nav.roles':'Role Management','nav.permissions':'Permission Management','nav.otpLogs':'OTP Logs','nav.devices':'Device Management','nav.auditlog':'Audit Log',
     'header.notifications':'Notifications','header.role':'Super Admin','header.lang':'中文',
     'dash.title':'Dashboard','dash.sub':'Overview & key metrics','dash.totalCustomers':'Total Customers','dash.activeLoanBalance':'Active Loan Balance','dash.overdueOrders':'Overdue Orders','dash.pendingReviews':'Pending Credit Reviews','dash.recentOrders':'Recent Loan Orders','btn.viewAll':'View All',
-    'th.orderNo':'Order No.','th.customer':'Customer','th.borrowCount':'Borrow Count','th.amountPKR':'Amount (PKR)','th.installments':'Installments','th.status':'Status','th.appliedAt':'Applied At','th.email':'Email','th.mobile':'Mobile','th.roles':'Roles','th.lastLogin':'Last Login','th.actions':'Actions','th.quickReview':'Quick Review','th.roleCode':'Code','th.roleName':'Role Name','th.description':'Description','th.users':'Users','th.sort':'Sort','th.permName':'Permission Name','th.permCode':'Code','th.type':'Type','th.routePath':'Route Path','th.idCard':'ID Card','th.creditStatus':'Credit Status','th.creditInfo':'Credit Info','th.wallet':'Wallet','th.blacklisted':'Blacklisted','th.registered':'Registered','th.amount':'Amount','th.channel':'Channel','th.disbursedAt':'Disbursed At','th.finalDue':'Final Due','th.repaymentNo':'Repayment No.','th.loanOrderNo':'Loan Order No.','th.repayType':'Type','th.reconcile':'Reconcile','th.payTime':'Pay Time','th.principal':'Principal','th.overdueDays':'Overdue Days','th.overdueFee':'Overdue Fee','th.totalRemaining':'Total Remaining','th.dueDate':'Due Date','th.collector':'Collector','th.couponNo':'Coupon No.','th.minLoan':'Min Loan','th.minRepay':'Min Repay','th.deductType':'Deduct Type','th.repayTypeCol':'Repay Type','th.effectivePeriod':'Effective Period','th.usedTime':'Used Time','th.time':'Time','th.operator':'Operator','th.module':'Module','th.action':'Action','th.target':'Target','th.ip':'IP','th.result':'Result',
-    'btn.createUser':'Create User','btn.createRole':'Create Role','btn.addPerm':'Add Permission','btn.issueCoupon':'Issue Coupon','btn.expandAll':'Expand All','btn.collapseAll':'Collapse All','btn.edit':'Edit','btn.delete':'Delete','btn.resetPwd':'Pwd','btn.disable':'Disable','btn.enable':'Enable','btn.detail':'Detail','btn.blacklist':'Blacklist','btn.unblock':'Unblock','btn.remind':'Remind','btn.void':'Void','btn.perms':'Perms','btn.save':'Save','btn.cancel':'Cancel','btn.confirm':'Confirm','btn.close':'Close','btn.selectAll':'Select All','btn.clearAll':'Clear All','btn.issue':'Issue',
-    'page.adminUsers':'Admin Users','page.roles':'Roles','page.permTree':'Permission Tree','page.customers':'Customers','page.loanOrders':'Loan Orders','page.repayments':'Repayment Orders','page.overdueOrders':'Overdue Orders','page.loanCoupons':'Loan Coupons','page.repayCoupons':'Repayment Coupons','page.auditLog':'Audit Log',
-    'filter.searchUserPh':'Search username / name...','filter.allStatus':'All Status','filter.active':'Active','filter.disabled':'Disabled','filter.allRoles':'All Roles','filter.searchRolePh':'Search role...','filter.searchCustPh':'Name / Mobile / ID card...','filter.allCreditStatus':'All Credit Status','filter.allBlacklist':'Blacklist: All','filter.blacklisted':'Blacklisted','filter.normal':'Normal','filter.searchLoanPh':'Order No...','filter.allChannels':'All Channels','filter.allQuickReview':'All Review Types','filter.quickYes':'Quick Review','filter.quickNo':'Normal Review','filter.searchRepayPh':'Repayment No / Loan No...','filter.searchOdPh':'Order No / Mobile...','filter.allOverdueDays':'All Overdue Days','filter.od17':'1–7 Days','filter.od830':'8–30 Days','filter.od30p':'30+ Days','filter.searchCouponPh':'Coupon No / Mobile...','filter.searchAuditPh':'Operator / Action...','filter.allModules':'All Modules','filter.allResults':'All Results',
+    'th.orderNo':'Order No.','th.customer':'Customer','th.borrowCount':'Borrow Count','th.amountPKR':'Amount (PKR)','th.installments':'Installments','th.status':'Status','th.appliedAt':'Applied At','th.email':'Email','th.mobile':'Mobile','th.roles':'Roles','th.lastLogin':'Last Login','th.actions':'Actions','th.quickReview':'Quick Review','th.roleCode':'Code','th.roleName':'Role Name','th.description':'Description','th.users':'Users','th.sort':'Sort','th.permName':'Permission Name','th.permCode':'Code','th.type':'Type','th.routePath':'Route Path','th.idCard':'ID Card','th.creditStatus':'Credit Status','th.creditInfo':'Credit Info','th.wallet':'Wallet','th.blacklisted':'Blacklisted','th.registered':'Registered','th.amount':'Amount','th.channel':'Channel','th.disbursedAt':'Disbursed At','th.finalDue':'Final Due','th.repaymentNo':'Repayment No.','th.loanOrderNo':'Loan Order No.','th.repayType':'Type','th.reconcile':'Reconcile','th.payTime':'Pay Time','th.principal':'Principal','th.overdueDays':'Overdue Days','th.overdueFee':'Overdue Fee','th.totalRemaining':'Total Remaining','th.dueDate':'Due Date','th.collector':'Collector','th.couponNo':'Coupon No.','th.minLoan':'Min Loan','th.minRepay':'Min Repay','th.deductType':'Deduct Type','th.repayTypeCol':'Repay Type','th.effectivePeriod':'Effective Period','th.usedTime':'Used Time','th.time':'Time','th.operator':'Operator','th.module':'Module','th.action':'Action','th.target':'Target','th.ip':'IP','th.result':'Result','th.accountType':'Account Type','th.accountNo':'Account No.','th.boundMobile':'Bound Mobile','th.relation':'Relation','th.verifyStatus':'Verify Status','th.default':'Default','th.lastVerified':'Last Verified','th.updatedAt':'Updated At','th.requestNo':'Request No.','th.eligibility':'Eligibility','th.otpStatus':'OTP Status','th.openLoanCheck':'Open Loan Check','th.reviewedBy':'Reviewed By','th.reviewTime':'Review Time','th.scene':'Scene','th.sentAt':'Sent At','th.expiresAt':'Expires At','th.attempts':'Attempts','th.lockStatus':'Lock Status','th.deviceIp':'Device / IP','th.message':'Message','th.deviceId':'Device ID','th.platform':'Platform','th.fingerprint':'Fingerprint','th.riskLevel':'Risk','th.currentDevice':'Current',
+    'btn.createUser':'Create User','btn.createRole':'Create Role','btn.addPerm':'Add Permission','btn.issueCoupon':'Issue Coupon','btn.expandAll':'Expand All','btn.collapseAll':'Collapse All','btn.edit':'Edit','btn.delete':'Delete','btn.resetPwd':'Pwd','btn.disable':'Disable','btn.enable':'Enable','btn.detail':'Detail','btn.blacklist':'Blacklist','btn.unblock':'Unblock','btn.remind':'Remind','btn.void':'Void','btn.perms':'Perms','btn.save':'Save','btn.cancel':'Cancel','btn.confirm':'Confirm','btn.close':'Close','btn.selectAll':'Select All','btn.clearAll':'Clear All','btn.issue':'Issue','btn.verify':'Verify','btn.resend':'Resend','btn.unlock':'Unlock','btn.invalidate':'Invalidate','btn.trust':'Trust','btn.approve':'Approve','btn.reject':'Reject',
+    'page.adminUsers':'Admin Users','page.roles':'Roles','page.permTree':'Permission Tree','page.customers':'Customers','page.walletAccounts':'Wallet Accounts','page.accountCancel':'Account Cancellation','page.otpLogs':'OTP Logs','page.devices':'Device Management','page.loanOrders':'Loan Orders','page.repayments':'Repayment Orders','page.overdueOrders':'Overdue Orders','page.loanCoupons':'Loan Coupons','page.repayCoupons':'Repayment Coupons','page.auditLog':'Audit Log',
+    'filter.searchUserPh':'Search username / name...','filter.allStatus':'All Status','filter.active':'Active','filter.disabled':'Disabled','filter.allRoles':'All Roles','filter.searchRolePh':'Search role...','filter.searchCustPh':'Name / Mobile / ID card...','filter.searchWalletPh':'Name / Mobile / Account...','filter.searchCancelPh':'Request No / Name / Mobile...','filter.searchOtpPh':'Request ID / Mobile / Device...','filter.searchDevicePh':'Device ID / Name / Mobile...','filter.allVerifyStatus':'All Verify Status','filter.allEligibility':'All Eligibility','filter.allScenes':'All Scenes','filter.allRisk':'All Risk','filter.allCreditStatus':'All Credit Status','filter.allBlacklist':'Blacklist: All','filter.blacklisted':'Blacklisted','filter.normal':'Normal','filter.searchLoanPh':'Order No...','filter.allChannels':'All Channels','filter.allQuickReview':'All Review Types','filter.quickYes':'Quick Review','filter.quickNo':'Normal Review','filter.searchRepayPh':'Repayment No / Loan No...','filter.searchOdPh':'Order No / Mobile...','filter.allOverdueDays':'All Overdue Days','filter.od17':'1–7 Days','filter.od830':'8–30 Days','filter.od30p':'30+ Days','filter.searchCouponPh':'Coupon No / Mobile...','filter.searchAuditPh':'Operator / Action...','filter.allModules':'All Modules','filter.allResults':'All Results',
     'od.statTotal':'Total Overdue Orders','od.stat17':'1–7 Days Overdue','od.stat830':'8–30 Days Overdue','od.stat30p':'30+ Days Overdue',
     'coupon.loanTab':'Loan Coupons','coupon.repayTab':'Repayment Coupons',
     'modal.createUser':'Create Admin User','modal.editUser':'Edit Admin User','modal.resetPwd':'Reset Password','modal.createRole':'Create Role','modal.editRole':'Edit Role','modal.assignPerms':'Assign Permissions — ','modal.addPerm':'Add Permission','modal.editPerm':'Edit Permission','modal.custDetail':'Customer Detail','modal.loanDetail':'Loan Order Detail','modal.issueCoupon':'Issue Coupon',
@@ -1993,16 +2151,16 @@ const i18n = {
     'confirm.title':'Confirm',
     'dash.activeLoansCount':'Active Loans','dash.todayDisbursed':'Today Disbursed','dash.todayRepaid':'Today Repaid','dash.pendingAdjust':'Pending Fee Adjustments','dash.repayRate':'On-time Repayment Rate','dash.overdueRate':'Overdue Rate','dash.pendingReconcile':'Pending Reconciliation','dash.pendingSettlement':'Pending Early Settlement',
     'count.showing':(n,tot)=>`Showing 1–${n} of ${tot}`,
-    'page.sub.dashboard':'Overview & key metrics','page.sub.customers':'View and manage loan customers','page.sub.loans':'Manage loan orders','page.sub.repayments':'Track repayments','page.sub.overdue':'Handle overdue orders','page.sub.coupons':'Manage loan & repayment coupons','page.sub.users':'Manage admin operator accounts','page.sub.roles':'Define roles and assign permissions','page.sub.permissions':'Manage the permission tree','page.sub.auditlog':'System operation audit trail',
+    'page.sub.dashboard':'Overview & key metrics','page.sub.customers':'View and manage loan customers','page.sub.walletAccounts':'Manage wallet and receiving accounts','page.sub.accountCancel':'Review account cancellation requests','page.sub.loans':'Manage loan orders','page.sub.repayments':'Track repayments','page.sub.overdue':'Handle overdue orders','page.sub.coupons':'Manage loan & repayment coupons','page.sub.users':'Manage admin operator accounts','page.sub.roles':'Define roles and assign permissions','page.sub.permissions':'Manage the permission tree','page.sub.otpLogs':'Track OTP, SMS, and WhatsApp verification','page.sub.devices':'Manage customer login devices','page.sub.auditlog':'System operation audit trail',
   },
   zh: {
-    'logo.sub':'运营后台','nav.overview':'概览','nav.dashboard':'仪表盘','nav.business':'业务管理','nav.customers':'客户管理','nav.loans':'借款订单','nav.repayments':'还款管理','nav.overdue':'逾期管理','nav.coupons':'优惠券','nav.system':'系统管理','nav.users':'用户管理','nav.roles':'角色管理','nav.permissions':'权限管理','nav.auditlog':'审计日志',
+    'logo.sub':'运营后台','nav.overview':'概览','nav.dashboard':'仪表盘','nav.business':'业务管理','nav.customers':'客户管理','nav.walletAccounts':'收款账号管理','nav.accountCancel':'账号注销','nav.loans':'借款订单','nav.repayments':'还款管理','nav.overdue':'逾期管理','nav.coupons':'优惠券','nav.system':'系统管理','nav.users':'用户管理','nav.roles':'角色管理','nav.permissions':'权限管理','nav.otpLogs':'OTP 记录','nav.devices':'设备管理','nav.auditlog':'审计日志',
     'header.notifications':'通知','header.role':'超级管理员','header.lang':'English',
     'dash.title':'仪表盘','dash.sub':'概览 & 关键指标','dash.totalCustomers':'总客户数','dash.activeLoanBalance':'在贷余额','dash.overdueOrders':'逾期订单','dash.pendingReviews':'待审核授信','dash.recentOrders':'最新借款订单','btn.viewAll':'查看全部',
-    'th.orderNo':'订单号','th.customer':'客户','th.borrowCount':'借款次数','th.amountPKR':'金额 (PKR)','th.installments':'期数','th.status':'状态','th.appliedAt':'申请时间','th.email':'邮箱','th.mobile':'手机号','th.roles':'角色','th.lastLogin':'最近登录','th.actions':'操作','th.quickReview':'快速审核','th.roleCode':'角色编码','th.roleName':'角色名称','th.description':'描述','th.users':'用户数','th.sort':'排序','th.permName':'权限名称','th.permCode':'权限编码','th.type':'类型','th.routePath':'路由路径','th.idCard':'身份证','th.creditStatus':'授信状态','th.creditInfo':'授信信息','th.wallet':'钱包','th.blacklisted':'黑名单','th.registered':'注册时间','th.amount':'金额','th.channel':'渠道','th.disbursedAt':'放款时间','th.finalDue':'最终到期日','th.repaymentNo':'还款单号','th.loanOrderNo':'借款订单号','th.repayType':'还款类型','th.reconcile':'对账状态','th.payTime':'支付时间','th.principal':'本金','th.overdueDays':'逾期天数','th.overdueFee':'逾期费','th.totalRemaining':'剩余应还','th.dueDate':'到期日','th.collector':'催收员','th.couponNo':'券号','th.minLoan':'最低借款','th.minRepay':'最低还款','th.deductType':'抵扣类型','th.repayTypeCol':'还款类型','th.effectivePeriod':'有效期','th.usedTime':'使用时间','th.time':'时间','th.operator':'操作人','th.module':'模块','th.action':'操作','th.target':'目标对象','th.ip':'IP','th.result':'结果',
-    'btn.createUser':'新建用户','btn.createRole':'新建角色','btn.addPerm':'新增权限','btn.issueCoupon':'发放券','btn.expandAll':'展开全部','btn.collapseAll':'收起全部','btn.edit':'编辑','btn.delete':'删除','btn.resetPwd':'改密','btn.disable':'禁用','btn.enable':'启用','btn.detail':'详情','btn.blacklist':'拉黑','btn.unblock':'解黑','btn.remind':'催收','btn.void':'作废','btn.perms':'配权','btn.save':'保存','btn.cancel':'取消','btn.confirm':'确认','btn.close':'关闭','btn.selectAll':'全选','btn.clearAll':'清空','btn.issue':'发放',
-    'page.adminUsers':'管理员用户','page.roles':'角色列表','page.permTree':'权限树','page.customers':'客户列表','page.loanOrders':'借款订单','page.repayments':'还款订单','page.overdueOrders':'逾期订单','page.loanCoupons':'借款优惠券','page.repayCoupons':'还款优惠券','page.auditLog':'审计日志',
-    'filter.searchUserPh':'搜索用户名/姓名...','filter.allStatus':'全部状态','filter.active':'启用','filter.disabled':'禁用','filter.allRoles':'全部角色','filter.searchRolePh':'搜索角色...','filter.searchCustPh':'姓名/手机/身份证...','filter.allCreditStatus':'全部授信状态','filter.allBlacklist':'黑名单：全部','filter.blacklisted':'已拉黑','filter.normal':'正常','filter.searchLoanPh':'订单号...','filter.allChannels':'全部渠道','filter.allQuickReview':'全部审核类型','filter.quickYes':'快速审核','filter.quickNo':'普通审核','filter.searchRepayPh':'还款单号/借款单号...','filter.searchOdPh':'订单号/手机号...','filter.allOverdueDays':'全部逾期天数','filter.od17':'1–7天','filter.od830':'8–30天','filter.od30p':'30天以上','filter.searchCouponPh':'券号/手机号...','filter.searchAuditPh':'操作人/操作内容...','filter.allModules':'全部模块','filter.allResults':'全部结果',
+    'th.orderNo':'订单号','th.customer':'客户','th.borrowCount':'借款次数','th.amountPKR':'金额 (PKR)','th.installments':'期数','th.status':'状态','th.appliedAt':'申请时间','th.email':'邮箱','th.mobile':'手机号','th.roles':'角色','th.lastLogin':'最近登录','th.actions':'操作','th.quickReview':'快速审核','th.roleCode':'角色编码','th.roleName':'角色名称','th.description':'描述','th.users':'用户数','th.sort':'排序','th.permName':'权限名称','th.permCode':'权限编码','th.type':'类型','th.routePath':'路由路径','th.idCard':'身份证','th.creditStatus':'授信状态','th.creditInfo':'授信信息','th.wallet':'钱包','th.blacklisted':'黑名单','th.registered':'注册时间','th.amount':'金额','th.channel':'渠道','th.disbursedAt':'放款时间','th.finalDue':'最终到期日','th.repaymentNo':'还款单号','th.loanOrderNo':'借款订单号','th.repayType':'还款类型','th.reconcile':'对账状态','th.payTime':'支付时间','th.principal':'本金','th.overdueDays':'逾期天数','th.overdueFee':'逾期费','th.totalRemaining':'剩余应还','th.dueDate':'到期日','th.collector':'催收员','th.couponNo':'券号','th.minLoan':'最低借款','th.minRepay':'最低还款','th.deductType':'抵扣类型','th.repayTypeCol':'还款类型','th.effectivePeriod':'有效期','th.usedTime':'使用时间','th.time':'时间','th.operator':'操作人','th.module':'模块','th.action':'操作','th.target':'目标对象','th.ip':'IP','th.result':'结果','th.accountType':'账号类型','th.accountNo':'账号','th.boundMobile':'绑定手机号','th.relation':'关系','th.verifyStatus':'验证状态','th.default':'默认','th.lastVerified':'最近验证','th.updatedAt':'更新时间','th.requestNo':'申请单号','th.eligibility':'可注销校验','th.otpStatus':'OTP 状态','th.openLoanCheck':'在贷校验','th.reviewedBy':'审核人','th.reviewTime':'审核时间','th.scene':'场景','th.sentAt':'发送时间','th.expiresAt':'过期时间','th.attempts':'次数','th.lockStatus':'锁定状态','th.deviceIp':'设备 / IP','th.message':'消息','th.deviceId':'设备 ID','th.platform':'平台','th.fingerprint':'指纹','th.riskLevel':'风险','th.currentDevice':'当前设备',
+    'btn.createUser':'新建用户','btn.createRole':'新建角色','btn.addPerm':'新增权限','btn.issueCoupon':'发放券','btn.expandAll':'展开全部','btn.collapseAll':'收起全部','btn.edit':'编辑','btn.delete':'删除','btn.resetPwd':'改密','btn.disable':'禁用','btn.enable':'启用','btn.detail':'详情','btn.blacklist':'拉黑','btn.unblock':'解黑','btn.remind':'催收','btn.void':'作废','btn.perms':'配权','btn.save':'保存','btn.cancel':'取消','btn.confirm':'确认','btn.close':'关闭','btn.selectAll':'全选','btn.clearAll':'清空','btn.issue':'发放','btn.verify':'验证','btn.resend':'重发','btn.unlock':'解锁','btn.invalidate':'失效','btn.trust':'信任','btn.approve':'通过','btn.reject':'拒绝',
+    'page.adminUsers':'管理员用户','page.roles':'角色列表','page.permTree':'权限树','page.customers':'客户列表','page.walletAccounts':'收款账号管理','page.accountCancel':'账号注销','page.otpLogs':'OTP 记录','page.devices':'设备管理','page.loanOrders':'借款订单','page.repayments':'还款订单','page.overdueOrders':'逾期订单','page.loanCoupons':'借款优惠券','page.repayCoupons':'还款优惠券','page.auditLog':'审计日志',
+    'filter.searchUserPh':'搜索用户名/姓名...','filter.allStatus':'全部状态','filter.active':'启用','filter.disabled':'禁用','filter.allRoles':'全部角色','filter.searchRolePh':'搜索角色...','filter.searchCustPh':'姓名/手机/身份证...','filter.searchWalletPh':'姓名/手机/收款账号...','filter.searchCancelPh':'申请单号/姓名/手机号...','filter.searchOtpPh':'请求ID/手机号/设备...','filter.searchDevicePh':'设备ID/姓名/手机号...','filter.allVerifyStatus':'全部验证状态','filter.allEligibility':'全部校验结果','filter.allScenes':'全部场景','filter.allRisk':'全部风险','filter.allCreditStatus':'全部授信状态','filter.allBlacklist':'黑名单：全部','filter.blacklisted':'已拉黑','filter.normal':'正常','filter.searchLoanPh':'订单号...','filter.allChannels':'全部渠道','filter.allQuickReview':'全部审核类型','filter.quickYes':'快速审核','filter.quickNo':'普通审核','filter.searchRepayPh':'还款单号/借款单号...','filter.searchOdPh':'订单号/手机号...','filter.allOverdueDays':'全部逾期天数','filter.od17':'1–7天','filter.od830':'8–30天','filter.od30p':'30天以上','filter.searchCouponPh':'券号/手机号...','filter.searchAuditPh':'操作人/操作内容...','filter.allModules':'全部模块','filter.allResults':'全部结果',
     'od.statTotal':'总逾期订单','od.stat17':'1–7天逾期','od.stat830':'8–30天逾期','od.stat30p':'30天以上逾期',
     'coupon.loanTab':'借款优惠券','coupon.repayTab':'还款优惠券',
     'modal.createUser':'新建管理员','modal.editUser':'编辑管理员','modal.resetPwd':'重置密码','modal.createRole':'新建角色','modal.editRole':'编辑角色','modal.assignPerms':'配置权限 — ','modal.addPerm':'新增权限','modal.editPerm':'编辑权限','modal.custDetail':'客户详情','modal.loanDetail':'借款订单详情','modal.issueCoupon':'发放优惠券',
@@ -2013,7 +2171,7 @@ const i18n = {
     'confirm.title':'确认操作',
     'dash.activeLoansCount':'在贷订单数','dash.todayDisbursed':'今日放款','dash.todayRepaid':'今日还款','dash.pendingAdjust':'待审费用调整','dash.repayRate':'按时还款率','dash.overdueRate':'逾期率','dash.pendingReconcile':'待处理对账','dash.pendingSettlement':'待结清提前结清',
     'count.showing':(n,tot)=>`共 ${tot} 条，显示 1–${n}`,
-    'page.sub.dashboard':'概览 & 关键指标','page.sub.customers':'查看与管理借款客户','page.sub.loans':'管理借款订单','page.sub.repayments':'追踪还款记录','page.sub.overdue':'处理逾期订单','page.sub.coupons':'管理借款券与还款券','page.sub.users':'管理后台操作员账号','page.sub.roles':'定义角色与分配权限','page.sub.permissions':'管理权限树','page.sub.auditlog':'系统操作审计日志',
+    'page.sub.dashboard':'概览 & 关键指标','page.sub.customers':'查看与管理借款客户','page.sub.walletAccounts':'管理钱包和收款账号','page.sub.accountCancel':'审核账号注销申请','page.sub.loans':'管理借款订单','page.sub.repayments':'追踪还款记录','page.sub.overdue':'处理逾期订单','page.sub.coupons':'管理借款券与还款券','page.sub.users':'管理后台操作员账号','page.sub.roles':'定义角色与分配权限','page.sub.permissions':'管理权限树','page.sub.otpLogs':'追踪 OTP、SMS、WhatsApp 验证','page.sub.devices':'管理客户登录设备','page.sub.auditlog':'系统操作审计日志',
   }
 };
 
@@ -2091,16 +2249,17 @@ const phraseZh = {
   'Payable Principal':'应还本金','Payable Interest':'应还利息','Payable Service Fee':'应还服务费','Payable Overdue Fee':'应还逾期费','Total Bill Amount':'账单总额','Overdue Days':'逾期天数',
   'REPAYMENT ORDER':'还款订单','PAYMENT DETAILS':'支付信息','Repayment No.':'还款单号','Channel':'渠道','Reconcile':'对账状态','Pay Time':'支付时间','Channel Txn No.':'渠道流水号',
   'Summary':'摘要','Bill Allocation':'账单分配','Fee Allocation':'费用分配',
-  'APPLICATION BASIC INFO':'申请基础信息','IDENTITY VERIFICATION':'身份认证','EMERGENCY CONTACTS':'紧急联系人','CREDIT & WALLET':'授信 & 钱包','BASIC INFO':'基础信息','LOAN INFO':'借款信息','STATUS & PAYMENT':'状态 & 支付',
+  'APPLICATION BASIC INFO':'申请基础信息','IDENTITY VERIFICATION':'身份认证','EMERGENCY CONTACTS':'紧急联系人','CREDIT & WALLET':'授信 & 钱包','BASIC INFO':'基础信息','LOAN INFO':'借款信息','STATUS & PAYMENT':'状态 & 支付','WALLET / RECEIVING ACCOUNT':'钱包 / 收款账号',
+  'Account Type':'账号类型','Account No.':'账号','Verify Status':'验证状态','Bound Mobile':'绑定手机号','Account Status':'账号状态','Last Verified':'最近验证',
   'This adjustment requires supervisor approval before taking effect.':'该费用调整需要主管审批后才会生效。',
   'Hold Ctrl/Cmd to select multiple':'按住 Ctrl/Cmd 可多选','Uppercase letters, underscores only. Cannot be changed after creation.':'仅支持大写字母和下划线，创建后不可修改。',
   'Number of installments the customer can choose from.':'客户可选择的分期期数。','Days per installment cycle.':'每个分期周期的天数。','Overrides the global amount rules for this user.':'覆盖该用户的全局金额期数规则。',
   'Reset password for':'为以下用户重置密码','Front':'正面','Back':'反面',
   'Active':'启用','Disabled':'禁用','Inactive':'停用','Menu':'菜单','Button / Action':'按钮 / 操作','Root (Top Level)':'根节点（顶级）',
   '— Root (Top Level) —':'— 根节点（顶级）—',
-  'Dashboard':'仪表盘','Customer Management':'客户管理','Customer List':'客户列表','Credit Review':'授信审核','Loan Management':'借款管理','Loan Orders':'借款订单','Repayment Orders':'还款订单','Overdue Management':'逾期管理','Fee Adjustment':'费用调整','Loan Bills':'分期账单','Disbursement Records':'放款记录','Early Settlement':'提前结清','Fee Details':'费用明细','Fee Change Log':'费用变更','Repayment Details':'还款明细','Repayment Allocation':'还款分配','Coupon Management':'优惠券管理','Loan Coupons':'借款优惠券','Repayment Coupons':'还款优惠券','Coupon Usage Records':'优惠券使用记录','Finance & Reconciliation':'财务与对账','Account Transactions':'账务流水','Repayment Reconciliation':'还款对账','Business Configuration':'业务配置','Amount Term Rules':'金额期数规则','User Term Config':'用户分期配置','System Management':'系统管理','User Management':'用户管理','Role Management':'角色管理','Permission Management':'权限管理','Audit Log':'审计日志',
+  'Dashboard':'仪表盘','Customer Management':'客户管理','Customer List':'客户列表','Wallet Accounts':'收款账号管理','Account Cancellation':'账号注销','Credit Review':'授信审核','Loan Management':'借款管理','Loan Orders':'借款订单','Repayment Orders':'还款订单','Overdue Management':'逾期管理','Fee Adjustment':'费用调整','Loan Bills':'分期账单','Disbursement Records':'放款记录','Early Settlement':'提前结清','Fee Details':'费用明细','Fee Change Log':'费用变更','Repayment Details':'还款明细','Repayment Allocation':'还款分配','Coupon Management':'优惠券管理','Loan Coupons':'借款优惠券','Repayment Coupons':'还款优惠券','Coupon Usage Records':'优惠券使用记录','Finance & Reconciliation':'财务与对账','Account Transactions':'账务流水','Repayment Reconciliation':'还款对账','Business Configuration':'业务配置','Amount Term Rules':'金额期数规则','User Term Config':'用户分期配置','System Management':'系统管理','User Management':'用户管理','Role Management':'角色管理','Permission Management':'权限管理','OTP Logs':'OTP记录','Device Management':'设备管理','Audit Log':'审计日志',
   'Loan Coupon':'借款优惠券','Repayment Coupon':'还款优惠券','Decrease':'减少','Waive':'全免','Increase':'增加',
-  'Approved':'已通过','Pending':'待处理','Rejected':'已拒绝','Success':'成功','Failed':'失败','Cancelled':'已取消','Matched':'已匹配','Unmatched':'未匹配','AmountMismatch':'金额不一致','ManualConfirmed':'人工确认','Handled':'已处理','Ignored':'已忽略',
+  'Approved':'已通过','Pending':'待处理','Rejected':'已拒绝','Success':'成功','Failed':'失败','Cancelled':'已取消','Verified':'已验证','Sent':'已发送','Locked':'已锁定','Trusted':'已信任','Invalidated':'已失效','Blocked':'已阻断','Pass':'通过','Low':'低','Medium':'中','High':'高','Matched':'已匹配','Unmatched':'未匹配','AmountMismatch':'金额不一致','ManualConfirmed':'人工确认','Handled':'已处理','Ignored':'已忽略',
   'Not Started':'未开始','Manual Review':'人工复核','Incomplete':'未完成','Pending Review':'待审核','Expired':'已过期','Blacklisted':'黑名单',
   'Identity Verification':'身份认证','Emergency Contacts':'紧急联系人','Review Queue':'等待审核','Completed':'已完成','Step':'步骤',
   'AUTO':'自动','MANUAL':'人工','Application in progress: waiting for identity verification':'申请中：等待身份认证',
@@ -2366,6 +2525,8 @@ const avatarColors = ['#3a5bdf','#0ea5e9','#10b981','#f59e0b','#ef4444','#8b5cf6
 const pageMap = {
   dashboard:   { titleKey:'nav.dashboard',    subKey:'page.sub.dashboard' },
   customers:   { titleKey:'nav.customers',    subKey:'page.sub.customers' },
+  walletAccounts: { titleKey:'nav.walletAccounts', subKey:'page.sub.walletAccounts' },
+  accountCancel:  { titleKey:'nav.accountCancel',  subKey:'page.sub.accountCancel' },
   loans:       { titleKey:'nav.loans',        subKey:'page.sub.loans' },
   repayments:  { titleKey:'nav.repayments',   subKey:'page.sub.repayments' },
   overdue:     { titleKey:'nav.overdue',      subKey:'page.sub.overdue' },
@@ -2373,6 +2534,8 @@ const pageMap = {
   users:       { titleKey:'nav.users',        subKey:'page.sub.users' },
   roles:       { titleKey:'nav.roles',        subKey:'page.sub.roles' },
   permissions: { titleKey:'nav.permissions',  subKey:'page.sub.permissions' },
+  otpLogs:     { titleKey:'nav.otpLogs',      subKey:'page.sub.otpLogs' },
+  devices:     { titleKey:'nav.devices',      subKey:'page.sub.devices' },
   auditlog:    { titleKey:'nav.auditlog',     subKey:'page.sub.auditlog' },
   amountrules:    { titleKey:'nav.amountrules',    subKey:'page.sub.amountrules' },
   termconfig:     { titleKey:'nav.termconfig',     subKey:'page.sub.termconfig' },
@@ -2410,11 +2573,15 @@ function navigate(page) {
   if (page === 'roles')       renderRoles();
   if (page === 'permissions') renderPermTree();
   if (page === 'customers')   renderCustomers();
+  if (page === 'walletAccounts') filterWalletAccounts();
+  if (page === 'accountCancel')  filterAccountCancel();
   if (page === 'loans')       renderLoans();
   if (page === 'repayments')  renderRepayments();
   if (page === 'overdue')   { setupOverdueTabs(); renderOverdue(); }
   if (page === 'coupons')   { activeCouponTab='loan'; renderCoupons(); }
   if (page === 'auditlog')        renderAuditLog();
+  if (page === 'otpLogs')         filterOtpLogs();
+  if (page === 'devices')         filterDevices();
   if (page === 'amountrules')     renderAmountRules();
   if (page === 'loanBills')       filterBills();
   if (page === 'loanBillFees')    filterLoanBillFees();
@@ -2955,6 +3122,175 @@ function toggleBlacklist(id) {
 }
 
 // ============================================================
+// WALLET / RECEIVING ACCOUNT MODULE
+// ============================================================
+let walletAccounts = [
+  { id:'WA1001001', userId:1001, custName:'Ali Hassan', mobile:'+92 321 4561234', type:'Easypaisa', accountNo:'+92 321 4561234', boundMobile:'+92 321 4561234', relation:'Self', verifyStatus:'Verified', isDefault:true, status:'Active', lastVerifiedAt:'2024-05-20 13:50', updatedAt:'2024-05-20 13:50', failReason:'-' },
+  { id:'WA1002001', userId:1002, custName:'Fatima Malik', mobile:'+92 333 9876543', type:'JazzCash', accountNo:'+92 333 9876543', boundMobile:'+92 333 9876543', relation:'Self', verifyStatus:'Pending', isDefault:true, status:'Active', lastVerifiedAt:'-', updatedAt:'2024-06-04 09:15', failReason:'Awaiting OTP' },
+  { id:'WA1003001', userId:1003, custName:'Muhammad Raza', mobile:'+92 311 2223333', type:'Easypaisa', accountNo:'+92 311 2223333', boundMobile:'+92 311 2223333', relation:'Self', verifyStatus:'Verified', isDefault:true, status:'Active', lastVerifiedAt:'2024-05-25 10:05', updatedAt:'2024-05-25 10:05', failReason:'-' },
+  { id:'WA1005001', userId:1005, custName:'Usman Khan', mobile:'+92 300 1234567', type:'Bank', accountNo:'PK36HABB00000001234567', boundMobile:'+92 300 1234567', relation:'Self', verifyStatus:'Verified', isDefault:true, status:'Active', lastVerifiedAt:'2024-05-01 10:40', updatedAt:'2024-05-01 10:40', failReason:'-' },
+  { id:'WA1008001', userId:1008, custName:'Hina Baig', mobile:'+92 333 4455221', type:'Easypaisa', accountNo:'+92 333 4455221', boundMobile:'+92 333 4455221', relation:'Self', verifyStatus:'Failed', isDefault:true, status:'Disabled', lastVerifiedAt:'2024-04-20 09:45', updatedAt:'2024-06-01 12:10', failReason:'Name mismatch' },
+  { id:'WA1010001', userId:1010, custName:'Mahnoor Tariq', mobile:'+92 311 8899001', type:'Bank', accountNo:'PK36HABB00000007654321', boundMobile:'+92 311 8899001', relation:'Self', verifyStatus:'Verified', isDefault:true, status:'Active', lastVerifiedAt:'2024-06-04 11:18', updatedAt:'2024-06-04 11:18', failReason:'-' },
+  { id:'WA1012001', userId:1012, custName:'Saba Noor', mobile:'+92 300 9988776', type:'Easypaisa', accountNo:'+92 300 9988776', boundMobile:'+92 300 9988776', relation:'Self', verifyStatus:'Verified', isDefault:true, status:'Active', lastVerifiedAt:'2024-05-22 12:44', updatedAt:'2024-05-22 12:44', failReason:'-' },
+  { id:'WA1020001', userId:1020, custName:'Amira Khan', mobile:'+92 346 8877665', type:'Bank', accountNo:'PK36HABB00000001122334', boundMobile:'+92 346 8877665', relation:'Self', verifyStatus:'Pending', isDefault:true, status:'Active', lastVerifiedAt:'-', updatedAt:'2024-06-03 16:12', failReason:'Bank callback pending' },
+];
+
+function statusBadge(s) {
+  const map = {
+    Active:'badge-active', Verified:'badge-active', Approved:'badge-active', Pass:'badge-active', Trusted:'badge-active',
+    Pending:'badge-pending', Sent:'badge-pending', Medium:'badge-pending',
+    Failed:'badge-disabled', Disabled:'badge-disabled', Rejected:'badge-disabled', Blocked:'badge-disabled', Locked:'badge-disabled', Expired:'badge-disabled', High:'badge-disabled',
+    Cancelled:'background:#f1f5f9;color:#64748b;', Invalidated:'background:#f1f5f9;color:#64748b;', Low:'background:#dcfce7;color:#15803d;'
+  };
+  const c = map[s] || 'background:#f1f5f9;color:#64748b;';
+  return c.includes(':')
+    ? `<span class="status-badge" style="${c}">${s}</span>`
+    : `<span class="status-badge ${c}">${s}</span>`;
+}
+
+function findWalletForLoan(l) {
+  const userId = l.userId || customers.find(c => c.mobile === l.mobile)?.id;
+  return walletAccounts.find(w => w.userId === userId && w.type === l.channel && w.isDefault)
+      || walletAccounts.find(w => w.userId === userId && w.isDefault)
+      || walletAccounts.find(w => w.mobile === l.mobile)
+      || null;
+}
+
+function renderWalletAccounts(list) {
+  const data = list || walletAccounts;
+  document.getElementById('wallet-count-label').textContent = t('count.showing')(data.length, data.length);
+  const rows = data.map(w => `
+    <tr>
+      <td>
+        <div style="font-weight:600;">${w.custName}</div>
+        <div style="font-size:11.5px;color:#94a3b8;">#${w.userId} · ${w.mobile}</div>
+      </td>
+      <td><span class="role-tag">${w.type}</span></td>
+      <td style="font-size:12.5px;font-family:monospace;">${w.accountNo}</td>
+      <td style="font-size:12.5px;">${w.boundMobile}</td>
+      <td>${w.relation}</td>
+      <td>${statusBadge(w.verifyStatus)}</td>
+      <td>${w.isDefault ? '<span class="status-badge badge-active">Yes</span>' : '-'}</td>
+      <td>${statusBadge(w.status)}</td>
+      <td style="font-size:12px;color:#94a3b8;">${w.lastVerifiedAt}</td>
+      <td style="font-size:12px;color:#94a3b8;">${w.updatedAt}</td>
+      <td>
+        <div class="d-flex gap-1 flex-wrap">
+          <button class="btn btn-sm btn-outline-primary action-btn" onclick="verifyWalletAccount('${w.id}')"><i class="bi bi-patch-check"></i> ${t('btn.verify')}</button>
+          <button class="btn btn-sm ${w.status === 'Active' ? 'btn-outline-danger' : 'btn-outline-success'} action-btn" onclick="toggleWalletAccount('${w.id}')">
+            <i class="bi ${w.status === 'Active' ? 'bi-slash-circle' : 'bi-check-circle'}"></i> ${w.status === 'Active' ? t('btn.disable') : t('btn.enable')}
+          </button>
+        </div>
+      </td>
+    </tr>`).join('');
+  document.getElementById('wallet-table-container').innerHTML = `
+    <div class="table-scroll"><table class="table table-hover mb-0">
+      <thead><tr><th>${t('th.customer')}</th><th>${t('th.accountType')}</th><th>${t('th.accountNo')}</th><th>${t('th.boundMobile')}</th><th>${t('th.relation')}</th><th>${t('th.verifyStatus')}</th><th>${t('th.default')}</th><th>${t('th.status')}</th><th>${t('th.lastVerified')}</th><th>${t('th.updatedAt')}</th><th>${t('th.actions')}</th></tr></thead>
+      <tbody>${rows || '<tr><td colspan="11"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+    </table></div>`;
+}
+
+function filterWalletAccounts() {
+  const q = document.getElementById('wallet-search').value.toLowerCase();
+  const type = document.getElementById('wallet-type-filter').value;
+  const verify = document.getElementById('wallet-verify-filter').value;
+  const status = document.getElementById('wallet-status-filter').value;
+  renderWalletAccounts(walletAccounts.filter(w =>
+    (!q || w.id.toLowerCase().includes(q) || w.custName.toLowerCase().includes(q) || w.mobile.includes(q) || w.accountNo.toLowerCase().includes(q)) &&
+    (!type || w.type === type) && (!verify || w.verifyStatus === verify) && (!status || w.status === status)
+  ));
+}
+
+function verifyWalletAccount(id) {
+  const w = walletAccounts.find(x=>x.id===id);
+  if (!w) return;
+  w.verifyStatus = 'Verified';
+  w.status = 'Active';
+  w.failReason = '-';
+  w.lastVerifiedAt = new Date().toISOString().slice(0,16).replace('T',' ');
+  w.updatedAt = w.lastVerifiedAt;
+  toast('Wallet account verified');
+  filterWalletAccounts();
+}
+
+function toggleWalletAccount(id) {
+  const w = walletAccounts.find(x=>x.id===id);
+  if (!w) return;
+  w.status = w.status === 'Active' ? 'Disabled' : 'Active';
+  w.updatedAt = new Date().toISOString().slice(0,16).replace('T',' ');
+  toast(`Wallet account ${w.status.toLowerCase()}`);
+  filterWalletAccounts();
+}
+
+// ============================================================
+// ACCOUNT CANCELLATION MODULE
+// ============================================================
+let cancelRequests = [
+  { requestNo:'AC20240604001', userId:1007, custName:'Imran Shoukat', mobile:'+92 300 5544332', eligibility:'Pass', openLoanCheck:'No Open Loan', otpStatus:'Verified', status:'Pending', requestedAt:'2024-06-04 11:05', reviewedBy:'-', reviewTime:'-', reason:'No longer use app' },
+  { requestNo:'AC20240604002', userId:1008, custName:'Hina Baig', mobile:'+92 333 4455221', eligibility:'Blocked', openLoanCheck:'Overdue Loan', otpStatus:'Verified', status:'Rejected', requestedAt:'2024-06-04 12:20', reviewedBy:'risk_admin', reviewTime:'2024-06-04 12:45', reason:'Has overdue order' },
+  { requestNo:'AC20240605001', userId:1015, custName:'Kamran Akhtar', mobile:'+92 345 3344556', eligibility:'Pass', openLoanCheck:'No Open Loan', otpStatus:'Expired', status:'Pending', requestedAt:'2024-06-05 09:40', reviewedBy:'-', reviewTime:'-', reason:'Duplicate registration' },
+  { requestNo:'AC20240605002', userId:1019, custName:'Hassan Iqbal', mobile:'+92 333 2211009', eligibility:'Blocked', openLoanCheck:'Written-off Loan', otpStatus:'Verified', status:'Rejected', requestedAt:'2024-06-05 13:15', reviewedBy:'risk_admin', reviewTime:'2024-06-05 13:30', reason:'Written-off order exists' },
+  { requestNo:'AC20240606001', userId:1009, custName:'Asad Javed', mobile:'+92 321 6677889', eligibility:'Pass', openLoanCheck:'No Open Loan', otpStatus:'Verified', status:'Approved', requestedAt:'2024-06-06 10:10', reviewedBy:'ops_admin', reviewTime:'2024-06-06 10:25', reason:'Customer requested deletion' },
+];
+
+function renderAccountCancel(list) {
+  const data = list || cancelRequests;
+  document.getElementById('cancel-count-label').textContent = t('count.showing')(data.length, data.length);
+  const rows = data.map(r => `
+    <tr>
+      <td><code style="font-size:12px;">${r.requestNo}</code></td>
+      <td>
+        <div style="font-weight:600;">${r.custName}</div>
+        <div style="font-size:11.5px;color:#94a3b8;">#${r.userId} · ${r.mobile}</div>
+      </td>
+      <td>${statusBadge(r.eligibility)}</td>
+      <td>${statusBadge(r.otpStatus)}</td>
+      <td style="font-size:12.5px;">${r.openLoanCheck}</td>
+      <td>${statusBadge(r.status)}</td>
+      <td style="font-size:12px;color:#94a3b8;">${r.requestedAt}</td>
+      <td style="font-size:12.5px;">${r.reviewedBy}</td>
+      <td style="font-size:12px;color:#94a3b8;">${r.reviewTime}</td>
+      <td style="font-size:12.5px;color:#64748b;">${r.reason}</td>
+      <td>
+        <div class="d-flex gap-1 flex-wrap">
+          <button class="btn btn-sm btn-outline-success action-btn" onclick="approveCancel('${r.requestNo}')" ${r.status !== 'Pending' || r.eligibility !== 'Pass' ? 'disabled' : ''}><i class="bi bi-check-lg"></i> ${t('btn.approve')}</button>
+          <button class="btn btn-sm btn-outline-danger action-btn" onclick="rejectCancel('${r.requestNo}')" ${r.status !== 'Pending' ? 'disabled' : ''}><i class="bi bi-x-lg"></i> ${t('btn.reject')}</button>
+        </div>
+      </td>
+    </tr>`).join('');
+  document.getElementById('cancel-table-container').innerHTML = `
+    <div class="table-scroll"><table class="table table-hover mb-0">
+      <thead><tr><th>${t('th.requestNo')}</th><th>${t('th.customer')}</th><th>${t('th.eligibility')}</th><th>${t('th.otpStatus')}</th><th>${t('th.openLoanCheck')}</th><th>${t('th.status')}</th><th>${t('th.appliedAt')}</th><th>${t('th.reviewedBy')}</th><th>${t('th.reviewTime')}</th><th>${t('th.remark') || 'Remark'}</th><th>${t('th.actions')}</th></tr></thead>
+      <tbody>${rows || '<tr><td colspan="11"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+    </table></div>`;
+}
+
+function filterAccountCancel() {
+  const q = document.getElementById('cancel-search').value.toLowerCase();
+  const status = document.getElementById('cancel-status-filter').value;
+  const check = document.getElementById('cancel-check-filter').value;
+  renderAccountCancel(cancelRequests.filter(r =>
+    (!q || r.requestNo.toLowerCase().includes(q) || r.custName.toLowerCase().includes(q) || r.mobile.includes(q)) &&
+    (!status || r.status === status) && (!check || r.eligibility === check)
+  ));
+}
+
+function approveCancel(no) {
+  const r = cancelRequests.find(x=>x.requestNo===no);
+  if (!r || r.eligibility !== 'Pass') return;
+  r.status = 'Approved'; r.reviewedBy = 'ops_admin'; r.reviewTime = new Date().toISOString().slice(0,16).replace('T',' ');
+  toast('Cancellation approved');
+  filterAccountCancel();
+}
+function rejectCancel(no) {
+  const r = cancelRequests.find(x=>x.requestNo===no);
+  if (!r) return;
+  r.status = 'Rejected'; r.reviewedBy = 'ops_admin'; r.reviewTime = new Date().toISOString().slice(0,16).replace('T',' ');
+  toast('Cancellation rejected');
+  filterAccountCancel();
+}
+
+// ============================================================
 // LOAN ORDERS DATA & MODULE
 // ============================================================
 let loanOrders = [
@@ -3109,6 +3445,7 @@ function filterLoans() {
 function viewLoanDetail(no) {
   const l = loanOrders.find(x=>x.no===no);
   const userId = l.userId || customers.find(c => c.mobile === l.mobile)?.id || '';
+  const wallet = findWalletForLoan(l);
   const coolingOffEntry = l.status === 'CoolingOff' ? `
     <div class="col-12">
       <div style="background:#f8fafc;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
@@ -3142,6 +3479,19 @@ function viewLoanDetail(no) {
           ${detailRow('Disbursement Channel', l.channel)}${detailRow('Disbursed At', l.disbursedAt)}
           ${detailRow('First Due Date', l.firstDue)}${detailRow('Final Due Date', l.finalDue)}
           ${detailRow('Paid Amount', fmtMoney(l.paidAmount))}${detailRow('Remaining Amount', fmtMoney(l.remainingAmount))}
+        </div>
+      </div>
+      <div class="col-12">
+        <div style="background:#f8fafc;border-radius:8px;padding:16px;">
+          <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:12px;">${localizePhrase('WALLET / RECEIVING ACCOUNT')}</div>
+          <div class="row g-3">
+            <div class="col-md-4">${detailRow('Account Type', wallet?.type || l.channel)}</div>
+            <div class="col-md-4">${detailRow('Account No.', wallet?.accountNo || '-')}</div>
+            <div class="col-md-4">${detailRow('Verify Status', wallet ? statusBadge(wallet.verifyStatus) : '-')}</div>
+            <div class="col-md-4">${detailRow('Bound Mobile', wallet?.boundMobile || l.mobile)}</div>
+            <div class="col-md-4">${detailRow('Account Status', wallet ? statusBadge(wallet.status) : '-')}</div>
+            <div class="col-md-4">${detailRow('Last Verified', wallet?.lastVerifiedAt || '-')}</div>
+          </div>
         </div>
       </div>
       ${coolingOffEntry}
@@ -5603,6 +5953,161 @@ function toggleAppResStatus(id) {
   appResLog.unshift({ id:'ARL-'+(appResLog.length+1).toString().padStart(3,'0'), slotKey:r.key, slotName:r.name, operator:'ops_admin', action: r.status==='Active'?'Enabled':'Disabled', changedAt:new Date().toISOString().slice(0,16).replace('T',' '), note:'Manual toggle', before:prev, after:r.status });
   toast(`Slot ${r.status==='Active'?'enabled':'disabled'}: ${r.name}`);
   filterAppResources();
+}
+
+// ============================================================
+// OTP / SMS / WHATSAPP VERIFICATION MODULE
+// ============================================================
+let otpLogs = [
+  { requestId:'OTP240604001', mobile:'+92 333 9876543', scene:'Wallet Verify', channel:'SMS', result:'Sent', sentAt:'2024-06-04 09:15', expiresAt:'2024-06-04 09:20', attempts:1, lockStatus:'-', device:'Android 13 / DV-9A31', ip:'103.255.6.12', message:'Waiting for customer input' },
+  { requestId:'OTP240604002', mobile:'+92 321 4561234', scene:'Login', channel:'WhatsApp', result:'Verified', sentAt:'2024-06-04 10:02', expiresAt:'2024-06-04 10:07', attempts:1, lockStatus:'-', device:'Android 14 / DV-8B21', ip:'39.50.18.44', message:'Verified in 38s' },
+  { requestId:'OTP240604003', mobile:'+92 333 4455221', scene:'Account Cancel', channel:'SMS', result:'Verified', sentAt:'2024-06-04 12:18', expiresAt:'2024-06-04 12:23', attempts:2, lockStatus:'-', device:'Android 12 / DV-77F1', ip:'103.31.80.7', message:'Cancellation OTP passed' },
+  { requestId:'OTP240605001', mobile:'+92 345 3344556', scene:'Account Cancel', channel:'WhatsApp', result:'Expired', sentAt:'2024-06-05 09:40', expiresAt:'2024-06-05 09:45', attempts:1, lockStatus:'-', device:'Android 11 / DV-20AA', ip:'182.176.41.8', message:'Code expired' },
+  { requestId:'OTP240605002', mobile:'+92 300 7788991', scene:'Loan Apply', channel:'SMS', result:'Locked', sentAt:'2024-06-05 10:10', expiresAt:'2024-06-05 10:15', attempts:5, lockStatus:'Locked until 2024-06-05 11:10', device:'Android 13 / DV-66B5', ip:'119.160.65.1', message:'Too many wrong attempts' },
+  { requestId:'OTP240606001', mobile:'+92 346 8877665', scene:'Wallet Verify', channel:'SMS', result:'Failed', sentAt:'2024-06-06 14:22', expiresAt:'-', attempts:0, lockStatus:'-', device:'Android 14 / DV-11C2', ip:'39.45.71.19', message:'Provider timeout' },
+];
+
+function renderOtpLogs(list) {
+  const data = list || otpLogs;
+  document.getElementById('otp-count-label').textContent = t('count.showing')(data.length, data.length);
+  const rows = data.map(o => `
+    <tr>
+      <td><code style="font-size:12px;">${o.requestId}</code></td>
+      <td style="font-size:12.5px;">${o.mobile}</td>
+      <td>${o.scene}</td>
+      <td><span class="role-tag">${o.channel}</span></td>
+      <td>${statusBadge(o.result)}</td>
+      <td style="font-size:12px;color:#94a3b8;">${o.sentAt}</td>
+      <td style="font-size:12px;color:#94a3b8;">${o.expiresAt}</td>
+      <td>${o.attempts}</td>
+      <td style="font-size:12.5px;">${o.lockStatus}</td>
+      <td>
+        <div style="font-size:12.5px;">${o.device}</div>
+        <div style="font-size:11.5px;color:#94a3b8;">${o.ip}</div>
+      </td>
+      <td style="font-size:12.5px;color:#64748b;">${o.message}</td>
+      <td>
+        <div class="d-flex gap-1 flex-wrap">
+          <button class="btn btn-sm btn-outline-primary action-btn" onclick="resendOtp('${o.requestId}')"><i class="bi bi-arrow-clockwise"></i> ${t('btn.resend')}</button>
+          <button class="btn btn-sm btn-outline-success action-btn" onclick="unlockOtp('${o.requestId}')" ${o.result !== 'Locked' ? 'disabled' : ''}><i class="bi bi-unlock"></i> ${t('btn.unlock')}</button>
+        </div>
+      </td>
+    </tr>`).join('');
+  document.getElementById('otp-table-container').innerHTML = `
+    <div class="table-scroll"><table class="table table-hover mb-0">
+      <thead><tr><th>Request ID</th><th>${t('th.mobile')}</th><th>${t('th.scene')}</th><th>${t('th.channel')}</th><th>${t('th.result')}</th><th>${t('th.sentAt')}</th><th>${t('th.expiresAt')}</th><th>${t('th.attempts')}</th><th>${t('th.lockStatus')}</th><th>${t('th.deviceIp')}</th><th>${t('th.message')}</th><th>${t('th.actions')}</th></tr></thead>
+      <tbody>${rows || '<tr><td colspan="12"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+    </table></div>`;
+}
+
+function filterOtpLogs() {
+  const q = document.getElementById('otp-search').value.toLowerCase();
+  const ch = document.getElementById('otp-channel-filter').value;
+  const scene = document.getElementById('otp-scene-filter').value;
+  const result = document.getElementById('otp-result-filter').value;
+  renderOtpLogs(otpLogs.filter(o =>
+    (!q || o.requestId.toLowerCase().includes(q) || o.mobile.includes(q) || o.device.toLowerCase().includes(q) || o.ip.includes(q)) &&
+    (!ch || o.channel === ch) && (!scene || o.scene === scene) && (!result || o.result === result)
+  ));
+}
+
+function resendOtp(id) {
+  const o = otpLogs.find(x=>x.requestId===id);
+  if (!o) return;
+  o.result = 'Sent';
+  o.attempts = 1;
+  o.lockStatus = '-';
+  const now = new Date();
+  o.sentAt = now.toISOString().slice(0,16).replace('T',' ');
+  o.expiresAt = new Date(now.getTime() + 5 * 60 * 1000).toISOString().slice(0,16).replace('T',' ');
+  o.message = 'Code resent by admin';
+  toast('OTP resent');
+  filterOtpLogs();
+}
+
+function unlockOtp(id) {
+  const o = otpLogs.find(x=>x.requestId===id);
+  if (!o) return;
+  o.result = 'Sent';
+  o.lockStatus = '-';
+  o.attempts = 0;
+  o.message = 'Lock cleared by admin';
+  toast('OTP lock cleared');
+  filterOtpLogs();
+}
+
+// ============================================================
+// DEVICE MANAGEMENT MODULE
+// ============================================================
+let deviceRecords = [
+  { deviceId:'DV-8B21', userId:1001, custName:'Ali Hassan', mobile:'+92 321 4561234', platform:'Android 14 / App 1.8.2', fingerprint:'fp_ali_8b21_karachi', ip:'39.50.18.44', location:'Karachi', status:'Trusted', riskLevel:'Low', current:true, firstSeen:'2024-01-15 10:25', lastLogin:'2024-06-04 10:02' },
+  { deviceId:'DV-9A31', userId:1002, custName:'Fatima Malik', mobile:'+92 333 9876543', platform:'Android 13 / App 1.8.1', fingerprint:'fp_fatima_9a31_lahore', ip:'103.255.6.12', location:'Lahore', status:'Active', riskLevel:'Low', current:true, firstSeen:'2024-02-03 14:12', lastLogin:'2024-06-04 09:15' },
+  { deviceId:'DV-66B5', userId:1016, custName:'Nadia Shah', mobile:'+92 300 7788991', platform:'Android 13 / App 1.7.9', fingerprint:'fp_nadia_66b5_lahore', ip:'119.160.65.1', location:'Lahore', status:'Active', riskLevel:'High', current:true, firstSeen:'2024-02-08 14:55', lastLogin:'2024-06-05 10:10' },
+  { deviceId:'DV-77F1', userId:1008, custName:'Hina Baig', mobile:'+92 333 4455221', platform:'Android 12 / App 1.8.0', fingerprint:'fp_hina_77f1_karachi', ip:'103.31.80.7', location:'Karachi', status:'Blocked', riskLevel:'High', current:false, firstSeen:'2024-03-01 13:04', lastLogin:'2024-06-04 12:18' },
+  { deviceId:'DV-20AA', userId:1015, custName:'Kamran Akhtar', mobile:'+92 345 3344556', platform:'Android 11 / App 1.8.1', fingerprint:'fp_kamran_20aa_karachi', ip:'182.176.41.8', location:'Karachi', status:'Active', riskLevel:'Medium', current:true, firstSeen:'2024-06-01 17:32', lastLogin:'2024-06-05 09:40' },
+  { deviceId:'DV-11C2', userId:1020, custName:'Amira Khan', mobile:'+92 346 8877665', platform:'Android 14 / App 1.8.2', fingerprint:'fp_amira_11c2_karachi', ip:'39.45.71.19', location:'Karachi', status:'Invalidated', riskLevel:'Medium', current:false, firstSeen:'2024-03-08 10:32', lastLogin:'2024-06-06 14:22' },
+];
+
+function renderDevices(list) {
+  const data = list || deviceRecords;
+  document.getElementById('device-count-label').textContent = t('count.showing')(data.length, data.length);
+  const rows = data.map(d => `
+    <tr>
+      <td><code style="font-size:12px;">${d.deviceId}</code></td>
+      <td>
+        <div style="font-weight:600;">${d.custName}</div>
+        <div style="font-size:11.5px;color:#94a3b8;">#${d.userId} · ${d.mobile}</div>
+      </td>
+      <td style="font-size:12.5px;">${d.platform}</td>
+      <td style="font-size:12px;font-family:monospace;color:#64748b;">${d.fingerprint}</td>
+      <td>
+        <div style="font-size:12.5px;">${d.ip}</div>
+        <div style="font-size:11.5px;color:#94a3b8;">${d.location}</div>
+      </td>
+      <td>${statusBadge(d.status)}</td>
+      <td>${statusBadge(d.riskLevel)}</td>
+      <td>${d.current ? '<span class="status-badge badge-active">Yes</span>' : '-'}</td>
+      <td style="font-size:12px;color:#94a3b8;">${d.lastLogin}</td>
+      <td>
+        <div class="d-flex gap-1 flex-wrap">
+          <button class="btn btn-sm btn-outline-secondary action-btn" onclick="invalidateDevice('${d.deviceId}')" ${d.status === 'Invalidated' ? 'disabled' : ''}><i class="bi bi-x-circle"></i> ${t('btn.invalidate')}</button>
+          <button class="btn btn-sm btn-outline-success action-btn" onclick="trustDevice('${d.deviceId}')" ${d.status === 'Trusted' ? 'disabled' : ''}><i class="bi bi-shield-check"></i> ${t('btn.trust')}</button>
+        </div>
+      </td>
+    </tr>`).join('');
+  document.getElementById('device-table-container').innerHTML = `
+    <div class="table-scroll"><table class="table table-hover mb-0">
+      <thead><tr><th>${t('th.deviceId')}</th><th>${t('th.customer')}</th><th>${t('th.platform')}</th><th>${t('th.fingerprint')}</th><th>${t('th.ip')}</th><th>${t('th.status')}</th><th>${t('th.riskLevel')}</th><th>${t('th.currentDevice')}</th><th>${t('th.lastLogin')}</th><th>${t('th.actions')}</th></tr></thead>
+      <tbody>${rows || '<tr><td colspan="10"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+    </table></div>`;
+}
+
+function filterDevices() {
+  const q = document.getElementById('device-search').value.toLowerCase();
+  const status = document.getElementById('device-status-filter').value;
+  const risk = document.getElementById('device-risk-filter').value;
+  renderDevices(deviceRecords.filter(d =>
+    (!q || d.deviceId.toLowerCase().includes(q) || d.custName.toLowerCase().includes(q) || d.mobile.includes(q) || d.fingerprint.toLowerCase().includes(q)) &&
+    (!status || d.status === status) && (!risk || d.riskLevel === risk)
+  ));
+}
+
+function invalidateDevice(id) {
+  const d = deviceRecords.find(x=>x.deviceId===id);
+  if (!d) return;
+  d.status = 'Invalidated';
+  d.current = false;
+  toast('Device invalidated');
+  filterDevices();
+}
+
+function trustDevice(id) {
+  const d = deviceRecords.find(x=>x.deviceId===id);
+  if (!d) return;
+  d.status = 'Trusted';
+  d.riskLevel = 'Low';
+  toast('Device marked as trusted');
+  filterDevices();
 }
 
 // ============================================================
