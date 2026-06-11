@@ -241,9 +241,6 @@
     <a class="nav-link-item" onclick="navigate('loanBillFees')" id="nav-loanBillFees">
       <i class="bi bi-list-columns-reverse"></i> <span data-i18n="nav.loanBillFees">Fee Details</span>
     </a>
-    <a class="nav-link-item" onclick="navigate('loanFeeChanges')" id="nav-loanFeeChanges">
-      <i class="bi bi-clock-history"></i> <span data-i18n="nav.loanFeeChanges">Fee Change Records</span>
-    </a>
     <a class="nav-link-item" onclick="navigate('disbursements')" id="nav-disbursements">
       <i class="bi bi-send-fill"></i> <span data-i18n="nav.disbursements">Disbursements</span>
     </a>
@@ -770,7 +767,11 @@
 
     <!-- LOAN BILL FEE DETAILS -->
     <div class="page" id="page-loanBillFees">
-      <div class="table-card">
+      <ul class="nav nav-tabs mb-3" id="loan-fee-tabs">
+        <li class="nav-item"><a class="nav-link active" href="#" onclick="switchLoanFeeTab('details',this)" data-i18n="page.loanBillFees">Fee Details</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="switchLoanFeeTab('changes',this)" data-i18n="page.loanFeeChanges">Fee Change Records</a></li>
+      </ul>
+      <div class="table-card" id="loan-fee-details-panel">
         <div class="table-card-header">
           <span class="title" data-i18n="page.loanBillFees">Fee Details</span>
           <div class="search-row ms-auto">
@@ -798,11 +799,7 @@
           <nav><ul class="pagination pagination-sm mb-0"><li class="page-item disabled"><a class="page-link">Prev</a></li><li class="page-item active"><a class="page-link">1</a></li><li class="page-item disabled"><a class="page-link">Next</a></li></ul></nav>
         </div>
       </div>
-    </div>
-
-    <!-- LOAN FEE CHANGE LOG -->
-    <div class="page" id="page-loanFeeChanges">
-      <div class="table-card">
+      <div class="table-card" id="loan-fee-changes-panel" style="display:none;">
         <div class="table-card-header">
           <span class="title" data-i18n="page.loanFeeChanges">Fee Change Records</span>
           <div class="search-row ms-auto">
@@ -2417,8 +2414,7 @@ let permissions = [
       { id:272, parentId:27, code:'loan:early_settlement:confirm', name:'Confirm Settlement', type:'Button', route:'', sort:2, status:'Active', expanded:false },
     { id:28, parentId:20, code:'loan:bill_fee', name:'Fee Details', type:'Menu', route:'/loan/bill-fees', sort:8, status:'Active', expanded:true },
       { id:281, parentId:28, code:'loan:bill_fee:view', name:'View Fee Details', type:'Button', route:'', sort:1, status:'Active', expanded:false },
-    { id:29, parentId:20, code:'loan:fee_change', name:'Fee Change Records', type:'Menu', route:'/loan/fee-changes', sort:9, status:'Active', expanded:true },
-      { id:291, parentId:29, code:'loan:fee_change:view', name:'View Fee Change Details', type:'Button', route:'', sort:1, status:'Active', expanded:false },
+      { id:291, parentId:28, code:'loan:fee_change:view', name:'View Fee Change Details', type:'Button', route:'', sort:2, status:'Active', expanded:false },
     { id:34, parentId:20, code:'loan:repayment_bill', name:'Repayment Details', type:'Menu', route:'/loan/repayment-bills', sort:10, status:'Active', expanded:true },
       { id:341, parentId:34, code:'loan:repayment_bill:view', name:'View Repayment Details', type:'Button', route:'', sort:1, status:'Active', expanded:false },
     { id:35, parentId:20, code:'loan:repayment_allocation', name:'Repayment Allocation', type:'Menu', route:'/loan/repayment-allocations', sort:11, status:'Active', expanded:true },
@@ -2492,7 +2488,7 @@ Object.assign(roles.find(r => r.code === 'COLLECTION'), {
   perms:['dashboard','customer','customer:list','customer:list:view','loan','loan:bill','loan:bill:view','loan:repayment','loan:repayment:view','loan:overdue','loan:overdue:view','loan:overdue:remind']
 });
 Object.assign(roles.find(r => r.code === 'FINANCE'), {
-  perms:['dashboard','loan','loan:order','loan:order:view','loan:bill','loan:bill:view','loan:bill_fee','loan:bill_fee:view','loan:fee_change','loan:fee_change:view','loan:disbursement','loan:disbursement:view','loan:repayment','loan:repayment:view','loan:repayment_bill','loan:repayment_bill:view','loan:repayment_allocation','loan:repayment_allocation:view','loan:adjustment','loan:adjustment:create','loan:adjustment:approve','finance','finance:transaction','finance:transaction:view','finance:transaction:export','finance:reconciliation','finance:reconciliation:view','finance:reconciliation:handle','finance:reconciliation:ignore']
+  perms:['dashboard','loan','loan:order','loan:order:view','loan:bill','loan:bill:view','loan:bill_fee','loan:bill_fee:view','loan:fee_change:view','loan:disbursement','loan:disbursement:view','loan:repayment','loan:repayment:view','loan:repayment_bill','loan:repayment_bill:view','loan:repayment_allocation','loan:repayment_allocation:view','loan:adjustment','loan:adjustment:create','loan:adjustment:approve','finance','finance:transaction','finance:transaction:view','finance:transaction:export','finance:reconciliation','finance:reconciliation:view','finance:reconciliation:handle','finance:reconciliation:ignore']
 });
 Object.assign(roles.find(r => r.code === 'OPERATIONS'), {
   perms:['dashboard','loan','loan:order','loan:order:view','coupon','coupon:loan','coupon:loan:view','coupon:loan:issue','coupon:loan:void','coupon:repay','coupon:repay:view','coupon:repay:issue','coupon:repay:void','coupon:usage','coupon:usage:view','config','config:amount_term_rule','config:amount_term_rule:view','config:amount_term_rule:create','config:amount_term_rule:edit','config:amount_term_rule:delete','config:user_term','config:user_term:view','config:user_term:create','config:user_term:edit','config:user_term:delete','config:user_term:log']
@@ -2524,7 +2520,6 @@ const pageMap = {
   termconfig:     { titleKey:'nav.termconfig',     subKey:'page.sub.termconfig' },
   loanBills:      { titleKey:'nav.loanBills',      subKey:'page.sub.loanBills' },
   loanBillFees:   { titleKey:'nav.loanBillFees',   subKey:'page.sub.loanBillFees' },
-  loanFeeChanges: { titleKey:'nav.loanFeeChanges', subKey:'page.sub.loanFeeChanges' },
   disbursements:  { titleKey:'nav.disbursements',  subKey:'page.sub.disbursements' },
   repaymentBills: { titleKey:'nav.repaymentBills', subKey:'page.sub.repaymentBills' },
   repaymentAllocations: { titleKey:'nav.repaymentAllocations', subKey:'page.sub.repaymentAllocations' },
@@ -2566,8 +2561,13 @@ function navigate(page) {
   if (page === 'devices')         filterDevices();
   if (page === 'amountrules')     renderAmountRules();
   if (page === 'loanBills')       filterBills();
-  if (page === 'loanBillFees')    filterLoanBillFees();
-  if (page === 'loanFeeChanges')  filterLoanFeeChanges();
+  if (page === 'loanBillFees')  {
+    activeLoanFeeTab = 'details';
+    document.querySelectorAll('#loan-fee-tabs .nav-link').forEach((a,i)=>a.classList.toggle('active',i===0));
+    document.getElementById('loan-fee-details-panel').style.display = '';
+    document.getElementById('loan-fee-changes-panel').style.display = 'none';
+    filterLoanBillFees();
+  }
   if (page === 'disbursements')   filterDisbursements();
   if (page === 'repaymentBills')  filterRepaymentBills();
   if (page === 'repaymentAllocations') filterRepaymentAllocations();
@@ -5094,8 +5094,6 @@ function viewBillDetail(id) {
   const b = loanBills.find(x => x.id === id);
   document.getElementById('bill-detail-no').textContent = b.billNo;
   const fees = loanBillFees[b.billNo] || [];
-  const changes = loanBillFeeChanges[b.billNo] || [];
-  const feeStatusColor = { Unpaid:'badge-pending', PartiallyPaid:'badge-pending', Paid:'badge-active', Waived:'background:#f1f5f9;color:#64748b;' };
   const amountByType = (type, field) => fees
     .filter(f => f.feeType === type)
     .reduce((sum, f) => sum + Number(f[field] || 0), 0);
@@ -5147,62 +5145,8 @@ function viewBillDetail(id) {
     </div></div>
   </div>`;
 
-  const feeDetailHtml = fees.length ? `<div style="overflow-x:auto;"><table class="table table-hover mb-0" style="font-size:13px;">
-    <thead><tr><th>Fee No.</th><th>Fee Type</th><th>Fee Name</th><th>Original</th><th>Payable</th><th>Paid</th><th>Remaining</th><th>Waived</th><th>Status</th><th>Generate Type</th><th>Remark</th></tr></thead>
-    <tbody>${fees.map(f=>{const c=feeStatusColor[f.status]||'';return`<tr>
-      <td><code style="font-size:11px;">${f.feeNo}</code></td>
-      <td><span class="role-tag" style="font-size:11px;">${f.feeType}</span></td>
-      <td style="font-size:12.5px;">${f.feeName}</td>
-      <td>PKR ${f.originalAmount.toLocaleString()}</td>
-      <td>PKR ${f.payableAmount.toLocaleString()}</td>
-      <td style="color:#16a34a;">PKR ${f.paidAmount.toLocaleString()}</td>
-      <td style="color:${f.remainingAmount>0?'#dc2626':'#94a3b8'};">PKR ${f.remainingAmount.toLocaleString()}</td>
-      <td style="color:#d97706;">PKR ${f.waivedAmount.toLocaleString()}</td>
-      <td><span class="status-badge" style="${c.includes(':')?c:''}" ${!c.includes(':') ? `class="status-badge ${c}"` : ''}>${f.status}</span></td>
-      <td style="font-size:12px;">${f.generateType}</td>
-      <td style="font-size:12px;color:#94a3b8;">${f.remark||'-'}</td>
-    </tr>`}).join('')}</tbody>
-  </table></div>` : '<div class="empty-state"><i class="bi bi-receipt"></i>No fee details</div>';
-
-  const feeChangeHtml = changes.length ? `<div style="overflow-x:auto;"><table class="table table-hover mb-0" style="font-size:12.5px;">
-    <thead><tr><th>Change No.</th><th>Fee No.</th><th>Fee Type</th><th>Change Type</th><th>Source</th><th>Source No.</th><th>Before Payable</th><th>Change Amt</th><th>After Payable</th><th>Paid Change</th><th>Waived</th><th>Reason</th><th>Operator</th><th>Time</th></tr></thead>
-    <tbody>${changes.map(ch=>`<tr>
-      <td><code style="font-size:11px;">${ch.changeNo}</code></td>
-      <td><code style="font-size:11px;">${ch.feeNo}</code></td>
-      <td><span class="role-tag" style="font-size:11px;">${ch.feeType}</span></td>
-      <td><span class="role-tag" style="${ch.changeType==='Pay'?'background:#dcfce7;color:#16a34a;':ch.changeType==='Waive'?'background:#fef3c7;color:#d97706;':''} font-size:11px;">${ch.changeType}</span></td>
-      <td style="font-size:12px;">${ch.sourceType}</td>
-      <td><code style="font-size:11px;">${ch.sourceNo}</code></td>
-      <td>PKR ${ch.beforePayable.toLocaleString()}</td>
-      <td style="font-weight:600;color:${ch.changeAmount<0?'#dc2626':'#16a34a'};">${ch.changeAmount>0?'+':''}PKR ${Math.abs(ch.changeAmount).toLocaleString()}</td>
-      <td>PKR ${ch.afterPayable.toLocaleString()}</td>
-      <td style="color:#16a34a;">PKR ${ch.paidChangeAmount.toLocaleString()}</td>
-      <td style="color:#d97706;">PKR ${ch.waivedChangeAmount.toLocaleString()}</td>
-      <td style="font-size:12px;color:#64748b;max-width:160px;">${ch.changeReason}</td>
-      <td style="font-size:12px;">${ch.operatorId}</td>
-      <td style="font-size:12px;color:#94a3b8;white-space:nowrap;">${ch.createdAt}</td>
-    </tr>`).join('')}</tbody>
-  </table></div>` : '<div class="empty-state"><i class="bi bi-clock-history"></i>No change records</div>';
-
-  document.getElementById('bill-detail-body').innerHTML = `
-    <ul class="nav nav-tabs mb-3" id="bill-detail-tabs">
-      <li class="nav-item"><a class="nav-link active" href="#" onclick="switchBillDetailTab('summary',this)">${currentLang === 'zh' ? '账单汇总' : 'Bill Summary'}</a></li>
-      <li class="nav-item"><a class="nav-link" href="#" onclick="switchBillDetailTab('fees',this)">${currentLang === 'zh' ? '费用明细' : 'Fee Details'} (${fees.length})</a></li>
-      <li class="nav-item"><a class="nav-link" href="#" onclick="switchBillDetailTab('changes',this)">${currentLang === 'zh' ? '费用变更记录' : 'Fee Change Records'} (${changes.length})</a></li>
-    </ul>
-    <div id="bill-detail-tab-content">
-      <div id="bdt-summary">${summaryHtml}</div>
-      <div id="bdt-fees" style="display:none;">${feeDetailHtml}</div>
-      <div id="bdt-changes" style="display:none;">${feeChangeHtml}</div>
-    </div>`;
+  document.getElementById('bill-detail-body').innerHTML = summaryHtml;
   new bootstrap.Modal(document.getElementById('billDetailModal')).show();
-}
-function switchBillDetailTab(tab, el) {
-  document.querySelectorAll('#bill-detail-tabs .nav-link').forEach(a => a.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('bdt-summary').style.display = tab === 'summary' ? '' : 'none';
-  document.getElementById('bdt-fees').style.display = tab === 'fees' ? '' : 'none';
-  document.getElementById('bdt-changes').style.display = tab === 'changes' ? '' : 'none';
 }
 
 // ============================================================
@@ -5387,6 +5331,17 @@ function allRepaymentBills() {
 
 function allRepaymentAllocations() {
   return Object.values(repaymentAllocations).flat();
+}
+
+let activeLoanFeeTab = 'details';
+function switchLoanFeeTab(tab, el) {
+  activeLoanFeeTab = tab;
+  document.querySelectorAll('#loan-fee-tabs .nav-link').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('loan-fee-details-panel').style.display = tab === 'details' ? '' : 'none';
+  document.getElementById('loan-fee-changes-panel').style.display = tab === 'changes' ? '' : 'none';
+  if (tab === 'details') filterLoanBillFees();
+  else filterLoanFeeChanges();
 }
 
 function renderLoanBillFees(list) {
