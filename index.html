@@ -191,6 +191,14 @@
   .table-scroll { overflow-x: auto; width: 100%; }
   .table-scroll table { min-width: 1180px; }
 
+  .sensitive-toolbar {
+    display: flex; align-items: center; gap: 10px; padding: 10px 16px;
+    background: #fffbeb; border-bottom: 1px solid #fde68a; color: #92400e;
+    font-size: 12.5px;
+  }
+  .sensitive-toolbar .btn { margin-left: auto; white-space: nowrap; }
+  .masked-value { letter-spacing: .3px; }
+
   /* Scrollbar */
   ::-webkit-scrollbar { width: 5px; height: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
@@ -465,11 +473,6 @@
               <option value="Pending">Pending</option>
               <option value="Rejected">Rejected</option>
               <option value="Not Applied">Not Applied</option>
-            </select>
-            <select class="form-select form-select-sm" style="width:130px;" id="cust-blacklist-filter" onchange="filterCustomers()">
-              <option value="" data-i18n="filter.allBlacklist">Blacklist: All</option>
-              <option value="1" data-i18n="filter.blacklisted">Blacklisted</option>
-              <option value="0" data-i18n="filter.normal">Normal</option>
             </select>
           </div>
         </div>
@@ -1498,16 +1501,18 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="cust-detail-title">Customer Detail</h5>
+        <button type="button" class="btn btn-sm btn-outline-warning ms-auto me-3" id="cust-detail-sensitive-btn" onclick="toggleCustomerSensitive('detail')" style="display:none;">
+          <i class="bi bi-eye"></i> <span>View sensitive info</span>
+        </button>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body" style="padding:0;">
         <ul class="nav nav-tabs px-3 pt-2" id="cust-detail-tabs">
-          <li class="nav-item"><a class="nav-link active" href="#" onclick="switchCustDetailTab('basic',this)">Basic Info</a></li>
-          <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('credit',this)">Credit Info</a></li>
-          <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('identity',this)">Identity</a></li>
-          <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('contacts',this)">Contacts</a></li>
-          <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('wallet',this)">Wallet Accounts</a></li>
-          <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('creditlog',this)">Credit Records</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#" onclick="switchCustDetailTab('profile',this)" data-i18n="cust.tab.profile">Customer Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('credit',this)" data-i18n="cust.tab.credit">Credit Info</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('contacts',this)" data-i18n="cust.tab.contacts">Contacts</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('wallet',this)" data-i18n="cust.tab.wallet">Wallet Accounts</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('creditlog',this)" data-i18n="cust.tab.creditRecords">Credit Records</a></li>
         </ul>
         <div id="cust-detail-body" style="font-size:13.5px;padding:20px;min-height:260px;"></div>
       </div>
@@ -2098,7 +2103,7 @@ const i18n = {
     'header.notifications':'Notifications','header.role':'Super Admin','header.lang':'中文',
     'dash.title':'Dashboard','dash.sub':'Overview & key metrics','dash.totalCustomers':'Total Customers','dash.activeLoanBalance':'Active Loan Balance','dash.overdueOrders':'Overdue Orders','dash.pendingReviews':'Pending Credit Reviews','dash.recentOrders':'Recent Loan Orders','btn.viewAll':'View All',
     'th.orderNo':'Order No.','th.customer':'Customer','th.borrowCount':'Borrow Count','th.amountPKR':'Amount (PKR)','th.installments':'Installments','th.status':'Status','th.appliedAt':'Applied At','th.email':'Email','th.mobile':'Mobile','th.roles':'Roles','th.lastLogin':'Last Login','th.actions':'Actions','th.quickReview':'Quick Review','th.roleCode':'Code','th.roleName':'Role Name','th.description':'Description','th.users':'Users','th.sort':'Sort','th.permName':'Permission Name','th.permCode':'Code','th.type':'Type','th.routePath':'Route Path','th.idCard':'ID Card','th.creditStatus':'Credit Status','th.creditInfo':'Credit Info','th.wallet':'Wallet','th.blacklisted':'Blacklisted','th.registered':'Registered','th.amount':'Amount','th.channel':'Channel','th.disbursedAt':'Disbursed At','th.finalDue':'Final Due','th.repaymentNo':'Repayment No.','th.loanOrderNo':'Loan Order No.','th.repayType':'Type','th.reconcile':'Reconcile','th.payTime':'Pay Time','th.principal':'Principal','th.overdueDays':'Overdue Days','th.overdueFee':'Overdue Fee','th.totalRemaining':'Total Remaining','th.dueDate':'Due Date','th.collector':'Collector','th.couponNo':'Coupon No.','th.minLoan':'Min Loan','th.minRepay':'Min Repay','th.deductType':'Deduct Type','th.repayTypeCol':'Repay Type','th.effectivePeriod':'Effective Period','th.usedTime':'Used Time','th.time':'Time','th.operator':'Operator','th.module':'Module','th.action':'Action','th.target':'Target','th.ip':'IP','th.result':'Result','th.accountType':'Account Type','th.accountNo':'Account No.','th.boundMobile':'Bound Mobile','th.relation':'Relation','th.verifyStatus':'Verify Status','th.default':'Default','th.lastVerified':'Last Verified','th.updatedAt':'Updated At','th.requestNo':'Request No.','th.eligibility':'Eligibility','th.otpStatus':'OTP Status','th.openLoanCheck':'Open Loan Check','th.reviewedBy':'Reviewed By','th.reviewTime':'Review Time','th.scene':'Scene','th.sentAt':'Sent At','th.expiresAt':'Expires At','th.attempts':'Attempts','th.lockStatus':'Lock Status','th.deviceIp':'Device / IP','th.message':'Message','th.deviceId':'Device ID','th.platform':'Platform','th.fingerprint':'Fingerprint','th.riskLevel':'Risk','th.currentDevice':'Current',
-    'btn.createUser':'Create User','btn.createRole':'Create Role','btn.addPerm':'Add Permission','btn.issueCoupon':'Issue Coupon','btn.expandAll':'Expand All','btn.collapseAll':'Collapse All','btn.edit':'Edit','btn.delete':'Delete','btn.resetPwd':'Pwd','btn.disable':'Disable','btn.enable':'Enable','btn.detail':'Detail','btn.blacklist':'Blacklist','btn.unblock':'Unblock','btn.remind':'Remind','btn.void':'Void','btn.perms':'Perms','btn.save':'Save','btn.cancel':'Cancel','btn.confirm':'Confirm','btn.close':'Close','btn.selectAll':'Select All','btn.clearAll':'Clear All','btn.issue':'Issue','btn.verify':'Verify','btn.resend':'Resend','btn.unlock':'Unlock','btn.invalidate':'Invalidate','btn.trust':'Trust','btn.approve':'Approve','btn.reject':'Reject',
+    'btn.createUser':'Create User','btn.createRole':'Create Role','btn.addPerm':'Add Permission','btn.issueCoupon':'Issue Coupon','btn.expandAll':'Expand All','btn.collapseAll':'Collapse All','btn.edit':'Edit','btn.delete':'Delete','btn.resetPwd':'Pwd','btn.disable':'Disable','btn.enable':'Enable','btn.detail':'Detail','btn.blacklist':'Blacklist','btn.unblock':'Unblock','btn.freeze':'Freeze','btn.unfreeze':'Unfreeze','btn.remind':'Remind','btn.void':'Void','btn.perms':'Perms','btn.save':'Save','btn.cancel':'Cancel','btn.confirm':'Confirm','btn.close':'Close','btn.selectAll':'Select All','btn.clearAll':'Clear All','btn.issue':'Issue','btn.verify':'Verify','btn.resend':'Resend','btn.unlock':'Unlock','btn.invalidate':'Invalidate','btn.trust':'Trust','btn.approve':'Approve','btn.reject':'Reject',
     'page.adminUsers':'Admin Users','page.roles':'Roles','page.permTree':'Permission Tree','page.customers':'Customers','page.walletAccounts':'Wallet Accounts','page.accountCancel':'Account Cancellation','page.otpLogs':'OTP Logs','page.devices':'Device Management','page.loanOrders':'Loan Orders','page.repayments':'Repayment Orders','page.overdueOrders':'Overdue Orders','page.loanCoupons':'Loan Coupons','page.repayCoupons':'Repayment Coupons','page.auditLog':'Audit Log',
     'filter.searchUserPh':'Search username / name...','filter.allStatus':'All Status','filter.active':'Active','filter.disabled':'Disabled','filter.allRoles':'All Roles','filter.searchRolePh':'Search role...','filter.searchCustPh':'Name / Mobile / ID card...','filter.searchWalletPh':'Name / Mobile / Account...','filter.searchCancelPh':'Request No / Name / Mobile...','filter.searchOtpPh':'Request ID / Mobile / Device...','filter.searchDevicePh':'Device ID / Name / Mobile...','filter.allVerifyStatus':'All Verify Status','filter.allEligibility':'All Eligibility','filter.allScenes':'All Scenes','filter.allRisk':'All Risk','filter.allCreditStatus':'All Credit Status','filter.allBlacklist':'Blacklist: All','filter.blacklisted':'Blacklisted','filter.normal':'Normal','filter.searchLoanPh':'Order No...','filter.allChannels':'All Channels','filter.allQuickReview':'All Review Types','filter.quickYes':'Quick Review','filter.quickNo':'Normal Review','filter.searchRepayPh':'Repayment No / Loan No...','filter.searchOdPh':'Order No / Mobile...','filter.allOverdueDays':'All Overdue Days','filter.od17':'1–7 Days','filter.od830':'8–30 Days','filter.od30p':'30+ Days','filter.searchCouponPh':'Coupon No / Mobile...','filter.searchAuditPh':'Operator / Action...','filter.allModules':'All Modules','filter.allResults':'All Results',
     'od.statTotal':'Total Overdue Orders','od.stat17':'1–7 Days Overdue','od.stat830':'8–30 Days Overdue','od.stat30p':'30+ Days Overdue',
@@ -2106,6 +2111,7 @@ const i18n = {
     'modal.createUser':'Create Admin User','modal.editUser':'Edit Admin User','modal.resetPwd':'Reset Password','modal.createRole':'Create Role','modal.editRole':'Edit Role','modal.assignPerms':'Assign Permissions — ','modal.addPerm':'Add Permission','modal.editPerm':'Edit Permission','modal.custDetail':'Customer Detail','modal.loanDetail':'Loan Order Detail','modal.issueCoupon':'Issue Coupon',
     'field.username':'Username','field.realName':'Real Name','field.email':'Email','field.mobile':'Mobile','field.assignRoles':'Assign Role(s)','field.status':'Status','field.notes':'Notes','field.newPwd':'New Password','field.roleCode':'Role Code','field.roleName':'Role Name','field.description':'Description','field.sortOrder':'Sort Order','field.parentNode':'Parent Node','field.permName':'Permission Name','field.permCode':'Permission Code','field.routePath':'Route Path','field.couponType':'Coupon Type','field.custMobile':'Customer Mobile','field.couponAmount':'Coupon Amount (PKR)','field.minLoanAmount':'Min Loan Amount (PKR)','field.effectiveStart':'Effective Start','field.expiryTime':'Expiry Time',
     'detail.basicInfo':'BASIC INFO','detail.creditWallet':'CREDIT & WALLET','detail.loanInfo':'LOAN INFO','detail.statusPayment':'STATUS & PAYMENT',
+    'cust.tab.profile':'Customer Profile','cust.tab.credit':'Credit Info','cust.tab.contacts':'Contacts','cust.tab.wallet':'Wallet Accounts','cust.tab.creditRecords':'Credit Records',
     'label.limitPKR':'Limit:','label.usedPKR':'Used:',
     'misc.holdCtrl':'Hold Ctrl/Cmd to select multiple','misc.rootNode':'— Root (Top Level) —','misc.immutableCode':'Uppercase, underscores only. Immutable after creation.',
     'confirm.title':'Confirm',
@@ -2118,7 +2124,7 @@ const i18n = {
     'header.notifications':'通知','header.role':'超级管理员','header.lang':'English',
     'dash.title':'仪表盘','dash.sub':'概览 & 关键指标','dash.totalCustomers':'总客户数','dash.activeLoanBalance':'在贷余额','dash.overdueOrders':'逾期订单','dash.pendingReviews':'待审核授信','dash.recentOrders':'最新借款订单','btn.viewAll':'查看全部',
     'th.orderNo':'订单号','th.customer':'客户','th.borrowCount':'借款次数','th.amountPKR':'金额 (PKR)','th.installments':'期数','th.status':'状态','th.appliedAt':'申请时间','th.email':'邮箱','th.mobile':'手机号','th.roles':'角色','th.lastLogin':'最近登录','th.actions':'操作','th.quickReview':'快速审核','th.roleCode':'角色编码','th.roleName':'角色名称','th.description':'描述','th.users':'用户数','th.sort':'排序','th.permName':'权限名称','th.permCode':'权限编码','th.type':'类型','th.routePath':'路由路径','th.idCard':'身份证','th.creditStatus':'授信状态','th.creditInfo':'授信信息','th.wallet':'钱包','th.blacklisted':'黑名单','th.registered':'注册时间','th.amount':'金额','th.channel':'渠道','th.disbursedAt':'放款时间','th.finalDue':'最终到期日','th.repaymentNo':'还款单号','th.loanOrderNo':'借款订单号','th.repayType':'还款类型','th.reconcile':'对账状态','th.payTime':'支付时间','th.principal':'本金','th.overdueDays':'逾期天数','th.overdueFee':'逾期费','th.totalRemaining':'剩余应还','th.dueDate':'到期日','th.collector':'催收员','th.couponNo':'券号','th.minLoan':'最低借款','th.minRepay':'最低还款','th.deductType':'抵扣类型','th.repayTypeCol':'还款类型','th.effectivePeriod':'有效期','th.usedTime':'使用时间','th.time':'时间','th.operator':'操作人','th.module':'模块','th.action':'操作','th.target':'目标对象','th.ip':'IP','th.result':'结果','th.accountType':'账号类型','th.accountNo':'账号','th.boundMobile':'绑定手机号','th.relation':'关系','th.verifyStatus':'验证状态','th.default':'默认','th.lastVerified':'最近验证','th.updatedAt':'更新时间','th.requestNo':'申请单号','th.eligibility':'可注销校验','th.otpStatus':'OTP 状态','th.openLoanCheck':'在贷校验','th.reviewedBy':'审核人','th.reviewTime':'审核时间','th.scene':'场景','th.sentAt':'发送时间','th.expiresAt':'过期时间','th.attempts':'次数','th.lockStatus':'锁定状态','th.deviceIp':'设备 / IP','th.message':'消息','th.deviceId':'设备 ID','th.platform':'平台','th.fingerprint':'指纹','th.riskLevel':'风险','th.currentDevice':'当前设备',
-    'btn.createUser':'新建用户','btn.createRole':'新建角色','btn.addPerm':'新增权限','btn.issueCoupon':'发放券','btn.expandAll':'展开全部','btn.collapseAll':'收起全部','btn.edit':'编辑','btn.delete':'删除','btn.resetPwd':'改密','btn.disable':'禁用','btn.enable':'启用','btn.detail':'详情','btn.blacklist':'拉黑','btn.unblock':'解黑','btn.remind':'催收','btn.void':'作废','btn.perms':'配权','btn.save':'保存','btn.cancel':'取消','btn.confirm':'确认','btn.close':'关闭','btn.selectAll':'全选','btn.clearAll':'清空','btn.issue':'发放','btn.verify':'验证','btn.resend':'重发','btn.unlock':'解锁','btn.invalidate':'失效','btn.trust':'信任','btn.approve':'通过','btn.reject':'拒绝',
+    'btn.createUser':'新建用户','btn.createRole':'新建角色','btn.addPerm':'新增权限','btn.issueCoupon':'发放券','btn.expandAll':'展开全部','btn.collapseAll':'收起全部','btn.edit':'编辑','btn.delete':'删除','btn.resetPwd':'改密','btn.disable':'禁用','btn.enable':'启用','btn.detail':'详情','btn.blacklist':'拉黑','btn.unblock':'解黑','btn.freeze':'冻结','btn.unfreeze':'解冻','btn.remind':'催收','btn.void':'作废','btn.perms':'配权','btn.save':'保存','btn.cancel':'取消','btn.confirm':'确认','btn.close':'关闭','btn.selectAll':'全选','btn.clearAll':'清空','btn.issue':'发放','btn.verify':'验证','btn.resend':'重发','btn.unlock':'解锁','btn.invalidate':'失效','btn.trust':'信任','btn.approve':'通过','btn.reject':'拒绝',
     'page.adminUsers':'管理员用户','page.roles':'角色列表','page.permTree':'权限树','page.customers':'客户列表','page.walletAccounts':'收款账号管理','page.accountCancel':'账号注销','page.otpLogs':'OTP 记录','page.devices':'设备管理','page.loanOrders':'借款订单','page.repayments':'还款订单','page.overdueOrders':'逾期订单','page.loanCoupons':'借款优惠券','page.repayCoupons':'还款优惠券','page.auditLog':'审计日志',
     'filter.searchUserPh':'搜索用户名/姓名...','filter.allStatus':'全部状态','filter.active':'启用','filter.disabled':'禁用','filter.allRoles':'全部角色','filter.searchRolePh':'搜索角色...','filter.searchCustPh':'姓名/手机/身份证...','filter.searchWalletPh':'姓名/手机/收款账号...','filter.searchCancelPh':'申请单号/姓名/手机号...','filter.searchOtpPh':'请求ID/手机号/设备...','filter.searchDevicePh':'设备ID/姓名/手机号...','filter.allVerifyStatus':'全部验证状态','filter.allEligibility':'全部校验结果','filter.allScenes':'全部场景','filter.allRisk':'全部风险','filter.allCreditStatus':'全部授信状态','filter.allBlacklist':'黑名单：全部','filter.blacklisted':'已拉黑','filter.normal':'正常','filter.searchLoanPh':'订单号...','filter.allChannels':'全部渠道','filter.allQuickReview':'全部审核类型','filter.quickYes':'快速审核','filter.quickNo':'普通审核','filter.searchRepayPh':'还款单号/借款单号...','filter.searchOdPh':'订单号/手机号...','filter.allOverdueDays':'全部逾期天数','filter.od17':'1–7天','filter.od830':'8–30天','filter.od30p':'30天以上','filter.searchCouponPh':'券号/手机号...','filter.searchAuditPh':'操作人/操作内容...','filter.allModules':'全部模块','filter.allResults':'全部结果',
     'od.statTotal':'总逾期订单','od.stat17':'1–7天逾期','od.stat830':'8–30天逾期','od.stat30p':'30天以上逾期',
@@ -2126,6 +2132,7 @@ const i18n = {
     'modal.createUser':'新建管理员','modal.editUser':'编辑管理员','modal.resetPwd':'重置密码','modal.createRole':'新建角色','modal.editRole':'编辑角色','modal.assignPerms':'配置权限 — ','modal.addPerm':'新增权限','modal.editPerm':'编辑权限','modal.custDetail':'客户详情','modal.loanDetail':'借款订单详情','modal.issueCoupon':'发放优惠券',
     'field.username':'登录账号','field.realName':'真实姓名','field.email':'邮箱','field.mobile':'手机号','field.assignRoles':'分配角色','field.status':'状态','field.notes':'备注','field.newPwd':'新密码','field.roleCode':'角色编码','field.roleName':'角色名称','field.description':'描述','field.sortOrder':'排序','field.parentNode':'父节点','field.permName':'权限名称','field.permCode':'权限编码','field.routePath':'路由路径','field.couponType':'券类型','field.custMobile':'客户手机号','field.couponAmount':'券面额 (PKR)','field.minLoanAmount':'最低借款金额 (PKR)','field.effectiveStart':'生效时间','field.expiryTime':'到期时间',
     'detail.basicInfo':'基本信息','detail.creditWallet':'授信 & 钱包','detail.loanInfo':'借款信息','detail.statusPayment':'状态 & 支付',
+    'cust.tab.profile':'客户资料','cust.tab.credit':'授信信息','cust.tab.contacts':'联系人','cust.tab.wallet':'钱包账户','cust.tab.creditRecords':'授信记录',
     'label.limitPKR':'额度：','label.usedPKR':'已用：',
     'misc.holdCtrl':'按住 Ctrl/Cmd 可多选','misc.rootNode':'— 根节点（顶级）—','misc.immutableCode':'仅限大写字母和下划线，创建后不可修改。',
     'confirm.title':'确认操作',
@@ -2350,7 +2357,7 @@ let users = [
 ];
 
 let roles = [
-  { id:1, code:'SUPER_ADMIN',      name:'Super Admin',       description:'Full access to all modules and settings',                          userCount:2,  status:'Active',   sort:1, perms:['dashboard','customer','customer:list','customer:list:view','customer:list:blacklist','customer:list:export','customer:credit','customer:credit:view','customer:credit:review','loan','loan:order','loan:order:view','loan:order:disburse','loan:repayment','loan:repayment:view','loan:overdue','loan:overdue:view','loan:adjustment','loan:adjustment:create','loan:adjustment:approve','system','system:user','system:user:view','system:user:create','system:user:edit','system:user:reset_pwd','system:user:toggle_status','system:user:delete','system:role','system:role:view','system:role:create','system:role:edit','system:role:assign_perm','system:role:delete','system:permission','system:permission:view','system:permission:create','system:permission:edit','system:permission:delete'] },
+  { id:1, code:'SUPER_ADMIN',      name:'Super Admin',       description:'Full access to all modules and settings',                          userCount:2,  status:'Active',   sort:1, perms:['dashboard','customer','customer:list','customer:list:view','customer:list:account_status','customer:list:export','customer:credit','customer:credit:view','customer:credit:review','loan','loan:order','loan:order:view','loan:order:disburse','loan:repayment','loan:repayment:view','loan:overdue','loan:overdue:view','loan:adjustment','loan:adjustment:create','loan:adjustment:approve','system','system:user','system:user:view','system:user:create','system:user:edit','system:user:reset_pwd','system:user:toggle_status','system:user:delete','system:role','system:role:view','system:role:create','system:role:edit','system:role:assign_perm','system:role:delete','system:permission','system:permission:view','system:permission:create','system:permission:edit','system:permission:delete'] },
   { id:2, code:'RISK_REVIEWER',    name:'Risk Reviewer',     description:'Credit review, loan order approval/rejection',                     userCount:3,  status:'Active',   sort:2, perms:['dashboard','customer','customer:list','customer:list:view','customer:credit','customer:credit:view','customer:credit:review','loan','loan:order','loan:order:view'] },
   { id:3, code:'CUSTOMER_SERVICE', name:'Customer Service',  description:'Customer info view and basic support operations',                  userCount:3,  status:'Active',   sort:3, perms:['dashboard','customer','customer:list','customer:list:view','loan','loan:order','loan:order:view','loan:repayment','loan:repayment:view'] },
   { id:4, code:'COLLECTION',       name:'Collection Agent',  description:'Overdue orders management and repayment reconciliation',           userCount:3,  status:'Active',   sort:4, perms:['dashboard','customer','customer:list','customer:list:view','loan','loan:repayment','loan:repayment:view','loan:overdue','loan:overdue:view'] },
@@ -2365,8 +2372,9 @@ let permissions = [
   { id:10, parentId:0, code:'customer', name:'Customer Management', type:'Menu', route:'', sort:2, status:'Active', expanded:true },
     { id:11, parentId:10, code:'customer:list', name:'Customer List', type:'Menu', route:'/customer/list', sort:1, status:'Active', expanded:true },
       { id:111, parentId:11, code:'customer:list:view', name:'View Detail', type:'Button', route:'', sort:1, status:'Active', expanded:false },
-      { id:112, parentId:11, code:'customer:list:blacklist', name:'Edit Blacklist', type:'Button', route:'', sort:2, status:'Active', expanded:false },
+      { id:112, parentId:11, code:'customer:list:account_status', name:'Edit Account Status', type:'Button', route:'', sort:2, status:'Active', expanded:false },
       { id:113, parentId:11, code:'customer:list:export', name:'Export', type:'Button', route:'', sort:3, status:'Active', expanded:false },
+      { id:114, parentId:11, code:'customer:list:view_sensitive', name:'View Sensitive Information', type:'Button', route:'', sort:4, status:'Active', expanded:false },
     { id:12, parentId:10, code:'customer:credit', name:'Credit Review', type:'Menu', route:'/customer/credit', sort:2, status:'Active', expanded:true },
       { id:121, parentId:12, code:'customer:credit:view', name:'View', type:'Button', route:'', sort:1, status:'Active', expanded:false },
       { id:122, parentId:12, code:'customer:credit:review', name:'Approve / Reject', type:'Button', route:'', sort:2, status:'Active', expanded:false },
@@ -2459,7 +2467,7 @@ let permissions = [
 
 roles.find(r => r.code === 'SUPER_ADMIN').perms = permissions.map(p => p.code);
 Object.assign(roles.find(r => r.code === 'RISK_REVIEWER'), {
-  perms:['dashboard','customer','customer:list','customer:list:view','customer:credit','customer:credit:view','customer:credit:review','loan','loan:order','loan:order:view','loan:order:review','loan:bill','loan:bill:view']
+  perms:['dashboard','customer','customer:list','customer:list:view','customer:list:view_sensitive','customer:credit','customer:credit:view','customer:credit:review','loan','loan:order','loan:order:view','loan:order:review','loan:bill','loan:bill:view']
 });
 Object.assign(roles.find(r => r.code === 'CUSTOMER_SERVICE'), {
   perms:['dashboard','customer','customer:list','customer:list:view','loan','loan:order','loan:order:view','loan:bill','loan:bill:view','loan:repayment','loan:repayment:view','coupon','coupon:usage','coupon:usage:view']
@@ -2513,6 +2521,7 @@ const pageMap = {
 };
 
 function navigate(page) {
+  if (page !== 'customers') customerListSensitiveVisible = false;
   window.scrollTo(0, 0);
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-link-item').forEach(n => n.classList.remove('active'));
@@ -3007,58 +3016,174 @@ function creditBadge(s) {
 }
 function fmtMoney(n) { return n ? 'PKR ' + n.toLocaleString() : '-'; }
 function maskId(id) { return id.slice(0,4) + '****' + id.slice(-3); }
+function maskName(name) {
+  const parts = String(name || '').trim().split(/\s+/);
+  return parts.map(part => part.length <= 1 ? '*' : part[0] + '*'.repeat(Math.min(part.length - 1, 4))).join(' ');
+}
+function maskMobile(mobile) {
+  const value = String(mobile || '');
+  const digits = value.replace(/\D/g, '');
+  if (digits.length < 7) return '****';
+  return value.replace(/\d(?=\D*\d{4})/g, '*');
+}
+function customerGender(c) {
+  const femaleIds = new Set([1002,1004,1006,1008,1010,1012,1014,1016,1018,1020]);
+  return femaleIds.has(c.id) ? 'Female' : 'Male';
+}
+function genderLabel(gender) {
+  if (currentLang !== 'zh') return gender;
+  return gender === 'Female' ? '女' : gender === 'Male' ? '男' : gender;
+}
+function customerAccountStatus(c) {
+  if (c.accountStatus) return c.accountStatus;
+  if (c.id === 1009) return 'Cancelled';
+  return c.blacklist ? 'Frozen' : 'Normal';
+}
+function accountStatusLabel(status) {
+  if (currentLang !== 'zh') return status;
+  return { Normal:'正常', Frozen:'冻结', Cancelled:'已注销' }[status] || status;
+}
+function accountStatusBadge(status) {
+  const styles = {
+    Normal:'background:#dcfce7;color:#16a34a;',
+    Frozen:'background:#fef3c7;color:#d97706;',
+    Cancelled:'background:#f1f5f9;color:#64748b;'
+  };
+  return `<span class="status-badge" style="${styles[status] || styles.Cancelled}">${accountStatusLabel(status)}</span>`;
+}
+
+const currentOperator = { username:'super.admin', roleCode:'SUPER_ADMIN' };
+const sensitivePermissionCode = 'customer:list:view_sensitive';
+let customerListSensitiveVisible = false;
+let customerDetailSensitiveVisible = false;
+let currentCustDetailId = null;
+let currentCustDetailTab = 'profile';
+
+function currentOperatorHasPermission(code) {
+  const role = roles.find(r => r.code === currentOperator.roleCode);
+  return !!role?.perms?.includes(code);
+}
+function sensitiveValue(type, value, visible) {
+  if (visible) return value;
+  if (type === 'name') return maskName(value);
+  if (type === 'mobile') return maskMobile(value);
+  if (type === 'id') return maskId(value);
+  return value;
+}
+function recordSensitiveView(scope, customerId) {
+  if (typeof auditLogs === 'undefined') return;
+  auditLogs.unshift({
+    id: Math.max(0, ...auditLogs.map(a => a.id)) + 1,
+    time: new Date().toISOString().slice(0,16).replace('T',' '),
+    operator: currentOperator.username,
+    module: 'Customer',
+    action: scope === 'list' ? 'View sensitive customer list' : 'View sensitive customer detail',
+    target: customerId ? `USR-${customerId}` : 'Customer List',
+    ip: '192.168.1.10',
+    result: 'Success'
+  });
+}
+function toggleCustomerSensitive(scope) {
+  if (!currentOperatorHasPermission(sensitivePermissionCode)) {
+    toast(currentLang === 'zh' ? '无权查看客户敏感信息' : 'No permission to view sensitive customer information', 'error');
+    return;
+  }
+  if (scope === 'list') {
+    customerListSensitiveVisible = !customerListSensitiveVisible;
+    if (customerListSensitiveVisible) recordSensitiveView('list');
+    filterCustomers();
+    return;
+  }
+  customerDetailSensitiveVisible = !customerDetailSensitiveVisible;
+  if (customerDetailSensitiveVisible) recordSensitiveView('detail', currentCustDetailId);
+  updateCustomerDetailSensitiveButton();
+  renderCustDetailTab(currentCustDetailTab, currentCustDetailId);
+}
+function updateCustomerDetailSensitiveButton() {
+  const btn = document.getElementById('cust-detail-sensitive-btn');
+  if (!btn) return;
+  const customer = customers.find(c => c.id === currentCustDetailId);
+  if (customer) {
+    document.getElementById('cust-detail-title').textContent =
+      `${currentLang === 'zh' ? '客户详情' : 'Customer Detail'} — ${sensitiveValue('name', customer.name, customerDetailSensitiveVisible)}`;
+  }
+  btn.style.display = currentOperatorHasPermission(sensitivePermissionCode) ? '' : 'none';
+  btn.className = `btn btn-sm ms-auto me-3 ${customerDetailSensitiveVisible ? 'btn-warning' : 'btn-outline-warning'}`;
+  btn.innerHTML = customerDetailSensitiveVisible
+    ? `<i class="bi bi-eye-slash"></i> <span>${currentLang === 'zh' ? '隐藏敏感信息' : 'Hide sensitive info'}</span>`
+    : `<i class="bi bi-eye"></i> <span>${currentLang === 'zh' ? '查看敏感信息' : 'View sensitive info'}</span>`;
+}
 
 function renderCustomers(list) {
   const data = list || customers;
   document.getElementById('cust-count-label').textContent = `Showing 1–${data.length} of ${data.length}`;
+  const canViewSensitive = currentOperatorHasPermission(sensitivePermissionCode);
+  const sensitiveToolbar = `
+    <div class="sensitive-toolbar">
+      <i class="bi bi-shield-lock-fill"></i>
+      <span>${currentLang === 'zh' ? '姓名、手机号和身份证号默认脱敏；明文查看操作将记录到审计日志。' : 'Names, mobile numbers, and ID cards are masked by default. Reveals are written to the audit log.'}</span>
+      ${canViewSensitive ? `<button class="btn btn-sm ${customerListSensitiveVisible ? 'btn-warning' : 'btn-outline-warning'}" onclick="toggleCustomerSensitive('list')">
+        <i class="bi bi-${customerListSensitiveVisible ? 'eye-slash' : 'eye'}"></i>
+        ${customerListSensitiveVisible ? (currentLang === 'zh' ? '隐藏敏感信息' : 'Hide sensitive info') : (currentLang === 'zh' ? '查看敏感信息' : 'View sensitive info')}
+      </button>` : `<span class="status-badge badge-disabled ms-auto">${currentLang === 'zh' ? '无查看权限' : 'No reveal permission'}</span>`}
+    </div>`;
   const rows = data.map(c => `
     <tr>
+      <td><code style="font-size:12px;">${c.id}</code></td>
       <td>
-        <div style="font-weight:600;">${c.name}</div>
-        <div style="font-size:11.5px;color:#94a3b8;">${c.mobile}</div>
+        <div class="${customerListSensitiveVisible ? '' : 'masked-value'}" style="font-weight:600;">${sensitiveValue('name', c.name, customerListSensitiveVisible)}</div>
+        <div class="${customerListSensitiveVisible ? '' : 'masked-value'}" style="font-size:11.5px;color:#94a3b8;">${sensitiveValue('mobile', c.mobile, customerListSensitiveVisible)}</div>
       </td>
-      <td style="font-size:12.5px;font-family:monospace;">${maskId(c.idCard)}</td>
+      <td style="font-size:12.5px;">${genderLabel(customerGender(c))}</td>
+      <td class="${customerListSensitiveVisible ? '' : 'masked-value'}" style="font-size:12.5px;font-family:monospace;">${sensitiveValue('id', c.idCard, customerListSensitiveVisible)}</td>
       <td>${c.creditStatus === 'Approved' ? `<span class="status-badge badge-active">${c.creditStatus}</span>` : c.creditStatus === 'Pending' ? `<span class="status-badge badge-pending">${c.creditStatus}</span>` : c.creditStatus === 'Rejected' ? `<span class="status-badge badge-disabled">${c.creditStatus}</span>` : `<span class="status-badge" style="background:#f1f5f9;color:#64748b;">${c.creditStatus}</span>`}</td>
       <td>
-        <div style="font-size:13px;">Limit: <strong>${fmtMoney(c.totalCredit)}</strong></div>
-        <div style="font-size:11.5px;color:#94a3b8;">Used: ${fmtMoney(c.usedCredit)}</div>
+        <div style="font-size:13px;">${t('label.limitPKR')} <strong>${fmtMoney(c.totalCredit)}</strong></div>
+        <div style="font-size:11.5px;color:#94a3b8;">${t('label.usedPKR')} ${fmtMoney(c.usedCredit)}</div>
       </td>
-      <td style="font-size:12.5px;">${c.walletType !== '-' ? `<span class="role-tag">${c.walletType}</span>` : '-'}</td>
-      <td>${c.blacklist ? '<span class="status-badge badge-disabled">Yes</span>' : '<span class="status-badge" style="background:#f1f5f9;color:#64748b;">No</span>'}</td>
+      <td style="font-weight:600;color:#16a34a;">PKR ${Math.max(0, c.totalCredit-c.usedCredit).toLocaleString()}</td>
+      <td>${accountStatusBadge(customerAccountStatus(c))}</td>
       <td style="font-size:12px;color:#94a3b8;">${c.regTime}</td>
       <td>
         <div class="d-flex gap-1">
           <button class="btn btn-sm btn-outline-primary action-btn" onclick="viewCustDetail(${c.id})"><i class="bi bi-eye"></i> ${t('btn.detail')}</button>
-          <button class="btn btn-sm ${c.blacklist ? 'btn-outline-success' : 'btn-outline-danger'} action-btn" onclick="toggleBlacklist(${c.id})">
-            ${c.blacklist ? `<i class="bi bi-unlock"></i> ${t('btn.unblock')}` : `<i class="bi bi-slash-circle"></i> ${t('btn.blacklist')}`}
+          <button class="btn btn-sm ${customerAccountStatus(c) === 'Frozen' ? 'btn-outline-success' : 'btn-outline-warning'} action-btn"
+            onclick="toggleCustomerFreeze(${c.id})" ${customerAccountStatus(c) === 'Cancelled' ? 'disabled' : ''}>
+            ${customerAccountStatus(c) === 'Cancelled'
+              ? `<i class="bi bi-person-x"></i> ${accountStatusLabel('Cancelled')}`
+              : customerAccountStatus(c) === 'Frozen'
+              ? `<i class="bi bi-unlock"></i> ${t('btn.unfreeze')}`
+              : `<i class="bi bi-snow"></i> ${t('btn.freeze')}`}
           </button>
         </div>
       </td>
     </tr>`).join('');
   document.getElementById('cust-table-container').innerHTML = `
+    ${sensitiveToolbar}
     <table class="table table-hover mb-0">
-      <thead><tr><th>${t('th.customer')}</th><th>${t('th.idCard')}</th><th>${t('th.creditStatus')}</th><th>${t('th.creditInfo')}</th><th>${t('th.wallet')}</th><th>${t('th.blacklisted')}</th><th>${t('th.registered')}</th><th>${t('th.actions')}</th></tr></thead>
-      <tbody>${rows || '<tr><td colspan="8"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+      <thead><tr><th>${currentLang === 'zh' ? '客户 ID' : 'Customer ID'}</th><th>${t('th.customer')}</th><th>${currentLang === 'zh' ? '性别' : 'Gender'}</th><th>${t('th.idCard')}</th><th>${t('th.creditStatus')}</th><th>${t('th.creditInfo')}</th><th>${currentLang === 'zh' ? '可用额度' : 'Available Credit'}</th><th>${currentLang === 'zh' ? '账号状态' : 'Account Status'}</th><th>${t('th.registered')}</th><th>${t('th.actions')}</th></tr></thead>
+      <tbody>${rows || '<tr><td colspan="10"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
     </table>`;
 }
 
 function filterCustomers() {
   const q = document.getElementById('cust-search').value.toLowerCase();
   const cs = document.getElementById('cust-credit-filter').value;
-  const bl = document.getElementById('cust-blacklist-filter').value;
   renderCustomers(customers.filter(c =>
     (!q || c.name.toLowerCase().includes(q) || c.mobile.includes(q) || c.idCard.includes(q)) &&
-    (!cs || c.creditStatus === cs) &&
-    (bl === '' || String(c.blacklist) === bl)
+    (!cs || c.creditStatus === cs)
   ));
 }
 
 function viewCustDetail(id) {
   currentCustDetailId = id;
+  currentCustDetailTab = 'profile';
+  customerDetailSensitiveVisible = false;
   const c = customers.find(x=>x.id===id);
-  document.getElementById('cust-detail-title').textContent = `Customer Detail — ${c.name}`;
+  document.getElementById('cust-detail-title').textContent = `${currentLang === 'zh' ? '客户详情' : 'Customer Detail'} — ${maskName(c.name)}`;
   document.querySelectorAll('#cust-detail-tabs .nav-link').forEach((a,i)=>a.classList.toggle('active',i===0));
-  renderCustDetailTab('basic', id);
+  updateCustomerDetailSensitiveButton();
+  renderCustDetailTab('profile', id);
   new bootstrap.Modal(document.getElementById('custDetailModal')).show();
 }
 function detailRow(label, val) {
@@ -3069,12 +3194,18 @@ function detailRow(label, val) {
   </div>`;
 }
 
-function toggleBlacklist(id) {
+function toggleCustomerFreeze(id) {
   const c = customers.find(x=>x.id===id);
-  const action = c.blacklist ? 'remove from blacklist' : 'add to blacklist';
-  showConfirm(`${c.name}: ${action}?`, () => {
-    c.blacklist = c.blacklist ? 0 : 1;
-    toast(`${c.name} ${c.blacklist ? 'blacklisted' : 'removed from blacklist'}`);
+  const status = customerAccountStatus(c);
+  if (status === 'Cancelled') return;
+  const willFreeze = status !== 'Frozen';
+  const action = currentLang === 'zh' ? (willFreeze ? '冻结该账号' : '解冻该账号') : (willFreeze ? 'freeze this account' : 'unfreeze this account');
+  showConfirm(`${maskName(c.name)}: ${action}?`, () => {
+    c.accountStatus = willFreeze ? 'Frozen' : 'Normal';
+    c.blacklist = willFreeze ? 1 : 0;
+    toast(currentLang === 'zh'
+      ? `${maskName(c.name)} 已${willFreeze ? '冻结' : '解冻'}`
+      : `${maskName(c.name)} account ${willFreeze ? 'frozen' : 'unfrozen'}`);
     filterCustomers();
   });
 }
@@ -4275,24 +4406,42 @@ const creditChangeLogs = {
   1006:[{id:1,changeType:'CREDIT_APPROVED',changeAmount:30000,beforeTotal:0,afterTotal:30000,loanOrderNo:'',remark:'Initial credit approval',createdAt:'2024-01-10 16:30'},{id:2,changeType:'CREDIT_USED',changeAmount:25000,beforeTotal:30000,afterTotal:30000,loanOrderNo:'LN2024060406',remark:'Loan disbursed',createdAt:'2024-06-03 15:22'}],
 };
 
-let currentCustDetailId=null;
 function switchCustDetailTab(tab,el) {
   document.querySelectorAll('#cust-detail-tabs .nav-link').forEach(a=>a.classList.remove('active'));
   el.classList.add('active');
+  currentCustDetailTab = tab;
   renderCustDetailTab(tab,currentCustDetailId);
 }
 function renderCustDetailTab(tab,id) {
   const c=customers.find(x=>x.id===id);
   const body=document.getElementById('cust-detail-body');
-  if(tab==='basic') {
+  if(tab==='profile') {
+    const id2=creditIdentity[id];
+    const fullName = id2?.name || c.name;
+    const gender = genderLabel(id2?.gender || customerGender(c));
     body.innerHTML=`<div class="row g-3">
-      <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
-        <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">BASIC INFO</div>
-        ${detailRow('Full Name',c.name)}${detailRow('Mobile',c.mobile)}${detailRow('ID Card',c.idCard)}${detailRow('City',c.city)}${detailRow('Registered',c.regTime)}
+      <div class="col-12"><div class="sensitive-toolbar" style="border:1px solid #fde68a;border-radius:8px;">
+        <i class="bi bi-shield-lock-fill"></i>
+        <span>${currentLang === 'zh' ? '客户及联系人的敏感信息默认脱敏，查看明文需要 customer:list:view_sensitive 权限。' : 'Customer and contact details are masked by default and require customer:list:view_sensitive to reveal.'}</span>
       </div></div>
-      <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
-        <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">CREDIT & WALLET</div>
-        ${detailRow('Credit Status',c.creditStatus)}${detailRow('Total Limit',fmtMoney(c.totalCredit))}${detailRow('Used',fmtMoney(c.usedCredit))}${detailRow('Available',fmtMoney(c.totalCredit-c.usedCredit))}${detailRow('Wallet',c.walletType+' / '+c.walletAccount)}${detailRow('Blacklisted',c.blacklist?'🚫 Yes':'✅ No')}
+      <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;height:100%;">
+        <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">${currentLang === 'zh' ? '客户资料' : 'CUSTOMER PROFILE'}</div>
+        ${detailRow(currentLang === 'zh' ? '客户 ID' : 'Customer ID',c.id)}
+        ${detailRow('Full Name',sensitiveValue('name',fullName,customerDetailSensitiveVisible))}
+        ${detailRow('Mobile',sensitiveValue('mobile',c.mobile,customerDetailSensitiveVisible))}
+        ${detailRow('ID Card',sensitiveValue('id',id2?.idCard||c.idCard,customerDetailSensitiveVisible))}
+        ${detailRow('Gender',gender)}${detailRow('Birthday',id2?.birthday||'-')}${detailRow('ID Issue Date',id2?.issueDate||'-')}
+        ${detailRow('Province',id2?.province||'-')}${detailRow('City',id2?.city||c.city)}${detailRow('Address',id2?.address||'-')}
+        ${detailRow(currentLang === 'zh' ? '账号状态' : 'Account Status',accountStatusBadge(customerAccountStatus(c)))}${detailRow('Registered',c.regTime)}
+      </div></div>
+      <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;height:100%;">
+        <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">${currentLang === 'zh' ? '授信概览' : 'CREDIT OVERVIEW'}</div>
+        ${detailRow('Credit Status',c.creditStatus)}${detailRow('Total Limit',fmtMoney(c.totalCredit))}${detailRow('Used',fmtMoney(c.usedCredit))}${detailRow('Available',fmtMoney(c.totalCredit-c.usedCredit))}
+        ${id2 ? `<div style="font-size:11px;font-weight:700;color:#94a3b8;margin:18px 0 10px;">${currentLang === 'zh' ? '身份认证材料' : 'IDENTITY DOCUMENTS'}</div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <div style="background:#e2e8f0;border-radius:8px;padding:12px 16px;font-size:12px;color:#64748b;"><i class="bi bi-card-image me-2"></i>${currentLang === 'zh' ? '正面' : 'Front'}: ${id2.frontImg}</div>
+            <div style="background:#e2e8f0;border-radius:8px;padding:12px 16px;font-size:12px;color:#64748b;"><i class="bi bi-card-image me-2"></i>${currentLang === 'zh' ? '背面' : 'Back'}: ${id2.backImg}</div>
+          </div>` : `<div class="empty-state" style="padding:28px 10px;"><i class="bi bi-person-vcard"></i>${currentLang === 'zh' ? '暂无身份认证材料' : 'No identity documents'}</div>`}
       </div></div></div>`;
   } else if(tab==='credit') {
     const recs = (typeof userCreditRecords !== 'undefined' && userCreditRecords[id]) ? userCreditRecords[id] : [];
@@ -4315,19 +4464,6 @@ function renderCustDetailTab(tab,id) {
         <div class="col-12">${detailRow('Existing Other Loans',bi.existingLoan?'Yes — PKR '+bi.totalLoanAmount:'No')}</div>
       </div></div>` : '';
     body.innerHTML = biHtml || '<div class="empty-state"><i class="bi bi-file-earmark-x"></i>No application basic info</div>';
-  } else if(tab==='identity') {
-    const id2=creditIdentity[id];
-    if(!id2){body.innerHTML='<div class="empty-state"><i class="bi bi-person-vcard"></i>No identity verification data</div>';return;}
-    body.innerHTML=`<div style="background:#f8fafc;border-radius:8px;padding:16px;">
-      <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">IDENTITY VERIFICATION</div>
-      <div class="row g-2">
-        <div class="col-md-6">${detailRow('Name',id2.name)}${detailRow('ID Card No.',id2.idCard)}${detailRow('Birthday',id2.birthday)}${detailRow('Gender',id2.gender)}</div>
-        <div class="col-md-6">${detailRow('ID Issue Date',id2.issueDate)}${detailRow('Province',id2.province)}${detailRow('City',id2.city)}${detailRow('Address',id2.address)}</div>
-        <div class="col-12 mt-2"><div style="display:flex;gap:12px;flex-wrap:wrap;">
-          <div style="background:#e2e8f0;border-radius:8px;padding:12px 20px;font-size:12px;color:#64748b;"><i class="bi bi-card-image me-2"></i>Front: ${id2.frontImg}</div>
-          <div style="background:#e2e8f0;border-radius:8px;padding:12px 20px;font-size:12px;color:#64748b;"><i class="bi bi-card-image me-2"></i>Back: ${id2.backImg}</div>
-        </div></div>
-      </div></div>`;
   } else if(tab==='contacts') {
     const contacts=creditContacts[id];
     if(!contacts||!contacts.length){body.innerHTML='<div class="empty-state"><i class="bi bi-people"></i>No emergency contacts</div>';return;}
@@ -4335,10 +4471,10 @@ function renderCustDetailTab(tab,id) {
       <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">EMERGENCY CONTACTS</div>
       ${contacts.map((ct,i)=>`<div class="mb-3 pb-3 ${i<contacts.length-1?'border-bottom':''}">
         <div class="d-flex gap-4">
-          <div style="font-weight:600;font-size:14px;">${ct.name}</div>
+          <div class="${customerDetailSensitiveVisible ? '' : 'masked-value'}" style="font-weight:600;font-size:14px;">${sensitiveValue('name',ct.name,customerDetailSensitiveVisible)}</div>
           <span class="role-tag">${ct.relationship}</span>
         </div>
-        <div style="font-size:13px;color:#64748b;margin-top:4px;"><i class="bi bi-phone me-1"></i>${ct.mobile}</div>
+        <div class="${customerDetailSensitiveVisible ? '' : 'masked-value'}" style="font-size:13px;color:#64748b;margin-top:4px;"><i class="bi bi-phone me-1"></i>${sensitiveValue('mobile',ct.mobile,customerDetailSensitiveVisible)}</div>
       </div>`).join('')}
     </div>`;
   } else if(tab==='wallet') {
@@ -6041,6 +6177,11 @@ function trustDevice(id) {
 // INIT
 // ============================================================
 document.addEventListener('shown.bs.modal', e => localizeHardcoded(e.target));
+document.getElementById('custDetailModal').addEventListener('hidden.bs.modal', () => {
+  customerDetailSensitiveVisible = false;
+  currentCustDetailId = null;
+  currentCustDetailTab = 'profile';
+});
 const i18nObserver = new MutationObserver(records => {
   if (currentLang !== 'zh') return;
   records.forEach(record => record.addedNodes.forEach(node => {
