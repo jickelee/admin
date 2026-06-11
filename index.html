@@ -5052,6 +5052,79 @@ const loanBillFeeChanges = {
   ],
 };
 
+// Complete the demo dataset so every fee detail has a realistic change history.
+let nextDemoFeeChangeId = 1000;
+let nextDemoFeeChangeNo = 1;
+Object.values(loanBillFees).flat().forEach(fee => {
+  const billChanges = loanBillFeeChanges[fee.billNo] ||= [];
+  if (billChanges.some(change => change.feeNo === fee.feeNo)) return;
+
+  const makeChange = (values) => ({
+    id: nextDemoFeeChangeId++,
+    changeNo: `DEMO-FC-${String(nextDemoFeeChangeNo++).padStart(4, '0')}`,
+    feeNo: fee.feeNo,
+    billNo: fee.billNo,
+    loanOrderNo: fee.loanOrderNo,
+    userId: fee.userId,
+    installmentNo: fee.installmentNo,
+    feeType: fee.feeType,
+    beforePaid: 0,
+    paidChangeAmount: 0,
+    afterPaid: 0,
+    waivedChangeAmount: 0,
+    operatorId: 'System',
+    ...values
+  });
+
+  billChanges.push(makeChange({
+    changeType: 'Create',
+    sourceType: fee.generateType === 'Overdue' ? 'Overdue' : 'System',
+    sourceNo: fee.generateType === 'Overdue' ? `OD-DEMO-${fee.id}` : `BILL-${fee.billNo}`,
+    beforePayable: 0,
+    changeAmount: fee.originalAmount,
+    afterPayable: fee.originalAmount,
+    beforeRemaining: 0,
+    afterRemaining: fee.originalAmount,
+    changeReason: `${fee.feeName} generated for installment ${fee.installmentNo}`,
+    createdAt: `${fee.createdAt} 00:01`
+  }));
+
+  if (fee.waivedAmount > 0) {
+    billChanges.push(makeChange({
+      changeType: 'Waive',
+      sourceType: fee.generateType === 'Coupon' ? 'Coupon' : 'Manual',
+      sourceNo: fee.remark || `ADJ-DEMO-${fee.id}`,
+      beforePayable: fee.originalAmount,
+      changeAmount: -fee.waivedAmount,
+      afterPayable: fee.payableAmount,
+      beforeRemaining: fee.originalAmount,
+      afterRemaining: fee.payableAmount,
+      waivedChangeAmount: fee.waivedAmount,
+      changeReason: fee.remark || 'Demo fee waiver approved',
+      operatorId: fee.generateType === 'Coupon' ? 'System' : 'demo.finance',
+      createdAt: `${fee.createdAt} 09:15`
+    }));
+  }
+
+  if (fee.paidAmount > 0) {
+    billChanges.push(makeChange({
+      changeType: 'Pay',
+      sourceType: 'Repayment',
+      sourceNo: `RP-DEMO-${fee.id}`,
+      beforePayable: fee.payableAmount,
+      changeAmount: 0,
+      afterPayable: fee.payableAmount,
+      beforePaid: 0,
+      paidChangeAmount: fee.paidAmount,
+      afterPaid: fee.paidAmount,
+      beforeRemaining: fee.payableAmount,
+      afterRemaining: fee.remainingAmount,
+      changeReason: fee.status === 'PartiallyPaid' ? 'Demo partial repayment allocation' : 'Demo repayment allocation',
+      createdAt: `${fee.createdAt} 10:30`
+    }));
+  }
+});
+
 // Update bill detail modal to show tabs with fee details
 function viewBillDetail(id) {
   const b = loanBills.find(x => x.id === id);
