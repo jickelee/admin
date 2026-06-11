@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anole Loan — Admin Platform</title>
+<title>Inyor Financial — Admin Platform</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 <style>
@@ -210,9 +210,9 @@
 <!-- SIDEBAR -->
 <nav id="sidebar">
   <div class="sidebar-logo">
-    <div class="logo-icon">A</div>
+    <div class="logo-icon">I</div>
     <div>
-      <div class="logo-text">Anole Loan</div>
+      <div class="logo-text">Inyor Financial</div>
       <div class="logo-sub" data-i18n="logo.sub">Admin Platform</div>
     </div>
   </div>
@@ -242,7 +242,7 @@
       <i class="bi bi-list-columns-reverse"></i> <span data-i18n="nav.loanBillFees">Fee Details</span>
     </a>
     <a class="nav-link-item" onclick="navigate('loanFeeChanges')" id="nav-loanFeeChanges">
-      <i class="bi bi-clock-history"></i> <span data-i18n="nav.loanFeeChanges">Fee Change Log</span>
+      <i class="bi bi-clock-history"></i> <span data-i18n="nav.loanFeeChanges">Fee Change Records</span>
     </a>
     <a class="nav-link-item" onclick="navigate('disbursements')" id="nav-disbursements">
       <i class="bi bi-send-fill"></i> <span data-i18n="nav.disbursements">Disbursements</span>
@@ -328,7 +328,7 @@
   <div id="header">
     <div class="breadcrumb-area">
       <div class="page-title" id="header-title">Dashboard</div>
-      <div class="page-sub" id="header-sub">Anole Loan Admin Platform</div>
+      <div class="page-sub" id="header-sub">Inyor Financial Services (Pvt) Ltd Admin Platform</div>
     </div>
     <button class="btn btn-sm btn-outline-secondary" style="font-size:12px;border-radius:8px;">
       <i class="bi bi-bell me-1"></i><span data-i18n="header.notifications">Notifications</span>
@@ -804,7 +804,7 @@
     <div class="page" id="page-loanFeeChanges">
       <div class="table-card">
         <div class="table-card-header">
-          <span class="title" data-i18n="page.loanFeeChanges">Fee Change Log</span>
+          <span class="title" data-i18n="page.loanFeeChanges">Fee Change Records</span>
           <div class="search-row ms-auto">
             <input type="text" class="form-control form-control-sm" data-i18n-ph="filter.searchFeeChangePh" placeholder="Change No / Fee No / Source No..." style="width:240px;" id="feechg-search" oninput="filterLoanFeeChanges()">
             <select class="form-select form-select-sm" style="width:140px;" id="feechg-type-filter" onchange="filterLoanFeeChanges()">
@@ -1545,9 +1545,9 @@
     <div class="modal-content">
       <div class="modal-header" style="background:#1a2035;color:#fff;border-bottom:none;">
         <div style="display:flex;align-items:center;gap:10px;">
-          <div style="width:28px;height:28px;background:#3a5bdf;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;">A</div>
+          <div style="width:28px;height:28px;background:#3a5bdf;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;">I</div>
           <div>
-            <div style="font-size:14px;font-weight:600;">Anole Loan</div>
+            <div style="font-size:14px;font-weight:600;">Inyor Financial</div>
             <div style="font-size:11px;color:rgba(255,255,255,0.5);" id="cv-contract-no">CON-—</div>
           </div>
         </div>
@@ -1558,7 +1558,7 @@
         <div style="max-width:680px;margin:24px auto;background:#fff;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.12);padding:48px 56px;font-family:'Segoe UI',system-ui,sans-serif;" id="cv-contract-body">
           <!-- Header -->
           <div style="text-align:center;margin-bottom:32px;border-bottom:2px solid #1a2035;padding-bottom:20px;">
-            <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:2px;margin-bottom:6px;">ANOLE FINANCIAL SERVICES (PVT.) LTD.</div>
+            <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:2px;margin-bottom:6px;">INYOR FINANCIAL SERVICES (PVT) LTD</div>
             <div style="font-size:20px;font-weight:700;color:#1a2035;letter-spacing:1px;">LOAN AGREEMENT</div>
             <div style="font-size:11px;color:#94a3b8;margin-top:4px;" id="cv-date-line"></div>
           </div>
@@ -1566,7 +1566,7 @@
           <div style="margin-bottom:24px;">
             <div style="font-size:11px;font-weight:700;color:#3a5bdf;letter-spacing:.8px;margin-bottom:10px;">PARTIES</div>
             <div style="display:grid;grid-template-columns:120px 1fr;gap:6px 12px;font-size:13px;">
-              <span style="color:#64748b;font-weight:600;">Lender</span><span>Anole Financial Services (Pvt.) Ltd., Karachi, Pakistan</span>
+              <span style="color:#64748b;font-weight:600;">Lender</span><span>Inyor Financial Services (Pvt) Ltd, Karachi, Pakistan</span>
               <span style="color:#64748b;font-weight:600;">Borrower</span><span id="cv-borrower" style="font-weight:600;"></span>
               <span style="color:#64748b;font-weight:600;">Contract No.</span><span id="cv-no" style="font-family:monospace;"></span>
             </div>
@@ -1584,7 +1584,7 @@
             <ol style="font-size:12.5px;color:#475569;line-height:1.8;padding-left:20px;margin:0;">
               <li>The Borrower agrees to repay the loan amount plus all applicable fees according to the installment schedule set forth in this agreement.</li>
               <li>In the event of late payment, an overdue penalty shall be charged at the rate specified in the Loan Terms section above, calculated on a daily basis on the outstanding balance.</li>
-              <li>The Borrower authorizes Anole Financial Services to deduct repayment amounts from the registered wallet account on due dates.</li>
+              <li>The Borrower authorizes Inyor Financial Services (Pvt) Ltd to deduct repayment amounts from the registered wallet account on due dates.</li>
               <li>Early repayment is permitted subject to the Early Settlement terms applicable at the time of settlement.</li>
               <li>This agreement is governed by the laws of Pakistan. Any disputes shall be submitted to the competent courts of Karachi.</li>
               <li>The Borrower confirms that all information provided during the application process is accurate and complete.</li>
@@ -1594,9 +1594,9 @@
           <div style="margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:24px;">
             <div style="border-top:1px solid #e2e8f0;padding-top:12px;">
               <div style="font-size:11px;color:#94a3b8;margin-bottom:4px;">LENDER</div>
-              <div style="font-size:13px;font-weight:600;color:#1a2035;">Anole Financial Services (Pvt.) Ltd.</div>
+              <div style="font-size:13px;font-weight:600;color:#1a2035;">Inyor Financial Services (Pvt) Ltd</div>
               <div style="font-size:11.5px;color:#64748b;margin-top:4px;">Authorized Signatory</div>
-              <div style="margin-top:12px;font-family:'Dancing Script',cursive;font-size:20px;color:#1a2035;opacity:.7;">Anole Loan</div>
+              <div style="margin-top:12px;font-family:'Dancing Script',cursive;font-size:20px;color:#1a2035;opacity:.7;">Inyor Financial</div>
             </div>
             <div style="border-top:1px solid #e2e8f0;padding-top:12px;">
               <div style="font-size:11px;color:#94a3b8;margin-bottom:4px;">BORROWER (E-SIGNATURE)</div>
@@ -1629,6 +1629,22 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body" id="bill-detail-body" style="font-size:13.5px;"></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Fee Record Detail Modal -->
+<div class="modal fade" id="feeRecordDetailModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="fee-record-detail-title">Fee Record Detail</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="fee-record-detail-body" style="font-size:13.5px;"></div>
       <div class="modal-footer">
         <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
       </div>
@@ -2224,7 +2240,7 @@ const phraseZh = {
   'Reset password for':'为以下用户重置密码','Front':'正面','Back':'反面',
   'Active':'启用','Disabled':'禁用','Inactive':'停用','Menu':'菜单','Button / Action':'按钮 / 操作','Root (Top Level)':'根节点（顶级）',
   '— Root (Top Level) —':'— 根节点（顶级）—',
-  'Dashboard':'仪表盘','Customer Management':'客户管理','Customer List':'客户列表','Wallet Accounts':'收款账号管理','Account Cancellation':'账号注销','Credit Review':'授信审核','Loan Management':'借款管理','Loan Orders':'借款订单','Repayment Orders':'还款订单','Overdue Management':'逾期管理','Fee Adjustment':'费用调整','Loan Bills':'分期账单','Disbursement Records':'放款记录','Early Settlement':'提前结清','Fee Details':'费用明细','Fee Change Log':'费用变更','Repayment Details':'还款明细','Repayment Allocation':'还款分配','Coupon Management':'优惠券管理','Loan Coupons':'借款优惠券','Repayment Coupons':'还款优惠券','Coupon Usage Records':'优惠券使用记录','Finance & Reconciliation':'财务与对账','Account Transactions':'账务流水','Repayment Reconciliation':'还款对账','Business Configuration':'业务配置','Amount Term Rules':'金额期数规则','User Term Config':'用户分期配置','System Management':'系统管理','User Management':'用户管理','Role Management':'角色管理','Permission Management':'权限管理','OTP Logs':'OTP记录','Device Management':'设备管理','Audit Log':'审计日志',
+  'Dashboard':'仪表盘','Customer Management':'客户管理','Customer List':'客户列表','Wallet Accounts':'收款账号管理','Account Cancellation':'账号注销','Credit Review':'授信审核','Loan Management':'借款管理','Loan Orders':'借款订单','Repayment Orders':'还款订单','Overdue Management':'逾期管理','Fee Adjustment':'费用调整','Loan Bills':'分期账单','Disbursement Records':'放款记录','Early Settlement':'提前结清','Fee Details':'费用明细','Fee Change Records':'费用变更记录','Repayment Details':'还款明细','Repayment Allocation':'还款分配','Coupon Management':'优惠券管理','Loan Coupons':'借款优惠券','Repayment Coupons':'还款优惠券','Coupon Usage Records':'优惠券使用记录','Finance & Reconciliation':'财务与对账','Account Transactions':'账务流水','Repayment Reconciliation':'还款对账','Business Configuration':'业务配置','Amount Term Rules':'金额期数规则','User Term Config':'用户分期配置','System Management':'系统管理','User Management':'用户管理','Role Management':'角色管理','Permission Management':'权限管理','OTP Logs':'OTP记录','Device Management':'设备管理','Audit Log':'审计日志',
   'Loan Coupon':'借款优惠券','Repayment Coupon':'还款优惠券','Decrease':'减少','Waive':'全免','Increase':'增加',
   'Approved':'已通过','Pending':'待处理','Rejected':'已拒绝','Success':'成功','Failed':'失败','Cancelled':'已取消','Verified':'已验证','Sent':'已发送','Locked':'已锁定','Trusted':'已信任','Invalidated':'已失效','Blocked':'已阻断','Pass':'通过','Low':'低','Medium':'中','High':'高','Matched':'已匹配','Unmatched':'未匹配','AmountMismatch':'金额不一致','ManualConfirmed':'人工确认','Handled':'已处理','Ignored':'已忽略',
   'Not Started':'未开始','Manual Review':'人工复核','Incomplete':'未完成','Pending Review':'待审核','Expired':'已过期','Blacklisted':'黑名单',
@@ -2401,8 +2417,8 @@ let permissions = [
       { id:272, parentId:27, code:'loan:early_settlement:confirm', name:'Confirm Settlement', type:'Button', route:'', sort:2, status:'Active', expanded:false },
     { id:28, parentId:20, code:'loan:bill_fee', name:'Fee Details', type:'Menu', route:'/loan/bill-fees', sort:8, status:'Active', expanded:true },
       { id:281, parentId:28, code:'loan:bill_fee:view', name:'View Fee Details', type:'Button', route:'', sort:1, status:'Active', expanded:false },
-    { id:29, parentId:20, code:'loan:fee_change', name:'Fee Change Log', type:'Menu', route:'/loan/fee-changes', sort:9, status:'Active', expanded:true },
-      { id:291, parentId:29, code:'loan:fee_change:view', name:'View Fee Changes', type:'Button', route:'', sort:1, status:'Active', expanded:false },
+    { id:29, parentId:20, code:'loan:fee_change', name:'Fee Change Records', type:'Menu', route:'/loan/fee-changes', sort:9, status:'Active', expanded:true },
+      { id:291, parentId:29, code:'loan:fee_change:view', name:'View Fee Change Details', type:'Button', route:'', sort:1, status:'Active', expanded:false },
     { id:34, parentId:20, code:'loan:repayment_bill', name:'Repayment Details', type:'Menu', route:'/loan/repayment-bills', sort:10, status:'Active', expanded:true },
       { id:341, parentId:34, code:'loan:repayment_bill:view', name:'View Repayment Details', type:'Button', route:'', sort:1, status:'Active', expanded:false },
     { id:35, parentId:20, code:'loan:repayment_allocation', name:'Repayment Allocation', type:'Menu', route:'/loan/repayment-allocations', sort:11, status:'Active', expanded:true },
@@ -2680,7 +2696,7 @@ function saveUser() {
       email: document.getElementById('u-email').value, mobile: document.getElementById('u-mobile').value,
       roles: selectedRoles, status: document.getElementById('u-status').value,
       lastLogin: '-', remark: document.getElementById('u-remark').value });
-    toast('User created — temp password: Anole@123');
+    toast('User created — temp password: Inyor@123');
   }
   bootstrap.Modal.getInstance(document.getElementById('userModal')).hide();
   renderUsers();
@@ -3878,8 +3894,8 @@ function filterAudit() {
 Object.assign(i18n.en,{'nav.loanBills':'Loan Bills','nav.disbursements':'Disbursements','nav.earlySettlement':'Early Settlement','nav.finance':'Finance & Ops','nav.feeAdjust':'Fee Adjustments','nav.transactions':'Account Transactions','nav.reconciliation':'Reconciliation','page.loanBills':'Loan Bills','page.disbursements':'Disbursement Records','page.earlySettlement':'Early Settlement','page.feeAdjust':'Fee Adjustments','page.transactions':'Account Transactions','page.reconciliation':'Reconciliation','page.sub.loanBills':'Per-installment bill details','page.sub.disbursements':'Loan fund transfer records','page.sub.earlySettlement':'Customer early settlement requests','page.sub.feeAdjust':'Manual fee adjustments with approval','page.sub.transactions':'Double-entry financial ledger','page.sub.reconciliation':'Reconciliation','btn.createAdj':'Create Adjustment','coupon.usageTab':'Usage Records','th.billNo':'Bill No.','th.installmentNo':'Installment','th.dueDate2':'Due Date','th.payable':'Payable','th.paid':'Paid','th.remaining':'Remaining','th.disbNo':'Disbursement No.','th.requestTime':'Request Time','th.txnNo':'Txn No.','th.settlementNo':'Settlement No.','th.settlementDate':'Settlement Date','th.settlementAmt':'Settlement Amount','th.waived':'Waived','th.opType':'Operation Type','th.scene':'Scene','th.terminal':'Terminal','th.adjNo':'Adjustment No.','th.feeType':'Fee Type','th.adjType':'Adjustment Type','th.adjAmt':'Adjustment Amount','th.before2':'Before','th.after2':'After','th.auditStatus':'Audit Status','th.auditor':'Auditor','th.auditTime':'Audit Time','th.txnNo2':'Transaction No.','th.bizType':'Biz Type','th.direction':'Direction','th.currency':'Currency','th.accountType':'Account Type','th.couponType2':'Coupon Type','th.couponNo2':'Coupon No.','th.lockedAmt':'Locked Amt','th.usedAmt':'Used Amt','th.deductType2':'Deduct Type','th.reconcileNo':'Reconcile No.','th.channelTxnNo':'Channel Txn No.','th.sysAmount':'Sys Amount','th.channelAmount':'Channel Amount','th.diffAmount':'Difference','th.reconcileStatus':'Reconcile Status','th.handleStatus':'Handle Status','th.handleBy':'Handled By','rec.matched':'Matched','rec.unmatched':'Unmatched','rec.amountMismatch':'Amount Mismatch','rec.manualConfirmed':'Manual Confirmed'});
 Object.assign(i18n.zh,{'nav.loanBills':'分期账单','nav.disbursements':'放款记录','nav.earlySettlement':'提前结清','nav.finance':'财务 & 运营','nav.feeAdjust':'费用调整','nav.transactions':'账务流水','nav.reconciliation':'对账管理','page.loanBills':'分期账单','page.disbursements':'放款记录','page.earlySettlement':'提前结清记录','page.feeAdjust':'费用调整单','page.transactions':'账务流水','page.reconciliation':'还款对账','page.sub.loanBills':'每期分期账单明细','page.sub.disbursements':'放款资金转账记录','page.sub.earlySettlement':'客户提前结清申请','page.sub.feeAdjust':'人工费用调整（带审批流）','page.sub.transactions':'双向记账账务流水','page.sub.reconciliation':'支付渠道对账','btn.createAdj':'创建调整单','coupon.usageTab':'使用记录','th.billNo':'账单号','th.installmentNo':'期数','th.dueDate2':'到期日','th.payable':'应还','th.paid':'已还','th.remaining':'剩余','th.disbNo':'放款单号','th.requestTime':'发起时间','th.txnNo':'流水号','th.settlementNo':'结清单号','th.settlementDate':'结清日期','th.settlementAmt':'结清金额','th.waived':'减免','th.opType':'操作类型','th.scene':'场景','th.terminal':'终端','th.adjNo':'调整单号','th.feeType':'费用类型','th.adjType':'调整类型','th.adjAmt':'调整金额','th.before2':'调整前','th.after2':'调整后','th.auditStatus':'审核状态','th.auditor':'审核人','th.auditTime':'审核时间','th.txnNo2':'流水号','th.bizType':'业务类型','th.direction':'方向','th.currency':'币种','th.accountType':'账户类型','th.couponType2':'券类型','th.couponNo2':'券号','th.lockedAmt':'锁定金额','th.usedAmt':'实用金额','th.deductType2':'抵扣类型','th.reconcileNo':'对账单号','th.channelTxnNo':'渠道流水号','th.sysAmount':'系统应收','th.channelAmount':'渠道实收','th.diffAmount':'差额','th.reconcileStatus':'对账状态','th.handleStatus':'处理状态','th.handleBy':'处理人','rec.matched':'已匹配','rec.unmatched':'未匹配','rec.amountMismatch':'金额不一致','rec.manualConfirmed':'人工确认'});
 Object.assign(i18n.en,{
-  'nav.loanBillFees':'Fee Details','nav.loanFeeChanges':'Fee Change Log','nav.repaymentBills':'Repayment Details','nav.repaymentAllocations':'Repayment Allocation',
-  'page.loanBillFees':'Fee Details','page.loanFeeChanges':'Fee Change Log','page.repaymentBills':'Repayment Details','page.repaymentAllocations':'Repayment Allocation',
+  'nav.loanBillFees':'Fee Details','nav.loanFeeChanges':'Fee Change Records','nav.repaymentBills':'Repayment Details','nav.repaymentAllocations':'Repayment Allocation',
+  'page.loanBillFees':'Fee Details','page.loanFeeChanges':'Fee Change Records','page.repaymentBills':'Repayment Details','page.repaymentAllocations':'Repayment Allocation',
   'page.sub.loanBillFees':'All loan_bill_fee records across bills','page.sub.loanFeeChanges':'All fee change records across customer accounts','page.sub.repaymentBills':'repayment_order_bill records','page.sub.repaymentAllocations':'Repayment-to-fee allocation records',
   'filter.searchFeePh':'Fee No / Bill No / Loan No...','filter.searchFeeChangePh':'Change No / Fee No / Source No...','filter.searchRepayBillPh':'Repayment No / Bill No / Loan No...','filter.searchAllocationPh':'Allocation No / Repayment No / Fee No...',
   'filter.allFeeTypes':'All Fee Types','filter.allChangeTypes':'All Change Types','filter.allSources':'All Sources',
@@ -3890,7 +3906,7 @@ Object.assign(i18n.en,{
   'tab.overdueOrders':'Overdue Orders','tab.dailyRecords':'Daily Records','section.creditRecords':'Credit Records','section.creditChanges':'Credit Changes'
 });
 Object.assign(i18n.zh,{
-  'nav.loanBillFees':'费用明细','nav.loanFeeChanges':'费用变更','nav.repaymentBills':'还款明细','nav.repaymentAllocations':'还款分配',
+  'nav.loanBillFees':'费用明细','nav.loanFeeChanges':'费用变更记录','nav.repaymentBills':'还款明细','nav.repaymentAllocations':'还款分配',
   'page.loanBillFees':'费用明细','page.loanFeeChanges':'费用变更记录','page.repaymentBills':'还款明细','page.repaymentAllocations':'还款分配',
   'page.sub.loanBillFees':'跨账单查看所有 loan_bill_fee 费用明细','page.sub.loanFeeChanges':'跨客户账户查看所有费用变更记录','page.sub.repaymentBills':'repayment_order_bill 还款订单明细','page.sub.repaymentAllocations':'还款金额到费用项的分配记录',
   'filter.searchFeePh':'费用号 / 账单号 / 借款单号...','filter.searchFeeChangePh':'变更号 / 费用号 / 来源单号...','filter.searchRepayBillPh':'还款单号 / 账单号 / 借款单号...','filter.searchAllocationPh':'分配号 / 还款单号 / 费用号...',
@@ -5080,6 +5096,17 @@ function viewBillDetail(id) {
   const fees = loanBillFees[b.billNo] || [];
   const changes = loanBillFeeChanges[b.billNo] || [];
   const feeStatusColor = { Unpaid:'badge-pending', PartiallyPaid:'badge-pending', Paid:'badge-active', Waived:'background:#f1f5f9;color:#64748b;' };
+  const amountByType = (type, field) => fees
+    .filter(f => f.feeType === type)
+    .reduce((sum, f) => sum + Number(f[field] || 0), 0);
+  const paidPrincipal = amountByType('Principal', 'paidAmount');
+  const paidInterest = amountByType('Interest', 'paidAmount');
+  const paidServiceFee = amountByType('ServiceFee', 'paidAmount');
+  const paidOverdueFee = amountByType('OverdueFee', 'paidAmount');
+  const remainingPrincipal = amountByType('Principal', 'remainingAmount');
+  const remainingInterest = amountByType('Interest', 'remainingAmount');
+  const remainingServiceFee = amountByType('ServiceFee', 'remainingAmount');
+  const remainingOverdueFee = amountByType('OverdueFee', 'remainingAmount');
 
   const summaryHtml = `<div class="row g-3">
     <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
@@ -5098,10 +5125,25 @@ function viewBillDetail(id) {
       ${detailRow('Payable Service Fee','PKR '+b.payableServiceFee.toLocaleString())}
       ${detailRow('Payable Overdue Fee','PKR '+b.payableOverdueFee.toLocaleString())}
       ${detailRow('Total Bill Amount','PKR '+b.billAmount.toLocaleString())}
-      <hr style="margin:8px 0;border-color:#e8ecf4;">
-      ${detailRow('Paid Amount','PKR '+b.paidAmount.toLocaleString())}
-      ${detailRow('Remaining Amount','PKR '+b.remainingAmount.toLocaleString())}
       ${b.isOverdue?detailRow('Overdue Days',b.overdueDays+' days'):''}
+    </div></div>
+    <div class="col-md-6"><div style="background:#f0fdf4;border-radius:8px;padding:16px;">
+      <div style="font-size:11px;font-weight:700;color:#16a34a;margin-bottom:12px;">${currentLang === 'zh' ? '已还明细' : 'PAID BREAKDOWN'}</div>
+      ${detailRow(currentLang === 'zh' ? '已还本金' : 'Paid Principal','PKR '+paidPrincipal.toLocaleString())}
+      ${detailRow(currentLang === 'zh' ? '已还利息' : 'Paid Interest','PKR '+paidInterest.toLocaleString())}
+      ${detailRow(currentLang === 'zh' ? '已还服务费' : 'Paid Service Fee','PKR '+paidServiceFee.toLocaleString())}
+      ${detailRow(currentLang === 'zh' ? '已还逾期费' : 'Paid Overdue Fee','PKR '+paidOverdueFee.toLocaleString())}
+      <hr style="margin:8px 0;border-color:#bbf7d0;">
+      ${detailRow(currentLang === 'zh' ? '已还合计' : 'Total Paid','PKR '+(paidPrincipal+paidInterest+paidServiceFee+paidOverdueFee).toLocaleString())}
+    </div></div>
+    <div class="col-md-6"><div style="background:#fff7ed;border-radius:8px;padding:16px;">
+      <div style="font-size:11px;font-weight:700;color:#ea580c;margin-bottom:12px;">${currentLang === 'zh' ? '剩余明细' : 'REMAINING BREAKDOWN'}</div>
+      ${detailRow(currentLang === 'zh' ? '剩余本金' : 'Remaining Principal','PKR '+remainingPrincipal.toLocaleString())}
+      ${detailRow(currentLang === 'zh' ? '剩余利息' : 'Remaining Interest','PKR '+remainingInterest.toLocaleString())}
+      ${detailRow(currentLang === 'zh' ? '剩余服务费' : 'Remaining Service Fee','PKR '+remainingServiceFee.toLocaleString())}
+      ${detailRow(currentLang === 'zh' ? '剩余逾期费' : 'Remaining Overdue Fee','PKR '+remainingOverdueFee.toLocaleString())}
+      <hr style="margin:8px 0;border-color:#fed7aa;">
+      ${detailRow(currentLang === 'zh' ? '剩余合计' : 'Total Remaining','PKR '+(remainingPrincipal+remainingInterest+remainingServiceFee+remainingOverdueFee).toLocaleString())}
     </div></div>
   </div>`;
 
@@ -5144,9 +5186,9 @@ function viewBillDetail(id) {
 
   document.getElementById('bill-detail-body').innerHTML = `
     <ul class="nav nav-tabs mb-3" id="bill-detail-tabs">
-      <li class="nav-item"><a class="nav-link active" href="#" onclick="switchBillDetailTab('summary',this)">Bill Summary</a></li>
-      <li class="nav-item"><a class="nav-link" href="#" onclick="switchBillDetailTab('fees',this)">Fee Details (${fees.length})</a></li>
-      <li class="nav-item"><a class="nav-link" href="#" onclick="switchBillDetailTab('changes',this)">Fee Change Log (${changes.length})</a></li>
+      <li class="nav-item"><a class="nav-link active" href="#" onclick="switchBillDetailTab('summary',this)">${currentLang === 'zh' ? '账单汇总' : 'Bill Summary'}</a></li>
+      <li class="nav-item"><a class="nav-link" href="#" onclick="switchBillDetailTab('fees',this)">${currentLang === 'zh' ? '费用明细' : 'Fee Details'} (${fees.length})</a></li>
+      <li class="nav-item"><a class="nav-link" href="#" onclick="switchBillDetailTab('changes',this)">${currentLang === 'zh' ? '费用变更记录' : 'Fee Change Records'} (${changes.length})</a></li>
     </ul>
     <div id="bill-detail-tab-content">
       <div id="bdt-summary">${summaryHtml}</div>
@@ -5366,11 +5408,12 @@ function renderLoanBillFees(list) {
     <td><span class="status-badge ${f.status==='Paid'?'badge-active':f.status==='Waived'?'':'badge-pending'}" style="${f.status==='Waived'?'background:#f1f5f9;color:#64748b;':''}font-size:11px;">${f.status}</span></td>
     <td style="font-size:12px;">${f.generateType}</td>
     <td style="font-size:12px;color:#64748b;max-width:180px;">${f.remark||'-'}</td>
+    <td><button class="btn btn-sm btn-outline-primary action-btn" onclick="viewLoanBillFeeDetail(${f.id})"><i class="bi bi-eye"></i> ${t('btn.detail')}</button></td>
   </tr>`).join('');
   document.getElementById('fee-table-container').innerHTML = `
-    <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1500px;">
-      <thead><tr><th>${t('th.feeNo')}</th><th>${t('th.billNo')}</th><th>${t('th.loanOrderNo')}</th><th>${t('th.custId')}</th><th>${t('th.installmentNo')}</th><th>${t('th.feeType')}</th><th>${t('th.feeName')}</th><th>${t('th.originalAmount')}</th><th>${t('th.payableAmount')}</th><th>${t('th.paidAmount')}</th><th>${t('th.remainingAmount')}</th><th>${t('th.waivedAmount')}</th><th>${t('th.status')}</th><th>${t('th.generateType')}</th><th>${t('th.remark')}</th></tr></thead>
-      <tbody>${rows||'<tr><td colspan="15"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+    <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1600px;">
+      <thead><tr><th>${t('th.feeNo')}</th><th>${t('th.billNo')}</th><th>${t('th.loanOrderNo')}</th><th>${t('th.custId')}</th><th>${t('th.installmentNo')}</th><th>${t('th.feeType')}</th><th>${t('th.feeName')}</th><th>${t('th.originalAmount')}</th><th>${t('th.payableAmount')}</th><th>${t('th.paidAmount')}</th><th>${t('th.remainingAmount')}</th><th>${t('th.waivedAmount')}</th><th>${t('th.status')}</th><th>${t('th.generateType')}</th><th>${t('th.remark')}</th><th>${t('th.actions')}</th></tr></thead>
+      <tbody>${rows||'<tr><td colspan="16"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
     </table></div>`;
 }
 
@@ -5406,12 +5449,76 @@ function renderLoanFeeChanges(list) {
     <td style="font-size:12px;color:#64748b;max-width:220px;">${ch.changeReason}</td>
     <td style="font-size:12px;">${ch.operatorId}</td>
     <td style="font-size:12px;color:#94a3b8;white-space:nowrap;">${ch.createdAt}</td>
+    <td><button class="btn btn-sm btn-outline-primary action-btn" onclick="viewLoanFeeChangeDetail(${ch.id})"><i class="bi bi-eye"></i> ${t('btn.detail')}</button></td>
   </tr>`).join('');
   document.getElementById('feechg-table-container').innerHTML = `
-    <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1720px;">
-      <thead><tr><th>${t('th.changeNo')}</th><th>${t('th.feeNo')}</th><th>${t('th.billNo')}</th><th>${t('th.loanOrderNo')}</th><th>${t('th.custId')}</th><th>${t('th.feeType')}</th><th>${t('th.changeType2')}</th><th>${t('th.sourceType')}</th><th>${t('th.sourceNo')}</th><th>${t('th.before2')}</th><th>${t('th.changeAmount')}</th><th>${t('th.after2')}</th><th>${t('th.paidChange')}</th><th>${t('th.waivedAmount')}</th><th>${t('th.changeReason')}</th><th>${t('th.operatorId')}</th><th>${t('th.createdAt')}</th></tr></thead>
-      <tbody>${rows||'<tr><td colspan="17"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+    <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1820px;">
+      <thead><tr><th>${t('th.changeNo')}</th><th>${t('th.feeNo')}</th><th>${t('th.billNo')}</th><th>${t('th.loanOrderNo')}</th><th>${t('th.custId')}</th><th>${t('th.feeType')}</th><th>${t('th.changeType2')}</th><th>${t('th.sourceType')}</th><th>${t('th.sourceNo')}</th><th>${t('th.before2')}</th><th>${t('th.changeAmount')}</th><th>${t('th.after2')}</th><th>${t('th.paidChange')}</th><th>${t('th.waivedAmount')}</th><th>${t('th.changeReason')}</th><th>${t('th.operatorId')}</th><th>${t('th.createdAt')}</th><th>${t('th.actions')}</th></tr></thead>
+      <tbody>${rows||'<tr><td colspan="18"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
     </table></div>`;
+}
+
+function openFeeRecordDetail(title, body) {
+  document.getElementById('fee-record-detail-title').textContent = title;
+  document.getElementById('fee-record-detail-body').innerHTML = body;
+  new bootstrap.Modal(document.getElementById('feeRecordDetailModal')).show();
+}
+
+function viewLoanBillFeeDetail(id) {
+  const f = allLoanBillFees().find(item => item.id === id);
+  if (!f) return;
+  openFeeRecordDetail(
+    `${currentLang === 'zh' ? '费用明细' : 'Fee Detail'} — ${f.feeNo}`,
+    `<div class="row g-3">
+      <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
+        ${detailRow('Fee No.',f.feeNo)}${detailRow('Bill No.',f.billNo)}
+        ${detailRow('Loan Order',f.loanOrderNo)}${detailRow('Customer ID','#'+f.userId)}
+        ${detailRow('Installment',f.installmentNo)}${detailRow('Fee Type',f.feeType)}
+        ${detailRow('Fee Name',f.feeName)}${detailRow('Generate Type',f.generateType)}
+      </div></div>
+      <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
+        ${detailRow('Original Amount','PKR '+f.originalAmount.toLocaleString())}
+        ${detailRow('Payable Amount','PKR '+f.payableAmount.toLocaleString())}
+        ${detailRow('Paid Amount','PKR '+f.paidAmount.toLocaleString())}
+        ${detailRow('Remaining Amount','PKR '+f.remainingAmount.toLocaleString())}
+        ${detailRow('Waived Amount','PKR '+f.waivedAmount.toLocaleString())}
+        ${detailRow('Status',f.status)}${detailRow('Created At',f.createdAt)}
+      </div></div>
+      <div class="col-12">${detailRow('Remark',f.remark||'-')}</div>
+    </div>`
+  );
+}
+
+function viewLoanFeeChangeDetail(id) {
+  const ch = allLoanFeeChanges().find(item => item.id === id);
+  if (!ch) return;
+  openFeeRecordDetail(
+    `${currentLang === 'zh' ? '费用变更记录' : 'Fee Change Record'} — ${ch.changeNo}`,
+    `<div class="row g-3">
+      <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
+        ${detailRow('Change No.',ch.changeNo)}${detailRow('Fee No.',ch.feeNo)}
+        ${detailRow('Bill No.',ch.billNo)}${detailRow('Loan Order',ch.loanOrderNo)}
+        ${detailRow('Customer ID','#'+ch.userId)}${detailRow('Installment',ch.installmentNo)}
+        ${detailRow('Fee Type',ch.feeType)}${detailRow('Change Type',ch.changeType)}
+        ${detailRow('Source Type',ch.sourceType)}${detailRow('Source No.',ch.sourceNo)}
+      </div></div>
+      <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
+        ${detailRow('Before Payable','PKR '+ch.beforePayable.toLocaleString())}
+        ${detailRow('Change Amount',(ch.changeAmount<0?'-':'+')+'PKR '+Math.abs(ch.changeAmount).toLocaleString())}
+        ${detailRow('After Payable','PKR '+ch.afterPayable.toLocaleString())}
+        ${detailRow('Before Paid','PKR '+ch.beforePaid.toLocaleString())}
+        ${detailRow('Paid Change','PKR '+ch.paidChangeAmount.toLocaleString())}
+        ${detailRow('After Paid','PKR '+ch.afterPaid.toLocaleString())}
+        ${detailRow('Before Remaining','PKR '+ch.beforeRemaining.toLocaleString())}
+        ${detailRow('After Remaining','PKR '+ch.afterRemaining.toLocaleString())}
+        ${detailRow('Waived Change','PKR '+ch.waivedChangeAmount.toLocaleString())}
+      </div></div>
+      <div class="col-12"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
+        ${detailRow('Change Reason',ch.changeReason)}${detailRow('Operator',ch.operatorId)}
+        ${detailRow('Created At',ch.createdAt)}
+      </div></div>
+    </div>`
+  );
 }
 
 function filterLoanFeeChanges() {
@@ -5488,35 +5595,6 @@ function filterRepaymentAllocations() {
     (!q || a.allocationNo.toLowerCase().includes(q) || a.repaymentOrderNo.toLowerCase().includes(q) || a.feeNo.toLowerCase().includes(q) || a.loanOrderNo.toLowerCase().includes(q)) &&
     (!feeType || a.feeType === feeType)
   ));
-}
-
-function viewBillDetail(id) {
-  const b = loanBills.find(x => x.id === id);
-  document.getElementById('bill-detail-no').textContent = b.billNo;
-  document.getElementById('bill-detail-body').innerHTML = `<div class="row g-3">
-    <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
-      <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">BILL INFO</div>
-      ${detailRow('Bill No.',b.billNo)}${detailRow('Loan Order',b.loanOrderNo)}
-      ${detailRow('Customer ID',customerIdDisplay(b))}
-      ${detailRow('Installment',b.installmentNo+' / '+b.totalInstallments)}
-      ${detailRow('Period',b.periodStart+' ~ '+b.dueDate)}
-      ${detailRow('Status',b.status)}
-      ${b.settledTime?detailRow('Settled At',b.settledTime):''}
-    </div></div>
-    <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
-      <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">AMOUNT SUMMARY</div>
-      ${detailRow('Payable Principal','PKR '+b.payablePrincipal.toLocaleString())}
-      ${detailRow('Payable Interest','PKR '+b.payableInterest.toLocaleString())}
-      ${detailRow('Payable Service Fee','PKR '+b.payableServiceFee.toLocaleString())}
-      ${detailRow('Payable Overdue Fee','PKR '+b.payableOverdueFee.toLocaleString())}
-      ${detailRow('Total Bill Amount','PKR '+b.billAmount.toLocaleString())}
-      <hr style="margin:8px 0;border-color:#e8ecf4;">
-      ${detailRow('Paid Amount','PKR '+b.paidAmount.toLocaleString())}
-      ${detailRow('Remaining Amount','PKR '+b.remainingAmount.toLocaleString())}
-      ${b.isOverdue?detailRow('Overdue Days',b.overdueDays+' days'):''}
-    </div></div>
-  </div>`;
-  new bootstrap.Modal(document.getElementById('billDetailModal')).show();
 }
 
 // ============================================================
