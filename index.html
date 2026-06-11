@@ -767,11 +767,7 @@
 
     <!-- LOAN BILL FEE DETAILS -->
     <div class="page" id="page-loanBillFees">
-      <ul class="nav nav-tabs mb-3" id="loan-fee-tabs">
-        <li class="nav-item"><a class="nav-link active" href="#" onclick="switchLoanFeeTab('details',this)" data-i18n="page.loanBillFees">Fee Details</a></li>
-        <li class="nav-item"><a class="nav-link" href="#" onclick="switchLoanFeeTab('changes',this)" data-i18n="page.loanFeeChanges">Fee Change Records</a></li>
-      </ul>
-      <div class="table-card" id="loan-fee-details-panel">
+      <div class="table-card">
         <div class="table-card-header">
           <span class="title" data-i18n="page.loanBillFees">Fee Details</span>
           <div class="search-row ms-auto">
@@ -796,33 +792,6 @@
         <div id="fee-table-container"></div>
         <div class="px-3 py-2 border-top d-flex align-items-center justify-content-between">
           <span style="font-size:12.5px;color:#718096;" id="fee-count-label"></span>
-          <nav><ul class="pagination pagination-sm mb-0"><li class="page-item disabled"><a class="page-link">Prev</a></li><li class="page-item active"><a class="page-link">1</a></li><li class="page-item disabled"><a class="page-link">Next</a></li></ul></nav>
-        </div>
-      </div>
-      <div class="table-card" id="loan-fee-changes-panel" style="display:none;">
-        <div class="table-card-header">
-          <span class="title" data-i18n="page.loanFeeChanges">Fee Change Records</span>
-          <div class="search-row ms-auto">
-            <input type="text" class="form-control form-control-sm" data-i18n-ph="filter.searchFeeChangePh" placeholder="Change No / Fee No / Source No..." style="width:240px;" id="feechg-search" oninput="filterLoanFeeChanges()">
-            <select class="form-select form-select-sm" style="width:140px;" id="feechg-type-filter" onchange="filterLoanFeeChanges()">
-              <option value="" data-i18n="filter.allChangeTypes">All Change Types</option>
-              <option value="Create">Create</option>
-              <option value="Decrease">Decrease</option>
-              <option value="Waive">Waive</option>
-              <option value="Pay">Pay</option>
-            </select>
-            <select class="form-select form-select-sm" style="width:140px;" id="feechg-source-filter" onchange="filterLoanFeeChanges()">
-              <option value="" data-i18n="filter.allSources">All Sources</option>
-              <option value="Overdue">Overdue</option>
-              <option value="Manual">Manual</option>
-              <option value="Coupon">Coupon</option>
-              <option value="Repayment">Repayment</option>
-            </select>
-          </div>
-        </div>
-        <div id="feechg-table-container"></div>
-        <div class="px-3 py-2 border-top d-flex align-items-center justify-content-between">
-          <span style="font-size:12.5px;color:#718096;" id="feechg-count-label"></span>
           <nav><ul class="pagination pagination-sm mb-0"><li class="page-item disabled"><a class="page-link">Prev</a></li><li class="page-item active"><a class="page-link">1</a></li><li class="page-item disabled"><a class="page-link">Next</a></li></ul></nav>
         </div>
       </div>
@@ -2561,13 +2530,7 @@ function navigate(page) {
   if (page === 'devices')         filterDevices();
   if (page === 'amountrules')     renderAmountRules();
   if (page === 'loanBills')       filterBills();
-  if (page === 'loanBillFees')  {
-    activeLoanFeeTab = 'details';
-    document.querySelectorAll('#loan-fee-tabs .nav-link').forEach((a,i)=>a.classList.toggle('active',i===0));
-    document.getElementById('loan-fee-details-panel').style.display = '';
-    document.getElementById('loan-fee-changes-panel').style.display = 'none';
-    filterLoanBillFees();
-  }
+  if (page === 'loanBillFees')    filterLoanBillFees();
   if (page === 'disbursements')   filterDisbursements();
   if (page === 'repaymentBills')  filterRepaymentBills();
   if (page === 'repaymentAllocations') filterRepaymentAllocations();
@@ -5153,20 +5116,57 @@ function viewBillDetail(id) {
 // FIX 3: REPAYMENT ORDER DETAIL (repayment_order_bill + allocation)
 // + OVERDUE RECORDS TAB (loan_overdue_record)
 // ============================================================
+// repayment_order_bill 还款订单明细：每个还款订单的应还总额 = 该订单下所有明细 payableAmount 之和
 const repaymentOrderBills = {
   'RP20240601001': [
-    { id:1, loanOrderNo:'LN2024060405', billNo:'LB2024060405001', userId:1005, periodNo:1, originalBillAmount:7800, billRemainingAmount:7800, couponAmount:400, payableAmount:7400, allocatedAmount:7800, differenceAmount:400, paidTime:'2024-05-16 10:05', status:'Paid', createdAt:'2024-05-16 10:00' },
+    { id:1, loanOrderNo:'LN2024060405', billNo:'LB2024060405001', userId:1005, periodNo:1, originalBillAmount:8200, billRemainingAmount:8200, couponAmount:400, payableAmount:7800, allocatedAmount:7800, differenceAmount:0, paidTime:'2024-05-16 10:05', status:'Paid', createdAt:'2024-05-16 10:00', updatedAt:'2024-05-16 10:05' },
   ],
   'RP20240602001': [
-    { id:2, loanOrderNo:'LN2024060405', billNo:'LB2024060405002', userId:1005, periodNo:2, originalBillAmount:7800, billRemainingAmount:7800, couponAmount:0, payableAmount:7800, allocatedAmount:7800, differenceAmount:0, paidTime:'2024-05-31 09:50', status:'Paid', createdAt:'2024-05-31 09:45' },
+    { id:2, loanOrderNo:'LN2024060405', billNo:'LB2024060405002', userId:1005, periodNo:2, originalBillAmount:7800, billRemainingAmount:7800, couponAmount:0, payableAmount:7800, allocatedAmount:7800, differenceAmount:0, paidTime:'2024-05-31 09:50', status:'Paid', createdAt:'2024-05-31 09:45', updatedAt:'2024-05-31 09:50' },
   ],
   'RP20240603001': [
-    { id:3, loanOrderNo:'LN2024060409', billNo:'LB2024060409001', userId:1009, periodNo:1, originalBillAmount:4875, billRemainingAmount:4875, couponAmount:0, payableAmount:4875, allocatedAmount:4875, differenceAmount:0, paidTime:'2024-05-30 11:30', status:'Paid', createdAt:'2024-05-30 11:25' },
+    { id:3, loanOrderNo:'LN2024060409', billNo:'LB2024060409001', userId:1009, periodNo:1, originalBillAmount:4875, billRemainingAmount:4875, couponAmount:0, payableAmount:4875, allocatedAmount:4875, differenceAmount:0, paidTime:'2024-05-30 11:30', status:'Paid', createdAt:'2024-05-30 11:25', updatedAt:'2024-05-30 11:30' },
+  ],
+  'RP20240603002': [
+    { id:5, loanOrderNo:'LN2024060409', billNo:'LB2024060409002', userId:1009, periodNo:2, originalBillAmount:4875, billRemainingAmount:4875, couponAmount:0, payableAmount:4875, allocatedAmount:4875, differenceAmount:0, paidTime:'2024-06-14 10:15', status:'Paid', createdAt:'2024-06-14 10:10', updatedAt:'2024-06-14 10:15' },
+  ],
+  'RP20240604001': [
+    { id:6, loanOrderNo:'LN2024060403', billNo:'LB2024060403001', userId:1003, periodNo:1, originalBillAmount:8000, billRemainingAmount:8000, couponAmount:0, payableAmount:8000, allocatedAmount:8000, differenceAmount:0, paidTime:'2024-06-09 14:22', status:'Paid', createdAt:'2024-06-09 14:18', updatedAt:'2024-06-09 14:22' },
   ],
   'RP20240604002': [
-    { id:4, loanOrderNo:'LN2024060412', billNo:'LB2024060412001', userId:1014, periodNo:1, originalBillAmount:4875, billRemainingAmount:4875, couponAmount:400, payableAmount:4475, allocatedAmount:4875, differenceAmount:400, paidTime:'2024-06-02 08:40', status:'Paid', createdAt:'2024-06-02 08:35' },
+    { id:4, loanOrderNo:'LN2024060412', billNo:'LB2024060412001', userId:1012, periodNo:1, originalBillAmount:6400, billRemainingAmount:6400, couponAmount:400, payableAmount:6000, allocatedAmount:6000, differenceAmount:0, paidTime:'2024-06-02 08:40', status:'Paid', createdAt:'2024-06-02 08:35', updatedAt:'2024-06-02 08:40' },
+  ],
+  // 提前结清：一次性结清剩余多期账单，应还总额 = 各期 payable 之和
+  'RP20240604003': [
+    { id:7, loanOrderNo:'LN2024060410', billNo:'LB2024060410001', userId:1010, periodNo:1, originalBillAmount:16000, billRemainingAmount:16000, couponAmount:0, payableAmount:16000, allocatedAmount:0, differenceAmount:16000, paidTime:'-', status:'Pending', createdAt:'2024-06-04 11:00', updatedAt:'2024-06-04 11:00' },
+    { id:8, loanOrderNo:'LN2024060410', billNo:'LB2024060410002', userId:1010, periodNo:2, originalBillAmount:16000, billRemainingAmount:16000, couponAmount:0, payableAmount:16000, allocatedAmount:0, differenceAmount:16000, paidTime:'-', status:'Pending', createdAt:'2024-06-04 11:00', updatedAt:'2024-06-04 11:00' },
+    { id:9, loanOrderNo:'LN2024060410', billNo:'LB2024060410003', userId:1010, periodNo:3, originalBillAmount:16000, billRemainingAmount:16000, couponAmount:0, payableAmount:16000, allocatedAmount:0, differenceAmount:16000, paidTime:'-', status:'Pending', createdAt:'2024-06-04 11:00', updatedAt:'2024-06-04 11:00' },
+  ],
+  'RP20240604004': [
+    { id:10, loanOrderNo:'LN2024060408', billNo:'LB2024060408001', userId:1008, periodNo:1, originalBillAmount:7200, billRemainingAmount:7200, couponAmount:0, payableAmount:7200, allocatedAmount:0, differenceAmount:7200, paidTime:'-', status:'Failed', createdAt:'2024-06-04 09:30', updatedAt:'2024-06-04 09:31' },
+  ],
+  'RP20240604005': [
+    { id:11, loanOrderNo:'LN2024060401', billNo:'LB2024060401001', userId:1001, periodNo:1, originalBillAmount:9750, billRemainingAmount:9750, couponAmount:0, payableAmount:9750, allocatedAmount:0, differenceAmount:9750, paidTime:'-', status:'Pending', createdAt:'2024-06-04 12:00', updatedAt:'2024-06-04 12:00' },
+  ],
+  // 部分还款：本期应还 25000，客户实付 10000，差额 15000
+  'RP20240604006': [
+    { id:12, loanOrderNo:'LN2024060413', billNo:'LB2024060413001', userId:1013, periodNo:1, originalBillAmount:25000, billRemainingAmount:25000, couponAmount:0, payableAmount:25000, allocatedAmount:10000, differenceAmount:15000, paidTime:'2024-04-28 13:10', status:'Pending', createdAt:'2024-04-28 13:05', updatedAt:'2024-04-28 13:10' },
+  ],
+  'RP20240604007': [
+    { id:13, loanOrderNo:'LN2024060411', billNo:'LB2024060411001', userId:1011, periodNo:1, originalBillAmount:7800, billRemainingAmount:7800, couponAmount:0, payableAmount:7800, allocatedAmount:7800, differenceAmount:0, paidTime:'2024-06-06 09:00', status:'Paid', createdAt:'2024-06-06 08:55', updatedAt:'2024-06-06 09:00' },
+  ],
+  'RP20240604008': [
+    { id:14, loanOrderNo:'LN2024060015', billNo:'LB2024060015001', userId:1015, periodNo:1, originalBillAmount:8000, billRemainingAmount:8000, couponAmount:0, payableAmount:8000, allocatedAmount:8000, differenceAmount:0, paidTime:'2024-03-10 16:00', status:'Paid', createdAt:'2024-03-10 15:55', updatedAt:'2024-03-10 16:00' },
   ],
 };
+
+// 还款订单聚合：应还总额、实际分配、差额均由明细汇总而来
+function repaymentBillSum(no, field) {
+  return (repaymentOrderBills[no] || []).reduce((s, b) => s + (Number(b[field]) || 0), 0);
+}
+function repaymentPayableTotal(no) { return repaymentBillSum(no, 'payableAmount'); }
+function repaymentAllocatedTotal(no) { return repaymentBillSum(no, 'allocatedAmount'); }
+function repaymentDifferenceTotal(no) { return repaymentBillSum(no, 'differenceAmount'); }
 
 const repaymentAllocations = {
   'RP20240601001': [
@@ -5333,17 +5333,6 @@ function allRepaymentAllocations() {
   return Object.values(repaymentAllocations).flat();
 }
 
-let activeLoanFeeTab = 'details';
-function switchLoanFeeTab(tab, el) {
-  activeLoanFeeTab = tab;
-  document.querySelectorAll('#loan-fee-tabs .nav-link').forEach(a => a.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('loan-fee-details-panel').style.display = tab === 'details' ? '' : 'none';
-  document.getElementById('loan-fee-changes-panel').style.display = tab === 'changes' ? '' : 'none';
-  if (tab === 'details') filterLoanBillFees();
-  else filterLoanFeeChanges();
-}
-
 function renderLoanBillFees(list) {
   const data = list || allLoanBillFees();
   document.getElementById('fee-count-label').textContent = t('count.showing')(data.length, data.length);
@@ -5363,7 +5352,12 @@ function renderLoanBillFees(list) {
     <td><span class="status-badge ${f.status==='Paid'?'badge-active':f.status==='Waived'?'':'badge-pending'}" style="${f.status==='Waived'?'background:#f1f5f9;color:#64748b;':''}font-size:11px;">${f.status}</span></td>
     <td style="font-size:12px;">${f.generateType}</td>
     <td style="font-size:12px;color:#64748b;max-width:180px;">${f.remark||'-'}</td>
-    <td><button class="btn btn-sm btn-outline-primary action-btn" onclick="viewLoanBillFeeDetail(${f.id})"><i class="bi bi-eye"></i> ${t('btn.detail')}</button></td>
+    <td>
+      <div class="d-flex gap-1 flex-wrap">
+        <button class="btn btn-sm btn-outline-primary action-btn" onclick="viewLoanBillFeeDetail(${f.id})"><i class="bi bi-eye"></i> ${t('btn.detail')}</button>
+        <button class="btn btn-sm btn-outline-secondary action-btn" onclick="viewFeeChangeRecords('${f.feeNo}')"><i class="bi bi-clock-history"></i> ${currentLang === 'zh' ? '变更记录' : 'Changes'}</button>
+      </div>
+    </td>
   </tr>`).join('');
   document.getElementById('fee-table-container').innerHTML = `
     <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1600px;">
@@ -5383,16 +5377,16 @@ function filterLoanBillFees() {
   ));
 }
 
-function renderLoanFeeChanges(list) {
-  const data = list || allLoanFeeChanges();
-  document.getElementById('feechg-count-label').textContent = t('count.showing')(data.length, data.length);
-  const rows = data.map(ch => `<tr>
+function openFeeRecordDetail(title, body) {
+  document.getElementById('fee-record-detail-title').textContent = title;
+  document.getElementById('fee-record-detail-body').innerHTML = body;
+  new bootstrap.Modal(document.getElementById('feeRecordDetailModal')).show();
+}
+
+function viewFeeChangeRecords(feeNo) {
+  const changes = allLoanFeeChanges().filter(ch => ch.feeNo === feeNo);
+  const rows = changes.map(ch => `<tr>
     <td><code style="font-size:11px;">${ch.changeNo}</code></td>
-    <td><code style="font-size:11px;color:#64748b;">${ch.feeNo}</code></td>
-    <td><code style="font-size:11px;color:#64748b;">${ch.billNo}</code></td>
-    <td><code style="font-size:11px;color:#64748b;">${ch.loanOrderNo}</code></td>
-    <td style="font-size:12px;">#${ch.userId}</td>
-    <td><span class="role-tag" style="font-size:11px;">${ch.feeType}</span></td>
     <td><span class="role-tag" style="font-size:11px;">${ch.changeType}</span></td>
     <td style="font-size:12px;">${ch.sourceType}</td>
     <td><code style="font-size:11px;">${ch.sourceNo}</code></td>
@@ -5404,19 +5398,19 @@ function renderLoanFeeChanges(list) {
     <td style="font-size:12px;color:#64748b;max-width:220px;">${ch.changeReason}</td>
     <td style="font-size:12px;">${ch.operatorId}</td>
     <td style="font-size:12px;color:#94a3b8;white-space:nowrap;">${ch.createdAt}</td>
-    <td><button class="btn btn-sm btn-outline-primary action-btn" onclick="viewLoanFeeChangeDetail(${ch.id})"><i class="bi bi-eye"></i> ${t('btn.detail')}</button></td>
   </tr>`).join('');
-  document.getElementById('feechg-table-container').innerHTML = `
-    <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1820px;">
-      <thead><tr><th>${t('th.changeNo')}</th><th>${t('th.feeNo')}</th><th>${t('th.billNo')}</th><th>${t('th.loanOrderNo')}</th><th>${t('th.custId')}</th><th>${t('th.feeType')}</th><th>${t('th.changeType2')}</th><th>${t('th.sourceType')}</th><th>${t('th.sourceNo')}</th><th>${t('th.before2')}</th><th>${t('th.changeAmount')}</th><th>${t('th.after2')}</th><th>${t('th.paidChange')}</th><th>${t('th.waivedAmount')}</th><th>${t('th.changeReason')}</th><th>${t('th.operatorId')}</th><th>${t('th.createdAt')}</th><th>${t('th.actions')}</th></tr></thead>
-      <tbody>${rows||'<tr><td colspan="18"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
-    </table></div>`;
-}
-
-function openFeeRecordDetail(title, body) {
-  document.getElementById('fee-record-detail-title').textContent = title;
-  document.getElementById('fee-record-detail-body').innerHTML = body;
-  new bootstrap.Modal(document.getElementById('feeRecordDetailModal')).show();
+  openFeeRecordDetail(
+    `${currentLang === 'zh' ? '费用变更记录' : 'Fee Change Records'} — ${feeNo}`,
+    changes.length ? `
+      <div class="mb-3 d-flex align-items-center justify-content-between">
+        <span style="font-size:13px;color:#64748b;">${currentLang === 'zh' ? `共 ${changes.length} 条变更记录` : `${changes.length} change record(s)`}</span>
+      </div>
+      <div style="overflow-x:auto;"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1200px;">
+        <thead><tr><th>${t('th.changeNo')}</th><th>${t('th.changeType2')}</th><th>${t('th.sourceType')}</th><th>${t('th.sourceNo')}</th><th>${t('th.before2')}</th><th>${t('th.changeAmount')}</th><th>${t('th.after2')}</th><th>${t('th.paidChange')}</th><th>${t('th.waivedAmount')}</th><th>${t('th.changeReason')}</th><th>${t('th.operatorId')}</th><th>${t('th.createdAt')}</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>` :
+      `<div class="empty-state"><i class="bi bi-clock-history"></i>${currentLang === 'zh' ? '当前费用明细暂无变更记录' : 'No change records for this fee detail'}</div>`
+  );
 }
 
 function viewLoanBillFeeDetail(id) {
@@ -5442,49 +5436,6 @@ function viewLoanBillFeeDetail(id) {
       <div class="col-12">${detailRow('Remark',f.remark||'-')}</div>
     </div>`
   );
-}
-
-function viewLoanFeeChangeDetail(id) {
-  const ch = allLoanFeeChanges().find(item => item.id === id);
-  if (!ch) return;
-  openFeeRecordDetail(
-    `${currentLang === 'zh' ? '费用变更记录' : 'Fee Change Record'} — ${ch.changeNo}`,
-    `<div class="row g-3">
-      <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
-        ${detailRow('Change No.',ch.changeNo)}${detailRow('Fee No.',ch.feeNo)}
-        ${detailRow('Bill No.',ch.billNo)}${detailRow('Loan Order',ch.loanOrderNo)}
-        ${detailRow('Customer ID','#'+ch.userId)}${detailRow('Installment',ch.installmentNo)}
-        ${detailRow('Fee Type',ch.feeType)}${detailRow('Change Type',ch.changeType)}
-        ${detailRow('Source Type',ch.sourceType)}${detailRow('Source No.',ch.sourceNo)}
-      </div></div>
-      <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
-        ${detailRow('Before Payable','PKR '+ch.beforePayable.toLocaleString())}
-        ${detailRow('Change Amount',(ch.changeAmount<0?'-':'+')+'PKR '+Math.abs(ch.changeAmount).toLocaleString())}
-        ${detailRow('After Payable','PKR '+ch.afterPayable.toLocaleString())}
-        ${detailRow('Before Paid','PKR '+ch.beforePaid.toLocaleString())}
-        ${detailRow('Paid Change','PKR '+ch.paidChangeAmount.toLocaleString())}
-        ${detailRow('After Paid','PKR '+ch.afterPaid.toLocaleString())}
-        ${detailRow('Before Remaining','PKR '+ch.beforeRemaining.toLocaleString())}
-        ${detailRow('After Remaining','PKR '+ch.afterRemaining.toLocaleString())}
-        ${detailRow('Waived Change','PKR '+ch.waivedChangeAmount.toLocaleString())}
-      </div></div>
-      <div class="col-12"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
-        ${detailRow('Change Reason',ch.changeReason)}${detailRow('Operator',ch.operatorId)}
-        ${detailRow('Created At',ch.createdAt)}
-      </div></div>
-    </div>`
-  );
-}
-
-function filterLoanFeeChanges() {
-  const q = (document.getElementById('feechg-search')?.value||'').toLowerCase();
-  const type = document.getElementById('feechg-type-filter')?.value || '';
-  const source = document.getElementById('feechg-source-filter')?.value || '';
-  renderLoanFeeChanges(allLoanFeeChanges().filter(ch =>
-    (!q || ch.changeNo.toLowerCase().includes(q) || ch.feeNo.toLowerCase().includes(q) || ch.sourceNo.toLowerCase().includes(q) || ch.loanOrderNo.toLowerCase().includes(q)) &&
-    (!type || ch.changeType === type) &&
-    (!source || ch.sourceType === source)
-  ));
 }
 
 function renderRepaymentBills(list) {
