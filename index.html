@@ -494,7 +494,7 @@
         <div class="table-card-header">
           <span class="title" data-i18n="page.accountCancel">Account Cancellation</span>
           <div class="search-row ms-auto">
-            <input type="text" class="form-control form-control-sm" data-i18n-ph="filter.searchCancelPh" placeholder="Request No / Name / Mobile..." style="width:230px;" id="cancel-search" oninput="filterAccountCancel()">
+            <input type="text" class="form-control form-control-sm" data-i18n-ph="filter.searchCancelPh" placeholder="Request No / Customer ID..." style="width:230px;" id="cancel-search" oninput="filterAccountCancel()">
             <select class="form-select form-select-sm" style="width:145px;" id="cancel-status-filter" onchange="filterAccountCancel()">
               <option value="" data-i18n="filter.allStatus">All Status</option>
               <option value="Pending">Pending</option>
@@ -1083,7 +1083,7 @@
         <span class="title" id="collection-tab-title">Collection Tasks</span>
         <!-- Tasks toolbar -->
         <div class="search-row ms-auto" id="cs-tasks-toolbar">
-          <input type="text" class="form-control form-control-sm" placeholder="Order No / Mobile..." style="width:150px;" id="cs-task-search" oninput="filterCollectionTasks()">
+          <input type="text" class="form-control form-control-sm" placeholder="Order No / Customer ID..." style="width:180px;" id="cs-task-search" oninput="filterCollectionTasks()">
           <select class="form-select form-select-sm" style="width:120px;" id="cs-task-days" onchange="filterCollectionTasks()">
             <option value="">All Overdue Days</option>
             <option value="1-7">1–7 Days</option>
@@ -1111,7 +1111,7 @@
         </div>
         <!-- Follow-ups toolbar -->
         <div class="search-row ms-auto" id="cs-followups-toolbar" style="display:none;">
-          <input type="text" class="form-control form-control-sm" placeholder="Order No / Mobile..." style="width:170px;" id="cs-fu-search" oninput="filterFollowups()">
+          <input type="text" class="form-control form-control-sm" placeholder="Order No / Customer ID..." style="width:190px;" id="cs-fu-search" oninput="filterFollowups()">
           <select class="form-select form-select-sm" style="width:145px;" id="cs-fu-result" onchange="filterFollowups()">
             <option value="">All Results</option>
             <option value="Contacted">Contacted</option>
@@ -1133,7 +1133,7 @@
         </div>
         <!-- Promises toolbar -->
         <div class="search-row ms-auto" id="cs-promises-toolbar" style="display:none;">
-          <input type="text" class="form-control form-control-sm" placeholder="Order No / Mobile..." style="width:170px;" id="cs-ptp-search" oninput="filterPromises()">
+          <input type="text" class="form-control form-control-sm" placeholder="Order No / Customer ID..." style="width:190px;" id="cs-ptp-search" oninput="filterPromises()">
           <select class="form-select form-select-sm" style="width:130px;" id="cs-ptp-status" onchange="filterPromises()">
             <option value="">All Status</option>
             <option value="Pending">Pending</option>
@@ -1256,7 +1256,7 @@
         <div class="table-card-header">
           <span class="title" data-i18n="page.devices">Device Management</span>
           <div class="search-row ms-auto">
-            <input type="text" class="form-control form-control-sm" data-i18n-ph="filter.searchDevicePh" placeholder="Device ID / Name / Mobile..." style="width:230px;" id="device-search" oninput="filterDevices()">
+            <input type="text" class="form-control form-control-sm" data-i18n-ph="filter.searchDevicePh" placeholder="Device ID / Customer ID / Fingerprint..." style="width:260px;" id="device-search" oninput="filterDevices()">
             <select class="form-select form-select-sm" style="width:130px;" id="device-status-filter" onchange="filterDevices()">
               <option value="" data-i18n="filter.allStatus">All Status</option>
               <option value="Trusted">Trusted</option>
@@ -2105,7 +2105,7 @@ const i18n = {
     'th.orderNo':'Order No.','th.customer':'Customer','th.borrowCount':'Borrow Count','th.amountPKR':'Amount (PKR)','th.installments':'Installments','th.status':'Status','th.appliedAt':'Applied At','th.email':'Email','th.mobile':'Mobile','th.roles':'Roles','th.lastLogin':'Last Login','th.actions':'Actions','th.quickReview':'Quick Review','th.roleCode':'Code','th.roleName':'Role Name','th.description':'Description','th.users':'Users','th.sort':'Sort','th.permName':'Permission Name','th.permCode':'Code','th.type':'Type','th.routePath':'Route Path','th.idCard':'ID Card','th.creditStatus':'Credit Status','th.creditInfo':'Credit Info','th.wallet':'Wallet','th.blacklisted':'Blacklisted','th.registered':'Registered','th.amount':'Amount','th.channel':'Channel','th.disbursedAt':'Disbursed At','th.finalDue':'Final Due','th.repaymentNo':'Repayment No.','th.loanOrderNo':'Loan Order No.','th.repayType':'Type','th.reconcile':'Reconcile','th.payTime':'Pay Time','th.principal':'Principal','th.overdueDays':'Overdue Days','th.overdueFee':'Overdue Fee','th.totalRemaining':'Total Remaining','th.dueDate':'Due Date','th.collector':'Collector','th.couponNo':'Coupon No.','th.minLoan':'Min Loan','th.minRepay':'Min Repay','th.deductType':'Deduct Type','th.repayTypeCol':'Repay Type','th.effectivePeriod':'Effective Period','th.usedTime':'Used Time','th.time':'Time','th.operator':'Operator','th.module':'Module','th.action':'Action','th.target':'Target','th.ip':'IP','th.result':'Result','th.accountType':'Account Type','th.accountNo':'Account No.','th.boundMobile':'Bound Mobile','th.relation':'Relation','th.verifyStatus':'Verify Status','th.default':'Default','th.lastVerified':'Last Verified','th.updatedAt':'Updated At','th.requestNo':'Request No.','th.eligibility':'Eligibility','th.otpStatus':'OTP Status','th.openLoanCheck':'Open Loan Check','th.reviewedBy':'Reviewed By','th.reviewTime':'Review Time','th.scene':'Scene','th.sentAt':'Sent At','th.expiresAt':'Expires At','th.attempts':'Attempts','th.lockStatus':'Lock Status','th.deviceIp':'Device / IP','th.message':'Message','th.deviceId':'Device ID','th.platform':'Platform','th.fingerprint':'Fingerprint','th.riskLevel':'Risk','th.currentDevice':'Current',
     'btn.createUser':'Create User','btn.createRole':'Create Role','btn.addPerm':'Add Permission','btn.issueCoupon':'Issue Coupon','btn.expandAll':'Expand All','btn.collapseAll':'Collapse All','btn.edit':'Edit','btn.delete':'Delete','btn.resetPwd':'Pwd','btn.disable':'Disable','btn.enable':'Enable','btn.detail':'Detail','btn.blacklist':'Blacklist','btn.unblock':'Unblock','btn.freeze':'Freeze','btn.unfreeze':'Unfreeze','btn.remind':'Remind','btn.void':'Void','btn.perms':'Perms','btn.save':'Save','btn.cancel':'Cancel','btn.confirm':'Confirm','btn.close':'Close','btn.selectAll':'Select All','btn.clearAll':'Clear All','btn.issue':'Issue','btn.verify':'Verify','btn.resend':'Resend','btn.unlock':'Unlock','btn.invalidate':'Invalidate','btn.trust':'Trust','btn.approve':'Approve','btn.reject':'Reject',
     'page.adminUsers':'Admin Users','page.roles':'Roles','page.permTree':'Permission Tree','page.customers':'Customers','page.walletAccounts':'Wallet Accounts','page.accountCancel':'Account Cancellation','page.otpLogs':'OTP Logs','page.devices':'Device Management','page.loanOrders':'Loan Orders','page.repayments':'Repayment Orders','page.overdueOrders':'Overdue Orders','page.loanCoupons':'Loan Coupons','page.repayCoupons':'Repayment Coupons','page.auditLog':'Audit Log',
-    'filter.searchUserPh':'Search username / name...','filter.allStatus':'All Status','filter.active':'Active','filter.disabled':'Disabled','filter.allRoles':'All Roles','filter.searchRolePh':'Search role...','filter.searchCustPh':'Name / Mobile / ID card...','filter.searchWalletPh':'Name / Mobile / Account...','filter.searchCancelPh':'Request No / Name / Mobile...','filter.searchOtpPh':'Request ID / Mobile / Device...','filter.searchDevicePh':'Device ID / Name / Mobile...','filter.allVerifyStatus':'All Verify Status','filter.allEligibility':'All Eligibility','filter.allScenes':'All Scenes','filter.allRisk':'All Risk','filter.allCreditStatus':'All Credit Status','filter.allBlacklist':'Blacklist: All','filter.blacklisted':'Blacklisted','filter.normal':'Normal','filter.searchLoanPh':'Order No...','filter.allChannels':'All Channels','filter.allQuickReview':'All Review Types','filter.quickYes':'Quick Review','filter.quickNo':'Normal Review','filter.searchRepayPh':'Repayment No / Loan No...','filter.searchOdPh':'Order No / Mobile...','filter.allOverdueDays':'All Overdue Days','filter.od17':'1–7 Days','filter.od830':'8–30 Days','filter.od30p':'30+ Days','filter.searchCouponPh':'Coupon No / Mobile...','filter.searchAuditPh':'Operator / Action...','filter.allModules':'All Modules','filter.allResults':'All Results',
+    'filter.searchUserPh':'Search username / name...','filter.allStatus':'All Status','filter.active':'Active','filter.disabled':'Disabled','filter.allRoles':'All Roles','filter.searchRolePh':'Search role...','filter.searchCustPh':'Name / Mobile / ID card...','filter.searchWalletPh':'Customer ID / Account...','filter.searchCancelPh':'Request No / Customer ID...','filter.searchOtpPh':'Request ID / Mobile / Device...','filter.searchDevicePh':'Device ID / Customer ID / Fingerprint...','filter.allVerifyStatus':'All Verify Status','filter.allEligibility':'All Eligibility','filter.allScenes':'All Scenes','filter.allRisk':'All Risk','filter.allCreditStatus':'All Credit Status','filter.allBlacklist':'Blacklist: All','filter.blacklisted':'Blacklisted','filter.normal':'Normal','filter.searchLoanPh':'Order No...','filter.allChannels':'All Channels','filter.allQuickReview':'All Review Types','filter.quickYes':'Quick Review','filter.quickNo':'Normal Review','filter.searchRepayPh':'Repayment No / Loan No...','filter.searchOdPh':'Order No / Mobile...','filter.allOverdueDays':'All Overdue Days','filter.od17':'1–7 Days','filter.od830':'8–30 Days','filter.od30p':'30+ Days','filter.searchCouponPh':'Coupon No / Mobile...','filter.searchAuditPh':'Operator / Action...','filter.allModules':'All Modules','filter.allResults':'All Results',
     'od.statTotal':'Total Overdue Orders','od.stat17':'1–7 Days Overdue','od.stat830':'8–30 Days Overdue','od.stat30p':'30+ Days Overdue',
     'coupon.loanTab':'Loan Coupons','coupon.repayTab':'Repayment Coupons',
     'modal.createUser':'Create Admin User','modal.editUser':'Edit Admin User','modal.resetPwd':'Reset Password','modal.createRole':'Create Role','modal.editRole':'Edit Role','modal.assignPerms':'Assign Permissions — ','modal.addPerm':'Add Permission','modal.editPerm':'Edit Permission','modal.custDetail':'Customer Detail','modal.loanDetail':'Loan Order Detail','modal.issueCoupon':'Issue Coupon',
@@ -2126,7 +2126,7 @@ const i18n = {
     'th.orderNo':'订单号','th.customer':'客户','th.borrowCount':'借款次数','th.amountPKR':'金额 (PKR)','th.installments':'期数','th.status':'状态','th.appliedAt':'申请时间','th.email':'邮箱','th.mobile':'手机号','th.roles':'角色','th.lastLogin':'最近登录','th.actions':'操作','th.quickReview':'快速审核','th.roleCode':'角色编码','th.roleName':'角色名称','th.description':'描述','th.users':'用户数','th.sort':'排序','th.permName':'权限名称','th.permCode':'权限编码','th.type':'类型','th.routePath':'路由路径','th.idCard':'身份证','th.creditStatus':'授信状态','th.creditInfo':'授信信息','th.wallet':'钱包','th.blacklisted':'黑名单','th.registered':'注册时间','th.amount':'金额','th.channel':'渠道','th.disbursedAt':'放款时间','th.finalDue':'最终到期日','th.repaymentNo':'还款单号','th.loanOrderNo':'借款订单号','th.repayType':'还款类型','th.reconcile':'对账状态','th.payTime':'支付时间','th.principal':'本金','th.overdueDays':'逾期天数','th.overdueFee':'逾期费','th.totalRemaining':'剩余应还','th.dueDate':'到期日','th.collector':'催收员','th.couponNo':'券号','th.minLoan':'最低借款','th.minRepay':'最低还款','th.deductType':'抵扣类型','th.repayTypeCol':'还款类型','th.effectivePeriod':'有效期','th.usedTime':'使用时间','th.time':'时间','th.operator':'操作人','th.module':'模块','th.action':'操作','th.target':'目标对象','th.ip':'IP','th.result':'结果','th.accountType':'账号类型','th.accountNo':'账号','th.boundMobile':'绑定手机号','th.relation':'关系','th.verifyStatus':'验证状态','th.default':'默认','th.lastVerified':'最近验证','th.updatedAt':'更新时间','th.requestNo':'申请单号','th.eligibility':'可注销校验','th.otpStatus':'OTP 状态','th.openLoanCheck':'在贷校验','th.reviewedBy':'审核人','th.reviewTime':'审核时间','th.scene':'场景','th.sentAt':'发送时间','th.expiresAt':'过期时间','th.attempts':'次数','th.lockStatus':'锁定状态','th.deviceIp':'设备 / IP','th.message':'消息','th.deviceId':'设备 ID','th.platform':'平台','th.fingerprint':'指纹','th.riskLevel':'风险','th.currentDevice':'当前设备',
     'btn.createUser':'新建用户','btn.createRole':'新建角色','btn.addPerm':'新增权限','btn.issueCoupon':'发放券','btn.expandAll':'展开全部','btn.collapseAll':'收起全部','btn.edit':'编辑','btn.delete':'删除','btn.resetPwd':'改密','btn.disable':'禁用','btn.enable':'启用','btn.detail':'详情','btn.blacklist':'拉黑','btn.unblock':'解黑','btn.freeze':'冻结','btn.unfreeze':'解冻','btn.remind':'催收','btn.void':'作废','btn.perms':'配权','btn.save':'保存','btn.cancel':'取消','btn.confirm':'确认','btn.close':'关闭','btn.selectAll':'全选','btn.clearAll':'清空','btn.issue':'发放','btn.verify':'验证','btn.resend':'重发','btn.unlock':'解锁','btn.invalidate':'失效','btn.trust':'信任','btn.approve':'通过','btn.reject':'拒绝',
     'page.adminUsers':'管理员用户','page.roles':'角色列表','page.permTree':'权限树','page.customers':'客户列表','page.walletAccounts':'收款账号管理','page.accountCancel':'账号注销','page.otpLogs':'OTP 记录','page.devices':'设备管理','page.loanOrders':'借款订单','page.repayments':'还款订单','page.overdueOrders':'逾期订单','page.loanCoupons':'借款优惠券','page.repayCoupons':'还款优惠券','page.auditLog':'审计日志',
-    'filter.searchUserPh':'搜索用户名/姓名...','filter.allStatus':'全部状态','filter.active':'启用','filter.disabled':'禁用','filter.allRoles':'全部角色','filter.searchRolePh':'搜索角色...','filter.searchCustPh':'姓名/手机/身份证...','filter.searchWalletPh':'姓名/手机/收款账号...','filter.searchCancelPh':'申请单号/姓名/手机号...','filter.searchOtpPh':'请求ID/手机号/设备...','filter.searchDevicePh':'设备ID/姓名/手机号...','filter.allVerifyStatus':'全部验证状态','filter.allEligibility':'全部校验结果','filter.allScenes':'全部场景','filter.allRisk':'全部风险','filter.allCreditStatus':'全部授信状态','filter.allBlacklist':'黑名单：全部','filter.blacklisted':'已拉黑','filter.normal':'正常','filter.searchLoanPh':'订单号...','filter.allChannels':'全部渠道','filter.allQuickReview':'全部审核类型','filter.quickYes':'快速审核','filter.quickNo':'普通审核','filter.searchRepayPh':'还款单号/借款单号...','filter.searchOdPh':'订单号/手机号...','filter.allOverdueDays':'全部逾期天数','filter.od17':'1–7天','filter.od830':'8–30天','filter.od30p':'30天以上','filter.searchCouponPh':'券号/手机号...','filter.searchAuditPh':'操作人/操作内容...','filter.allModules':'全部模块','filter.allResults':'全部结果',
+    'filter.searchUserPh':'搜索用户名/姓名...','filter.allStatus':'全部状态','filter.active':'启用','filter.disabled':'禁用','filter.allRoles':'全部角色','filter.searchRolePh':'搜索角色...','filter.searchCustPh':'姓名/手机/身份证...','filter.searchWalletPh':'客户ID/收款账号...','filter.searchCancelPh':'申请单号/客户ID...','filter.searchOtpPh':'请求ID/手机号/设备...','filter.searchDevicePh':'设备ID/客户ID/设备指纹...','filter.allVerifyStatus':'全部验证状态','filter.allEligibility':'全部校验结果','filter.allScenes':'全部场景','filter.allRisk':'全部风险','filter.allCreditStatus':'全部授信状态','filter.allBlacklist':'黑名单：全部','filter.blacklisted':'已拉黑','filter.normal':'正常','filter.searchLoanPh':'订单号...','filter.allChannels':'全部渠道','filter.allQuickReview':'全部审核类型','filter.quickYes':'快速审核','filter.quickNo':'普通审核','filter.searchRepayPh':'还款单号/借款单号...','filter.searchOdPh':'订单号/手机号...','filter.allOverdueDays':'全部逾期天数','filter.od17':'1–7天','filter.od830':'8–30天','filter.od30p':'30天以上','filter.searchCouponPh':'券号/手机号...','filter.searchAuditPh':'操作人/操作内容...','filter.allModules':'全部模块','filter.allResults':'全部结果',
     'od.statTotal':'总逾期订单','od.stat17':'1–7天逾期','od.stat830':'8–30天逾期','od.stat30p':'30天以上逾期',
     'coupon.loanTab':'借款优惠券','coupon.repayTab':'还款优惠券',
     'modal.createUser':'新建管理员','modal.editUser':'编辑管理员','modal.resetPwd':'重置密码','modal.createRole':'新建角色','modal.editRole':'编辑角色','modal.assignPerms':'配置权限 — ','modal.addPerm':'新增权限','modal.editPerm':'编辑权限','modal.custDetail':'客户详情','modal.loanDetail':'借款订单详情','modal.issueCoupon':'发放优惠券',
@@ -2521,7 +2521,6 @@ const pageMap = {
 };
 
 function navigate(page) {
-  if (page !== 'customers') customerListSensitiveVisible = false;
   window.scrollTo(0, 0);
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-link-item').forEach(n => n.classList.remove('active'));
@@ -3054,7 +3053,6 @@ function accountStatusBadge(status) {
 
 const currentOperator = { username:'super.admin', roleCode:'SUPER_ADMIN' };
 const sensitivePermissionCode = 'customer:list:view_sensitive';
-let customerListSensitiveVisible = false;
 let customerDetailSensitiveVisible = false;
 let currentCustDetailId = null;
 let currentCustDetailTab = 'profile';
@@ -3077,7 +3075,7 @@ function recordSensitiveView(scope, customerId) {
     time: new Date().toISOString().slice(0,16).replace('T',' '),
     operator: currentOperator.username,
     module: 'Customer',
-    action: scope === 'list' ? 'View sensitive customer list' : 'View sensitive customer detail',
+    action: 'View sensitive customer detail',
     target: customerId ? `USR-${customerId}` : 'Customer List',
     ip: '192.168.1.10',
     result: 'Success'
@@ -3086,12 +3084,6 @@ function recordSensitiveView(scope, customerId) {
 function toggleCustomerSensitive(scope) {
   if (!currentOperatorHasPermission(sensitivePermissionCode)) {
     toast(currentLang === 'zh' ? '无权查看客户敏感信息' : 'No permission to view sensitive customer information', 'error');
-    return;
-  }
-  if (scope === 'list') {
-    customerListSensitiveVisible = !customerListSensitiveVisible;
-    if (customerListSensitiveVisible) recordSensitiveView('list');
-    filterCustomers();
     return;
   }
   customerDetailSensitiveVisible = !customerDetailSensitiveVisible;
@@ -3117,25 +3109,15 @@ function updateCustomerDetailSensitiveButton() {
 function renderCustomers(list) {
   const data = list || customers;
   document.getElementById('cust-count-label').textContent = `Showing 1–${data.length} of ${data.length}`;
-  const canViewSensitive = currentOperatorHasPermission(sensitivePermissionCode);
-  const sensitiveToolbar = `
-    <div class="sensitive-toolbar">
-      <i class="bi bi-shield-lock-fill"></i>
-      <span>${currentLang === 'zh' ? '姓名、手机号和身份证号默认脱敏；明文查看操作将记录到审计日志。' : 'Names, mobile numbers, and ID cards are masked by default. Reveals are written to the audit log.'}</span>
-      ${canViewSensitive ? `<button class="btn btn-sm ${customerListSensitiveVisible ? 'btn-warning' : 'btn-outline-warning'}" onclick="toggleCustomerSensitive('list')">
-        <i class="bi bi-${customerListSensitiveVisible ? 'eye-slash' : 'eye'}"></i>
-        ${customerListSensitiveVisible ? (currentLang === 'zh' ? '隐藏敏感信息' : 'Hide sensitive info') : (currentLang === 'zh' ? '查看敏感信息' : 'View sensitive info')}
-      </button>` : `<span class="status-badge badge-disabled ms-auto">${currentLang === 'zh' ? '无查看权限' : 'No reveal permission'}</span>`}
-    </div>`;
   const rows = data.map(c => `
     <tr>
       <td><code style="font-size:12px;">${c.id}</code></td>
       <td>
-        <div class="${customerListSensitiveVisible ? '' : 'masked-value'}" style="font-weight:600;">${sensitiveValue('name', c.name, customerListSensitiveVisible)}</div>
-        <div class="${customerListSensitiveVisible ? '' : 'masked-value'}" style="font-size:11.5px;color:#94a3b8;">${sensitiveValue('mobile', c.mobile, customerListSensitiveVisible)}</div>
+        <div class="masked-value" style="font-weight:600;">${maskName(c.name)}</div>
+        <div class="masked-value" style="font-size:11.5px;color:#94a3b8;">${maskMobile(c.mobile)}</div>
       </td>
       <td style="font-size:12.5px;">${genderLabel(customerGender(c))}</td>
-      <td class="${customerListSensitiveVisible ? '' : 'masked-value'}" style="font-size:12.5px;font-family:monospace;">${sensitiveValue('id', c.idCard, customerListSensitiveVisible)}</td>
+      <td class="masked-value" style="font-size:12.5px;font-family:monospace;">${maskId(c.idCard)}</td>
       <td>${c.creditStatus === 'Approved' ? `<span class="status-badge badge-active">${c.creditStatus}</span>` : c.creditStatus === 'Pending' ? `<span class="status-badge badge-pending">${c.creditStatus}</span>` : c.creditStatus === 'Rejected' ? `<span class="status-badge badge-disabled">${c.creditStatus}</span>` : `<span class="status-badge" style="background:#f1f5f9;color:#64748b;">${c.creditStatus}</span>`}</td>
       <td>
         <div style="font-size:13px;">${t('label.limitPKR')} <strong>${fmtMoney(c.totalCredit)}</strong></div>
@@ -3159,7 +3141,6 @@ function renderCustomers(list) {
       </td>
     </tr>`).join('');
   document.getElementById('cust-table-container').innerHTML = `
-    ${sensitiveToolbar}
     <table class="table table-hover mb-0">
       <thead><tr><th>${currentLang === 'zh' ? '客户 ID' : 'Customer ID'}</th><th>${t('th.customer')}</th><th>${currentLang === 'zh' ? '性别' : 'Gender'}</th><th>${t('th.idCard')}</th><th>${t('th.creditStatus')}</th><th>${t('th.creditInfo')}</th><th>${currentLang === 'zh' ? '可用额度' : 'Available Credit'}</th><th>${currentLang === 'zh' ? '账号状态' : 'Account Status'}</th><th>${t('th.registered')}</th><th>${t('th.actions')}</th></tr></thead>
       <tbody>${rows || '<tr><td colspan="10"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
@@ -3192,6 +3173,33 @@ function detailRow(label, val) {
     <span style="color:#64748b;font-size:13px;">${localizePhrase(label)}</span>
     <span style="font-weight:500;font-size:13px;max-width:55%;text-align:right;">${displayVal ?? '-'}</span>
   </div>`;
+}
+
+function customerIdOf(record) {
+  if (!record) return '-';
+  if (record.userId !== undefined && record.userId !== null && record.userId !== '') return record.userId;
+  const matchedCustomer = customers.find(c =>
+    (record.mobile && c.mobile === record.mobile) ||
+    (record.custName && c.name === record.custName)
+  );
+  if (matchedCustomer) return matchedCustomer.id;
+  const orderNo = record.loanOrderNo || record.loanNo || record.orderNo || record.no;
+  if (orderNo && typeof loanOrders !== 'undefined') {
+    const loan = loanOrders.find(l => l.no === orderNo);
+    if (loan && loan !== record) return customerIdOf(loan);
+  }
+  if (orderNo && typeof collectionTasks !== 'undefined') {
+    const task = collectionTasks.find(t => t.orderNo === orderNo);
+    if (task) return 2000 + Number(task.id || 0);
+  }
+  if (typeof record.id === 'number') return 2000 + record.id;
+  const numericKey = String(orderNo || record.id || '').replace(/\D/g, '');
+  if (numericKey) return 2000 + (Number(numericKey.slice(-4)) % 8000);
+  return '-';
+}
+function customerIdDisplay(record) {
+  const id = customerIdOf(record);
+  return id === '-' ? '-' : `#${id}`;
 }
 
 function toggleCustomerFreeze(id) {
@@ -3274,10 +3282,7 @@ function renderAccountCancel(list) {
   const rows = data.map(r => `
     <tr>
       <td><code style="font-size:12px;">${r.requestNo}</code></td>
-      <td>
-        <div style="font-weight:600;">${r.custName}</div>
-        <div style="font-size:11.5px;color:#94a3b8;">#${r.userId} · ${r.mobile}</div>
-      </td>
+      <td><code style="font-size:12px;">${customerIdDisplay(r)}</code></td>
       <td>${statusBadge(r.eligibility)}</td>
       <td>${statusBadge(r.otpStatus)}</td>
       <td style="font-size:12.5px;">${r.openLoanCheck}</td>
@@ -3305,7 +3310,7 @@ function filterAccountCancel() {
   const status = document.getElementById('cancel-status-filter').value;
   const check = document.getElementById('cancel-check-filter').value;
   renderAccountCancel(cancelRequests.filter(r =>
-    (!q || r.requestNo.toLowerCase().includes(q) || r.custName.toLowerCase().includes(q) || r.mobile.includes(q)) &&
+    (!q || r.requestNo.toLowerCase().includes(q) || String(r.userId).includes(q)) &&
     (!status || r.status === status) && (!check || r.eligibility === check)
   ));
 }
@@ -3375,10 +3380,7 @@ function renderLoans(list) {
     return `
       <tr>
         <td><code style="font-size:12px;">${l.no}</code></td>
-        <td>
-          <div style="font-weight:600;">${l.custName}</div>
-          <div style="font-size:11.5px;color:#94a3b8;">${userId ? `#${userId}` : '-'}</div>
-        </td>
+        <td><code style="font-size:12px;">${userId ? `#${userId}` : customerIdDisplay(l)}</code></td>
         <td><span class="role-tag" style="font-size:11px;background:#ecfeff;color:#0e7490;">${formatBorrowCount(l.borrowCount)}</span></td>
         <td style="font-weight:600;">PKR ${l.amount.toLocaleString()}</td>
         <td style="font-size:13px;">${l.installments} × ${l.periodDays}d</td>
@@ -3403,12 +3405,12 @@ function renderLoans(list) {
     </table>`;
 }
 
-function viewContract(no, custName, amount, installments, periodDays, disbursedAt, finalDue, dailyRate, totalRepay) {
+function viewContract(no, customerId, amount, installments, periodDays, disbursedAt, finalDue, dailyRate, totalRepay) {
   const contractNo = 'CON-' + no;
   document.getElementById('cv-contract-no').textContent = contractNo;
   document.getElementById('cv-no').textContent = contractNo;
-  document.getElementById('cv-borrower').textContent = custName;
-  document.getElementById('cv-sig-name').textContent = custName;
+  document.getElementById('cv-borrower').textContent = `#${customerId}`;
+  document.getElementById('cv-sig-name').textContent = `#${customerId}`;
   document.getElementById('cv-sig-date').textContent = disbursedAt !== '-' ? disbursedAt : '—';
   document.getElementById('cv-date-line').textContent = 'Date: ' + (disbursedAt !== '-' ? disbursedAt.slice(0,10) : '—');
   const terms = [
@@ -3498,7 +3500,7 @@ function viewLoanDetail(no) {
       <div class="col-md-6">
         <div style="background:#f8fafc;border-radius:8px;padding:16px;">
           <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:12px;">LOAN INFO</div>
-          ${detailRow('Order No.', l.no)}${detailRow('Customer', l.custName + (userId ? ' (#' + userId + ')' : ''))}
+          ${detailRow('Order No.', l.no)}${detailRow('Customer', userId ? '#' + userId : customerIdDisplay(l))}
           ${detailRow('Borrow Count', formatBorrowCount(l.borrowCount))}
           ${detailRow('Loan Amount', fmtMoney(l.amount))}${detailRow('Contract Principal', fmtMoney(l.contractPrincipal))}
           ${detailRow('Installments', l.installments + ' × ' + l.periodDays + ' days')}
@@ -3546,7 +3548,7 @@ function buildContractCard(l) {
     : `<span class="status-badge badge-pending" style="font-size:11px;">${localizePhrase('Not Generated')}</span>`;
   const actionBtns = hasContract ? `
     <div style="display:flex;gap:8px;flex-shrink:0;">
-      <button class="btn btn-sm btn-primary action-btn" onclick="viewContract('${l.no}','${l.custName}',${l.amount},${l.installments},${l.periodDays},'${l.disbursedAt}','${l.finalDue}','${l.dailyRate}',${l.totalRepay})">
+      <button class="btn btn-sm btn-primary action-btn" onclick="viewContract('${l.no}','${customerIdOf(l)}',${l.amount},${l.installments},${l.periodDays},'${l.disbursedAt}','${l.finalDue}','${l.dailyRate}',${l.totalRepay})">
         <i class="bi bi-file-earmark-text-fill me-1"></i>${localizePhrase('View Contract')}
       </button>
       <button class="btn btn-sm btn-outline-secondary action-btn" onclick="downloadContract('${contractNo}')">
@@ -3600,10 +3602,7 @@ function renderRepayments(list) {
     <tr>
       <td><code style="font-size:12px;">${r.no}</code></td>
       <td><code style="font-size:12px;">${r.loanNo}</code></td>
-      <td>
-        <div style="font-weight:600;">${r.custName}</div>
-        <div style="font-size:11.5px;color:#94a3b8;">#${r.userId||''}</div>
-      </td>
+      <td><code style="font-size:12px;">${customerIdDisplay(r)}</code></td>
       <td style="font-weight:600;">PKR ${r.amount.toLocaleString()}</td>
       <td><span class="role-tag" style="font-size:11px;">${r.type}</span></td>
       <td><span class="role-tag" style="font-size:11px;">${r.channel}</span></td>
@@ -3623,7 +3622,7 @@ function filterRepayments() {
   const st = document.getElementById('repay-status-filter').value;
   const ch = document.getElementById('repay-channel-filter').value;
   renderRepayments(repayments.filter(r =>
-    (!q || r.no.toLowerCase().includes(q) || r.loanNo.toLowerCase().includes(q) || r.custName.toLowerCase().includes(q)) &&
+    (!q || r.no.toLowerCase().includes(q) || r.loanNo.toLowerCase().includes(q) || String(customerIdOf(r)).includes(q)) &&
     (!st || r.status === st) && (!ch || r.channel === ch)
   ));
 }
@@ -3658,10 +3657,7 @@ function renderOverdue(list) {
   const rows = data.map(o => `
     <tr>
       <td><code style="font-size:12px;">${o.no}</code></td>
-      <td>
-        <div style="font-weight:600;">${o.custName}</div>
-        <div style="font-size:11.5px;color:#94a3b8;">#${o.userId||""}</div>
-      </td>
+      <td><code style="font-size:12px;">${customerIdDisplay(o)}</code></td>
       <td style="font-weight:600;">PKR ${o.principal.toLocaleString()}</td>
       <td><span class="status-badge" style="${overdueColor(o.overdueDays)}">${o.overdueDays} days</span></td>
       <td style="color:#dc2626;font-weight:600;">PKR ${o.overdueFee.toLocaleString()}</td>
@@ -3672,7 +3668,7 @@ function renderOverdue(list) {
       <td>
         <div class="d-flex gap-1">
           <button class="btn btn-sm btn-outline-primary action-btn" onclick="viewLoanDetail('${o.no}')"><i class="bi bi-eye"></i> ${t('btn.detail')}</button>
-          <button class="btn btn-sm btn-outline-secondary action-btn" onclick="toast('Reminder sent to ${o.custName}')"><i class="bi bi-bell"></i> ${t('btn.remind')}</button>
+          <button class="btn btn-sm btn-outline-secondary action-btn" onclick="toast('Reminder sent to ${customerIdDisplay(o)}')"><i class="bi bi-bell"></i> ${t('btn.remind')}</button>
         </div>
       </td>
     </tr>`).join('');
@@ -3687,7 +3683,7 @@ function filterOverdue() {
   const q = document.getElementById('od-search').value.toLowerCase();
   const d = document.getElementById('od-days-filter').value;
   renderOverdue(overdueOrders.filter(o =>
-    (!q || o.no.toLowerCase().includes(q) || o.custName.toLowerCase().includes(q) || o.mobile.includes(q)) &&
+    (!q || o.no.toLowerCase().includes(q) || String(customerIdOf(o)).includes(q)) &&
     (!d || (d==='1-7'&&o.overdueDays<=7) || (d==='8-30'&&o.overdueDays>7&&o.overdueDays<=30) || (d==='30+'&&o.overdueDays>30))
   ));
 }
@@ -3751,8 +3747,7 @@ function renderCoupons(list) {
     <tr>
       <td><code style="font-size:12px;">${c.no}</code></td>
       <td>
-        <div style="font-weight:600;">${c.custName}</div>
-        <div style="font-size:11.5px;color:#94a3b8;">#${c.userId}</div>
+        <code style="font-size:12px;">${customerIdDisplay(c)}</code>
       </td>
       <td style="font-weight:600;">PKR ${c.amount.toLocaleString()}</td>
       <td style="font-size:13px;">PKR ${(isLoan ? c.minLoan : c.minRepay).toLocaleString()}</td>
@@ -3938,8 +3933,7 @@ function renderBills(list) {
     return `<tr>
       <td><code style="font-size:12px;">${b.billNo}</code></td>
       <td><code style="font-size:11.5px;color:#94a3b8;">${b.loanOrderNo}</code></td>
-      <td><div style="font-weight:600;">${b.custName}</div>
-      <div style="font-size:11.5px;color:#94a3b8;">#${b.userId}</div></td>
+      <td><code style="font-size:12px;">${customerIdDisplay(b)}</code></td>
       <td style="font-size:13px;">${b.installmentNo} / ${b.totalInstallments}</td>
       <td style="font-size:12.5px;color:#94a3b8;">${b.dueDate}</td>
       <td style="font-weight:600;">PKR ${b.billAmount.toLocaleString()}</td>
@@ -3991,7 +3985,7 @@ function renderDisbursements(list) {
     return `<tr>
       <td><code style="font-size:12px;">${d.disbNo}</code></td>
       <td><code style="font-size:11.5px;color:#94a3b8;">${d.loanOrderNo}</code></td>
-      <td><div style="font-weight:600;">${d.custName}</div><div style="font-size:11.5px;color:#94a3b8;">#${d.userId}</div></td>
+      <td><code style="font-size:12px;">${customerIdDisplay(d)}</code></td>
       <td style="font-weight:600;">PKR ${d.amount.toLocaleString()}</td>
       <td><span class="role-tag" style="font-size:11px;">${d.channel}</span></td>
       <td style="font-size:11.5px;color:#64748b;font-family:monospace;">${d.walletAcc||'-'}</td>
@@ -4104,7 +4098,7 @@ function renderEarlySettlement(list) {
     return `<tr>
       <td><code style="font-size:12px;">${e.settlementNo}</code></td>
       <td><code style="font-size:11.5px;color:#94a3b8;">${e.loanOrderNo}</code></td>
-      <td><div style="font-weight:600;">${e.custName}</div><div style="font-size:11.5px;color:#94a3b8;">#${e.userId}</div></td>
+      <td><code style="font-size:12px;">${customerIdDisplay(e)}</code></td>
       <td style="font-size:12.5px;">${e.settlementDate}</td>
       <td>PKR ${e.originalRemainingContractPrincipal.toLocaleString()}</td>
       <td style="color:#94a3b8;font-size:12.5px;">PKR ${e.originalRemainingOverdueFee.toLocaleString()}</td>
@@ -4170,7 +4164,7 @@ function renderAdjustments(list) {
     return `<tr>
       <td><code style="font-size:12px;">${a.adjNo}</code></td>
       <td><code style="font-size:11.5px;color:#94a3b8;">${a.loanOrderNo}</code></td>
-      <td style="font-weight:600;">${a.custName}</td>
+      <td><code style="font-size:12px;">${customerIdDisplay(a)}</code></td>
       <td><span class="role-tag" style="font-size:11px;">${a.feeType}</span></td>
       <td><span class="role-tag" style="${a.adjType==='Waive'?'background:#fee2e2;color:#b91c1c;':a.adjType==='Decrease'?'background:#fef3c7;color:#d97706;':'background:#dcfce7;color:#15803d;'} font-size:11px;">${a.adjType}</span></td>
       <td style="font-weight:600;">PKR ${a.adjAmount.toLocaleString()}</td>
@@ -4218,7 +4212,7 @@ function openAdjApprove(id) {
   const a=feeAdjustments.find(x=>x.id===id);
   document.getElementById('adj-approve-title').textContent=`Review — ${a.adjNo}`;
   document.getElementById('adj-approve-body').innerHTML=`
-    ${detailRow('Loan Order',a.loanOrderNo)}${detailRow('Customer',a.custName)}
+    ${detailRow('Loan Order',a.loanOrderNo)}${detailRow('Customer',customerIdDisplay(a))}
     ${detailRow('Fee Type',a.feeType)}${detailRow('Adj Type',a.adjType)}
     ${detailRow('Amount','PKR '+a.adjAmount.toLocaleString())}
     ${detailRow('Reason',a.reason)}${detailRow('Submitted By',a.operatorId)}`;
@@ -4362,7 +4356,7 @@ function renderCouponUsage(list) {
     return `<tr>
       <td><code style="font-size:12px;">${u.couponNo}</code></td>
       <td><span class="role-tag" style="${u.couponType==='LoanCoupon'?'background:#eef1fd;color:#3a5bdf;':'background:#fce7f3;color:#9d174d;'} font-size:11px;">${u.couponType}</span></td>
-      <td style="font-weight:600;">${u.custName}</td>
+      <td><code style="font-size:12px;">${customerIdDisplay(u)}</code></td>
       <td><code style="font-size:11px;">${u.loanOrderNo||'-'}</code></td>
       <td><code style="font-size:11px;">${u.repayOrderNo||'-'}</code></td>
       <td>PKR ${u.lockedAmount.toLocaleString()}</td>
@@ -4711,8 +4705,7 @@ function renderTermConfigList(list) {
   const rows = data.map(c => `
     <tr>
       <td>
-        <div style="font-weight:600;">${c.custName}</div>
-        <div style="font-size:11.5px;color:#94a3b8;">#${c.userId}</div>
+        <code style="font-size:12px;">${customerIdDisplay(c)}</code>
       </td>
       <td>${c.availableTerms.split(',').map(x=>`<span class="role-tag" style="font-size:11px;">${x}×15d</span>`).join('')}</td>
       <td><span class="role-tag" style="background:#e0e7ff;color:#4338ca;font-size:11px;">${c.termUnit}</span></td>
@@ -4747,8 +4740,7 @@ function renderTermConfigLog(list) {
   const rows = data.map(l => `
     <tr>
       <td>
-        <div style="font-weight:600;">${l.custName}</div>
-        <div style="font-size:11.5px;color:#94a3b8;">ID: ${l.userId}</div>
+        <code style="font-size:12px;">${customerIdDisplay(l)}</code>
       </td>
       <td><span class="status-badge ${l.changeType==='CREATE'?'badge-active':'badge-pending'}" style="font-size:11px;">${l.changeType}</span></td>
       <td>
@@ -4780,14 +4772,14 @@ function renderTermConfigLog(list) {
 
 function filterTermConfig() {
   const q = (document.getElementById('termcfg-search')?.value||'').toLowerCase();
-  renderTermConfigList(termConfigs.filter(c=>!q||c.custName.toLowerCase().includes(q)||c.mobile.includes(q)));
+  renderTermConfigList(termConfigs.filter(c=>!q||String(c.userId).includes(q)));
 }
 
 function filterTermLog() {
   const q = (document.getElementById('termlog-search')?.value||'').toLowerCase();
   const tp = document.getElementById('termlog-type-filter')?.value||'';
   renderTermConfigLog(termConfigLogs.filter(l=>
-    (!q||l.custName.toLowerCase().includes(q)||l.reason.toLowerCase().includes(q))&&
+    (!q||String(l.userId).includes(q)||l.reason.toLowerCase().includes(q))&&
     (!tp||l.changeType===tp)
   ));
 }
@@ -5093,7 +5085,7 @@ function viewBillDetail(id) {
     <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
       <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">BILL INFO</div>
       ${detailRow('Bill No.',b.billNo)}${detailRow('Loan Order',b.loanOrderNo)}
-      ${detailRow('Customer',b.custName+' (#'+b.userId+')')}
+      ${detailRow('Customer ID',customerIdDisplay(b))}
       ${detailRow('Installment',b.installmentNo+' / '+b.totalInstallments)}
       ${detailRow('Period',b.periodStart+' ~ '+b.dueDate)}
       ${detailRow('Status',b.status)}
@@ -5219,7 +5211,7 @@ function viewRepaymentDetail(no) {
     <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
       <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">REPAYMENT ORDER</div>
       ${detailRow('Repayment No.',r.no)}${detailRow('Loan Order',r.loanNo)}
-      ${detailRow('Customer',r.custName+' (#'+(r.userId||'')+')')}
+      ${detailRow('Customer ID',customerIdDisplay(r))}
       ${detailRow('Type',r.type)}${detailRow('Channel',r.channel)}
       ${detailRow('Amount','PKR '+r.amount.toLocaleString())}
       ${detailRow('Status',r.status)}${detailRow('Reconcile',r.reconcile)}
@@ -5505,7 +5497,7 @@ function viewBillDetail(id) {
     <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
       <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">BILL INFO</div>
       ${detailRow('Bill No.',b.billNo)}${detailRow('Loan Order',b.loanOrderNo)}
-      ${detailRow('Customer',b.custName+' (#'+b.userId+')')}
+      ${detailRow('Customer ID',customerIdDisplay(b))}
       ${detailRow('Installment',b.installmentNo+' / '+b.totalInstallments)}
       ${detailRow('Period',b.periodStart+' ~ '+b.dueDate)}
       ${detailRow('Status',b.status)}
@@ -5603,7 +5595,7 @@ function filterCollectionTasks() {
   const agent   = document.getElementById('cs-task-agent')?.value||'';
   const result  = document.getElementById('cs-task-result')?.value||'';
   const data = collectionTasks.filter(t => {
-    if (q && !t.orderNo.toLowerCase().includes(q) && !t.custName.toLowerCase().includes(q) && !t.mobile.includes(q)) return false;
+    if (q && !t.orderNo.toLowerCase().includes(q) && !String(customerIdOf(t)).includes(q.replace('#',''))) return false;
     if (days === '1-7'  && !(t.overdueDays >= 1  && t.overdueDays <= 7))  return false;
     if (days === '8-30' && !(t.overdueDays >= 8  && t.overdueDays <= 30)) return false;
     if (days === '30+'  && t.overdueDays < 30) return false;
@@ -5621,7 +5613,7 @@ function filterCollectionTasks() {
       `<span class="role-tag">${t.collector}</span>`;
     return `<tr>
       <td><code style="font-size:11px;">${t.orderNo}</code></td>
-      <td><div style="font-weight:600;font-size:13px;">${t.custName}</div><div style="font-size:11.5px;color:#94a3b8;">${t.mobile}</div></td>
+      <td><code style="font-size:12px;">${customerIdDisplay(t)}</code></td>
       <td><span style="font-size:14px;font-weight:700;color:${daysColor};">${t.overdueDays}</span><span style="font-size:11px;color:#94a3b8;"> days</span></td>
       <td style="font-weight:600;color:#dc2626;">PKR ${t.overdueAmount.toLocaleString()}</td>
       <td style="font-size:12.5px;">${t.dueDate}</td>
@@ -5655,7 +5647,7 @@ function filterFollowups() {
   const result = document.getElementById('cs-fu-result')?.value||'';
   const agent  = document.getElementById('cs-fu-agent')?.value||'';
   const data = followupRecords.filter(f => {
-    if (q && !f.orderNo.toLowerCase().includes(q) && !f.custName.toLowerCase().includes(q) && !f.mobile.includes(q)) return false;
+    if (q && !f.orderNo.toLowerCase().includes(q) && !String(customerIdOf(f)).includes(q.replace('#',''))) return false;
     if (result && f.result !== result) return false;
     if (agent  && f.collector !== agent) return false;
     return true;
@@ -5668,7 +5660,7 @@ function filterFollowups() {
     return `<tr>
       <td><code style="font-size:11px;">${f.id}</code></td>
       <td><code style="font-size:11px;color:#64748b;">${f.orderNo}</code></td>
-      <td><div style="font-weight:600;">${f.custName}</div><div style="font-size:11.5px;color:#94a3b8;">${f.mobile}</div></td>
+      <td><code style="font-size:12px;">${customerIdDisplay(f)}</code></td>
       <td style="font-size:12.5px;color:#64748b;">${f.contactTime}</td>
       <td><span class="role-tag"><i class="bi bi-${methodIcon} me-1"></i>${f.method}</span></td>
       <td>${resultBadge}</td>
@@ -5692,7 +5684,7 @@ function filterPromises() {
   const status = document.getElementById('cs-ptp-status')?.value||'';
   const date   = document.getElementById('cs-ptp-date')?.value||'';
   const data = promiseToPay.filter(p => {
-    if (q && !p.orderNo.toLowerCase().includes(q) && !p.custName.toLowerCase().includes(q) && !p.mobile.includes(q)) return false;
+    if (q && !p.orderNo.toLowerCase().includes(q) && !String(customerIdOf(p)).includes(q.replace('#',''))) return false;
     if (status && p.status !== status) return false;
     if (date   && p.promiseDate !== date) return false;
     return true;
@@ -5710,7 +5702,7 @@ function filterPromises() {
     return `<tr>
       <td><code style="font-size:11px;">${p.id}</code></td>
       <td><code style="font-size:11px;color:#64748b;">${p.orderNo}</code></td>
-      <td><div style="font-weight:600;">${p.custName}</div><div style="font-size:11.5px;color:#94a3b8;">${p.mobile}</div></td>
+      <td><code style="font-size:12px;">${customerIdDisplay(p)}</code></td>
       <td style="font-weight:600;color:#1a202c;">PKR ${p.promiseAmount.toLocaleString()}</td>
       <td>${dateDisplay}</td>
       <td>${statusBadge}</td>
@@ -6117,10 +6109,7 @@ function renderDevices(list) {
   const rows = data.map(d => `
     <tr>
       <td><code style="font-size:12px;">${d.deviceId}</code></td>
-      <td>
-        <div style="font-weight:600;">${d.custName}</div>
-        <div style="font-size:11.5px;color:#94a3b8;">#${d.userId} · ${d.mobile}</div>
-      </td>
+      <td><code style="font-size:12px;">${customerIdDisplay(d)}</code></td>
       <td style="font-size:12.5px;">${d.platform}</td>
       <td style="font-size:12px;font-family:monospace;color:#64748b;">${d.fingerprint}</td>
       <td>
@@ -6150,7 +6139,7 @@ function filterDevices() {
   const status = document.getElementById('device-status-filter').value;
   const risk = document.getElementById('device-risk-filter').value;
   renderDevices(deviceRecords.filter(d =>
-    (!q || d.deviceId.toLowerCase().includes(q) || d.custName.toLowerCase().includes(q) || d.mobile.includes(q) || d.fingerprint.toLowerCase().includes(q)) &&
+    (!q || d.deviceId.toLowerCase().includes(q) || String(d.userId).includes(q.replace('#','')) || d.fingerprint.toLowerCase().includes(q)) &&
     (!status || d.status === status) && (!risk || d.riskLevel === risk)
   ));
 }
