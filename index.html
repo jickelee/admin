@@ -247,9 +247,6 @@
     <a class="nav-link-item" onclick="navigate('repayments')">
       <i class="bi bi-arrow-return-left"></i> <span data-i18n="nav.repayments">Repayments</span>
     </a>
-    <a class="nav-link-item" onclick="navigate('repaymentBills')" id="nav-repaymentBills">
-      <i class="bi bi-receipt"></i> <span data-i18n="nav.repaymentBills">Repayment Details</span>
-    </a>
     <a class="nav-link-item" onclick="navigate('repaymentAllocations')" id="nav-repaymentAllocations">
       <i class="bi bi-diagram-3"></i> <span data-i18n="nav.repaymentAllocations">Repayment Allocation</span>
     </a>
@@ -792,23 +789,6 @@
         <div id="fee-table-container"></div>
         <div class="px-3 py-2 border-top d-flex align-items-center justify-content-between">
           <span style="font-size:12.5px;color:#718096;" id="fee-count-label"></span>
-          <nav><ul class="pagination pagination-sm mb-0"><li class="page-item disabled"><a class="page-link">Prev</a></li><li class="page-item active"><a class="page-link">1</a></li><li class="page-item disabled"><a class="page-link">Next</a></li></ul></nav>
-        </div>
-      </div>
-    </div>
-
-    <!-- REPAYMENT ORDER BILL DETAILS -->
-    <div class="page" id="page-repaymentBills">
-      <div class="table-card">
-        <div class="table-card-header">
-          <span class="title" data-i18n="page.repaymentBills">Repayment Details</span>
-          <div class="search-row ms-auto">
-            <input type="text" class="form-control form-control-sm" data-i18n-ph="filter.searchRepayBillPh" placeholder="Repayment No / Bill No / Loan No..." style="width:240px;" id="repaybill-search" oninput="filterRepaymentBills()">
-          </div>
-        </div>
-        <div id="repaybill-table-container"></div>
-        <div class="px-3 py-2 border-top d-flex align-items-center justify-content-between">
-          <span style="font-size:12.5px;color:#718096;" id="repaybill-count-label"></span>
           <nav><ul class="pagination pagination-sm mb-0"><li class="page-item disabled"><a class="page-link">Prev</a></li><li class="page-item active"><a class="page-link">1</a></li><li class="page-item disabled"><a class="page-link">Next</a></li></ul></nav>
         </div>
       </div>
@@ -2384,8 +2364,7 @@ let permissions = [
     { id:28, parentId:20, code:'loan:bill_fee', name:'Fee Details', type:'Menu', route:'/loan/bill-fees', sort:8, status:'Active', expanded:true },
       { id:281, parentId:28, code:'loan:bill_fee:view', name:'View Fee Details', type:'Button', route:'', sort:1, status:'Active', expanded:false },
       { id:291, parentId:28, code:'loan:fee_change:view', name:'View Fee Change Details', type:'Button', route:'', sort:2, status:'Active', expanded:false },
-    { id:34, parentId:20, code:'loan:repayment_bill', name:'Repayment Details', type:'Menu', route:'/loan/repayment-bills', sort:10, status:'Active', expanded:true },
-      { id:341, parentId:34, code:'loan:repayment_bill:view', name:'View Repayment Details', type:'Button', route:'', sort:1, status:'Active', expanded:false },
+      { id:341, parentId:22, code:'loan:repayment_bill:view', name:'View Repayment Order Details', type:'Button', route:'', sort:2, status:'Active', expanded:false },
     { id:35, parentId:20, code:'loan:repayment_allocation', name:'Repayment Allocation', type:'Menu', route:'/loan/repayment-allocations', sort:11, status:'Active', expanded:true },
       { id:351, parentId:35, code:'loan:repayment_allocation:view', name:'View Repayment Allocation', type:'Button', route:'', sort:1, status:'Active', expanded:false },
   // Coupon Management
@@ -2457,7 +2436,7 @@ Object.assign(roles.find(r => r.code === 'COLLECTION'), {
   perms:['dashboard','customer','customer:list','customer:list:view','loan','loan:bill','loan:bill:view','loan:repayment','loan:repayment:view','loan:overdue','loan:overdue:view','loan:overdue:remind']
 });
 Object.assign(roles.find(r => r.code === 'FINANCE'), {
-  perms:['dashboard','loan','loan:order','loan:order:view','loan:bill','loan:bill:view','loan:bill_fee','loan:bill_fee:view','loan:fee_change:view','loan:disbursement','loan:disbursement:view','loan:repayment','loan:repayment:view','loan:repayment_bill','loan:repayment_bill:view','loan:repayment_allocation','loan:repayment_allocation:view','loan:adjustment','loan:adjustment:create','loan:adjustment:approve','finance','finance:transaction','finance:transaction:view','finance:transaction:export','finance:reconciliation','finance:reconciliation:view','finance:reconciliation:handle','finance:reconciliation:ignore']
+  perms:['dashboard','loan','loan:order','loan:order:view','loan:bill','loan:bill:view','loan:bill_fee','loan:bill_fee:view','loan:fee_change:view','loan:disbursement','loan:disbursement:view','loan:repayment','loan:repayment:view','loan:repayment_bill:view','loan:repayment_allocation','loan:repayment_allocation:view','loan:adjustment','loan:adjustment:create','loan:adjustment:approve','finance','finance:transaction','finance:transaction:view','finance:transaction:export','finance:reconciliation','finance:reconciliation:view','finance:reconciliation:handle','finance:reconciliation:ignore']
 });
 Object.assign(roles.find(r => r.code === 'OPERATIONS'), {
   perms:['dashboard','loan','loan:order','loan:order:view','coupon','coupon:loan','coupon:loan:view','coupon:loan:issue','coupon:loan:void','coupon:repay','coupon:repay:view','coupon:repay:issue','coupon:repay:void','coupon:usage','coupon:usage:view','config','config:amount_term_rule','config:amount_term_rule:view','config:amount_term_rule:create','config:amount_term_rule:edit','config:amount_term_rule:delete','config:user_term','config:user_term:view','config:user_term:create','config:user_term:edit','config:user_term:delete','config:user_term:log']
@@ -2490,7 +2469,6 @@ const pageMap = {
   loanBills:      { titleKey:'nav.loanBills',      subKey:'page.sub.loanBills' },
   loanBillFees:   { titleKey:'nav.loanBillFees',   subKey:'page.sub.loanBillFees' },
   disbursements:  { titleKey:'nav.disbursements',  subKey:'page.sub.disbursements' },
-  repaymentBills: { titleKey:'nav.repaymentBills', subKey:'page.sub.repaymentBills' },
   repaymentAllocations: { titleKey:'nav.repaymentAllocations', subKey:'page.sub.repaymentAllocations' },
   earlySettlement:{ titleKey:'nav.earlySettlement',subKey:'page.sub.earlySettlement' },
   feeAdjust:      { titleKey:'nav.feeAdjust',      subKey:'page.sub.feeAdjust' },
@@ -2532,7 +2510,6 @@ function navigate(page) {
   if (page === 'loanBills')       filterBills();
   if (page === 'loanBillFees')    filterLoanBillFees();
   if (page === 'disbursements')   filterDisbursements();
-  if (page === 'repaymentBills')  filterRepaymentBills();
   if (page === 'repaymentAllocations') filterRepaymentAllocations();
   if (page === 'earlySettlement') filterEarlySettlement();
   if (page === 'feeAdjust')       filterAdjustments();
@@ -3567,12 +3544,18 @@ let repayments = [
   { no:'RP20240604008', loanNo:'LN2024060015', custName:'Tariq Mehmood',   mobile:'+92 321 1122334', amount:8000,  type:'Manual',         channel:'Manual',    walletAcc:'-',                       txnNo:'MANUAL001',  status:'Success', payTime:'2024-03-10 16:00', reconcile:'ManualConfirmed' },
 ];
 
-const repayStatusColor = { Success:'badge-active', Pending:'badge-pending', Failed:'badge-disabled', Cancelled:'background:#f1f5f9;color:#64748b;' };
+const repayStatusColor = { Success:'badge-active', Pending:'badge-pending', Failed:'badge-disabled', Cancelled:'badge-disabled', Expired:'badge-disabled' };
 function repayBadge(s) {
-  const c = repayStatusColor[s] || '';
-  return `<span class="status-badge" style="${c.includes(':')?c:''}" ${!c.includes(':') ? `class="status-badge ${c}"` : ''}>${s}</span>`;
+  return `<span class="status-badge ${repayStatusColor[s] || ''}">${s}</span>`;
 }
-const reconcileBadge = { Matched:'<span style="color:#16a34a;font-size:12px;font-weight:600;">✓ Matched</span>', Pending:'<span style="color:#d97706;font-size:12px;font-weight:600;">⏳ Pending</span>', Unmatched:'<span style="color:#dc2626;font-size:12px;font-weight:600;">✗ Unmatched</span>', ManualConfirmed:'<span style="color:#7c3aed;font-size:12px;font-weight:600;">✔ Manual</span>' };
+const reconcileBadge = {
+  Matched:'<span style="color:#16a34a;font-size:12px;font-weight:600;">✓ Matched</span>',
+  Success:'<span style="color:#16a34a;font-size:12px;font-weight:600;">✓ Success</span>',
+  Pending:'<span style="color:#d97706;font-size:12px;font-weight:600;">⏳ Pending</span>',
+  Unmatched:'<span style="color:#dc2626;font-size:12px;font-weight:600;">✗ Unmatched</span>',
+  Failed:'<span style="color:#dc2626;font-size:12px;font-weight:600;">✗ Failed</span>',
+  ManualConfirmed:'<span style="color:#7c3aed;font-size:12px;font-weight:600;">✔ Manual</span>'
+};
 
 function renderRepayments(list) {
   const data = list || repayments;
@@ -3582,18 +3565,23 @@ function renderRepayments(list) {
       <td><code style="font-size:12px;">${r.no}</code></td>
       <td><code style="font-size:12px;">${r.loanNo}</code></td>
       <td><code style="font-size:12px;">${customerIdDisplay(r)}</code></td>
-      <td style="font-weight:600;">PKR ${r.amount.toLocaleString()}</td>
-      <td><span class="role-tag" style="font-size:11px;">${r.type}</span></td>
-      <td><span class="role-tag" style="font-size:11px;">${r.channel}</span></td>
-      <td>${repayBadge(r.status)}</td>
-      <td>${reconcileBadge[r.reconcile] || r.reconcile}</td>
-      <td style="font-size:12px;color:#94a3b8;">${r.payTime}</td>
+      <td style="font-weight:600;">PKR ${r.payableAmount.toLocaleString()}</td>
+      <td style="color:#16a34a;font-weight:600;">PKR ${r.repaymentAmount.toLocaleString()}</td>
+      <td style="color:${r.differenceAmount?'#dc2626':'#94a3b8'};">PKR ${r.differenceAmount.toLocaleString()}</td>
+      <td><span class="role-tag" style="font-size:11px;">${r.repaymentType}</span></td>
+      <td><span class="role-tag" style="font-size:11px;">${r.paymentChannel}</span></td>
+      <td>${repayBadge(r.paymentStatus)}</td>
+      <td>${statusBadge(r.matchStatus)}</td>
+      <td>${reconcileBadge[r.reconcileStatus] || r.reconcileStatus}</td>
+      <td style="font-size:12px;color:#94a3b8;white-space:nowrap;">${r.paymentStartTime}</td>
+      <td style="font-size:12px;color:#94a3b8;white-space:nowrap;">${r.paymentSuccessTime}</td>
+      <td><button class="btn btn-sm btn-outline-primary action-btn" onclick="viewRepaymentDetail('${r.no}')"><i class="bi bi-eye"></i> ${currentLang === 'zh' ? '查看明细' : 'View Details'}</button></td>
     </tr>`).join('');
   document.getElementById('repay-table-container').innerHTML = `
-    <table class="table table-hover mb-0">
-      <thead><tr><th>${t('th.repaymentNo')}</th><th>${t('th.loanOrderNo')}</th><th>${t('th.customer')}</th><th>${t('th.amount')}</th><th>${t('th.repayType')}</th><th>${t('th.channel')}</th><th>${t('th.status')}</th><th>${t('th.reconcile')}</th><th>${t('th.payTime')}</th></tr></thead>
-      <tbody>${rows || '<tr><td colspan="9"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
-    </table>`;
+    <div class="table-scroll"><table class="table table-hover mb-0" style="min-width:1650px;">
+      <thead><tr><th>${t('th.repaymentNo')}</th><th>${t('th.loanOrderNo')}</th><th>${currentLang === 'zh' ? '客户ID' : 'Customer ID'}</th><th>${currentLang === 'zh' ? '应还总额' : 'Payable'}</th><th>${currentLang === 'zh' ? '还款金额' : 'Repayment'}</th><th>${currentLang === 'zh' ? '差额' : 'Difference'}</th><th>${t('th.repayType')}</th><th>${t('th.channel')}</th><th>${currentLang === 'zh' ? '支付状态' : 'Payment Status'}</th><th>${currentLang === 'zh' ? '匹配状态' : 'Match Status'}</th><th>${t('th.reconcile')}</th><th>${currentLang === 'zh' ? '发起时间' : 'Started At'}</th><th>${currentLang === 'zh' ? '成功时间' : 'Succeeded At'}</th><th>${t('th.actions')}</th></tr></thead>
+      <tbody>${rows || '<tr><td colspan="14"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+    </table></div>`;
 }
 
 function filterRepayments() {
@@ -3602,7 +3590,7 @@ function filterRepayments() {
   const ch = document.getElementById('repay-channel-filter').value;
   renderRepayments(repayments.filter(r =>
     (!q || r.no.toLowerCase().includes(q) || r.loanNo.toLowerCase().includes(q) || String(customerIdOf(r)).includes(q)) &&
-    (!st || r.status === st) && (!ch || r.channel === ch)
+    (!st || r.paymentStatus === st) && (!ch || r.paymentChannel === ch)
   ));
 }
 
@@ -5207,7 +5195,7 @@ const repaymentOrderBills = {
     { id:6, loanOrderNo:'LN2024060403', billNo:'LB2024060403001', userId:1003, periodNo:1, originalBillAmount:8000, billRemainingAmount:8000, couponAmount:0, payableAmount:8000, allocatedAmount:8000, differenceAmount:0, paidTime:'2024-06-09 14:22', status:'Paid', createdAt:'2024-06-09 14:18', updatedAt:'2024-06-09 14:22' },
   ],
   'RP20240604002': [
-    { id:4, loanOrderNo:'LN2024060412', billNo:'LB2024060412001', userId:1012, periodNo:1, originalBillAmount:6400, billRemainingAmount:6400, couponAmount:400, payableAmount:6000, allocatedAmount:6000, differenceAmount:0, paidTime:'2024-06-02 08:40', status:'Paid', createdAt:'2024-06-02 08:35', updatedAt:'2024-06-02 08:40' },
+    { id:4, loanOrderNo:'LN2024060412', billNo:'LB2024060412001', userId:1014, periodNo:1, originalBillAmount:6400, billRemainingAmount:6400, couponAmount:400, payableAmount:6000, allocatedAmount:6000, differenceAmount:0, paidTime:'2024-06-02 08:40', status:'Paid', createdAt:'2024-06-02 08:35', updatedAt:'2024-06-02 08:40' },
   ],
   // 提前结清：一次性结清剩余多期账单，应还总额 = 各期 payable 之和
   'RP20240604003': [
@@ -5226,10 +5214,10 @@ const repaymentOrderBills = {
     { id:12, loanOrderNo:'LN2024060413', billNo:'LB2024060413001', userId:1013, periodNo:1, originalBillAmount:25000, billRemainingAmount:25000, couponAmount:0, payableAmount:25000, allocatedAmount:10000, differenceAmount:15000, paidTime:'2024-04-28 13:10', status:'Pending', createdAt:'2024-04-28 13:05', updatedAt:'2024-04-28 13:10' },
   ],
   'RP20240604007': [
-    { id:13, loanOrderNo:'LN2024060411', billNo:'LB2024060411001', userId:1011, periodNo:1, originalBillAmount:7800, billRemainingAmount:7800, couponAmount:0, payableAmount:7800, allocatedAmount:7800, differenceAmount:0, paidTime:'2024-06-06 09:00', status:'Paid', createdAt:'2024-06-06 08:55', updatedAt:'2024-06-06 09:00' },
+    { id:13, loanOrderNo:'LN2024060411', billNo:'LB2024060411001', userId:1012, periodNo:1, originalBillAmount:7800, billRemainingAmount:7800, couponAmount:0, payableAmount:7800, allocatedAmount:7800, differenceAmount:0, paidTime:'2024-06-06 09:00', status:'Paid', createdAt:'2024-06-06 08:55', updatedAt:'2024-06-06 09:00' },
   ],
   'RP20240604008': [
-    { id:14, loanOrderNo:'LN2024060015', billNo:'LB2024060015001', userId:1015, periodNo:1, originalBillAmount:8000, billRemainingAmount:8000, couponAmount:0, payableAmount:8000, allocatedAmount:8000, differenceAmount:0, paidTime:'2024-03-10 16:00', status:'Paid', createdAt:'2024-03-10 15:55', updatedAt:'2024-03-10 16:00' },
+    { id:14, loanOrderNo:'LN2024060015', billNo:'LB2024060015001', userId:1013, periodNo:1, originalBillAmount:8000, billRemainingAmount:8000, couponAmount:0, payableAmount:8000, allocatedAmount:8000, differenceAmount:0, paidTime:'2024-03-10 16:00', status:'Paid', createdAt:'2024-03-10 15:55', updatedAt:'2024-03-10 16:00' },
   ],
 };
 
@@ -5240,6 +5228,50 @@ function repaymentBillSum(no, field) {
 function repaymentPayableTotal(no) { return repaymentBillSum(no, 'payableAmount'); }
 function repaymentAllocatedTotal(no) { return repaymentBillSum(no, 'allocatedAmount'); }
 function repaymentDifferenceTotal(no) { return repaymentBillSum(no, 'differenceAmount'); }
+
+const repaymentOrderMetadata = {
+  RP20240601001:{ id:1, productId:1, paymentId:8801122, paymentStartTime:'2024-05-16 10:00', paymentSuccessTime:'2024-05-16 10:05', matchStatus:'Matched', reconcileStatus:'Success', reconciledTime:'2024-05-16 10:08', createdAt:'2024-05-16 10:00', updatedAt:'2024-05-16 10:08', expirationAt:'2024-05-16 10:30' },
+  RP20240602001:{ id:2, productId:1, paymentId:8812233, paymentStartTime:'2024-05-31 09:45', paymentSuccessTime:'2024-05-31 09:50', matchStatus:'Matched', reconcileStatus:'Success', reconciledTime:'2024-05-31 09:54', createdAt:'2024-05-31 09:45', updatedAt:'2024-05-31 09:54', expirationAt:'2024-05-31 10:15' },
+  RP20240603001:{ id:3, productId:1, paymentId:7700112, paymentStartTime:'2024-05-30 11:25', paymentSuccessTime:'2024-05-30 11:30', matchStatus:'Matched', reconcileStatus:'Success', reconciledTime:'2024-05-30 11:34', createdAt:'2024-05-30 11:25', updatedAt:'2024-05-30 11:34', expirationAt:'2024-05-30 11:55' },
+  RP20240603002:{ id:4, productId:1, paymentId:7711223, paymentStartTime:'2024-06-14 10:10', paymentSuccessTime:'2024-06-14 10:15', matchStatus:'Matched', reconcileStatus:'Success', reconciledTime:'2024-06-14 10:18', createdAt:'2024-06-14 10:10', updatedAt:'2024-06-14 10:18', expirationAt:'2024-06-14 10:40' },
+  RP20240604001:{ id:5, productId:1, paymentId:6600881, paymentStartTime:'2024-06-09 14:18', paymentSuccessTime:'2024-06-09 14:22', matchStatus:'Matched', reconcileStatus:'Success', reconciledTime:'2024-06-09 14:25', createdAt:'2024-06-09 14:18', updatedAt:'2024-06-09 14:25', expirationAt:'2024-06-09 14:48' },
+  RP20240604002:{ id:6, productId:1, paymentId:6611992, paymentStartTime:'2024-06-02 08:35', paymentSuccessTime:'2024-06-02 08:40', matchStatus:'Matched', reconcileStatus:'Success', reconciledTime:'2024-06-02 08:43', createdAt:'2024-06-02 08:35', updatedAt:'2024-06-02 08:43', expirationAt:'2024-06-02 09:05' },
+  RP20240604003:{ id:7, productId:1, paymentId:5500773, paymentStartTime:'2024-06-04 11:00', paymentSuccessTime:'-', matchStatus:'Pending', reconcileStatus:'Pending', reconciledTime:'-', createdAt:'2024-06-04 11:00', updatedAt:'2024-06-04 11:00', expirationAt:'2024-06-04 11:30' },
+  RP20240604004:{ id:8, productId:1, paymentId:4400664, paymentStartTime:'2024-06-04 09:30', paymentSuccessTime:'-', matchStatus:'Unmatched', reconcileStatus:'Failed', reconciledTime:'2024-06-04 09:35', failReason:'Channel payment failed: insufficient wallet balance', createdAt:'2024-06-04 09:30', updatedAt:'2024-06-04 09:35', expirationAt:'2024-06-04 10:00' },
+  RP20240604005:{ id:9, productId:1, paymentId:3311555, paymentStartTime:'2024-06-04 12:00', paymentSuccessTime:'-', matchStatus:'Pending', reconcileStatus:'Pending', reconciledTime:'-', createdAt:'2024-06-04 12:00', updatedAt:'2024-06-04 12:00', expirationAt:'2024-06-04 12:30' },
+  RP20240604006:{ id:10, productId:1, paymentId:2200446, paymentStartTime:'2024-04-28 13:05', paymentSuccessTime:'2024-04-28 13:10', matchStatus:'PartiallyMatched', reconcileStatus:'Success', reconciledTime:'2024-04-28 13:14', createdAt:'2024-04-28 13:05', updatedAt:'2024-04-28 13:14', expirationAt:'2024-04-28 13:35' },
+  RP20240604007:{ id:11, productId:1, paymentId:1100337, paymentStartTime:'2024-06-06 08:55', paymentSuccessTime:'2024-06-06 09:00', matchStatus:'Matched', reconcileStatus:'Success', reconciledTime:'2024-06-06 09:04', createdAt:'2024-06-06 08:55', updatedAt:'2024-06-06 09:04', expirationAt:'2024-06-06 09:25' },
+  RP20240604008:{ id:12, productId:1, paymentId:1, paymentStartTime:'2024-03-10 15:55', paymentSuccessTime:'2024-03-10 16:00', matchStatus:'Matched', reconcileStatus:'ManualConfirmed', reconciledTime:'2024-03-10 16:08', createdAt:'2024-03-10 15:55', updatedAt:'2024-03-10 16:08', expirationAt:'2024-03-10 16:25' },
+};
+
+repayments.forEach(r => {
+  const meta = repaymentOrderMetadata[r.no] || {};
+  Object.assign(r, {
+    id: meta.id,
+    userId: customerIdOf(r),
+    productId: meta.productId || 1,
+    paymentId: meta.paymentId || '-',
+    payableAmount: repaymentPayableTotal(r.no),
+    differenceAmount: repaymentDifferenceTotal(r.no),
+    paymentStartTime: meta.paymentStartTime || '-',
+    paymentSuccessTime: meta.paymentSuccessTime || r.payTime || '-',
+    repaymentType: r.type,
+    repaymentAmount: r.amount,
+    paymentChannel: r.channel,
+    paymentTxnNo: r.txnNo,
+    walletName: ['Easypaisa','JazzCash'].includes(r.channel) ? r.channel : '-',
+    payerAccountName: null,
+    payerAccountNo: r.walletAcc,
+    paymentStatus: r.status,
+    matchStatus: meta.matchStatus || r.reconcile,
+    reconcileStatus: meta.reconcileStatus || r.reconcile,
+    failReason: meta.failReason || '-',
+    reconciledTime: meta.reconciledTime || '-',
+    createdAt: meta.createdAt || r.payTime || '-',
+    updatedAt: meta.updatedAt || r.payTime || '-',
+    expirationAt: meta.expirationAt || '-',
+  });
+});
 
 const repaymentAllocations = {
   'RP20240601001': [
@@ -5264,29 +5296,53 @@ const loanOverdueRecords = [
 function viewRepaymentDetail(no) {
   const r = repayments.find(x => x.no === no);
   const bills = repaymentOrderBills[no] || [];
-  const allocs = repaymentAllocations[no] || [];
+  const detailPayableTotal = repaymentPayableTotal(no);
+  const totalMatches = detailPayableTotal === r.payableAmount;
 
   const summaryHtml = `<div class="row g-3">
     <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
-      <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">REPAYMENT ORDER</div>
-      ${detailRow('Repayment No.',r.no)}${detailRow('Loan Order',r.loanNo)}
-      ${detailRow('Customer ID',customerIdDisplay(r))}
-      ${detailRow('Type',r.type)}${detailRow('Channel',r.channel)}
-      ${detailRow('Amount','PKR '+r.amount.toLocaleString())}
-      ${detailRow('Status',r.status)}${detailRow('Reconcile',r.reconcile)}
-      ${detailRow('Pay Time',r.payTime||'-')}
+      <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">${currentLang === 'zh' ? '订单信息' : 'ORDER INFORMATION'}</div>
+      ${detailRow('ID',r.id)}${detailRow('Repayment Order No.',r.no)}
+      ${detailRow('Loan Order No.',r.loanNo)}${detailRow('Customer ID','#'+r.userId)}
+      ${detailRow('Product ID',r.productId)}${detailRow('Channel Payment ID',r.paymentId)}
+      ${detailRow('Repayment Type',r.repaymentType)}${detailRow('Payment Channel',r.paymentChannel)}
+      ${detailRow('Payment Status',r.paymentStatus)}${detailRow('Match Status',r.matchStatus)}
+      ${detailRow('Reconcile Status',r.reconcileStatus)}
     </div></div>
     <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
-      <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">PAYMENT DETAILS</div>
-      ${detailRow('Wallet',r.walletAcc||'-')}${detailRow('Channel Txn No.',r.txnNo||'-')}
+      <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">${currentLang === 'zh' ? '金额与支付信息' : 'AMOUNT & PAYMENT'}</div>
+      ${detailRow('Payable Amount','PKR '+r.payableAmount.toLocaleString())}
+      ${detailRow('Repayment Amount','PKR '+r.repaymentAmount.toLocaleString())}
+      ${detailRow('Difference Amount','PKR '+r.differenceAmount.toLocaleString())}
+      ${detailRow('Payment Txn No.',r.paymentTxnNo)}${detailRow('Wallet Name',r.walletName)}
+      ${detailRow('Payer Account Name',currentLang === 'zh' ? '按隐私规则不展示' : 'Hidden by privacy policy')}
+      ${detailRow('Payer Account No.',r.payerAccountNo)}
+      ${detailRow('Failure Reason',r.failReason)}
+    </div></div>
+    <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
+      <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">${currentLang === 'zh' ? '时间信息' : 'TIMESTAMPS'}</div>
+      ${detailRow('Payment Start Time',r.paymentStartTime)}
+      ${detailRow('Payment Success Time',r.paymentSuccessTime)}
+      ${detailRow('Reconciled Time',r.reconciledTime)}
+      ${detailRow('Created At',r.createdAt)}${detailRow('Updated At',r.updatedAt)}
+      ${detailRow('Expiration At',r.expirationAt)}
+    </div></div>
+    <div class="col-md-6"><div style="background:${totalMatches?'#f0fdf4':'#fef2f2'};border-radius:8px;padding:16px;">
+      <div style="font-size:11px;font-weight:700;color:${totalMatches?'#16a34a':'#dc2626'};margin-bottom:12px;">${currentLang === 'zh' ? '金额校验' : 'AMOUNT VALIDATION'}</div>
+      ${detailRow(currentLang === 'zh' ? '订单应还总额' : 'Order Payable','PKR '+r.payableAmount.toLocaleString())}
+      ${detailRow(currentLang === 'zh' ? '明细应付合计' : 'Detail Payable Total','PKR '+detailPayableTotal.toLocaleString())}
+      ${detailRow(currentLang === 'zh' ? '校验结果' : 'Validation',totalMatches ? (currentLang === 'zh' ? '一致' : 'Matched') : (currentLang === 'zh' ? '不一致' : 'Mismatch'))}
+      ${detailRow(currentLang === 'zh' ? '明细数量' : 'Detail Rows',bills.length)}
     </div></div>
   </div>`;
 
-  const billAllocHtml = bills.length ? `<table class="table table-hover mb-0" style="font-size:13px;">
-    <thead><tr><th>Loan Order</th><th>Bill No.</th><th>Period</th><th>Original Bill</th><th>Remaining Snapshot</th><th>Coupon</th><th>Payable</th><th>Allocated</th><th>Difference</th><th>Status</th><th>Paid Time</th></tr></thead>
+  const billDetailHtml = bills.length ? `<div style="overflow-x:auto;"><table class="table table-hover mb-0" style="font-size:13px;min-width:1650px;">
+    <thead><tr><th>ID</th><th>Loan Order</th><th>Bill No.</th><th>Customer ID</th><th>Period</th><th>Original Bill</th><th>Remaining Snapshot</th><th>Coupon</th><th>Payable</th><th>Allocated</th><th>Difference</th><th>Paid Time</th><th>Status</th><th>Created At</th><th>Updated At</th></tr></thead>
     <tbody>${bills.map(b=>`<tr>
+      <td>${b.id}</td>
       <td><code style="font-size:11px;">${b.loanOrderNo}</code></td>
       <td><code style="font-size:11px;">${b.billNo}</code></td>
+      <td><code style="font-size:11px;">#${b.userId}</code></td>
       <td style="font-size:12.5px;">P${b.periodNo}</td>
       <td>PKR ${b.originalBillAmount.toLocaleString()}</td>
       <td>PKR ${b.billRemainingAmount.toLocaleString()}</td>
@@ -5294,42 +5350,27 @@ function viewRepaymentDetail(no) {
       <td style="font-weight:600;">PKR ${b.payableAmount.toLocaleString()}</td>
       <td style="color:#16a34a;font-weight:600;">PKR ${b.allocatedAmount.toLocaleString()}</td>
       <td style="${b.differenceAmount!==0?'color:#dc2626;':'color:#94a3b8;'}">PKR ${b.differenceAmount.toLocaleString()}</td>
-      <td><span class="status-badge ${b.status==='Paid'?'badge-active':'badge-pending'}" style="font-size:11px;">${b.status}</span></td>
       <td style="font-size:12px;color:#94a3b8;">${b.paidTime||'-'}</td>
+      <td><span class="status-badge ${b.status==='Paid'?'badge-active':b.status==='Failed'?'badge-disabled':'badge-pending'}" style="font-size:11px;">${b.status}</span></td>
+      <td style="font-size:12px;color:#94a3b8;">${b.createdAt}</td>
+      <td style="font-size:12px;color:#94a3b8;">${b.updatedAt}</td>
     </tr>`).join('')}</tbody>
-  </table>` : '<div class="empty-state"><i class="bi bi-receipt"></i>No bill allocation data</div>';
+  </table></div>` : '<div class="empty-state"><i class="bi bi-receipt"></i>No repayment order details</div>';
 
-  const feeAllocHtml = allocs.length ? `<table class="table table-hover mb-0" style="font-size:13px;">
-    <thead><tr><th>Allocation No.</th><th>Bill No.</th><th>Fee No.</th><th>Period</th><th>Fee Type</th><th>Allocated Amount</th><th>Alloc. Order</th><th>Time</th></tr></thead>
-    <tbody>${allocs.map(a=>`<tr>
-      <td><code style="font-size:11px;">${a.allocationNo}</code></td>
-      <td><code style="font-size:11px;">${a.billNo}</code></td>
-      <td><code style="font-size:11px;">${a.feeNo}</code></td>
-      <td style="font-size:12.5px;">P${a.installmentNo}</td>
-      <td><span class="role-tag" style="font-size:11px;">${a.feeType}</span></td>
-      <td style="font-weight:600;">PKR ${a.allocatedAmount.toLocaleString()}</td>
-      <td style="font-size:12.5px;">${a.allocationOrder}</td>
-      <td style="font-size:12px;color:#94a3b8;">${a.createdAt}</td>
-    </tr>`).join('')}</tbody>
-  </table>` : '<div class="empty-state"><i class="bi bi-diagram-3"></i>No fee allocation data</div>';
-
-  // Use loan detail modal body for repayment
-  document.querySelector('#loanDetailModal .modal-title').textContent = 'Repayment Order Detail';
+  document.querySelector('#loanDetailModal .modal-title').textContent = currentLang === 'zh' ? '还款订单详情' : 'Repayment Order Detail';
   document.getElementById('loan-detail-body').innerHTML = `
     <ul class="nav nav-tabs mb-3" id="repay-detail-tabs">
-      <li class="nav-item"><a class="nav-link active" href="#" onclick="switchRepayDetailTab('summary',this)">Summary</a></li>
-      <li class="nav-item"><a class="nav-link" href="#" onclick="switchRepayDetailTab('bills',this)">Bill Allocation (${bills.length})</a></li>
-      <li class="nav-item"><a class="nav-link" href="#" onclick="switchRepayDetailTab('fees',this)">Fee Allocation (${allocs.length})</a></li>
+      <li class="nav-item"><a class="nav-link active" href="#" onclick="switchRepayDetailTab('summary',this)">${currentLang === 'zh' ? '订单信息' : 'Order Information'}</a></li>
+      <li class="nav-item"><a class="nav-link" href="#" onclick="switchRepayDetailTab('bills',this)">${currentLang === 'zh' ? '还款明细' : 'Repayment Details'} (${bills.length})</a></li>
     </ul>
     <div id="rdt-summary">${summaryHtml}</div>
-    <div id="rdt-bills" style="display:none;">${billAllocHtml}</div>
-    <div id="rdt-fees" style="display:none;">${feeAllocHtml}</div>`;
+    <div id="rdt-bills" style="display:none;">${billDetailHtml}</div>`;
   new bootstrap.Modal(document.getElementById('loanDetailModal')).show();
 }
 function switchRepayDetailTab(tab, el) {
   document.querySelectorAll('#repay-detail-tabs .nav-link').forEach(a => a.classList.remove('active'));
   el.classList.add('active');
-  ['summary','bills','fees'].forEach(t => {
+  ['summary','bills'].forEach(t => {
     const el2 = document.getElementById('rdt-'+t);
     if (el2) el2.style.display = t === tab ? '' : 'none';
   });
@@ -5396,10 +5437,6 @@ function allLoanBillFees() {
 
 function allLoanFeeChanges() {
   return Object.values(loanBillFeeChanges).flat();
-}
-
-function allRepaymentBills() {
-  return Object.entries(repaymentOrderBills).flatMap(([repaymentOrderNo, rows]) => rows.map(r => ({ ...r, repaymentOrderNo })));
 }
 
 function allRepaymentAllocations() {
@@ -5509,39 +5546,6 @@ function viewLoanBillFeeDetail(id) {
       <div class="col-12">${detailRow('Remark',f.remark||'-')}</div>
     </div>`
   );
-}
-
-function renderRepaymentBills(list) {
-  const data = list || allRepaymentBills();
-  document.getElementById('repaybill-count-label').textContent = t('count.showing')(data.length, data.length);
-  const rows = data.map(b => `<tr>
-    <td><code style="font-size:11px;">${b.repaymentOrderNo}</code></td>
-    <td><code style="font-size:11px;color:#64748b;">${b.loanOrderNo}</code></td>
-    <td><code style="font-size:11px;color:#64748b;">${b.billNo}</code></td>
-    <td style="font-size:12px;">#${b.userId}</td>
-    <td>${b.periodNo}</td>
-    <td>PKR ${b.originalBillAmount.toLocaleString()}</td>
-    <td>PKR ${b.billRemainingAmount.toLocaleString()}</td>
-    <td style="color:#d97706;">PKR ${b.couponAmount.toLocaleString()}</td>
-    <td style="font-weight:600;">PKR ${b.payableAmount.toLocaleString()}</td>
-    <td style="color:#16a34a;font-weight:600;">PKR ${b.allocatedAmount.toLocaleString()}</td>
-    <td style="${b.differenceAmount!==0?'color:#dc2626;':'color:#94a3b8;'}">PKR ${b.differenceAmount.toLocaleString()}</td>
-    <td><span class="status-badge ${b.status==='Paid'?'badge-active':'badge-pending'}" style="font-size:11px;">${b.status}</span></td>
-    <td style="font-size:12px;color:#94a3b8;">${b.paidTime||'-'}</td>
-    <td style="font-size:12px;color:#94a3b8;">${b.createdAt}</td>
-  </tr>`).join('');
-  document.getElementById('repaybill-table-container').innerHTML = `
-    <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1400px;">
-      <thead><tr><th>${t('th.repaymentOrderNo')}</th><th>${t('th.loanOrderNo')}</th><th>${t('th.billNo')}</th><th>${t('th.custId')}</th><th>${t('th.periodNo')}</th><th>${t('th.originalBillAmount')}</th><th>${t('th.billRemainingAmount')}</th><th>${t('th.couponAmount')}</th><th>${t('th.payableAmount')}</th><th>${t('th.allocatedAmount')}</th><th>${t('th.differenceAmount')}</th><th>${t('th.status')}</th><th>${t('th.payTime')}</th><th>${t('th.createdAt')}</th></tr></thead>
-      <tbody>${rows||'<tr><td colspan="14"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
-    </table></div>`;
-}
-
-function filterRepaymentBills() {
-  const q = (document.getElementById('repaybill-search')?.value||'').toLowerCase();
-  renderRepaymentBills(allRepaymentBills().filter(b =>
-    !q || b.repaymentOrderNo.toLowerCase().includes(q) || b.billNo.toLowerCase().includes(q) || b.loanOrderNo.toLowerCase().includes(q)
-  ));
 }
 
 function renderRepaymentAllocations(list) {
