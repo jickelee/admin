@@ -285,9 +285,6 @@
     <a class="nav-link-item" onclick="navigate('amountrules')" id="nav-amountrules">
       <i class="bi bi-sliders"></i> <span data-i18n="nav.amountrules">Amount Term Rules</span>
     </a>
-    <a class="nav-link-item" onclick="navigate('termconfig')" id="nav-termconfig">
-      <i class="bi bi-person-gear"></i> <span data-i18n="nav.termconfig">User Term Config</span>
-    </a>
     <a class="nav-link-item" onclick="navigate('appResources')" id="nav-appResources">
       <i class="bi bi-layout-wtf"></i> <span data-i18n="nav.appResources">App Resources</span>
     </a>
@@ -2431,12 +2428,6 @@ let permissions = [
       { id:512, parentId:51, code:'config:amount_term_rule:create', name:'Create Rule', type:'Button', route:'', sort:2, status:'Active', expanded:false },
       { id:513, parentId:51, code:'config:amount_term_rule:edit', name:'Edit Rule', type:'Button', route:'', sort:3, status:'Active', expanded:false },
       { id:514, parentId:51, code:'config:amount_term_rule:delete', name:'Delete Rule', type:'Button', route:'', sort:4, status:'Active', expanded:false },
-    { id:52, parentId:50, code:'config:user_term', name:'User Term Config', type:'Menu', route:'/config/user-term', sort:2, status:'Active', expanded:true },
-      { id:521, parentId:52, code:'config:user_term:view', name:'View', type:'Button', route:'', sort:1, status:'Active', expanded:false },
-      { id:522, parentId:52, code:'config:user_term:create', name:'Create Config', type:'Button', route:'', sort:2, status:'Active', expanded:false },
-      { id:523, parentId:52, code:'config:user_term:edit', name:'Edit Config', type:'Button', route:'', sort:3, status:'Active', expanded:false },
-      { id:524, parentId:52, code:'config:user_term:delete', name:'Delete Config', type:'Button', route:'', sort:4, status:'Active', expanded:false },
-      { id:525, parentId:52, code:'config:user_term:log', name:'View Change Log', type:'Button', route:'', sort:5, status:'Active', expanded:false },
   // System
   { id:90, parentId:0, code:'system', name:'System Management', type:'Menu', route:'', sort:9, status:'Active', expanded:true },
     { id:91, parentId:90, code:'system:user', name:'User Management', type:'Menu', route:'/system/users', sort:1, status:'Active', expanded:true },
@@ -2475,7 +2466,7 @@ Object.assign(roles.find(r => r.code === 'FINANCE'), {
   perms:['dashboard','loan','loan:order','loan:order:view','loan:bill','loan:bill:view','loan:bill_fee','loan:bill_fee:view','loan:fee_change:view','loan:disbursement','loan:disbursement:view','loan:repayment','loan:repayment:view','loan:repayment_bill:view','loan:repayment_allocation','loan:repayment_allocation:view','loan:adjustment','loan:adjustment:create','loan:adjustment:approve','finance','finance:transaction','finance:transaction:view','finance:transaction:export','finance:reconciliation','finance:reconciliation:view','finance:reconciliation:handle','finance:reconciliation:ignore']
 });
 Object.assign(roles.find(r => r.code === 'OPERATIONS'), {
-  perms:['dashboard','loan','loan:order','loan:order:view','coupon','coupon:loan','coupon:loan:view','coupon:loan:issue','coupon:loan:void','coupon:repay','coupon:repay:view','coupon:repay:issue','coupon:repay:void','coupon:usage','coupon:usage:view','config','config:amount_term_rule','config:amount_term_rule:view','config:amount_term_rule:create','config:amount_term_rule:edit','config:amount_term_rule:delete','config:user_term','config:user_term:view','config:user_term:create','config:user_term:edit','config:user_term:delete','config:user_term:log']
+  perms:['dashboard','loan','loan:order','loan:order:view','coupon','coupon:loan','coupon:loan:view','coupon:loan:issue','coupon:loan:void','coupon:repay','coupon:repay:view','coupon:repay:issue','coupon:repay:void','coupon:usage','coupon:usage:view','config','config:amount_term_rule','config:amount_term_rule:view','config:amount_term_rule:create','config:amount_term_rule:edit','config:amount_term_rule:delete']
 });
 
 let nextUserId = 16, nextRoleId = 7, nextPermId = 1000;
