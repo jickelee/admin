@@ -898,7 +898,7 @@
         <div class="table-card-header">
           <span class="title" data-i18n="page.transactions">Account Transactions</span>
           <div class="search-row ms-auto">
-            <input type="text" class="form-control form-control-sm" placeholder="Txn No / Loan No / Mobile..." style="width:210px;" id="txn-search" oninput="filterTransactions()">
+            <input type="text" class="form-control form-control-sm" placeholder="Txn No. / Biz No. / Customer ID..." style="width:230px;" id="txn-search" oninput="filterTransactions()">
             <select class="form-select form-select-sm" style="width:160px;" id="txn-biz-filter" onchange="filterTransactions()">
               <option value="">All Types</option>
               <option value="Disbursement">Disbursement</option>
@@ -914,6 +914,14 @@
               <option value="">In / Out</option>
               <option value="In">In</option>
               <option value="Out">Out</option>
+            </select>
+            <select class="form-select form-select-sm" style="width:130px;" id="txn-status-filter" onchange="filterTransactions()">
+              <option value="">All Status</option>
+              <option value="Pending">Pending</option>
+              <option value="Success">Success</option>
+              <option value="Failed">Failed</option>
+              <option value="Cancelled">Cancelled</option>
+              <option value="Reversed">Reversed</option>
             </select>
           </div>
         </div>
@@ -2200,6 +2208,8 @@ const phraseZh = {
   'Bill Type':'账单类型','Installment No.':'期数','Period Start Date':'账单开始日','Due Date':'账单到期日','Discount Amount':'本期优惠金额','Discounted Principal':'优惠后本期应还本金','Current Bill Amount':'当前应还金额','Overdue':'是否逾期','Settlement Type':'结清方式','Settlement Record No.':'提前结清记录号','Settlement Bill No.':'结清账单号',
   'Settlement No.':'结清单号','Settlement Date':'结清日期','Repayment Order No.':'还款订单号','Original Contract Principal':'原合同本金','Original Remaining Overdue Fee':'原剩余逾期费','Paid Normal Principal':'已正常还款本金','Paid Normal Interest':'已收正常利息','Paid Normal Service Fee':'已收正常服务费',
   'Actual Used Days':'实际占用天数','Actual Payable Interest':'实际应收利息','Actual Payable Service Fee':'实际应收服务费','Settlement Payable Fee':'提前结清应收总费用','Waived Interest':'减免利息','Waived Service Fee':'减免服务费','Waived Overdue Fee':'减免逾期费','Settlement Amount':'最终结清金额','Paid Time':'支付时间','Amount Validation':'金额校验',
+  'Transaction Detail':'账务流水详情','Transaction No.':'流水号','Fee No.':'费用明细号','Business Type':'业务类型','Business No.':'业务单号','Direction':'流水方向','Currency':'币种','Account ID':'账户 ID','Counterparty Account Type':'对方账户类型','Counterparty Account ID':'对方账户 ID','Reversal':'是否冲正','Original Transaction No.':'原流水号','Reversal Reason':'冲正原因','Transaction Time':'交易时间','Posted Time':'入账时间',
+  'TRANSACTION INFORMATION':'流水信息','BUSINESS REFERENCES':'业务关联','ACCOUNTING ENTRIES':'账户分录','REVERSAL INFORMATION':'冲正信息','SYSTEM INFORMATION':'系统信息',
   'BILL INFO':'账单信息','AMOUNT SUMMARY':'金额汇总','Bill No.':'账单号','Loan Order':'借款订单','Installment':'期次','Period':'周期','Settled At':'结清时间',
   'Payable Principal':'应还本金','Payable Interest':'应还利息','Payable Service Fee':'应还服务费','Payable Overdue Fee':'应还逾期费','Total Bill Amount':'账单总额','Overdue Days':'逾期天数',
   'REPAYMENT ORDER':'还款订单','PAYMENT DETAILS':'支付信息','Repayment No.':'还款单号','Channel':'渠道','Reconcile':'对账状态','Pay Time':'支付时间','Channel Txn No.':'渠道流水号',
@@ -3218,10 +3228,10 @@ let walletAccounts = [
 
 function statusBadge(s) {
   const map = {
-    Active:'badge-active', Verified:'badge-active', Approved:'badge-active', Pass:'badge-active', Trusted:'badge-active',
+    Active:'badge-active', Verified:'badge-active', Approved:'badge-active', Pass:'badge-active', Trusted:'badge-active', Success:'badge-active',
     Pending:'badge-pending', Sent:'badge-pending', Medium:'badge-pending',
     Failed:'badge-disabled', Disabled:'badge-disabled', Rejected:'badge-disabled', Blocked:'badge-disabled', Locked:'badge-disabled', Expired:'badge-disabled', High:'badge-disabled',
-    Cancelled:'background:#f1f5f9;color:#64748b;', Invalidated:'background:#f1f5f9;color:#64748b;', Low:'background:#dcfce7;color:#15803d;'
+    Cancelled:'background:#f1f5f9;color:#64748b;', Reversed:'background:#f1f5f9;color:#64748b;', Invalidated:'background:#f1f5f9;color:#64748b;', Low:'background:#dcfce7;color:#15803d;'
   };
   const c = map[s] || 'background:#f1f5f9;color:#64748b;';
   return c.includes(':')
@@ -4523,34 +4533,126 @@ let accountTransactions = [
   { id:13, txnNo:'AT20240428001', userId:1017, loanOrderNo:'LN2024060413', billNo:'LB2024060413001', bizType:'Repayment',    bizNo:'RP20240604006', direction:'In',  amount:10000, currency:'PKR', accountType:'Platform',    accountId:'PLATFORM_MAIN',   status:'Success', txnTime:'2024-04-28 13:10', postedTime:'2024-04-28 13:10' },
   { id:14, txnNo:'AT20240602001', userId:1014, loanOrderNo:'LN2024060412', billNo:'LB2024060412001', bizType:'Repayment',    bizNo:'RP20240604002', direction:'In',  amount:6000,  currency:'PKR', accountType:'Platform',    accountId:'PLATFORM_MAIN',   status:'Success', txnTime:'2024-06-02 08:40', postedTime:'2024-06-02 08:40' },
   { id:15, txnNo:'AT20240310001', userId:1013, loanOrderNo:'LN2024060015', billNo:'',               bizType:'Repayment',    bizNo:'RP20240604008', direction:'In',  amount:8000,  currency:'PKR', accountType:'Platform',    accountId:'PLATFORM_MAIN',   status:'Success', txnTime:'2024-03-10 16:00', postedTime:'2024-03-10 16:00' },
+  { id:16, txnNo:'AT20240604006', userId:1008, loanOrderNo:'LN2024060408', billNo:'LB2024060408001', bizType:'Reversal',     bizNo:'RV20240604001', direction:'In',  amount:2000,  currency:'PKR', accountType:'Receivable',  accountId:'OD_RECEIVABLE',   status:'Success', txnTime:'2024-06-04 16:10', postedTime:'2024-06-04 16:10' },
 ];
+
+const accountTransactionMetadata = {
+  2:{ repaymentOrderNo:'RP20240601001', feeType:'Principal', remark:'Installment repayment posted' },
+  3:{ repaymentOrderNo:'RP20240602001', feeType:'Principal', remark:'Installment repayment posted' },
+  6:{ repaymentOrderNo:'RP20240603001', feeType:'Principal', remark:'Installment repayment posted' },
+  7:{ feeNo:'FEE2024060408001OD', feeType:'OverdueFee', remark:'Daily overdue fee accrual' },
+  8:{ feeNo:'FEE2024060408001OD', feeType:'OverdueFee', status:'Reversed', remark:'Waiver entry reversed by correction' },
+  9:{ feeNo:'FEE2024060404001OD', feeType:'OverdueFee', remark:'Daily overdue fee accrual' },
+  11:{ repaymentOrderNo:'RP20240603002', feeType:'Principal', remark:'Installment repayment posted' },
+  12:{ repaymentOrderNo:'RP20240604007', feeType:'Principal', remark:'Installment repayment posted' },
+  13:{ repaymentOrderNo:'RP20240604006', feeType:'Principal', remark:'Partial repayment posted' },
+  14:{ repaymentOrderNo:'RP20240604002', feeType:'Principal', remark:'Partial repayment posted' },
+  15:{ repaymentOrderNo:'RP20240604008', feeType:'Principal', remark:'Manual repayment posted' },
+  16:{ feeNo:'FEE2024060408001OD', feeType:'OverdueFee', isReversal:true, originalTransactionNo:'AT20240604003', reversalReason:'Incorrect waiver amount; original entry reversed', remark:'Reversal of fee waiver transaction' },
+};
+
+accountTransactions.forEach(tx => {
+  const meta = accountTransactionMetadata[tx.id] || {};
+  const isRepayment = tx.bizType === 'Repayment';
+  const isDisbursement = tx.bizType === 'Disbursement';
+  const isFeeEntry = ['FeeAccrual','FeeWaiver','OverdueFee','Adjustment','Reversal'].includes(tx.bizType);
+  const counterpartyType = isDisbursement || isRepayment || ['FeeWaiver','Reversal','Refund'].includes(tx.bizType)
+    ? 'User'
+    : (isFeeEntry ? 'Revenue' : 'Platform');
+  Object.assign(tx, {
+    transactionNo: tx.txnNo,
+    feeNo: '',
+    repaymentOrderNo: isRepayment ? tx.bizNo : '',
+    counterpartyAccountType: counterpartyType,
+    counterpartyAccountId: tx.userId ? `USER_${tx.userId}` : 'PLATFORM_MAIN',
+    feeType: tx.bizType === 'OverdueFee' || tx.bizType === 'FeeWaiver' ? 'OverdueFee' : '',
+    isReversal: false,
+    originalTransactionNo: '',
+    reversalReason: '',
+    transactionTime: tx.txnTime,
+    remark: isDisbursement ? 'Loan disbursement posted' : (isRepayment ? 'Repayment received and posted' : tx.bizType),
+    createdAt: tx.txnTime,
+    updatedAt: tx.postedTime || tx.txnTime,
+  }, meta);
+});
 
 function renderTransactions(list) {
   const data=list||accountTransactions;
   document.getElementById('txn-count-label').textContent=t('count.showing')(data.length,data.length);
   const rows=data.map(tx=>`<tr>
+    <td>${tx.id}</td>
     <td><code style="font-size:12px;">${tx.txnNo}</code></td>
+    <td><code style="font-size:11.5px;">#${tx.userId}</code></td>
     <td><code style="font-size:11.5px;color:#94a3b8;">${tx.loanOrderNo}</code></td>
+    <td><code style="font-size:11px;">${tx.billNo||'-'}</code></td>
+    <td><code style="font-size:11px;">${tx.repaymentOrderNo||'-'}</code></td>
     <td><span class="role-tag" style="font-size:11px;">${tx.bizType}</span></td>
     <td><code style="font-size:11px;">${tx.bizNo}</code></td>
     <td><span style="font-weight:700;${tx.direction==='In'?'color:#16a34a;':'color:#dc2626;'}">${tx.direction==='In'?'▲ In':'▼ Out'}</span></td>
     <td style="font-weight:600;">PKR ${tx.amount.toLocaleString()}</td>
     <td style="font-size:12px;color:#94a3b8;">${tx.accountType}</td>
     <td style="font-size:11.5px;color:#94a3b8;font-family:monospace;">${tx.accountId}</td>
-    <td><span class="status-badge badge-active" style="font-size:11px;">${tx.status}</span></td>
+    <td style="font-size:12px;color:#64748b;">${tx.counterpartyAccountType}</td>
+    <td style="font-size:12px;">${tx.feeType||'-'}</td>
+    <td>${statusBadge(tx.status)}</td>
     <td style="font-size:12px;color:#94a3b8;white-space:nowrap;">${tx.txnTime}</td>
+    <td><button class="btn btn-sm btn-outline-primary action-btn" onclick="viewAccountTransactionDetail(${tx.id})"><i class="bi bi-eye"></i> ${t('btn.detail')}</button></td>
   </tr>`).join('');
   document.getElementById('txn-table-container').innerHTML=`
-    <table class="table table-hover mb-0">
-      <thead><tr><th>${t('th.txnNo2')}</th><th>${t('th.loanOrderNo')}</th><th>${t('th.bizType')}</th><th>Biz No.</th><th>${t('th.direction')}</th><th>${t('th.amount')}</th><th>${t('th.accountType')}</th><th>Account ID</th><th>${t('th.status')}</th><th>${t('th.time')}</th></tr></thead>
-      <tbody>${rows||'<tr><td colspan="10"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
-    </table>`;
+    <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1900px;">
+      <thead><tr><th>ID</th><th>${t('th.txnNo2')}</th><th>Customer ID</th><th>${t('th.loanOrderNo')}</th><th>Bill No.</th><th>Repayment Order No.</th><th>${t('th.bizType')}</th><th>Biz No.</th><th>${t('th.direction')}</th><th>${t('th.amount')}</th><th>${t('th.accountType')}</th><th>Account ID</th><th>Counterparty Type</th><th>Fee Type</th><th>${t('th.status')}</th><th>${t('th.time')}</th><th>Actions</th></tr></thead>
+      <tbody>${rows||'<tr><td colspan="17"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+    </table></div>`;
 }
 function filterTransactions() {
   const q=document.getElementById('txn-search').value.toLowerCase();
   const b=document.getElementById('txn-biz-filter').value;
   const d=document.getElementById('txn-dir-filter').value;
-  renderTransactions(accountTransactions.filter(tx=>(!q||tx.txnNo.toLowerCase().includes(q)||tx.loanOrderNo.toLowerCase().includes(q)||tx.bizNo.toLowerCase().includes(q))&&(!b||tx.bizType===b)&&(!d||tx.direction===d)));
+  const s=document.getElementById('txn-status-filter').value;
+  renderTransactions(accountTransactions.filter(tx=>
+    (!q||tx.txnNo.toLowerCase().includes(q)||tx.bizNo.toLowerCase().includes(q)||String(tx.userId).includes(q)||tx.loanOrderNo.toLowerCase().includes(q)) &&
+    (!b||tx.bizType===b) && (!d||tx.direction===d) && (!s||tx.status===s)
+  ));
+}
+
+function viewAccountTransactionDetail(id) {
+  const tx=accountTransactions.find(item=>item.id===id);
+  if(!tx) return;
+  const section=title=>`<div style="font-size:11px;font-weight:700;color:#3a5bdf;letter-spacing:.5px;margin:14px 0 8px;">${localizePhrase(title)}</div>`;
+  openFeeRecordDetail(
+    `${localizePhrase('Transaction Detail')} — ${tx.transactionNo}`,
+    `${section('TRANSACTION INFORMATION')}
+      ${detailRow('ID',tx.id)}
+      ${detailRow('Transaction No.',`<code>${tx.transactionNo}</code>`)}
+      ${detailRow('Customer ID',tx.userId ? `#${tx.userId}` : '-')}
+      ${detailRow('Business Type',tx.bizType)}
+      ${detailRow('Business No.',`<code>${tx.bizNo||'-'}</code>`)}
+      ${detailRow('Direction',tx.direction)}
+      ${detailRow('Amount',`${tx.currency} ${tx.amount.toLocaleString()}`)}
+      ${detailRow('Currency',tx.currency)}
+      ${detailRow('Status',statusBadge(tx.status))}
+     ${section('BUSINESS REFERENCES')}
+      ${detailRow('Loan Order No.',`<code>${tx.loanOrderNo||'-'}</code>`)}
+      ${detailRow('Bill No.',`<code>${tx.billNo||'-'}</code>`)}
+      ${detailRow('Fee No.',`<code>${tx.feeNo||'-'}</code>`)}
+      ${detailRow('Repayment Order No.',`<code>${tx.repaymentOrderNo||'-'}</code>`)}
+      ${detailRow('Fee Type',tx.feeType||'-')}
+     ${section('ACCOUNTING ENTRIES')}
+      ${detailRow('Account Type',tx.accountType)}
+      ${detailRow('Account ID',`<code>${tx.accountId}</code>`)}
+      ${detailRow('Counterparty Account Type',tx.counterpartyAccountType)}
+      ${detailRow('Counterparty Account ID',`<code>${tx.counterpartyAccountId}</code>`)}
+     ${section('REVERSAL INFORMATION')}
+      ${detailRow('Reversal',tx.isReversal?'Yes':'No')}
+      ${detailRow('Original Transaction No.',`<code>${tx.originalTransactionNo||'-'}</code>`)}
+      ${detailRow('Reversal Reason',tx.reversalReason||'-')}
+     ${section('SYSTEM INFORMATION')}
+      ${detailRow('Transaction Time',tx.transactionTime)}
+      ${detailRow('Posted Time',tx.postedTime||'-')}
+      ${detailRow('Remark',tx.remark||'-')}
+      ${detailRow('Created At',tx.createdAt)}
+      ${detailRow('Updated At',tx.updatedAt)}`
+  );
 }
 
 // ============================================================
