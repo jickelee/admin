@@ -721,7 +721,7 @@
         <div class="table-card-header">
           <span class="title" data-i18n="page.loanBills">Loan Bills</span>
           <div class="search-row ms-auto">
-            <input type="text" class="form-control form-control-sm" placeholder="Order No / Customer..." style="width:200px;" id="bill-search" oninput="filterBills()">
+            <input type="text" class="form-control form-control-sm" placeholder="Bill No. / Loan No. / Customer ID..." style="width:250px;" id="bill-search" oninput="filterBills()">
             <select class="form-select form-select-sm" style="width:160px;" id="bill-status-filter" onchange="filterBills()">
               <option value="">All Status</option>
               <option value="CoolingOff">CoolingOff</option>
@@ -732,6 +732,7 @@
               <option value="Paid">Paid</option>
               <option value="earlysettled">EarlySettled</option>
               <option value="WrittenOff">WrittenOff</option>
+              <option value="Expired">Expired</option>
             </select>
             <select class="form-select form-select-sm" style="width:110px;" id="bill-overdue-filter" onchange="filterBills()">
               <option value="">All</option>
@@ -841,7 +842,7 @@
         <div class="table-card-header">
           <span class="title" data-i18n="page.earlySettlement">Early Settlement Records</span>
           <div class="search-row ms-auto">
-            <input type="text" class="form-control form-control-sm" placeholder="Settlement No / Loan No..." style="width:210px;" id="es-search" oninput="filterEarlySettlement()">
+            <input type="text" class="form-control form-control-sm" placeholder="Settlement No. / Loan No. / Customer ID..." style="width:260px;" id="es-search" oninput="filterEarlySettlement()">
             <select class="form-select form-select-sm" style="width:130px;" id="es-status-filter" onchange="filterEarlySettlement()">
               <option value="">All Status</option>
               <option value="Pending">Pending</option>
@@ -2196,6 +2197,9 @@ const phraseZh = {
   'Paid Principal':'已还本金','Paid Interest':'已还利息','Paid Service Fee':'已还服务费','Paid Overdue Fee':'已还逾期费','Remaining Principal':'剩余应还本金','Remaining Interest':'剩余应还利息','Remaining Service Fee':'剩余应还服务费','Remaining Overdue Fee':'剩余应还逾期费',
   'Wallet Name':'收款钱包名称','Wallet Account Name':'收款账户姓名','Wallet Account No.':'收款账户号','Disbursement Status':'放款状态','Disbursement Time':'放款时间','Fee Capped':'是否达到费用上限','Fee Capped Time':'达到费用上限时间',
   'Cooling-off Repaid':'是否冷静期结清','Cooling-off Repaid Time':'冷静期结清时间','Early Settled':'是否提前结清','Early Settlement Time':'提前结清时间','Settled Time':'实际结清时间','Batching Time':'最后一次跑批时间','Created At':'创建时间','Updated At':'更新时间',
+  'Bill Type':'账单类型','Installment No.':'期数','Period Start Date':'账单开始日','Due Date':'账单到期日','Discount Amount':'本期优惠金额','Discounted Principal':'优惠后本期应还本金','Current Bill Amount':'当前应还金额','Overdue':'是否逾期','Settlement Type':'结清方式','Settlement Record No.':'提前结清记录号','Settlement Bill No.':'结清账单号',
+  'Settlement No.':'结清单号','Settlement Date':'结清日期','Repayment Order No.':'还款订单号','Original Contract Principal':'原合同本金','Original Remaining Overdue Fee':'原剩余逾期费','Paid Normal Principal':'已正常还款本金','Paid Normal Interest':'已收正常利息','Paid Normal Service Fee':'已收正常服务费',
+  'Actual Used Days':'实际占用天数','Actual Payable Interest':'实际应收利息','Actual Payable Service Fee':'实际应收服务费','Settlement Payable Fee':'提前结清应收总费用','Waived Interest':'减免利息','Waived Service Fee':'减免服务费','Waived Overdue Fee':'减免逾期费','Settlement Amount':'最终结清金额','Paid Time':'支付时间','Amount Validation':'金额校验',
   'BILL INFO':'账单信息','AMOUNT SUMMARY':'金额汇总','Bill No.':'账单号','Loan Order':'借款订单','Installment':'期次','Period':'周期','Settled At':'结清时间',
   'Payable Principal':'应还本金','Payable Interest':'应还利息','Payable Service Fee':'应还服务费','Payable Overdue Fee':'应还逾期费','Total Bill Amount':'账单总额','Overdue Days':'逾期天数',
   'REPAYMENT ORDER':'还款订单','PAYMENT DETAILS':'支付信息','Repayment No.':'还款单号','Channel':'渠道','Reconcile':'对账状态','Pay Time':'支付时间','Channel Txn No.':'渠道流水号',
@@ -4092,40 +4096,108 @@ let loanBills = [
   { id:13, billNo:'LB2024060413001', loanOrderNo:'LN2024060413', userId:1017, custName:'Omar Farooq',      installmentNo:1, totalInstallments:4, periodStart:'2024-04-15', dueDate:'2024-04-30', payablePrincipal:6250,  payableInterest:1406.3, payableServiceFee:468.8, payableOverdueFee:10125,billAmount:18250, paidAmount:10000,remainingAmount:8250,  overdueDays:35, isOverdue:1, status:'OverduePartiallyPaid',settledTime:'' },
   { id:14, billNo:'LB2024060412001', loanOrderNo:'LN2024060412', userId:1014, custName:'Rabia Yousuf',     installmentNo:1, totalInstallments:4, periodStart:'2024-05-18', dueDate:'2024-06-02', payablePrincipal:3750,  payableInterest:843.75, payableServiceFee:281.25,payableOverdueFee:0,    billAmount:4875,  paidAmount:4875, remainingAmount:0,     overdueDays:0,  isOverdue:0, status:'Paid',               settledTime:'2024-06-02 08:40' },
   { id:15, billNo:'LB2024060411001', loanOrderNo:'LN2024060411', userId:1012, custName:'Saba Noor',        installmentNo:1, totalInstallments:2, periodStart:'2024-05-22', dueDate:'2024-06-06', payablePrincipal:6000,  payableInterest:1350,   payableServiceFee:450,   payableOverdueFee:0,    billAmount:7800,  paidAmount:7800, remainingAmount:0,     overdueDays:0,  isOverdue:0, status:'Paid',               settledTime:'2024-06-06 09:00' },
+  { id:16, billType:'EarlySettlement', billNo:'ESB2024060410001', loanOrderNo:'LN2024060410', userId:1010, productId:1, custName:'Mahnoor Tariq', installmentNo:0, totalInstallments:4, periodStart:'2024-06-04', dueDate:'2024-06-04', periodDays:1, payablePrincipal:30000, discountAmount:0, payableInterest:225, payableServiceFee:75, payableOverdueFee:0, billAmount:30300, paidAmount:0, remainingAmount:30300, overdueDays:0, isOverdue:0, status:'CoolingOff', settlementType:'EARLY_SETTLEMENT', settlementRecordNo:'ES20240604001', settlementBillNo:'', settledTime:'' },
 ];
+
+const loanBillMetadata = {
+  1:{ createdAt:'2024-05-20 14:02', updatedAt:'2024-06-04 00:05' },
+  2:{ createdAt:'2024-05-20 14:02', updatedAt:'2024-06-04 00:05' },
+  3:{ createdAt:'2024-05-10 09:02', updatedAt:'2024-06-04 11:05' },
+  4:{ createdAt:'2024-05-10 09:02', updatedAt:'2024-06-04 00:05' },
+  5:{ createdAt:'2024-05-01 11:05', updatedAt:'2024-05-16 10:05', settlementType:'NORMAL_REPAYMENT' },
+  6:{ createdAt:'2024-05-01 11:05', updatedAt:'2024-05-31 09:50', settlementType:'NORMAL_REPAYMENT' },
+  7:{ createdAt:'2024-06-03 15:23', updatedAt:'2024-06-03 15:23' },
+  8:{ createdAt:'2024-04-20 10:03', updatedAt:'2024-06-04 15:31', paidBreakdown:{ principal:4500, interest:1012.5, serviceFee:337.5, overdueFee:1350 } },
+  9:{ createdAt:'2024-04-20 10:03', updatedAt:'2024-06-04 16:01' },
+  10:{ createdAt:'2024-05-15 09:32', updatedAt:'2024-05-30 11:30', settlementType:'NORMAL_REPAYMENT' },
+  11:{ createdAt:'2024-05-15 09:32', updatedAt:'2024-06-14 10:15', settlementType:'NORMAL_REPAYMENT' },
+  12:{ createdAt:'2024-06-04 11:44', updatedAt:'2024-06-04 11:44' },
+  13:{ createdAt:'2024-04-15 08:03', updatedAt:'2024-06-04 16:01', paidBreakdown:{ principal:6250, interest:1406.3, serviceFee:468.8, overdueFee:1874.9 } },
+  14:{ createdAt:'2024-05-18 14:32', updatedAt:'2024-06-02 08:40', settlementType:'NORMAL_REPAYMENT' },
+  15:{ createdAt:'2024-05-22 13:02', updatedAt:'2024-06-06 09:00', settlementType:'NORMAL_REPAYMENT' },
+  16:{ createdAt:'2024-06-04 11:40', updatedAt:'2024-06-04 11:40' },
+};
+
+loanBills.forEach(b => {
+  const meta = loanBillMetadata[b.id] || {};
+  const totalPayable = Number(b.billAmount || 0);
+  const paidRatio = totalPayable > 0 ? Math.min(1, Number(b.paidAmount || 0) / totalPayable) : 0;
+  const paid = meta.paidBreakdown || {
+    principal: Math.round(Number(b.payablePrincipal || 0) * paidRatio * 100) / 100,
+    interest: Math.round(Number(b.payableInterest || 0) * paidRatio * 100) / 100,
+    serviceFee: Math.round(Number(b.payableServiceFee || 0) * paidRatio * 100) / 100,
+    overdueFee: Math.round(Number(b.payableOverdueFee || 0) * paidRatio * 100) / 100,
+  };
+  const discountAmount = Number(b.discountAmount || 0);
+  Object.assign(b, {
+    billType: b.billType || 'Normal',
+    productId: b.productId || 1,
+    installmentCount: b.totalInstallments,
+    periodStartDate: b.periodStart,
+    periodDays: b.periodDays || 15,
+    payablePrincipalAmount: b.payablePrincipal,
+    discountAmount,
+    discountBillAmount: Math.max(0, Number(b.payablePrincipal || 0) - discountAmount),
+    payableInterestAmount: b.payableInterest,
+    payableServiceFeeAmount: b.payableServiceFee,
+    payableOverdueFeeAmount: b.payableOverdueFee,
+    paidPrincipalAmount: paid.principal,
+    paidInterestAmount: paid.interest,
+    paidServiceFeeAmount: paid.serviceFee,
+    paidOverdueFeeAmount: paid.overdueFee,
+    remainingPrincipalAmount: Math.max(0, Number(b.payablePrincipal || 0) - discountAmount - paid.principal),
+    remainingInterestAmount: Math.max(0, Number(b.payableInterest || 0) - paid.interest),
+    remainingServiceFeeAmount: Math.max(0, Number(b.payableServiceFee || 0) - paid.serviceFee),
+    remainingOverdueFeeAmount: Math.max(0, Number(b.payableOverdueFee || 0) - paid.overdueFee),
+    settlementType: b.settlementType || meta.settlementType || (b.status === 'Paid' ? 'NORMAL_REPAYMENT' : '-'),
+    settlementRecordNo: b.settlementRecordNo || '-',
+    settlementBillNo: b.settlementBillNo || '-',
+    createdAt: meta.createdAt || '-',
+    updatedAt: meta.updatedAt || '-',
+  });
+  b.paidAmount = b.paidPrincipalAmount + b.paidInterestAmount + b.paidServiceFeeAmount + b.paidOverdueFeeAmount;
+  b.remainingAmount = b.remainingPrincipalAmount + b.remainingInterestAmount + b.remainingServiceFeeAmount + b.remainingOverdueFeeAmount;
+});
 
 function renderBills(list) {
   const data = list || loanBills;
   document.getElementById('bill-count-label').textContent = t('count.showing')(data.length, data.length);
   const rows = data.map(b => {
-    const sc = {CoolingOff:'background:#e0e7ff;color:#4338ca;',Active:'badge-active',PartiallyPaid:'badge-pending',Overdue:'badge-disabled',OverduePartiallyPaid:'background:#fee2e2;color:#dc2626;',Paid:'background:#dcfce7;color:#15803d;',earlysettled:'background:#f0fdf4;color:#166534;',WrittenOff:'background:#f1f5f9;color:#64748b;'};
+    const sc = {CoolingOff:'background:#e0e7ff;color:#4338ca;',Active:'badge-active',PartiallyPaid:'badge-pending',Overdue:'badge-disabled',OverduePartiallyPaid:'background:#fee2e2;color:#dc2626;',Paid:'background:#dcfce7;color:#15803d;',earlysettled:'background:#f0fdf4;color:#166534;',WrittenOff:'background:#f1f5f9;color:#64748b;',Expired:'badge-disabled'};
     const c=sc[b.status]||'';
-    const badge=`<span class="status-badge" style="${c.includes(':')?c:''}" ${!c.includes(':') ? `class="status-badge ${c}"` : ''}>${b.status}</span>`;
+    const badge=c.includes(':')
+      ? `<span class="status-badge" style="${c}">${b.status}</span>`
+      : `<span class="status-badge ${c}">${b.status}</span>`;
     return `<tr>
+      <td style="font-size:12px;">${b.id}</td>
+      <td><span class="role-tag" style="font-size:11px;">${b.billType}</span></td>
       <td><code style="font-size:12px;">${b.billNo}</code></td>
       <td><code style="font-size:11.5px;color:#94a3b8;">${b.loanOrderNo}</code></td>
-      <td><code style="font-size:12px;">${customerIdDisplay(b)}</code></td>
-      <td style="font-size:13px;">${b.installmentNo} / ${b.totalInstallments}</td>
+      <td><code style="font-size:12px;">#${b.userId}</code></td>
+      <td style="font-size:12px;">${b.productId}</td>
+      <td style="font-size:13px;">${b.installmentNo} / ${b.installmentCount}</td>
       <td style="font-size:12.5px;color:#94a3b8;">${b.dueDate}</td>
       <td style="font-weight:600;">PKR ${b.billAmount.toLocaleString()}</td>
       <td style="color:#16a34a;">PKR ${b.paidAmount.toLocaleString()}</td>
       <td style="color:${b.remainingAmount>0?'#dc2626':'#16a34a'};">PKR ${b.remainingAmount.toLocaleString()}</td>
       <td>${b.isOverdue?`<span class="status-badge badge-disabled">${b.overdueDays}d</span>`:'<span style="color:#94a3b8;font-size:12px;">-</span>'}</td>
       <td>${badge}</td>
+      <td style="font-size:12px;">${b.settlementType}</td>
+      <td style="font-size:12px;color:#94a3b8;white-space:nowrap;">${b.updatedAt}</td>
       <td><button class="btn btn-sm btn-outline-primary action-btn" onclick="viewBillDetail(${b.id})"><i class="bi bi-eye"></i> ${t('btn.detail')}</button></td>
     </tr>`;
   }).join('');
   document.getElementById('bill-table-container').innerHTML = `
-    <table class="table table-hover mb-0">
-      <thead><tr><th>${t('th.billNo')}</th><th>${t('th.loanOrderNo')}</th><th>${t('th.customer')}</th><th>${t('th.installmentNo')}</th><th>${t('th.dueDate2')}</th><th>${t('th.payable')}</th><th>${t('th.paid')}</th><th>${t('th.remaining')}</th><th>${t('th.overdueDays')}</th><th>${t('th.status')}</th><th>${t('th.actions')}</th></tr></thead>
-      <tbody>${rows||'<tr><td colspan="11"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
-    </table>`;
+    <div class="table-scroll"><table class="table table-hover mb-0" style="min-width:1650px;">
+      <thead><tr><th>ID</th><th>${currentLang === 'zh' ? '账单类型' : 'Bill Type'}</th><th>${t('th.billNo')}</th><th>${t('th.loanOrderNo')}</th><th>${currentLang === 'zh' ? '客户 ID' : 'Customer ID'}</th><th>${currentLang === 'zh' ? '产品 ID' : 'Product ID'}</th><th>${t('th.installmentNo')}</th><th>${t('th.dueDate2')}</th><th>${t('th.payable')}</th><th>${t('th.paid')}</th><th>${t('th.remaining')}</th><th>${t('th.overdueDays')}</th><th>${t('th.status')}</th><th>${currentLang === 'zh' ? '结清方式' : 'Settlement Type'}</th><th>${t('th.updatedAt')}</th><th>${t('th.actions')}</th></tr></thead>
+      <tbody>${rows||'<tr><td colspan="16"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+    </table></div>`;
 }
 function filterBills() {
   const q=document.getElementById('bill-search').value.toLowerCase();
   const s=document.getElementById('bill-status-filter').value;
   const o=document.getElementById('bill-overdue-filter').value;
-  renderBills(loanBills.filter(b=>(!q||b.billNo.toLowerCase().includes(q)||b.loanOrderNo.toLowerCase().includes(q)||b.custName.toLowerCase().includes(q))&&(!s||b.status===s)&&(o===''||String(b.isOverdue)===o)));
+  renderBills(loanBills.filter(b=>(!q||b.billNo.toLowerCase().includes(q)||b.loanOrderNo.toLowerCase().includes(q)||String(b.userId).includes(q.replace('#','')))&&(!s||b.status===s)&&(o===''||String(b.isOverdue)===o)));
 }
 // viewBillDetail: replaced by tabbed version below
 
@@ -4192,7 +4264,7 @@ let earlySettlements = [
     paidNormalPrincipalAmount:0, paidNormalFeeInterest:0, paidNormalFeeServiceFee:0,
     actualUsedDays:1, actualPayableInterest:225, actualPayableServiceFee:75,
     settlementPayableFeeAmount:30300,
-    waivedInterest:13275, waivedServiceFee:4425, waivedOverdueFee:0,
+    waivedInterest:3375, waivedServiceFee:1125, waivedOverdueFee:0,
     settlementAmount:25800,
     repaymentOrderNo:'RP20240604003', status:'Pending', createdAt:'2024-06-04 11:40', paidTime:'', updatedAt:'2024-06-04 11:40' },
   { id:2, settlementNo:'ES20240301001', loanOrderNo:'LN2024060403', userId:1003, productId:1, custName:'Muhammad Raza',
@@ -4201,7 +4273,7 @@ let earlySettlements = [
     paidNormalPrincipalAmount:8000, paidNormalFeeInterest:1800, paidNormalFeeServiceFee:600,
     actualUsedDays:37, actualPayableInterest:5550, actualPayableServiceFee:1850,
     settlementPayableFeeAmount:17000,
-    waivedInterest:2700, waivedServiceFee:900, waivedOverdueFee:0,
+    waivedInterest:225, waivedServiceFee:75, waivedOverdueFee:0,
     settlementAmount:16700,
     repaymentOrderNo:'RP20240601001', status:'Paid', createdAt:'2024-06-01 14:00', paidTime:'2024-06-01 14:30', updatedAt:'2024-06-01 14:30' },
   { id:3, settlementNo:'ES20240515001', loanOrderNo:'LN2024060412', userId:1014, productId:1, custName:'Rabia Yousuf',
@@ -4210,7 +4282,7 @@ let earlySettlements = [
     paidNormalPrincipalAmount:3750, paidNormalFeeInterest:843.75, paidNormalFeeServiceFee:281.25,
     actualUsedDays:16, actualPayableInterest:1800, actualPayableServiceFee:600,
     settlementPayableFeeAmount:12525,
-    waivedInterest:4950, waivedServiceFee:1650, waivedOverdueFee:0,
+    waivedInterest:431.25, waivedServiceFee:143.75, waivedOverdueFee:0,
     settlementAmount:11950,
     repaymentOrderNo:'RP20240520001', status:'Paid', createdAt:'2024-05-20 10:30', paidTime:'2024-05-20 11:00', updatedAt:'2024-05-20 11:00' },
   { id:4, settlementNo:'ES20240520001', loanOrderNo:'LN2024060411', userId:1012, productId:1, custName:'Saba Noor',
@@ -4228,7 +4300,7 @@ let earlySettlements = [
     paidNormalPrincipalAmount:0, paidNormalFeeInterest:0, paidNormalFeeServiceFee:0,
     actualUsedDays:1, actualPayableInterest:187.5, actualPayableServiceFee:62.5,
     settlementPayableFeeAmount:25250,
-    waivedInterest:11062.5, waivedServiceFee:3687.5, waivedOverdueFee:0,
+    waivedInterest:2812.5, waivedServiceFee:937.5, waivedOverdueFee:0,
     settlementAmount:21500,
     repaymentOrderNo:'', status:'Expired', createdAt:'2024-06-04 09:00', paidTime:'', updatedAt:'2024-06-04 12:00' },
   { id:6, settlementNo:'ES20240605001', loanOrderNo:'LN2024060416', userId:1016, productId:1, custName:'Laiba Ahmed',
@@ -4237,7 +4309,7 @@ let earlySettlements = [
     paidNormalPrincipalAmount:0, paidNormalFeeInterest:0, paidNormalFeeServiceFee:0,
     actualUsedDays:1, actualPayableInterest:75, actualPayableServiceFee:25,
     settlementPayableFeeAmount:10100,
-    waivedInterest:2175, waivedServiceFee:725, waivedOverdueFee:0,
+    waivedInterest:750, waivedServiceFee:250, waivedOverdueFee:0,
     settlementAmount:9100,
     repaymentOrderNo:'', status:'Pending', createdAt:'2024-06-05 09:10', paidTime:'', updatedAt:'2024-06-05 09:10' },
   { id:7, settlementNo:'ES20240605002', loanOrderNo:'LN2024060417', userId:1017, productId:1, custName:'Bilal Qureshi',
@@ -4246,7 +4318,7 @@ let earlySettlements = [
     paidNormalPrincipalAmount:0, paidNormalFeeInterest:0, paidNormalFeeServiceFee:0,
     actualUsedDays:1, actualPayableInterest:135, actualPayableServiceFee:45,
     settlementPayableFeeAmount:18180,
-    waivedInterest:7965, waivedServiceFee:2655, waivedOverdueFee:0,
+    waivedInterest:1485, waivedServiceFee:495, waivedOverdueFee:0,
     settlementAmount:16200,
     repaymentOrderNo:'', status:'Pending', createdAt:'2024-06-05 10:25', paidTime:'', updatedAt:'2024-06-05 10:25' },
   { id:8, settlementNo:'ES20240605003', loanOrderNo:'LN2024060418', userId:1018, productId:1, custName:'Mariam Iqbal',
@@ -4255,7 +4327,7 @@ let earlySettlements = [
     paidNormalPrincipalAmount:0, paidNormalFeeInterest:0, paidNormalFeeServiceFee:0,
     actualUsedDays:1, actualPayableInterest:187.5, actualPayableServiceFee:62.5,
     settlementPayableFeeAmount:25250,
-    waivedInterest:11062.5, waivedServiceFee:3687.5, waivedOverdueFee:0,
+    waivedInterest:2062.5, waivedServiceFee:687.5, waivedOverdueFee:0,
     settlementAmount:22500,
     repaymentOrderNo:'', status:'Pending', createdAt:'2024-06-05 12:05', paidTime:'', updatedAt:'2024-06-05 12:05' },
 ];
@@ -4267,48 +4339,83 @@ function renderEarlySettlement(list) {
   const rows=data.map(e=>{
     const c=sc[e.status]||'';
     return `<tr>
+      <td style="font-size:12px;">${e.id}</td>
       <td><code style="font-size:12px;">${e.settlementNo}</code></td>
       <td><code style="font-size:11.5px;color:#94a3b8;">${e.loanOrderNo}</code></td>
-      <td><code style="font-size:12px;">${customerIdDisplay(e)}</code></td>
+      <td><code style="font-size:12px;">#${e.userId}</code></td>
+      <td style="font-size:12px;">${e.productId}</td>
       <td style="font-size:12.5px;">${e.settlementDate}</td>
       <td>PKR ${e.originalRemainingContractPrincipal.toLocaleString()}</td>
-      <td style="color:#94a3b8;font-size:12.5px;">PKR ${e.originalRemainingOverdueFee.toLocaleString()}</td>
-      <td style="font-size:12.5px;">PKR ${e.paidNormalPrincipalAmount.toLocaleString()}</td>
-      <td style="font-size:12.5px;">PKR ${e.paidNormalFeeInterest.toLocaleString()}</td>
-      <td style="font-size:12.5px;">PKR ${e.paidNormalFeeServiceFee.toLocaleString()}</td>
       <td style="font-size:13px;">${e.actualUsedDays}d</td>
-      <td>PKR ${e.actualPayableInterest.toLocaleString()}</td>
-      <td>PKR ${e.actualPayableServiceFee.toLocaleString()}</td>
       <td style="font-weight:600;">PKR ${e.settlementPayableFeeAmount.toLocaleString()}</td>
-      <td style="color:#10b981;font-weight:600;">PKR ${e.waivedInterest.toLocaleString()}</td>
-      <td style="color:#10b981;font-weight:600;">PKR ${e.waivedServiceFee.toLocaleString()}</td>
-      <td style="color:#10b981;">PKR ${e.waivedOverdueFee.toLocaleString()}</td>
+      <td style="color:#10b981;font-weight:600;">PKR ${(e.waivedInterest+e.waivedServiceFee+e.waivedOverdueFee).toLocaleString()}</td>
       <td style="font-weight:600;color:#3a5bdf;">PKR ${e.settlementAmount.toLocaleString()}</td>
       <td><code style="font-size:11px;">${e.repaymentOrderNo||'-'}</code></td>
-      <td><span class="status-badge" style="${c.includes(':')?c:''}" ${!c.includes(':') ? `class="status-badge ${c}"` : ''}>${e.status}</span></td>
+      <td>${c.includes(':') ? `<span class="status-badge" style="${c}">${e.status}</span>` : `<span class="status-badge ${c}">${e.status}</span>`}</td>
       <td style="font-size:12px;color:#94a3b8;">${e.paidTime||'-'}</td>
-      <td style="font-size:12px;color:#94a3b8;">${e.createdAt}</td>
+      <td><button class="btn btn-sm btn-outline-primary action-btn" onclick="viewEarlySettlementDetail(${e.id})"><i class="bi bi-eye"></i> ${t('btn.detail')}</button></td>
     </tr>`;
   }).join('');
   document.getElementById('es-table-container').innerHTML=`
-    <div style="overflow-x:auto;"><table class="table table-hover mb-0" style="font-size:12.5px;">
+    <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1500px;">
       <thead><tr>
-        <th>Settlement No.</th><th>Loan Order No.</th><th>Customer</th><th>Date</th>
-        <th>Orig. Remaining Principal</th><th>Orig. Remaining Overdue Fee</th>
-        <th>Paid Normal Principal</th><th>Paid Normal Interest</th><th>Paid Normal Svc Fee</th>
-        <th>Actual Days</th><th>Actual Payable Interest</th><th>Actual Payable Svc Fee</th>
-        <th>Settlement Payable Fee</th>
-        <th>Waived Interest</th><th>Waived Svc Fee</th><th>Waived Overdue Fee</th>
-        <th style="color:#3a5bdf;">Settlement Amount</th>
-        <th>Repay Order No.</th><th>Status</th><th>Paid Time</th><th>Created At</th>
+        <th>ID</th><th>Settlement No.</th><th>Loan Order No.</th><th>Customer ID</th><th>Product ID</th><th>Date</th>
+        <th>Original Contract Principal</th><th>Actual Days</th><th>Payable Fee</th><th>Total Waived</th>
+        <th style="color:#3a5bdf;">Settlement Amount</th><th>Repay Order No.</th><th>Status</th><th>Paid Time</th><th>Actions</th>
       </tr></thead>
-      <tbody>${rows||'<tr><td colspan="21"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+      <tbody>${rows||'<tr><td colspan="15"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
     </table></div>`;
 }
+
+function viewEarlySettlementDetail(id) {
+  const e = earlySettlements.find(item => item.id === id);
+  if (!e) return;
+  const calculatedAmount = e.settlementPayableFeeAmount - e.waivedInterest - e.waivedServiceFee - e.waivedOverdueFee;
+  openFeeRecordDetail(
+    `${currentLang === 'zh' ? '提前结清详情' : 'Early Settlement Detail'} — ${e.settlementNo}`,
+    `<div class="row g-3">
+      <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
+        <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">${currentLang === 'zh' ? '记录信息' : 'RECORD INFORMATION'}</div>
+        ${detailRow('ID',e.id)}${detailRow('Settlement No.',e.settlementNo)}
+        ${detailRow('Loan Order No.',e.loanOrderNo)}${detailRow('Customer ID','#'+e.userId)}
+        ${detailRow('Product ID',e.productId)}${detailRow('Settlement Date',e.settlementDate)}
+        ${detailRow('Repayment Order No.',e.repaymentOrderNo||'-')}${detailRow('Status',e.status)}
+      </div></div>
+      <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
+        <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">${currentLang === 'zh' ? '原合同与已还' : 'ORIGINAL & PAID'}</div>
+        ${detailRow('Original Contract Principal',loanMoney(e.originalRemainingContractPrincipal))}
+        ${detailRow('Original Remaining Overdue Fee',loanMoney(e.originalRemainingOverdueFee))}
+        ${detailRow('Paid Normal Principal',loanMoney(e.paidNormalPrincipalAmount))}
+        ${detailRow('Paid Normal Interest',loanMoney(e.paidNormalFeeInterest))}
+        ${detailRow('Paid Normal Service Fee',loanMoney(e.paidNormalFeeServiceFee))}
+      </div></div>
+      <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
+        <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">${currentLang === 'zh' ? '实际占用计费' : 'ACTUAL USAGE CHARGES'}</div>
+        ${detailRow('Actual Used Days',e.actualUsedDays)}
+        ${detailRow('Actual Payable Interest',loanMoney(e.actualPayableInterest))}
+        ${detailRow('Actual Payable Service Fee',loanMoney(e.actualPayableServiceFee))}
+        ${detailRow('Settlement Payable Fee',loanMoney(e.settlementPayableFeeAmount))}
+      </div></div>
+      <div class="col-md-6"><div style="background:#f0fdf4;border-radius:8px;padding:16px;">
+        <div style="font-size:11px;font-weight:700;color:#16a34a;margin-bottom:12px;">${currentLang === 'zh' ? '减免与最终金额' : 'WAIVERS & FINAL AMOUNT'}</div>
+        ${detailRow('Waived Interest',loanMoney(e.waivedInterest))}
+        ${detailRow('Waived Service Fee',loanMoney(e.waivedServiceFee))}
+        ${detailRow('Waived Overdue Fee',loanMoney(e.waivedOverdueFee))}
+        ${detailRow('Settlement Amount',loanMoney(e.settlementAmount))}
+        ${detailRow('Amount Validation',calculatedAmount === e.settlementAmount ? (currentLang === 'zh' ? '校验通过' : 'Matched') : (currentLang === 'zh' ? '金额不一致' : 'Mismatch'))}
+      </div></div>
+      <div class="col-12"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
+        <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">${currentLang === 'zh' ? '系统时间' : 'SYSTEM TIMESTAMPS'}</div>
+        <div class="row g-3"><div class="col-md-4">${detailRow('Created At',e.createdAt)}</div><div class="col-md-4">${detailRow('Paid Time',e.paidTime||'-')}</div><div class="col-md-4">${detailRow('Updated At',e.updatedAt)}</div></div>
+      </div></div>
+    </div>`
+  );
+}
+
 function filterEarlySettlement() {
   const q=document.getElementById('es-search').value.toLowerCase();
   const s=document.getElementById('es-status-filter').value;
-  renderEarlySettlement(earlySettlements.filter(e=>(!q||e.settlementNo.toLowerCase().includes(q)||e.loanOrderNo.toLowerCase().includes(q)||e.custName.toLowerCase().includes(q))&&(!s||e.status===s)));
+  renderEarlySettlement(earlySettlements.filter(e=>(!q||e.settlementNo.toLowerCase().includes(q)||e.loanOrderNo.toLowerCase().includes(q)||String(e.userId).includes(q.replace('#','')))&&(!s||e.status===s)));
 }
 
 // ============================================================
@@ -5321,55 +5428,58 @@ Object.values(loanBillFees).flat().forEach(fee => {
 function viewBillDetail(id) {
   const b = loanBills.find(x => x.id === id);
   document.getElementById('bill-detail-no').textContent = b.billNo;
-  const fees = loanBillFees[b.billNo] || [];
-  const amountByType = (type, field) => fees
-    .filter(f => f.feeType === type)
-    .reduce((sum, f) => sum + Number(f[field] || 0), 0);
-  const paidPrincipal = amountByType('Principal', 'paidAmount');
-  const paidInterest = amountByType('Interest', 'paidAmount');
-  const paidServiceFee = amountByType('ServiceFee', 'paidAmount');
-  const paidOverdueFee = amountByType('OverdueFee', 'paidAmount');
-  const remainingPrincipal = amountByType('Principal', 'remainingAmount');
-  const remainingInterest = amountByType('Interest', 'remainingAmount');
-  const remainingServiceFee = amountByType('ServiceFee', 'remainingAmount');
-  const remainingOverdueFee = amountByType('OverdueFee', 'remainingAmount');
 
   const summaryHtml = `<div class="row g-3">
     <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
-      <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">BILL INFO</div>
-      ${detailRow('Bill No.',b.billNo)}${detailRow('Loan Order',b.loanOrderNo)}
-      ${detailRow('Customer ID',customerIdDisplay(b))}
-      ${detailRow('Installment',b.installmentNo+' / '+b.totalInstallments)}
-      ${detailRow('Period',b.periodStart+' ~ '+b.dueDate)}
-      ${detailRow('Status',b.status)}
-      ${b.settledTime?detailRow('Settled At',b.settledTime):''}
+      <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">${currentLang === 'zh' ? '账单基础信息' : 'BILL INFORMATION'}</div>
+      ${detailRow('ID',b.id)}${detailRow('Bill Type',b.billType)}
+      ${detailRow('Bill No.',b.billNo)}${detailRow('Loan Order No.',b.loanOrderNo)}
+      ${detailRow('Customer ID','#'+b.userId)}${detailRow('Product ID',b.productId)}
+      ${detailRow('Installment No.',b.installmentNo)}${detailRow('Installment Count',b.installmentCount)}
+      ${detailRow('Period Start Date',b.periodStartDate)}${detailRow('Due Date',b.dueDate)}
+      ${detailRow('Period Days',b.periodDays)}${detailRow('Status',b.status)}
+      ${detailRow('Overdue',currentLang === 'zh' ? (b.isOverdue ? '是' : '否') : (b.isOverdue ? 'Yes' : 'No'))}
+      ${detailRow('Overdue Days',b.overdueDays)}
     </div></div>
     <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
-      <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">AMOUNT SUMMARY</div>
-      ${detailRow('Payable Principal','PKR '+b.payablePrincipal.toLocaleString())}
-      ${detailRow('Payable Interest','PKR '+b.payableInterest.toLocaleString())}
-      ${detailRow('Payable Service Fee','PKR '+b.payableServiceFee.toLocaleString())}
-      ${detailRow('Payable Overdue Fee','PKR '+b.payableOverdueFee.toLocaleString())}
-      ${detailRow('Total Bill Amount','PKR '+b.billAmount.toLocaleString())}
-      ${b.isOverdue?detailRow('Overdue Days',b.overdueDays+' days'):''}
+      <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">${currentLang === 'zh' ? '应还金额' : 'PAYABLE AMOUNTS'}</div>
+      ${detailRow('Payable Principal',loanMoney(b.payablePrincipalAmount))}
+      ${detailRow('Discount Amount',loanMoney(b.discountAmount))}
+      ${detailRow('Discounted Principal',loanMoney(b.discountBillAmount))}
+      ${detailRow('Payable Interest',loanMoney(b.payableInterestAmount))}
+      ${detailRow('Payable Service Fee',loanMoney(b.payableServiceFeeAmount))}
+      ${detailRow('Payable Overdue Fee',loanMoney(b.payableOverdueFeeAmount))}
+      ${detailRow('Current Bill Amount',loanMoney(b.billAmount))}
     </div></div>
     <div class="col-md-6"><div style="background:#f0fdf4;border-radius:8px;padding:16px;">
       <div style="font-size:11px;font-weight:700;color:#16a34a;margin-bottom:12px;">${currentLang === 'zh' ? '已还明细' : 'PAID BREAKDOWN'}</div>
-      ${detailRow(currentLang === 'zh' ? '已还本金' : 'Paid Principal','PKR '+paidPrincipal.toLocaleString())}
-      ${detailRow(currentLang === 'zh' ? '已还利息' : 'Paid Interest','PKR '+paidInterest.toLocaleString())}
-      ${detailRow(currentLang === 'zh' ? '已还服务费' : 'Paid Service Fee','PKR '+paidServiceFee.toLocaleString())}
-      ${detailRow(currentLang === 'zh' ? '已还逾期费' : 'Paid Overdue Fee','PKR '+paidOverdueFee.toLocaleString())}
+      ${detailRow('Paid Principal',loanMoney(b.paidPrincipalAmount))}
+      ${detailRow('Paid Interest',loanMoney(b.paidInterestAmount))}
+      ${detailRow('Paid Service Fee',loanMoney(b.paidServiceFeeAmount))}
+      ${detailRow('Paid Overdue Fee',loanMoney(b.paidOverdueFeeAmount))}
       <hr style="margin:8px 0;border-color:#bbf7d0;">
-      ${detailRow(currentLang === 'zh' ? '已还合计' : 'Total Paid','PKR '+(paidPrincipal+paidInterest+paidServiceFee+paidOverdueFee).toLocaleString())}
+      ${detailRow('Paid Amount',loanMoney(b.paidAmount))}
     </div></div>
     <div class="col-md-6"><div style="background:#fff7ed;border-radius:8px;padding:16px;">
       <div style="font-size:11px;font-weight:700;color:#ea580c;margin-bottom:12px;">${currentLang === 'zh' ? '剩余明细' : 'REMAINING BREAKDOWN'}</div>
-      ${detailRow(currentLang === 'zh' ? '剩余本金' : 'Remaining Principal','PKR '+remainingPrincipal.toLocaleString())}
-      ${detailRow(currentLang === 'zh' ? '剩余利息' : 'Remaining Interest','PKR '+remainingInterest.toLocaleString())}
-      ${detailRow(currentLang === 'zh' ? '剩余服务费' : 'Remaining Service Fee','PKR '+remainingServiceFee.toLocaleString())}
-      ${detailRow(currentLang === 'zh' ? '剩余逾期费' : 'Remaining Overdue Fee','PKR '+remainingOverdueFee.toLocaleString())}
+      ${detailRow('Remaining Principal',loanMoney(b.remainingPrincipalAmount))}
+      ${detailRow('Remaining Interest',loanMoney(b.remainingInterestAmount))}
+      ${detailRow('Remaining Service Fee',loanMoney(b.remainingServiceFeeAmount))}
+      ${detailRow('Remaining Overdue Fee',loanMoney(b.remainingOverdueFeeAmount))}
       <hr style="margin:8px 0;border-color:#fed7aa;">
-      ${detailRow(currentLang === 'zh' ? '剩余合计' : 'Total Remaining','PKR '+(remainingPrincipal+remainingInterest+remainingServiceFee+remainingOverdueFee).toLocaleString())}
+      ${detailRow('Remaining Amount',loanMoney(b.remainingAmount))}
+    </div></div>
+    <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
+      <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">${currentLang === 'zh' ? '结清关联' : 'SETTLEMENT REFERENCES'}</div>
+      ${detailRow('Settlement Type',b.settlementType)}
+      ${detailRow('Settlement Record No.',b.settlementRecordNo)}
+      ${detailRow('Settlement Bill No.',b.settlementBillNo)}
+      ${detailRow('Settled Time',b.settledTime || '-')}
+    </div></div>
+    <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
+      <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">${currentLang === 'zh' ? '系统时间' : 'SYSTEM TIMESTAMPS'}</div>
+      ${detailRow('Created At',b.createdAt)}
+      ${detailRow('Updated At',b.updatedAt)}
     </div></div>
   </div>`;
 
