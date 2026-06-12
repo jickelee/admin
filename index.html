@@ -229,9 +229,6 @@
     <a class="nav-link-item" onclick="navigate('customers')">
       <i class="bi bi-people-fill"></i> <span data-i18n="nav.customers">Customers</span>
     </a>
-    <a class="nav-link-item" onclick="navigate('accountCancel')" id="nav-accountCancel">
-      <i class="bi bi-person-x-fill"></i> <span data-i18n="nav.accountCancel">Account Cancellation</span>
-    </a>
     <a class="nav-link-item" onclick="navigate('loans')">
       <i class="bi bi-cash-stack"></i> <span data-i18n="nav.loans">Loan Orders</span>
     </a>
@@ -2247,13 +2244,31 @@ const phraseZh = {
   'Returning Users':'老用户','Overdue Users':'逾期用户','Change Note':'变更备注',
   'Add Slot Config':'新增资源位','Edit Slot Config':'编辑资源位',
   'H5 (WebView)':'H5跳转','Native Page':'原生页面','External URL':'外部链接','No Action':'无跳转',
-  'Banner':'横幅Banner','Popup':'弹窗','Entry Icon':'金刚入口','Float Button':'浮窗按钮','Tab Item':'底部Tab',
-  'Fulfilled':'已履约','Broken':'已违诺','Pending':'待验证','Expired':'已过期',
+  'Banner':'横幅','Popup':'弹窗','Entry Icon':'金刚入口','Float Button':'浮窗按钮','Tab Item':'底部标签',
+  'Fulfilled':'已履约','Broken':'已违诺','Expired':'已过期',
   'Next Follow-up':'下次跟进时间','Promise Details':'承诺详情','Keep Current':'保持当前',
   'No Contact':'无联系','All Overdue Days':'全部逾期天数','All Collectors':'全部催收员','All Last Results':'全部跟进结果',
   'All Results':'全部结果','All Types':'全部类型','All Status':'全部状态',
   'No credit records':'暂无授信记录','No application basic info':'暂无申请基础信息','No identity verification data':'暂无身份认证数据','No emergency contacts':'暂无紧急联系人','No wallet accounts':'暂无收款账号','No credit change history':'暂无授信变更记录',
   'No results':'暂无结果','No fee details':'暂无费用明细','No change records':'暂无变更记录','No bill allocation data':'暂无账单分配数据','No fee allocation data':'暂无费用分配数据',
+  'Overdue Only':'仅逾期','Not Overdue':'未逾期','All Channels':'全部渠道','All Fee Types':'全部费用类型','All Handle':'全部处理状态',
+  'Actual Days':'实际天数','Payable Fee':'应付费用','Total Waived':'减免合计','Repay Order No.':'还款订单号','Biz No.':'业务单号',
+  'In / Out':'收入 / 支出','Counterparty Type':'对方账户类型','Request ID':'请求 ID','Loan Apply':'借款申请','Wallet Verify':'钱包验证','Account Cancel':'账号注销',
+  'Follow-up':'跟进记录','Promised To Pay':'承诺还款','Contact Time':'联系时间','1–7 Days':'1–7天','8–30 Days':'8–30天','30+ Days':'30天以上',
+  'Target URL':'跳转链接','Display Text':'展示文案',
+  'order_submitted':'订单已提交','wallet_verification_success':'钱包验证成功','wallet_verification_failed':'钱包验证失败',
+  'face_verification_success':'人脸验证成功','face_verification_failed':'人脸验证失败','otp_verification_success':'OTP 验证成功','otp_verification_failed':'OTP 验证失败',
+  'batching':'跑批中','pendingpay':'待支付','earlysettled':'已提前结清','coupon':'优惠券',
+  'Unpaid':'未支付','Waived':'已减免','PartiallyPaid':'部分已还','OverduePartiallyPaid':'逾期部分已还','CoolingOff':'冷静期','WrittenOff':'已核销',
+  'PendingApproval':'待审批','PendingDisbursement':'待放款','DisbursementFailed':'放款失败','Disbursementsuccess':'放款成功',
+  'NORMAL_REPAYMENT':'正常还款','EARLY_SETTLEMENT':'提前结清',
+  'Paid':'已支付','Closed':'已关闭','EarlySettled':'已提前结清','All':'全部','Prev':'上一页','Next':'下一页',
+  'Unassigned':'未分配','Refused':'拒绝还款','Contacted':'已联系','Actions':'操作','Assign':'分配','Method':'方式','Result':'结果','Remarks':'备注','Call':'电话',
+  'Date':'日期','Operator':'操作人','Review':'审核','Repay No.':'还款单号',
+  'Disbursement':'放款','Repayment':'还款','FeeAccrual':'费用计提','FeeWaiver':'费用减免','Refund':'退款','Adjustment':'调整','Out':'支出','Reversed':'已冲正',
+  'Handle':'处理','Ignore':'忽略','Image':'图片','Sort':'排序','Validity':'有效期','View':'查看','Entry':'入口','Native':'原生页面','Float':'浮窗','Tab':'标签页',
+  'Code':'编码','Login':'登录',
+  'PartiallyMatched':'部分匹配','Unused':'未使用','Coupon':'优惠券','Slot Name / Key':'资源位名称 / 位置标识',
 };
 
 const phraseEn = Object.fromEntries(Object.entries(phraseZh).map(([en, zh]) => [zh, en]));
@@ -2275,8 +2290,6 @@ function localizePhrase(text) {
   }
   if (!translated && currentLang === 'zh' && /\bdays?\b/.test(trimmed)) translated = trimmed.replace(/\bdays?\b/g, '天');
   if (!translated && currentLang === 'en' && /天/.test(trimmed)) translated = trimmed.replace(/天/g, 'days');
-  if (!translated && currentLang === 'zh' && /\b(Yes|No)\b/.test(trimmed)) translated = trimmed.replace(/\bYes\b/g, '是').replace(/\bNo\b/g, '否');
-  if (!translated && currentLang === 'en' && /[是否]/.test(trimmed)) translated = trimmed.replace(/是/g, 'Yes').replace(/否/g, 'No');
   if (!translated) return source;
   return source.replace(trimmed, translated);
 }
@@ -3476,12 +3489,10 @@ function renderLoans(list) {
         <td style="font-size:12px;">${l.id}</td>
         <td><code style="font-size:12px;">${l.no}</code></td>
         <td><code style="font-size:12px;">#${l.userId}</code></td>
-        <td style="font-size:12px;">${l.productId}</td>
         <td><span class="role-tag" style="font-size:11px;background:#ecfeff;color:#0e7490;">${formatBorrowCount(l.borrowCount)}</span></td>
-        <td style="font-weight:600;">${loanMoney(l.loanAmount)}</td>
-        <td style="font-weight:600;color:#0f766e;">${loanMoney(l.contractPrincipal)}</td>
         <td style="font-size:13px;">${l.installmentCount} × ${l.periodDays}d</td>
         <td style="font-weight:600;">${loanMoney(l.displayBillAmount)}</td>
+        <td style="color:#16a34a;font-weight:600;">${loanMoney(l.paidAmount)}</td>
         <td style="color:${l.remainingAmount > 0 ? '#dc2626' : '#16a34a'};font-weight:600;">${loanMoney(l.remainingAmount)}</td>
         <td>${loanBadge(l.status)}</td>
         <td>${statusBadge(l.riskStatus)}</td>
@@ -3500,16 +3511,16 @@ function renderLoans(list) {
         </td>
       </tr>`).join('');
   document.getElementById('loan-table-container').innerHTML = `
-    <div class="table-scroll"><table class="table table-hover mb-0" style="min-width:2050px;">
+    <div class="table-scroll"><table class="table table-hover mb-0" style="min-width:1750px;">
       <thead><tr>
-        <th>ID</th><th>${t('th.orderNo')}</th><th>${currentLang === 'zh' ? '客户 ID' : 'Customer ID'}</th><th>${currentLang === 'zh' ? '产品 ID' : 'Product ID'}</th>
-        <th>${t('th.borrowCount')}</th><th>${currentLang === 'zh' ? '借款金额' : 'Loan Amount'}</th><th>${currentLang === 'zh' ? '合同本金' : 'Contract Principal'}</th>
-        <th>${t('th.installments')}</th><th>${currentLang === 'zh' ? '展示应还' : 'Display Bill Amount'}</th><th>${currentLang === 'zh' ? '剩余应还' : 'Remaining Amount'}</th>
+        <th>ID</th><th>${t('th.orderNo')}</th><th>${currentLang === 'zh' ? '客户 ID' : 'Customer ID'}</th>
+        <th>${t('th.borrowCount')}</th><th>${t('th.installments')}</th><th>${currentLang === 'zh' ? '展示应还' : 'Display Bill Amount'}</th>
+        <th>${currentLang === 'zh' ? '已还金额' : 'Paid Amount'}</th><th>${currentLang === 'zh' ? '剩余应还' : 'Remaining Amount'}</th>
         <th>${t('th.status')}</th><th>${currentLang === 'zh' ? '风控状态' : 'Risk Status'}</th><th>${t('th.quickReview')}</th>
         <th>${currentLang === 'zh' ? '放款状态' : 'Disbursement Status'}</th><th>${currentLang === 'zh' ? '收款钱包' : 'Wallet'}</th>
         <th>${t('th.disbursedAt')}</th><th>${currentLang === 'zh' ? '账单结束日' : 'Bill End Date'}</th><th>${currentLang === 'zh' ? '创建时间' : 'Created At'}</th><th>${t('th.actions')}</th>
       </tr></thead>
-      <tbody>${rows || '<tr><td colspan="19"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+      <tbody>${rows || '<tr><td colspan="16"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
     </table></div>`;
 }
 
@@ -4175,7 +4186,6 @@ function renderBills(list) {
       <td><code style="font-size:12px;">${b.billNo}</code></td>
       <td><code style="font-size:11.5px;color:#94a3b8;">${b.loanOrderNo}</code></td>
       <td><code style="font-size:12px;">#${b.userId}</code></td>
-      <td style="font-size:12px;">${b.productId}</td>
       <td style="font-size:13px;">${b.installmentNo} / ${b.installmentCount}</td>
       <td style="font-size:12.5px;color:#94a3b8;">${b.dueDate}</td>
       <td style="font-weight:600;">PKR ${b.billAmount.toLocaleString()}</td>
@@ -4189,9 +4199,9 @@ function renderBills(list) {
     </tr>`;
   }).join('');
   document.getElementById('bill-table-container').innerHTML = `
-    <div class="table-scroll"><table class="table table-hover mb-0" style="min-width:1650px;">
-      <thead><tr><th>ID</th><th>${currentLang === 'zh' ? '账单类型' : 'Bill Type'}</th><th>${t('th.billNo')}</th><th>${t('th.loanOrderNo')}</th><th>${currentLang === 'zh' ? '客户 ID' : 'Customer ID'}</th><th>${currentLang === 'zh' ? '产品 ID' : 'Product ID'}</th><th>${t('th.installmentNo')}</th><th>${t('th.dueDate2')}</th><th>${t('th.payable')}</th><th>${t('th.paid')}</th><th>${t('th.remaining')}</th><th>${t('th.overdueDays')}</th><th>${t('th.status')}</th><th>${currentLang === 'zh' ? '结清方式' : 'Settlement Type'}</th><th>${t('th.updatedAt')}</th><th>${t('th.actions')}</th></tr></thead>
-      <tbody>${rows||'<tr><td colspan="16"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+    <div class="table-scroll"><table class="table table-hover mb-0" style="min-width:1550px;">
+      <thead><tr><th>ID</th><th>${currentLang === 'zh' ? '账单类型' : 'Bill Type'}</th><th>${t('th.billNo')}</th><th>${t('th.loanOrderNo')}</th><th>${currentLang === 'zh' ? '客户 ID' : 'Customer ID'}</th><th>${t('th.installmentNo')}</th><th>${t('th.dueDate2')}</th><th>${t('th.payable')}</th><th>${t('th.paid')}</th><th>${t('th.remaining')}</th><th>${t('th.overdueDays')}</th><th>${t('th.status')}</th><th>${currentLang === 'zh' ? '结清方式' : 'Settlement Type'}</th><th>${t('th.updatedAt')}</th><th>${t('th.actions')}</th></tr></thead>
+      <tbody>${rows||'<tr><td colspan="15"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
     </table></div>`;
 }
 function filterBills() {
@@ -4344,7 +4354,6 @@ function renderEarlySettlement(list) {
       <td><code style="font-size:12px;">${e.settlementNo}</code></td>
       <td><code style="font-size:11.5px;color:#94a3b8;">${e.loanOrderNo}</code></td>
       <td><code style="font-size:12px;">#${e.userId}</code></td>
-      <td style="font-size:12px;">${e.productId}</td>
       <td style="font-size:12.5px;">${e.settlementDate}</td>
       <td>PKR ${e.originalRemainingContractPrincipal.toLocaleString()}</td>
       <td style="font-size:13px;">${e.actualUsedDays}d</td>
@@ -4358,13 +4367,13 @@ function renderEarlySettlement(list) {
     </tr>`;
   }).join('');
   document.getElementById('es-table-container').innerHTML=`
-    <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1500px;">
+    <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1420px;">
       <thead><tr>
-        <th>ID</th><th>Settlement No.</th><th>Loan Order No.</th><th>Customer ID</th><th>Product ID</th><th>Date</th>
+        <th>ID</th><th>Settlement No.</th><th>Loan Order No.</th><th>Customer ID</th><th>Date</th>
         <th>Original Contract Principal</th><th>Actual Days</th><th>Payable Fee</th><th>Total Waived</th>
         <th style="color:#3a5bdf;">Settlement Amount</th><th>Repay Order No.</th><th>Status</th><th>Paid Time</th><th>Actions</th>
       </tr></thead>
-      <tbody>${rows||'<tr><td colspan="15"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+      <tbody>${rows||'<tr><td colspan="14"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
     </table></div>`;
 }
 
@@ -5686,6 +5695,33 @@ const repaymentAllocations = {
     { id:2, allocationNo:'AL240516001002', repaymentOrderNo:'RP20240601001', loanOrderNo:'LN2024060405', billNo:'LB2024060405001', feeNo:'FEE240516001002', userId:1005, productId:1, installmentNo:1, feeType:'Interest', allocatedAmount:1350, allocationOrder:2, createdAt:'2024-05-16 10:05' },
     { id:3, allocationNo:'AL240516001003', repaymentOrderNo:'RP20240601001', loanOrderNo:'LN2024060405', billNo:'LB2024060405001', feeNo:'FEE240516001003', userId:1005, productId:1, installmentNo:1, feeType:'ServiceFee', allocatedAmount:50, allocationOrder:3, createdAt:'2024-05-16 10:05' },
   ],
+  'RP20240602001': [
+    { id:4, allocationNo:'AL240531002001', repaymentOrderNo:'RP20240602001', loanOrderNo:'LN2024060405', billNo:'LB2024060405002', feeNo:'FEE240516D01', userId:1005, productId:1, installmentNo:2, feeType:'Principal', allocatedAmount:6000, allocationOrder:1, createdAt:'2024-05-31 09:50' },
+    { id:5, allocationNo:'AL240531002002', repaymentOrderNo:'RP20240602001', loanOrderNo:'LN2024060405', billNo:'LB2024060405002', feeNo:'FEE240516D02', userId:1005, productId:1, installmentNo:2, feeType:'Interest', allocatedAmount:1350, allocationOrder:2, createdAt:'2024-05-31 09:50' },
+    { id:6, allocationNo:'AL240531002003', repaymentOrderNo:'RP20240602001', loanOrderNo:'LN2024060405', billNo:'LB2024060405002', feeNo:'FEE240516D03', userId:1005, productId:1, installmentNo:2, feeType:'ServiceFee', allocatedAmount:450, allocationOrder:3, createdAt:'2024-05-31 09:50' },
+  ],
+  'RP20240603001': [
+    { id:7, allocationNo:'AL240530003001', repaymentOrderNo:'RP20240603001', loanOrderNo:'LN2024060409', billNo:'LB2024060409002', feeNo:'FEE240530I01', userId:1009, productId:1, installmentNo:2, feeType:'Principal', allocatedAmount:3750, allocationOrder:1, createdAt:'2024-05-30 11:30' },
+    { id:8, allocationNo:'AL240530003002', repaymentOrderNo:'RP20240603001', loanOrderNo:'LN2024060409', billNo:'LB2024060409002', feeNo:'FEE240530I02', userId:1009, productId:1, installmentNo:2, feeType:'Interest', allocatedAmount:843.75, allocationOrder:2, createdAt:'2024-05-30 11:30' },
+    { id:9, allocationNo:'AL240530003003', repaymentOrderNo:'RP20240603001', loanOrderNo:'LN2024060409', billNo:'LB2024060409002', feeNo:'FEE240530I03', userId:1009, productId:1, installmentNo:2, feeType:'ServiceFee', allocatedAmount:281.25, allocationOrder:3, createdAt:'2024-05-30 11:30' },
+  ],
+  'RP20240604001': [
+    { id:10, allocationNo:'AL240609004001', repaymentOrderNo:'RP20240604001', loanOrderNo:'LN2024060408', billNo:'LB2024060408001', feeNo:'FEE240420F01', userId:1008, productId:1, installmentNo:1, feeType:'Principal', allocatedAmount:4500, allocationOrder:1, createdAt:'2024-06-09 14:22' },
+    { id:11, allocationNo:'AL240609004002', repaymentOrderNo:'RP20240604001', loanOrderNo:'LN2024060408', billNo:'LB2024060408001', feeNo:'FEE240420F02', userId:1008, productId:1, installmentNo:1, feeType:'Interest', allocatedAmount:1012.5, allocationOrder:2, createdAt:'2024-06-09 14:22' },
+    { id:12, allocationNo:'AL240609004003', repaymentOrderNo:'RP20240604001', loanOrderNo:'LN2024060408', billNo:'LB2024060408001', feeNo:'FEE240420F03', userId:1008, productId:1, installmentNo:1, feeType:'ServiceFee', allocatedAmount:337.5, allocationOrder:3, createdAt:'2024-06-09 14:22' },
+    { id:13, allocationNo:'AL240609004004', repaymentOrderNo:'RP20240604001', loanOrderNo:'LN2024060408', billNo:'LB2024060408001', feeNo:'FEE240604F04', userId:1008, productId:1, installmentNo:1, feeType:'OverdueFee', allocatedAmount:1350, allocationOrder:4, createdAt:'2024-06-09 14:22' },
+  ],
+  'RP20240604002': [
+    { id:14, allocationNo:'AL240602005001', repaymentOrderNo:'RP20240604002', loanOrderNo:'LN2024060412', billNo:'LB2024060412001', feeNo:'FEE240518L01', userId:1014, productId:1, installmentNo:1, feeType:'Principal', allocatedAmount:3750, allocationOrder:1, createdAt:'2024-06-02 08:40' },
+    { id:15, allocationNo:'AL240602005002', repaymentOrderNo:'RP20240604002', loanOrderNo:'LN2024060412', billNo:'LB2024060412001', feeNo:'FEE240518L02', userId:1014, productId:1, installmentNo:1, feeType:'Interest', allocatedAmount:443.75, allocationOrder:2, createdAt:'2024-06-02 08:40' },
+    { id:16, allocationNo:'AL240602005003', repaymentOrderNo:'RP20240604002', loanOrderNo:'LN2024060412', billNo:'LB2024060412001', feeNo:'FEE240518L03', userId:1014, productId:1, installmentNo:1, feeType:'ServiceFee', allocatedAmount:281.25, allocationOrder:3, createdAt:'2024-06-02 08:40' },
+  ],
+  'RP20240604006': [
+    { id:17, allocationNo:'AL240428006001', repaymentOrderNo:'RP20240604006', loanOrderNo:'LN2024060413', billNo:'LB2024060413001', feeNo:'FEE240415M01', userId:1017, productId:1, installmentNo:1, feeType:'Principal', allocatedAmount:6250, allocationOrder:1, createdAt:'2024-04-28 13:10' },
+    { id:18, allocationNo:'AL240428006002', repaymentOrderNo:'RP20240604006', loanOrderNo:'LN2024060413', billNo:'LB2024060413001', feeNo:'FEE240415M02', userId:1017, productId:1, installmentNo:1, feeType:'Interest', allocatedAmount:1406.3, allocationOrder:2, createdAt:'2024-04-28 13:10' },
+    { id:19, allocationNo:'AL240428006003', repaymentOrderNo:'RP20240604006', loanOrderNo:'LN2024060413', billNo:'LB2024060413001', feeNo:'FEE240415M03', userId:1017, productId:1, installmentNo:1, feeType:'ServiceFee', allocatedAmount:468.8, allocationOrder:3, createdAt:'2024-04-28 13:10' },
+    { id:20, allocationNo:'AL240428006004', repaymentOrderNo:'RP20240604006', loanOrderNo:'LN2024060413', billNo:'LB2024060413001', feeNo:'FEE240501M04', userId:1017, productId:1, installmentNo:1, feeType:'OverdueFee', allocatedAmount:1875, allocationOrder:4, createdAt:'2024-04-28 13:10' },
+  ],
 };
 
 const loanOverdueRecords = [
@@ -5860,7 +5896,6 @@ function renderLoanBillFees(list) {
     <td style="font-size:12px;">#${f.userId}</td>
     <td style="font-size:12px;">${f.installmentNo}</td>
     <td><span class="role-tag" style="font-size:11px;">${f.feeType}</span></td>
-    <td style="font-size:12px;">${f.feeName}</td>
     <td>PKR ${f.originalAmount.toLocaleString()}</td>
     <td style="font-weight:600;">PKR ${f.payableAmount.toLocaleString()}</td>
     <td style="color:#16a34a;">PKR ${f.paidAmount.toLocaleString()}</td>
@@ -5877,9 +5912,9 @@ function renderLoanBillFees(list) {
     </td>
   </tr>`).join('');
   document.getElementById('fee-table-container').innerHTML = `
-    <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1600px;">
-      <thead><tr><th>${t('th.feeNo')}</th><th>${t('th.billNo')}</th><th>${t('th.loanOrderNo')}</th><th>${t('th.custId')}</th><th>${t('th.installmentNo')}</th><th>${t('th.feeType')}</th><th>${t('th.feeName')}</th><th>${t('th.originalAmount')}</th><th>${t('th.payableAmount')}</th><th>${t('th.paidAmount')}</th><th>${t('th.remainingAmount')}</th><th>${t('th.waivedAmount')}</th><th>${t('th.status')}</th><th>${t('th.generateType')}</th><th>${t('th.remark')}</th><th>${t('th.actions')}</th></tr></thead>
-      <tbody>${rows||'<tr><td colspan="16"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+    <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1520px;">
+      <thead><tr><th>${t('th.feeNo')}</th><th>${t('th.billNo')}</th><th>${t('th.loanOrderNo')}</th><th>${t('th.custId')}</th><th>${t('th.installmentNo')}</th><th>${t('th.feeType')}</th><th>${t('th.originalAmount')}</th><th>${t('th.payableAmount')}</th><th>${t('th.paidAmount')}</th><th>${t('th.remainingAmount')}</th><th>${t('th.waivedAmount')}</th><th>${t('th.status')}</th><th>${t('th.generateType')}</th><th>${t('th.remark')}</th><th>${t('th.actions')}</th></tr></thead>
+      <tbody>${rows||'<tr><td colspan="15"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
     </table></div>`;
 }
 
@@ -5940,7 +5975,7 @@ function viewLoanBillFeeDetail(id) {
         ${detailRow('Fee No.',f.feeNo)}${detailRow('Bill No.',f.billNo)}
         ${detailRow('Loan Order',f.loanOrderNo)}${detailRow('Customer ID','#'+f.userId)}
         ${detailRow('Installment',f.installmentNo)}${detailRow('Fee Type',f.feeType)}
-        ${detailRow('Fee Name',f.feeName)}${detailRow('Generate Type',f.generateType)}
+        ${detailRow('Generate Type',f.generateType)}
       </div></div>
       <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
         ${detailRow('Original Amount','PKR '+f.originalAmount.toLocaleString())}
