@@ -101,21 +101,30 @@
   .table-card .table thead th {
     background: #f8fafc; font-size: 12px; font-weight: 600; color: #718096;
     text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #e8ecf4; padding: 10px 16px;
+    white-space: nowrap; word-break: keep-all;
   }
-  .table-card .table tbody td { padding: 12px 16px; font-size: 13.5px; vertical-align: middle; border-color: #f1f5f9; }
+  .table-card .table tbody td {
+    padding: 12px 16px; font-size: 13.5px; vertical-align: middle; border-color: #f1f5f9;
+    white-space: nowrap; word-break: keep-all;
+  }
   .table-card .table tbody tr:hover { background: #f8fafc; }
+  .modal .table th, .modal .table td { white-space: nowrap; word-break: keep-all; }
 
   /* Status badges */
   .badge-active { background: #dcfce7; color: #16a34a; }
   .badge-disabled { background: #fee2e2; color: #dc2626; }
   .badge-pending { background: #fef3c7; color: #d97706; }
-  .status-badge { font-size: 11.5px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+  .status-badge {
+    display: inline-flex; align-items: center; font-size: 11.5px; font-weight: 600;
+    padding: 3px 10px; border-radius: 20px; white-space: nowrap; word-break: keep-all;
+  }
 
   /* Role color dots */
   .role-tag {
     display: inline-flex; align-items: center; gap: 5px;
     background: var(--accent-light); color: var(--accent);
     font-size: 11.5px; font-weight: 500; padding: 2px 9px; border-radius: 20px; margin: 1px;
+    white-space: nowrap; word-break: keep-all;
   }
 
   /* Perm type */
@@ -138,7 +147,7 @@
   .btn-outline-primary:hover { background: var(--accent); border-color: var(--accent); }
 
   /* Action btns */
-  .action-btn { font-size: 12px; padding: 3px 10px; border-radius: 6px; }
+  .action-btn { font-size: 12px; padding: 3px 10px; border-radius: 6px; white-space: nowrap; }
 
   /* Permission tree */
   .perm-tree-node { user-select: none; }
@@ -2208,6 +2217,15 @@ const phraseZh = {
   'Payable Principal':'应还本金','Payable Interest':'应还利息','Payable Service Fee':'应还服务费','Payable Overdue Fee':'应还逾期费','Total Bill Amount':'账单总额','Overdue Days':'逾期天数',
   'REPAYMENT ORDER':'还款订单','PAYMENT DETAILS':'支付信息','Repayment No.':'还款单号','Channel':'渠道','Reconcile':'对账状态','Pay Time':'支付时间','Channel Txn No.':'渠道流水号',
   'Summary':'摘要','Bill Allocation':'账单分配','Fee Allocation':'费用分配',
+  'ORDER INFORMATION':'订单信息','AMOUNT & PAYMENT':'金额与支付信息','TIMESTAMPS':'时间信息','AMOUNT VALIDATION':'金额校验',
+  'Repayment Type':'还款类型','Payment Channel':'支付渠道','Payment Status':'支付状态','Match Status':'匹配状态','Reconcile Status':'对账状态',
+  'Payable Amount':'应付金额','Repayment Amount':'还款金额','Difference Amount':'差额','Payment Txn No.':'支付流水号',
+  'Payer Account Name':'付款账户姓名','Payer Account No.':'付款账户号','Failure Reason':'失败原因',
+  'Payment Start Time':'支付发起时间','Payment Success Time':'支付成功时间','Reconciled Time':'对账时间','Expiration At':'过期时间',
+  'Order Payable':'订单应付总额','Detail Payable Total':'明细应付合计','Validation':'校验结果','Detail Rows':'明细数量',
+  'Order Information':'订单信息','Repayment Details':'还款明细','Loan Order':'借款订单','Original Bill':'原始账单金额',
+  'Remaining Snapshot':'剩余金额快照','Coupon':'优惠券','Payable':'应付金额','Allocated':'已分配金额','Difference':'差额',
+  'No repayment order details':'暂无还款订单明细','Channel Payment ID':'渠道支付 ID',
   'APPLICATION BASIC INFO':'申请基础信息','IDENTITY VERIFICATION':'身份认证','EMERGENCY CONTACTS':'紧急联系人','CREDIT & WALLET':'授信 & 钱包','BASIC INFO':'基础信息','LOAN INFO':'借款信息','STATUS & PAYMENT':'状态 & 支付','WALLET / RECEIVING ACCOUNT':'钱包 / 收款账号',
   'Account Type':'账号类型','Account No.':'账号','Verify Status':'验证状态','Bound Mobile':'绑定手机号','Account Status':'账号状态','Last Verified':'最近验证','Open Management':'打开管理页',
   'This adjustment requires supervisor approval before taking effect.':'该费用调整需要主管审批后才会生效。',
@@ -2265,7 +2283,13 @@ const phraseZh = {
   'Paid':'已支付','Closed':'已关闭','EarlySettled':'已提前结清','All':'全部','Prev':'上一页','Next':'下一页',
   'Unassigned':'未分配','Refused':'拒绝还款','Contacted':'已联系','Actions':'操作','Assign':'分配','Method':'方式','Result':'结果','Remarks':'备注','Call':'电话',
   'Date':'日期','Operator':'操作人','Review':'审核','Repay No.':'还款单号',
-  'Disbursement':'放款','Repayment':'还款','FeeAccrual':'费用计提','FeeWaiver':'费用减免','Refund':'退款','Adjustment':'调整','Out':'支出','Reversed':'已冲正',
+  'Disbursement':'放款','Repayment':'还款','FeeAccrual':'费用计提','FeeWaiver':'费用减免','Refund':'退款','Adjustment':'调整','In':'收入','Out':'支出','Reversed':'已冲正',
+  'Platform':'平台账户','User':'用户账户','Revenue':'收入账户','Receivable':'应收账户','System':'系统生成',
+  'Loan disbursement posted':'借款放款已入账','Repayment received and posted':'还款已到账并入账',
+  'Installment repayment posted':'分期还款已入账','Daily overdue fee accrual':'每日逾期费计提',
+  'Waiver entry reversed by correction':'减免分录因更正已冲正','Partial repayment posted':'部分还款已入账',
+  'Manual repayment posted':'人工还款已入账','Reversal of fee waiver transaction':'费用减免流水冲正',
+  'Incorrect waiver amount; original entry reversed':'减免金额错误，原分录已冲正',
   'Handle':'处理','Ignore':'忽略','Image':'图片','Sort':'排序','Validity':'有效期','View':'查看','Entry':'入口','Native':'原生页面','Float':'浮窗','Tab':'标签页',
   'Code':'编码','Login':'登录',
   'PartiallyMatched':'部分匹配','Unused':'未使用','Coupon':'优惠券','Slot Name / Key':'资源位名称 / 位置标识',
@@ -2599,7 +2623,7 @@ function renderUsers(list) {
         <td><span class="status-badge ${u.status==='Active'?'badge-active':'badge-disabled'}">${u.status}</span></td>
         <td style="font-size:12.5px;color:#94a3b8;">${u.lastLogin||'-'}</td>
         <td>
-          <div class="d-flex gap-1 flex-wrap">
+          <div class="d-flex gap-1 flex-nowrap">
             <button class="btn btn-sm btn-outline-primary action-btn" onclick="openUserModal(${u.id})"><i class="bi bi-pencil"></i> ${t('btn.edit')}</button>
             <button class="btn btn-sm btn-outline-secondary action-btn" onclick="openResetPwd(${u.id})"><i class="bi bi-key"></i> ${t('btn.resetPwd')}</button>
             <button class="btn btn-sm ${u.status==='Active'?'btn-outline-warning':'btn-outline-success'} action-btn" onclick="toggleUserStatus(${u.id})">
@@ -2730,7 +2754,7 @@ function renderRoles(list) {
         <td><span class="status-badge ${r.status==='Active'?'badge-active':'badge-disabled'}">${r.status}</span></td>
         <td style="font-size:12.5px;color:#94a3b8;">${r.sort}</td>
         <td>
-          <div class="d-flex gap-1 flex-wrap">
+          <div class="d-flex gap-1 flex-nowrap">
             <button class="btn btn-sm btn-outline-primary action-btn" onclick="openRoleModal(${r.id})"><i class="bi bi-pencil"></i> ${t('btn.edit')}</button>
             <button class="btn btn-sm btn-outline-secondary action-btn" onclick="openAssignPerm(${r.id})"><i class="bi bi-key"></i> ${t('btn.perms')}</button>
             <button class="btn btn-sm ${r.status==='Active'?'btn-outline-warning':'btn-outline-success'} action-btn" onclick="toggleRoleStatus(${r.id})">
@@ -3171,6 +3195,20 @@ function detailRow(label, val) {
   </div>`;
 }
 
+function detailCard(title, content, tone='default') {
+  const tones = {
+    default: { bg:'#f8fafc', title:'#64748b' },
+    primary: { bg:'#eef2ff', title:'#3a5bdf' },
+    success: { bg:'#f0fdf4', title:'#16a34a' },
+    warning: { bg:'#fff7ed', title:'#ea580c' },
+  };
+  const colors = tones[tone] || tones.default;
+  return `<div style="background:${colors.bg};border-radius:8px;padding:16px;height:100%;">
+    <div style="font-size:11px;font-weight:700;color:${colors.title};letter-spacing:.5px;margin-bottom:12px;">${localizePhrase(title)}</div>
+    ${content}
+  </div>`;
+}
+
 function customerIdOf(record) {
   if (!record) return '-';
   if (record.userId !== undefined && record.userId !== null && record.userId !== '') return record.userId;
@@ -3288,7 +3326,7 @@ function renderAccountCancel(list) {
       <td style="font-size:12px;color:#94a3b8;">${r.reviewTime}</td>
       <td style="font-size:12.5px;color:#64748b;">${r.reason}</td>
       <td>
-        <div class="d-flex gap-1 flex-wrap">
+        <div class="d-flex gap-1 flex-nowrap">
           <button class="btn btn-sm btn-outline-success action-btn" onclick="approveCancel('${r.requestNo}')" ${r.status !== 'Pending' || r.eligibility !== 'Pass' ? 'disabled' : ''}><i class="bi bi-check-lg"></i> ${t('btn.approve')}</button>
           <button class="btn btn-sm btn-outline-danger action-btn" onclick="rejectCancel('${r.requestNo}')" ${r.status !== 'Pending' ? 'disabled' : ''}><i class="bi bi-x-lg"></i> ${t('btn.reject')}</button>
         </div>
@@ -3505,7 +3543,7 @@ function renderLoans(list) {
         <td style="font-size:12px;color:#94a3b8;white-space:nowrap;">${l.billEndTime}</td>
         <td style="font-size:12px;color:#94a3b8;white-space:nowrap;">${l.createdAt}</td>
         <td>
-          <div class="d-flex gap-1 flex-wrap">
+          <div class="d-flex gap-1 flex-nowrap">
             <button class="btn btn-sm btn-outline-primary action-btn" onclick="viewLoanDetail('${l.no}')"><i class="bi bi-eye"></i> ${t('btn.detail')}</button>
           </div>
         </td>
@@ -3768,14 +3806,19 @@ const repayStatusColor = { Success:'badge-active', Pending:'badge-pending', Fail
 function repayBadge(s) {
   return `<span class="status-badge ${repayStatusColor[s] || ''}">${s}</span>`;
 }
-const reconcileBadge = {
-  Matched:'<span style="color:#16a34a;font-size:12px;font-weight:600;">✓ Matched</span>',
-  Success:'<span style="color:#16a34a;font-size:12px;font-weight:600;">✓ Success</span>',
-  Pending:'<span style="color:#d97706;font-size:12px;font-weight:600;">⏳ Pending</span>',
-  Unmatched:'<span style="color:#dc2626;font-size:12px;font-weight:600;">✗ Unmatched</span>',
-  Failed:'<span style="color:#dc2626;font-size:12px;font-weight:600;">✗ Failed</span>',
-  ManualConfirmed:'<span style="color:#7c3aed;font-size:12px;font-weight:600;">✔ Manual</span>'
-};
+function repaymentReconcileBadge(status) {
+  const config = {
+    Matched: ['✓', '#16a34a', 'Matched'],
+    Success: ['✓', '#16a34a', 'Success'],
+    Pending: ['⏳', '#d97706', 'Pending'],
+    Unmatched: ['✗', '#dc2626', 'Unmatched'],
+    Failed: ['✗', '#dc2626', 'Failed'],
+    ManualConfirmed: ['✔', '#7c3aed', 'ManualConfirmed'],
+  };
+  const item = config[status];
+  if (!item) return localizePhrase(status);
+  return `<span style="color:${item[1]};font-size:12px;font-weight:600;white-space:nowrap;">${item[0]} ${localizePhrase(item[2])}</span>`;
+}
 
 function renderRepayments(list) {
   const data = list || repayments;
@@ -3792,7 +3835,7 @@ function renderRepayments(list) {
       <td><span class="role-tag" style="font-size:11px;">${r.paymentChannel}</span></td>
       <td>${repayBadge(r.paymentStatus)}</td>
       <td>${statusBadge(r.matchStatus)}</td>
-      <td>${reconcileBadge[r.reconcileStatus] || r.reconcileStatus}</td>
+      <td>${repaymentReconcileBadge(r.reconcileStatus)}</td>
       <td style="font-size:12px;color:#94a3b8;white-space:nowrap;">${r.paymentStartTime}</td>
       <td style="font-size:12px;color:#94a3b8;white-space:nowrap;">${r.paymentSuccessTime}</td>
       <td><button class="btn btn-sm btn-outline-primary action-btn" onclick="viewRepaymentDetail('${r.no}')"><i class="bi bi-eye"></i> ${currentLang === 'zh' ? '查看明细' : 'View Details'}</button></td>
@@ -4588,7 +4631,7 @@ function renderTransactions(list) {
     <td><code style="font-size:11px;">${tx.repaymentOrderNo||'-'}</code></td>
     <td><span class="role-tag" style="font-size:11px;">${tx.bizType}</span></td>
     <td><code style="font-size:11px;">${tx.bizNo}</code></td>
-    <td><span style="font-weight:700;${tx.direction==='In'?'color:#16a34a;':'color:#dc2626;'}">${tx.direction==='In'?'▲ In':'▼ Out'}</span></td>
+    <td><span style="font-weight:700;white-space:nowrap;${tx.direction==='In'?'color:#16a34a;':'color:#dc2626;'}">${tx.direction==='In'?'▲':'▼'} ${localizePhrase(tx.direction)}</span></td>
     <td style="font-weight:600;">PKR ${tx.amount.toLocaleString()}</td>
     <td style="font-size:12px;color:#94a3b8;">${tx.accountType}</td>
     <td style="font-size:11.5px;color:#94a3b8;font-family:monospace;">${tx.accountId}</td>
@@ -4618,40 +4661,52 @@ function filterTransactions() {
 function viewAccountTransactionDetail(id) {
   const tx=accountTransactions.find(item=>item.id===id);
   if(!tx) return;
-  const section=title=>`<div style="font-size:11px;font-weight:700;color:#3a5bdf;letter-spacing:.5px;margin:14px 0 8px;">${localizePhrase(title)}</div>`;
   openFeeRecordDetail(
     `${localizePhrase('Transaction Detail')} — ${tx.transactionNo}`,
-    `${section('TRANSACTION INFORMATION')}
-      ${detailRow('ID',tx.id)}
-      ${detailRow('Transaction No.',`<code>${tx.transactionNo}</code>`)}
-      ${detailRow('Customer ID',tx.userId ? `#${tx.userId}` : '-')}
-      ${detailRow('Business Type',tx.bizType)}
-      ${detailRow('Business No.',`<code>${tx.bizNo||'-'}</code>`)}
-      ${detailRow('Direction',tx.direction)}
-      ${detailRow('Amount',`${tx.currency} ${tx.amount.toLocaleString()}`)}
-      ${detailRow('Currency',tx.currency)}
-      ${detailRow('Status',statusBadge(tx.status))}
-     ${section('BUSINESS REFERENCES')}
-      ${detailRow('Loan Order No.',`<code>${tx.loanOrderNo||'-'}</code>`)}
-      ${detailRow('Bill No.',`<code>${tx.billNo||'-'}</code>`)}
-      ${detailRow('Fee No.',`<code>${tx.feeNo||'-'}</code>`)}
-      ${detailRow('Repayment Order No.',`<code>${tx.repaymentOrderNo||'-'}</code>`)}
-      ${detailRow('Fee Type',tx.feeType||'-')}
-     ${section('ACCOUNTING ENTRIES')}
-      ${detailRow('Account Type',tx.accountType)}
-      ${detailRow('Account ID',`<code>${tx.accountId}</code>`)}
-      ${detailRow('Counterparty Account Type',tx.counterpartyAccountType)}
-      ${detailRow('Counterparty Account ID',`<code>${tx.counterpartyAccountId}</code>`)}
-     ${section('REVERSAL INFORMATION')}
-      ${detailRow('Reversal',tx.isReversal?'Yes':'No')}
-      ${detailRow('Original Transaction No.',`<code>${tx.originalTransactionNo||'-'}</code>`)}
-      ${detailRow('Reversal Reason',tx.reversalReason||'-')}
-     ${section('SYSTEM INFORMATION')}
-      ${detailRow('Transaction Time',tx.transactionTime)}
-      ${detailRow('Posted Time',tx.postedTime||'-')}
-      ${detailRow('Remark',tx.remark||'-')}
-      ${detailRow('Created At',tx.createdAt)}
-      ${detailRow('Updated At',tx.updatedAt)}`
+    `<div class="row g-3">
+      <div class="col-md-6">${detailCard('TRANSACTION INFORMATION',`
+        ${detailRow('ID',tx.id)}
+        ${detailRow('Transaction No.',`<code>${tx.transactionNo}</code>`)}
+        ${detailRow('Customer ID',tx.userId ? `#${tx.userId}` : '-')}
+        ${detailRow('Business Type',tx.bizType)}
+        ${detailRow('Business No.',`<code>${tx.bizNo||'-'}</code>`)}
+        ${detailRow('Direction',tx.direction)}
+        ${detailRow('Amount',`${tx.currency} ${tx.amount.toLocaleString()}`)}
+        ${detailRow('Currency',tx.currency)}
+        ${detailRow('Status',statusBadge(tx.status))}
+      `,'primary')}</div>
+      <div class="col-md-6">${detailCard('BUSINESS REFERENCES',`
+        ${detailRow('Loan Order No.',`<code>${tx.loanOrderNo||'-'}</code>`)}
+        ${detailRow('Bill No.',`<code>${tx.billNo||'-'}</code>`)}
+        ${detailRow('Fee No.',`<code>${tx.feeNo||'-'}</code>`)}
+        ${detailRow('Repayment Order No.',`<code>${tx.repaymentOrderNo||'-'}</code>`)}
+        ${detailRow('Fee Type',tx.feeType||'-')}
+      `)}</div>
+      <div class="col-md-6">${detailCard('ACCOUNTING ENTRIES',`
+        ${detailRow('Account Type',tx.accountType)}
+        ${detailRow('Account ID',`<code>${tx.accountId}</code>`)}
+        ${detailRow('Counterparty Account Type',tx.counterpartyAccountType)}
+        ${detailRow('Counterparty Account ID',`<code>${tx.counterpartyAccountId}</code>`)}
+      `,'success')}</div>
+      <div class="col-md-6">${detailCard('REVERSAL INFORMATION',`
+        ${detailRow('Reversal',tx.isReversal ? (currentLang === 'zh' ? '是' : 'Yes') : (currentLang === 'zh' ? '否' : 'No'))}
+        ${detailRow('Original Transaction No.',`<code>${tx.originalTransactionNo||'-'}</code>`)}
+        ${detailRow('Reversal Reason',tx.reversalReason||'-')}
+      `,'warning')}</div>
+      <div class="col-12">${detailCard('SYSTEM INFORMATION',`
+        <div class="row g-3">
+          <div class="col-md-6">
+            ${detailRow('Transaction Time',tx.transactionTime)}
+            ${detailRow('Posted Time',tx.postedTime||'-')}
+          </div>
+          <div class="col-md-6">
+            ${detailRow('Created At',tx.createdAt)}
+            ${detailRow('Updated At',tx.updatedAt)}
+          </div>
+          <div class="col-12">${detailRow('Remark',tx.remark||'-')}</div>
+        </div>
+      `)}</div>
+    </div>`
   );
 }
 
@@ -5905,7 +5960,7 @@ function renderLoanBillFees(list) {
     <td style="font-size:12px;">${f.generateType}</td>
     <td style="font-size:12px;color:#64748b;max-width:180px;">${f.remark||'-'}</td>
     <td>
-      <div class="d-flex gap-1 flex-wrap">
+      <div class="d-flex gap-1 flex-nowrap">
         <button class="btn btn-sm btn-outline-primary action-btn" onclick="viewLoanBillFeeDetail(${f.id})"><i class="bi bi-eye"></i> ${t('btn.detail')}</button>
         <button class="btn btn-sm btn-outline-secondary action-btn" onclick="viewFeeChangeRecords('${f.feeNo}')"><i class="bi bi-clock-history"></i> ${currentLang === 'zh' ? '变更记录' : 'Changes'}</button>
       </div>
@@ -6545,7 +6600,7 @@ function renderOtpLogs(list) {
       </td>
       <td style="font-size:12.5px;color:#64748b;">${o.message}</td>
       <td>
-        <div class="d-flex gap-1 flex-wrap">
+        <div class="d-flex gap-1 flex-nowrap">
           <button class="btn btn-sm btn-outline-primary action-btn" onclick="resendOtp('${o.requestId}')"><i class="bi bi-arrow-clockwise"></i> ${t('btn.resend')}</button>
           <button class="btn btn-sm btn-outline-success action-btn" onclick="unlockOtp('${o.requestId}')" ${o.result !== 'Locked' ? 'disabled' : ''}><i class="bi bi-unlock"></i> ${t('btn.unlock')}</button>
         </div>
@@ -6624,7 +6679,7 @@ function renderDevices(list) {
       <td>${d.current ? '<span class="status-badge badge-active">Yes</span>' : '-'}</td>
       <td style="font-size:12px;color:#94a3b8;">${d.lastLogin}</td>
       <td>
-        <div class="d-flex gap-1 flex-wrap">
+        <div class="d-flex gap-1 flex-nowrap">
           <button class="btn btn-sm btn-outline-secondary action-btn" onclick="invalidateDevice('${d.deviceId}')" ${d.status === 'Invalidated' ? 'disabled' : ''}><i class="bi bi-x-circle"></i> ${t('btn.invalidate')}</button>
           <button class="btn btn-sm btn-outline-success action-btn" onclick="trustDevice('${d.deviceId}')" ${d.status === 'Trusted' ? 'disabled' : ''}><i class="bi bi-shield-check"></i> ${t('btn.trust')}</button>
         </div>
