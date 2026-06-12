@@ -197,7 +197,12 @@
   .empty-state { text-align: center; padding: 48px 20px; color: #94a3b8; }
   .empty-state i { font-size: 40px; display: block; margin-bottom: 12px; }
 
-  .table-scroll { overflow-x: auto; width: 100%; }
+  .table-scroll,
+  .table-card > [id$="-table-container"] {
+    overflow-x: auto;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
   .table-scroll table { min-width: 1180px; }
 
   .sensitive-toolbar {
@@ -442,18 +447,20 @@
             </button>
           </div>
         </div>
-        <table class="table table-hover mb-0">
-          <thead><tr>
-            <th style="width:35%;">Permission Name</th>
-            <th style="width:25%;">Code</th>
-            <th style="width:8%;">Type</th>
-            <th style="width:18%;">Route Path</th>
-            <th style="width:7%;">Sort</th>
-            <th style="width:7%;">Status</th>
-            <th style="width:10%;">Actions</th>
-          </tr></thead>
-          <tbody id="perm-tree-tbody"></tbody>
-        </table>
+        <div class="table-scroll">
+          <table class="table table-hover mb-0">
+            <thead><tr>
+              <th style="width:35%;">Permission Name</th>
+              <th style="width:25%;">Code</th>
+              <th style="width:8%;">Type</th>
+              <th style="width:18%;">Route Path</th>
+              <th style="width:7%;">Sort</th>
+              <th style="width:7%;">Status</th>
+              <th style="width:10%;">Actions</th>
+            </tr></thead>
+            <tbody id="perm-tree-tbody"></tbody>
+          </table>
+        </div>
       </div>
     </div>
 
