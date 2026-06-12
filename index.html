@@ -521,17 +521,34 @@
         <div class="table-card-header">
           <span class="title" data-i18n="page.loanOrders">Loan Orders</span>
           <div class="search-row ms-auto">
-            <input type="text" class="form-control form-control-sm" data-i18n-ph="filter.searchLoanPh" placeholder="Order No..." style="width:200px;" id="loan-search" oninput="filterLoans()">
+            <input type="text" class="form-control form-control-sm" placeholder="Order No. / Customer ID..." style="width:220px;" id="loan-search" oninput="filterLoans()">
             <select class="form-select form-select-sm" style="width:160px;" id="loan-status-filter" onchange="filterLoans()">
               <option value="" data-i18n="filter.allStatus">All Status</option>
+              <option value="order_submitted">order_submitted</option>
+              <option value="wallet_verification_success">wallet_verification_success</option>
+              <option value="wallet_verification_failed">wallet_verification_failed</option>
+              <option value="face_verification_success">face_verification_success</option>
+              <option value="face_verification_failed">face_verification_failed</option>
+              <option value="otp_verification_success">otp_verification_success</option>
+              <option value="otp_verification_failed">otp_verification_failed</option>
+              <option value="Approved">Approved</option>
               <option value="PendingApproval">PendingApproval</option>
               <option value="PendingDisbursement">PendingDisbursement</option>
+              <option value="DisbursementFailed">DisbursementFailed</option>
+              <option value="Disbursementsuccess">Disbursementsuccess</option>
               <option value="CoolingOff">CoolingOff</option>
               <option value="Active">Active</option>
+              <option value="batching">batching</option>
+              <option value="pendingpay">pendingpay</option>
               <option value="Overdue">Overdue</option>
+              <option value="PartiallyPaid">PartiallyPaid</option>
+              <option value="OverduePartiallyPaid">OverduePartiallyPaid</option>
               <option value="Paid">Paid</option>
               <option value="WrittenOff">WrittenOff</option>
               <option value="Rejected">Rejected</option>
+              <option value="Cancelled">Cancelled</option>
+              <option value="earlysettled">earlysettled</option>
+              <option value="Closed">Closed</option>
             </select>
             <select class="form-select form-select-sm" style="width:130px;" id="loan-channel-filter" onchange="filterLoans()">
               <option value="" data-i18n="filter.allChannels">All Channels</option>
@@ -2174,6 +2191,11 @@ const phraseZh = {
   'Application No.':'申请单号','Submit Time':'提交时间','Review Result':'审核结果','Credit Limit':'授信额度','Next Applicable Time':'下次可申请时间','Face State':'人脸状态','Application Step':'申请步骤','Current Step':'当前步骤','Latest Approved':'最近通过','Latest Application':'最新申请','Rejected Attempt':'被拒记录',
   'Order No.':'订单号','Customer':'客户','Borrow Count':'借款次数','First':'首次','Loan Amount':'借款金额','Contract Principal':'合同本金','Installments':'分期','Daily Interest Rate':'日利率','Overdue Rate':'逾期费率','Total Interest':'总利息','Total Service Fee':'总服务费','Total Repayable':'总应还',
   'Order Status':'订单状态','Risk Status':'风控状态','Disbursement Channel':'放款渠道','Disbursed At':'放款时间','First Due Date':'首期到期日','Final Due Date':'最终到期日','Paid Amount':'已还金额','Remaining Amount':'剩余金额',
+  'Customer ID':'客户 ID','Product ID':'产品 ID','Loan Coupon Amount':'借款优惠券金额','Installment Count':'分期期数','Total Days':'总借款天数','Theoretical Repay Amount':'理论应还金额','Rounding Waiver Amount':'抹零优惠金额','Display Bill Amount':'展示应还金额','Fee Cap Amount':'费用上限金额',
+  'Bill Start Time':'账单开始时间','Bill End Time':'账单结束时间','Cooling-off Start Time':'冷静期开始时间','Cooling-off End Time':'冷静期结束时间','Approve Time':'审批时间','Accumulated Fee Amount':'累计费用金额','Total Overdue Fee':'总逾期费','Repayment Coupon Amount':'还款优惠券金额',
+  'Paid Principal':'已还本金','Paid Interest':'已还利息','Paid Service Fee':'已还服务费','Paid Overdue Fee':'已还逾期费','Remaining Principal':'剩余应还本金','Remaining Interest':'剩余应还利息','Remaining Service Fee':'剩余应还服务费','Remaining Overdue Fee':'剩余应还逾期费',
+  'Wallet Name':'收款钱包名称','Wallet Account Name':'收款账户姓名','Wallet Account No.':'收款账户号','Disbursement Status':'放款状态','Disbursement Time':'放款时间','Fee Capped':'是否达到费用上限','Fee Capped Time':'达到费用上限时间',
+  'Cooling-off Repaid':'是否冷静期结清','Cooling-off Repaid Time':'冷静期结清时间','Early Settled':'是否提前结清','Early Settlement Time':'提前结清时间','Settled Time':'实际结清时间','Batching Time':'最后一次跑批时间','Created At':'创建时间','Updated At':'更新时间',
   'BILL INFO':'账单信息','AMOUNT SUMMARY':'金额汇总','Bill No.':'账单号','Loan Order':'借款订单','Installment':'期次','Period':'周期','Settled At':'结清时间',
   'Payable Principal':'应还本金','Payable Interest':'应还利息','Payable Service Fee':'应还服务费','Payable Overdue Fee':'应还逾期费','Total Bill Amount':'账单总额','Overdue Days':'逾期天数',
   'REPAYMENT ORDER':'还款订单','PAYMENT DETAILS':'支付信息','Repayment No.':'还款单号','Channel':'渠道','Reconcile':'对账状态','Pay Time':'支付时间','Channel Txn No.':'渠道流水号',
@@ -3310,14 +3332,127 @@ let loanOrders = [
   { no:'LN2024060418', custName:'Mariam Iqbal',   mobile:'+92 303 8899116', amount:25000, contractPrincipal:25000, installments:4, periodDays:15, dailyRate:'0.75%', overdueRate:'2.3%', totalInterest:11250,totalFee:3750, totalRepay:40000, status:'CoolingOff',         channel:'Bank',      disbursedAt:'2024-06-05 12:05', firstDue:'2024-06-20', finalDue:'2024-07-20', paidAmount:0,     remainingAmount:40000, riskStatus:'Approved', borrowCount:3, earlySettlementEntryOpen:false, quickReview:false },
 ];
 
+const loanOrderMetadata = {
+  LN2024060401:{ approveTime:'2024-05-20 13:40', createdAt:'2024-05-20 13:20', updatedAt:'2024-06-04 00:05' },
+  LN2024060402:{ approveTime:'2024-06-04 09:35', createdAt:'2024-06-04 09:10', updatedAt:'2024-06-04 09:50' },
+  LN2024060403:{ approveTime:'2024-05-25 10:05', createdAt:'2024-05-25 09:40', updatedAt:'2024-06-09 14:25' },
+  LN2024060404:{ approveTime:'2024-05-10 08:35', createdAt:'2024-05-10 08:15', updatedAt:'2024-06-04 00:10', totalOverdueFee:1150 },
+  LN2024060405:{ approveTime:'2024-05-01 10:35', createdAt:'2024-05-01 10:10', updatedAt:'2024-05-31 09:54', repayCouponAmount:400, settledTime:'2024-05-31 09:50' },
+  LN2024060406:{ approveTime:'2024-06-03 14:55', createdAt:'2024-06-03 14:30', updatedAt:'2024-06-03 15:23' },
+  LN2024060407:{ approveTime:'-', createdAt:'2024-06-04 10:40', updatedAt:'2024-06-04 11:08' },
+  LN2024060408:{ approveTime:'2024-04-20 09:35', createdAt:'2024-04-20 09:10', updatedAt:'2024-06-04 12:00', totalOverdueFee:11730, paidBreakdown:{ principal:4500, interest:1012.5, serviceFee:337.5, overdueFee:1350 } },
+  LN2024060409:{ approveTime:'2024-05-15 09:05', createdAt:'2024-05-15 08:40', updatedAt:'2024-06-14 10:18', settledTime:'2024-06-14 10:15' },
+  LN2024060410:{ approveTime:'2024-06-04 11:15', createdAt:'2024-06-04 10:50', updatedAt:'2024-06-04 11:44' },
+  LN2024060411:{ approveTime:'2024-05-22 12:35', createdAt:'2024-05-22 12:10', updatedAt:'2024-06-06 09:04' },
+  LN2024060412:{ approveTime:'2024-05-18 14:05', createdAt:'2024-05-18 13:40', updatedAt:'2024-06-02 08:43', repayCouponAmount:400 },
+  LN2024060413:{ approveTime:'2024-04-15 07:35', createdAt:'2024-04-15 07:10', updatedAt:'2024-06-04 13:20', totalOverdueFee:10125 },
+  LN2024060414:{ approveTime:'2024-06-04 15:20', rejectReason:'Risk score below product threshold', createdAt:'2024-06-04 14:45', updatedAt:'2024-06-04 15:20' },
+  LN2024060415:{ approveTime:'2024-02-01 09:35', createdAt:'2024-02-01 09:10', updatedAt:'2024-05-01 00:10', totalOverdueFee:8200 },
+  LN2024060416:{ approveTime:'2024-06-05 08:45', createdAt:'2024-06-05 08:20', updatedAt:'2024-06-05 09:12' },
+  LN2024060417:{ approveTime:'2024-06-05 10:00', createdAt:'2024-06-05 09:35', updatedAt:'2024-06-05 10:27' },
+  LN2024060418:{ approveTime:'2024-06-05 11:40', createdAt:'2024-06-05 11:15', updatedAt:'2024-06-05 12:07' },
+};
+
+function loanDatePart(value) {
+  return value && value !== '-' ? value.slice(0, 10) : '-';
+}
+
+function loanAddHours(value, hours) {
+  if (!value || value === '-') return '-';
+  const date = new Date(value.replace(' ', 'T') + ':00');
+  date.setHours(date.getHours() + hours);
+  const pad = n => String(n).padStart(2, '0');
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+function loanMoney(value) {
+  return `PKR ${Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+}
+
+loanOrders.forEach((l, index) => {
+  const meta = loanOrderMetadata[l.no] || {};
+  const wallet = findWalletForLoan(l);
+  const matchedCustomerId = customers.find(c => c.mobile === l.mobile)?.id;
+  const paidRatio = l.totalRepay > 0 ? Math.min(1, l.paidAmount / l.totalRepay) : 0;
+  const paid = meta.paidBreakdown || {
+    principal: Math.round(l.contractPrincipal * paidRatio * 100) / 100,
+    interest: Math.round(l.totalInterest * paidRatio * 100) / 100,
+    serviceFee: Math.round(l.totalFee * paidRatio * 100) / 100,
+    overdueFee: 0,
+  };
+  const totalOverdueFee = meta.totalOverdueFee || 0;
+  const repayCouponAmount = meta.repayCouponAmount || 0;
+  const disbursementStatus = l.disbursedAt !== '-' ? 'Success'
+    : l.status === 'PendingDisbursement' ? 'Pending'
+    : ['Rejected','PendingApproval'].includes(l.status) ? null : 'Failed';
+
+  Object.assign(l, {
+    id: index + 1,
+    loanOrderNo: l.no,
+    userId: matchedCustomerId || 2000 + Number(l.no.slice(-4)),
+    productId: 1,
+    borrowCount: Number(l.borrowCount) || 1,
+    loanAmount: l.amount,
+    loanCouponAmount: 0,
+    installmentCount: l.installments,
+    totalDays: l.installments * l.periodDays,
+    dailyInterestRate: 0.0075,
+    overdueRateValue: 0.023,
+    totalServiceFee: l.totalFee,
+    totalRepayAmount: l.totalRepay,
+    roundingWaiverAmount: 0,
+    displayBillAmount: l.totalRepay,
+    billStartTime: l.firstDue !== '-' ? loanDatePart(l.disbursedAt) : '-',
+    billEndTime: l.finalDue,
+    coolingOffStartTime: l.disbursedAt,
+    coolingOffEndTime: loanAddHours(l.disbursedAt, 24),
+    feeCapAmount: l.contractPrincipal,
+    rejectReason: meta.rejectReason || '-',
+    approveTime: meta.approveTime || '-',
+    accumulatedFeeAmount: l.totalInterest + l.totalFee + totalOverdueFee,
+    totalOverdueFee,
+    repayCouponAmount,
+    paidPrincipal: paid.principal,
+    paidInterest: paid.interest,
+    paidServiceFee: paid.serviceFee,
+    paidOverdueFee: paid.overdueFee,
+    paidAmount: paid.principal + paid.interest + paid.serviceFee + paid.overdueFee,
+    remainingPrincipal: Math.max(0, l.contractPrincipal - paid.principal),
+    remainingInterest: Math.max(0, l.totalInterest - paid.interest),
+    remainingServiceFee: Math.max(0, l.totalFee - paid.serviceFee),
+    remainingOverdueFee: Math.max(0, totalOverdueFee - paid.overdueFee),
+    walletName: wallet?.type || (l.channel !== '-' ? l.channel : '-'),
+    walletAccountName: null,
+    walletAccountNo: wallet?.accountNo || '-',
+    disbursementStatus,
+    disbursementTime: l.disbursedAt,
+    isFeeCapped: totalOverdueFee >= l.contractPrincipal,
+    feeCappedTime: totalOverdueFee >= l.contractPrincipal ? meta.updatedAt : '-',
+    isCoolingOffRepaid: !!meta.coolingOffRepaidTime,
+    coolingOffRepaidTime: meta.coolingOffRepaidTime || '-',
+    isEarlySettled: l.status === 'earlysettled',
+    earlySettlementTime: meta.earlySettlementTime || '-',
+    settledTime: meta.settledTime || '-',
+    batchingTime: ['Active','Overdue','PartiallyPaid','OverduePartiallyPaid','WrittenOff'].includes(l.status) ? meta.updatedAt : '-',
+    createdAt: meta.createdAt || '-',
+    updatedAt: meta.updatedAt || '-',
+  });
+  l.remainingAmount = Math.max(0, l.remainingPrincipal + l.remainingInterest + l.remainingServiceFee + l.remainingOverdueFee - l.repayCouponAmount);
+});
+
 const loanStatusColor = {
   Active:'badge-active', Paid:'background:#dcfce7;color:#15803d;', Overdue:'badge-disabled',
   PendingApproval:'badge-pending', PendingDisbursement:'badge-pending', CoolingOff:'background:#e0e7ff;color:#4338ca;',
-  Rejected:'badge-disabled', WrittenOff:'background:#f1f5f9;color:#64748b;'
+  Approved:'badge-active', Disbursementsuccess:'badge-active', PartiallyPaid:'badge-pending',
+  OverduePartiallyPaid:'badge-disabled', Rejected:'badge-disabled', DisbursementFailed:'badge-disabled',
+  WrittenOff:'background:#f1f5f9;color:#64748b;', Cancelled:'background:#f1f5f9;color:#64748b;',
+  earlysettled:'background:#dcfce7;color:#15803d;', Closed:'background:#f1f5f9;color:#64748b;'
 };
 function loanBadge(s) {
   const c = loanStatusColor[s] || '';
-  return `<span class="status-badge" style="${c.includes(':')?c:''}" ${!c.includes(':') ? `class="status-badge ${c}"` : ''}>${s}</span>`;
+  return c.includes(':')
+    ? `<span class="status-badge" style="${c}">${s}</span>`
+    : `<span class="status-badge ${c}">${s}</span>`;
 }
 
 function formatBorrowCount(count) {
@@ -3331,34 +3466,46 @@ function formatBorrowCount(count) {
 function renderLoans(list) {
   const data = list || loanOrders;
   document.getElementById('loan-count-label').textContent = `Showing 1–${data.length} of ${data.length}`;
-  const rows = data.map(l => {
-    const userId = l.userId || customers.find(c => c.mobile === l.mobile)?.id || '';
-    return `
+  const rows = data.map(l => `
       <tr>
+        <td style="font-size:12px;">${l.id}</td>
         <td><code style="font-size:12px;">${l.no}</code></td>
-        <td><code style="font-size:12px;">${userId ? `#${userId}` : customerIdDisplay(l)}</code></td>
+        <td><code style="font-size:12px;">#${l.userId}</code></td>
+        <td style="font-size:12px;">${l.productId}</td>
         <td><span class="role-tag" style="font-size:11px;background:#ecfeff;color:#0e7490;">${formatBorrowCount(l.borrowCount)}</span></td>
-        <td style="font-weight:600;">PKR ${l.amount.toLocaleString()}</td>
-        <td style="font-size:13px;">${l.installments} × ${l.periodDays}d</td>
+        <td style="font-weight:600;">${loanMoney(l.loanAmount)}</td>
+        <td style="font-weight:600;color:#0f766e;">${loanMoney(l.contractPrincipal)}</td>
+        <td style="font-size:13px;">${l.installmentCount} × ${l.periodDays}d</td>
+        <td style="font-weight:600;">${loanMoney(l.displayBillAmount)}</td>
+        <td style="color:${l.remainingAmount > 0 ? '#dc2626' : '#16a34a'};font-weight:600;">${loanMoney(l.remainingAmount)}</td>
         <td>${loanBadge(l.status)}</td>
+        <td>${statusBadge(l.riskStatus)}</td>
         <td>${l.quickReview
           ? `<span class="status-badge" style="background:#dcfce7;color:#16a34a;font-size:11px;"><i class="bi bi-lightning-fill me-1"></i>${t('filter.quickYes')}</span>`
           : `<span class="status-badge" style="background:#f1f5f9;color:#64748b;font-size:11px;">${t('filter.quickNo')}</span>`}</td>
-        <td><span class="role-tag" style="font-size:11px;">${l.channel !== '-' ? l.channel : '-'}</span></td>
-        <td style="font-size:12px;color:#94a3b8;">${l.disbursedAt}</td>
-        <td style="font-size:12px;color:#94a3b8;">${l.finalDue}</td>
+        <td>${l.disbursementStatus ? statusBadge(l.disbursementStatus) : '-'}</td>
+        <td><span class="role-tag" style="font-size:11px;">${l.walletName}</span></td>
+        <td style="font-size:12px;color:#94a3b8;white-space:nowrap;">${l.disbursementTime}</td>
+        <td style="font-size:12px;color:#94a3b8;white-space:nowrap;">${l.billEndTime}</td>
+        <td style="font-size:12px;color:#94a3b8;white-space:nowrap;">${l.createdAt}</td>
         <td>
           <div class="d-flex gap-1 flex-wrap">
             <button class="btn btn-sm btn-outline-primary action-btn" onclick="viewLoanDetail('${l.no}')"><i class="bi bi-eye"></i> ${t('btn.detail')}</button>
           </div>
         </td>
-      </tr>`;
-  }).join('');
+      </tr>`).join('');
   document.getElementById('loan-table-container').innerHTML = `
-    <table class="table table-hover mb-0">
-      <thead><tr><th>${t('th.orderNo')}</th><th>${t('th.customer')}</th><th>${t('th.borrowCount')}</th><th>${t('th.amount')}</th><th>${t('th.installments')}</th><th>${t('th.status')}</th><th>${t('th.quickReview')}</th><th>${t('th.channel')}</th><th>${t('th.disbursedAt')}</th><th>${t('th.finalDue')}</th><th>${t('th.actions')}</th></tr></thead>
-      <tbody>${rows || '<tr><td colspan="11"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
-    </table>`;
+    <div class="table-scroll"><table class="table table-hover mb-0" style="min-width:2050px;">
+      <thead><tr>
+        <th>ID</th><th>${t('th.orderNo')}</th><th>${currentLang === 'zh' ? '客户 ID' : 'Customer ID'}</th><th>${currentLang === 'zh' ? '产品 ID' : 'Product ID'}</th>
+        <th>${t('th.borrowCount')}</th><th>${currentLang === 'zh' ? '借款金额' : 'Loan Amount'}</th><th>${currentLang === 'zh' ? '合同本金' : 'Contract Principal'}</th>
+        <th>${t('th.installments')}</th><th>${currentLang === 'zh' ? '展示应还' : 'Display Bill Amount'}</th><th>${currentLang === 'zh' ? '剩余应还' : 'Remaining Amount'}</th>
+        <th>${t('th.status')}</th><th>${currentLang === 'zh' ? '风控状态' : 'Risk Status'}</th><th>${t('th.quickReview')}</th>
+        <th>${currentLang === 'zh' ? '放款状态' : 'Disbursement Status'}</th><th>${currentLang === 'zh' ? '收款钱包' : 'Wallet'}</th>
+        <th>${t('th.disbursedAt')}</th><th>${currentLang === 'zh' ? '账单结束日' : 'Bill End Date'}</th><th>${currentLang === 'zh' ? '创建时间' : 'Created At'}</th><th>${t('th.actions')}</th>
+      </tr></thead>
+      <tbody>${rows || '<tr><td colspan="19"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+    </table></div>`;
 }
 
 function viewContract(no, customerId, amount, installments, periodDays, disbursedAt, finalDue, dailyRate, totalRepay) {
@@ -3429,16 +3576,15 @@ function filterLoans() {
   const ch = document.getElementById('loan-channel-filter').value;
   const qr = document.getElementById('loan-quickreview-filter').value;
   renderLoans(loanOrders.filter(l =>
-    (!q || l.no.toLowerCase().includes(q) || l.mobile.includes(q) || l.custName.toLowerCase().includes(q)) &&
-    (!st || l.status === st) && (!ch || l.channel === ch) &&
+    (!q || l.no.toLowerCase().includes(q) || String(l.userId).includes(q.replace('#',''))) &&
+    (!st || l.status === st) && (!ch || l.walletName === ch) &&
     (qr === '' || String(l.quickReview) === qr)
   ));
 }
 
 function viewLoanDetail(no) {
   const l = loanOrders.find(x=>x.no===no);
-  const userId = l.userId || customers.find(c => c.mobile === l.mobile)?.id || '';
-  const wallet = findWalletForLoan(l);
+  const yesNo = value => currentLang === 'zh' ? (value ? '是' : '否') : (value ? 'Yes' : 'No');
   const coolingOffEntry = l.status === 'CoolingOff' ? `
     <div class="col-12">
       <div style="background:#f8fafc;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
@@ -3455,36 +3601,94 @@ function viewLoanDetail(no) {
     <div class="row g-3">
       <div class="col-md-6">
         <div style="background:#f8fafc;border-radius:8px;padding:16px;">
-          <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:12px;">LOAN INFO</div>
-          ${detailRow('Order No.', l.no)}${detailRow('Customer', userId ? '#' + userId : customerIdDisplay(l))}
+          <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:12px;">${currentLang === 'zh' ? '订单与客户' : 'ORDER & CUSTOMER'}</div>
+          ${detailRow('ID', l.id)}${detailRow('Loan Order No.', l.loanOrderNo)}
+          ${detailRow('Customer ID', '#' + l.userId)}${detailRow('Product ID', l.productId)}
           ${detailRow('Borrow Count', formatBorrowCount(l.borrowCount))}
-          ${detailRow('Loan Amount', fmtMoney(l.amount))}${detailRow('Contract Principal', fmtMoney(l.contractPrincipal))}
-          ${detailRow('Installments', l.installments + ' × ' + l.periodDays + ' days')}
-          ${detailRow('Daily Interest Rate', l.dailyRate)}${detailRow('Overdue Rate', l.overdueRate)}
-          ${detailRow('Total Interest', fmtMoney(l.totalInterest))}${detailRow('Total Service Fee', fmtMoney(l.totalFee))}
-          ${detailRow('Total Repayable', fmtMoney(l.totalRepay))}
+          ${detailRow('Order Status', l.status)}${detailRow('Risk Status', l.riskStatus)}
+          ${detailRow(t('th.quickReview'), l.quickReview ? `<span style="color:#16a34a;font-weight:600;"><i class="bi bi-lightning-fill me-1"></i>${t('filter.quickYes')}</span>` : `<span style="color:#64748b;">${t('filter.quickNo')}</span>`)}
+          ${detailRow('Reject Reason', l.rejectReason)}${detailRow('Approve Time', l.approveTime)}
         </div>
       </div>
       <div class="col-md-6">
         <div style="background:#f8fafc;border-radius:8px;padding:16px;">
-          <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:12px;">STATUS & PAYMENT</div>
-          ${detailRow('Order Status', l.status)}${detailRow(t('th.quickReview'), l.quickReview ? `<span style="color:#16a34a;font-weight:600;"><i class="bi bi-lightning-fill me-1"></i>${t('filter.quickYes')}</span>` : `<span style="color:#64748b;">${t('filter.quickNo')}</span>`)}${detailRow('Risk Status', l.riskStatus)}
-          ${detailRow('Disbursement Channel', l.channel)}${detailRow('Disbursed At', l.disbursedAt)}
-          ${detailRow('First Due Date', l.firstDue)}${detailRow('Final Due Date', l.finalDue)}
-          ${detailRow('Paid Amount', fmtMoney(l.paidAmount))}${detailRow('Remaining Amount', fmtMoney(l.remainingAmount))}
+          <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:12px;">${currentLang === 'zh' ? '金额与计费' : 'AMOUNT & PRICING'}</div>
+          ${detailRow('Loan Amount', loanMoney(l.loanAmount))}
+          ${detailRow('Loan Coupon Amount', loanMoney(l.loanCouponAmount))}
+          ${detailRow('Contract Principal', loanMoney(l.contractPrincipal))}
+          ${detailRow('Total Interest', loanMoney(l.totalInterest))}
+          ${detailRow('Total Service Fee', loanMoney(l.totalServiceFee))}
+          ${detailRow('Theoretical Repay Amount', loanMoney(l.totalRepayAmount))}
+          ${detailRow('Rounding Waiver Amount', loanMoney(l.roundingWaiverAmount))}
+          ${detailRow('Display Bill Amount', loanMoney(l.displayBillAmount))}
+          ${detailRow('Fee Cap Amount', loanMoney(l.feeCapAmount))}
+          ${detailRow('Accumulated Fee Amount', loanMoney(l.accumulatedFeeAmount))}
+          ${detailRow('Total Overdue Fee', loanMoney(l.totalOverdueFee))}
+          ${detailRow('Repayment Coupon Amount', loanMoney(l.repayCouponAmount))}
         </div>
       </div>
-      <div class="col-12">
+      <div class="col-md-6">
         <div style="background:#f8fafc;border-radius:8px;padding:16px;">
-          <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:12px;">${localizePhrase('WALLET / RECEIVING ACCOUNT')}</div>
-          <div class="row g-3">
-            <div class="col-md-4">${detailRow('Account Type', wallet?.type || l.channel)}</div>
-            <div class="col-md-4">${detailRow('Account No.', wallet?.accountNo || '-')}</div>
-            <div class="col-md-4">${detailRow('Verify Status', wallet ? statusBadge(wallet.verifyStatus) : '-')}</div>
-            <div class="col-md-4">${detailRow('Bound Mobile', wallet?.boundMobile || l.mobile)}</div>
-            <div class="col-md-4">${detailRow('Account Status', wallet ? statusBadge(wallet.status) : '-')}</div>
-            <div class="col-md-4">${detailRow('Last Verified', wallet?.lastVerifiedAt || '-')}</div>
-          </div>
+          <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:12px;">${currentLang === 'zh' ? '分期与账期' : 'INSTALLMENT & BILLING'}</div>
+          ${detailRow('Installment Count', l.installmentCount)}
+          ${detailRow('Period Days', l.periodDays)}
+          ${detailRow('Total Days', l.totalDays)}
+          ${detailRow('Daily Interest Rate', `${(l.dailyInterestRate * 100).toFixed(2)}%`)}
+          ${detailRow('Overdue Rate', `${(l.overdueRateValue * 100).toFixed(2)}%`)}
+          ${detailRow('Bill Start Time', l.billStartTime)}
+          ${detailRow('Bill End Time', l.billEndTime)}
+          ${detailRow('Cooling-off Start Time', l.coolingOffStartTime)}
+          ${detailRow('Cooling-off End Time', l.coolingOffEndTime)}
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div style="background:#f8fafc;border-radius:8px;padding:16px;">
+          <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:12px;">${currentLang === 'zh' ? '已还金额拆分' : 'PAID AMOUNT BREAKDOWN'}</div>
+          ${detailRow('Paid Principal', loanMoney(l.paidPrincipal))}
+          ${detailRow('Paid Interest', loanMoney(l.paidInterest))}
+          ${detailRow('Paid Service Fee', loanMoney(l.paidServiceFee))}
+          ${detailRow('Paid Overdue Fee', loanMoney(l.paidOverdueFee))}
+          ${detailRow('Paid Amount', loanMoney(l.paidAmount))}
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div style="background:#f8fafc;border-radius:8px;padding:16px;">
+          <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:12px;">${currentLang === 'zh' ? '剩余应还拆分' : 'REMAINING AMOUNT BREAKDOWN'}</div>
+          ${detailRow('Remaining Principal', loanMoney(l.remainingPrincipal))}
+          ${detailRow('Remaining Interest', loanMoney(l.remainingInterest))}
+          ${detailRow('Remaining Service Fee', loanMoney(l.remainingServiceFee))}
+          ${detailRow('Remaining Overdue Fee', loanMoney(l.remainingOverdueFee))}
+          ${detailRow('Remaining Amount', loanMoney(l.remainingAmount))}
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div style="background:#f8fafc;border-radius:8px;padding:16px;">
+          <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:12px;">${currentLang === 'zh' ? '钱包与放款' : 'WALLET & DISBURSEMENT'}</div>
+          ${detailRow('Wallet Name', l.walletName)}
+          ${detailRow('Wallet Account Name', currentLang === 'zh' ? '按隐私规则不展示' : 'Hidden by privacy policy')}
+          ${detailRow('Wallet Account No.', maskAccount(l.walletAccountNo))}
+          ${detailRow('Disbursement Status', l.disbursementStatus || '-')}
+          ${detailRow('Disbursement Time', l.disbursementTime)}
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div style="background:#f8fafc;border-radius:8px;padding:16px;">
+          <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:12px;">${currentLang === 'zh' ? '费用与结清标记' : 'FEE & SETTLEMENT FLAGS'}</div>
+          ${detailRow('Fee Capped', yesNo(l.isFeeCapped))}
+          ${detailRow('Fee Capped Time', l.feeCappedTime)}
+          ${detailRow('Cooling-off Repaid', yesNo(l.isCoolingOffRepaid))}
+          ${detailRow('Cooling-off Repaid Time', l.coolingOffRepaidTime)}
+          ${detailRow('Early Settled', yesNo(l.isEarlySettled))}
+          ${detailRow('Early Settlement Time', l.earlySettlementTime)}
+          ${detailRow('Settled Time', l.settledTime)}
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div style="background:#f8fafc;border-radius:8px;padding:16px;">
+          <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:12px;">${currentLang === 'zh' ? '系统时间' : 'SYSTEM TIMESTAMPS'}</div>
+          ${detailRow('Batching Time', l.batchingTime)}
+          ${detailRow('Created At', l.createdAt)}
+          ${detailRow('Updated At', l.updatedAt)}
         </div>
       </div>
       ${coolingOffEntry}
