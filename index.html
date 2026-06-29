@@ -1840,11 +1840,11 @@
           </div>
           <div class="col-md-6">
             <label class="form-label" id="ic-amount-label" style="font-size:13px;font-weight:600;">Increase Amount (PKR) <span class="text-danger">*</span></label>
-            <input type="number" class="form-control form-control-sm" id="ic-amount" placeholder="e.g. 500">
+            <input type="number" class="form-control form-control-sm" id="ic-amount" min="100" step="100" placeholder="e.g. 200 / 300 / 1000">
           </div>
-          <div class="col-md-6">
-            <label class="form-label" id="ic-threshold-label" style="font-size:13px;font-weight:600;">Base Credit Limit (PKR) <span class="text-danger">*</span></label>
-            <input type="number" class="form-control form-control-sm" id="ic-threshold" placeholder="e.g. 10000">
+          <div class="col-md-6" id="ic-threshold-group" style="display:none;">
+            <label class="form-label" id="ic-threshold-label" style="font-size:13px;font-weight:600;">Min Remaining Principal (PKR) <span class="text-danger">*</span></label>
+            <input type="number" class="form-control form-control-sm" id="ic-threshold" min="1" step="1" placeholder="e.g. 5000">
           </div>
           <div class="col-md-6">
             <label class="form-label" style="font-size:13px;font-weight:600;">Effective Start <span class="text-danger">*</span></label>
@@ -3929,16 +3929,16 @@ function filterOverdue() {
 // COUPON DATA & MODULE
 // ============================================================
 let limitIncreaseCoupons = [
-  { no:'LI20240001', userId:1001, custName:'Ali Hassan',     mobile:'+92 321 4561234', increaseAmount:5000,  baseLimit:15000, linkedOrder:'LN2024060401', status:'Used',    effectiveStart:'2024-05-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'2024-05-20 14:00' },
-  { no:'LI20240002', userId:1003, custName:'Muhammad Raza',  mobile:'+92 311 2223333', increaseAmount:10000, baseLimit:20000, linkedOrder:'LN2024060403', status:'Used',    effectiveStart:'2024-05-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'2024-05-25 10:30' },
-  { no:'LI20240003', userId:1005, custName:'Usman Khan',     mobile:'+92 300 1234567', increaseAmount:5000,  baseLimit:12000, linkedOrder:'',             status:'Unused',  effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'-' },
-  { no:'LI20240004', userId:1006, custName:'Zainab Hussain', mobile:'+92 312 7788990', increaseAmount:15000, baseLimit:25000, linkedOrder:'LN2024060406', status:'Used',    effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'2024-06-03 15:20' },
-  { no:'LI20240005', userId:1009, custName:'Asad Javed',     mobile:'+92 321 6677889', increaseAmount:3000,  baseLimit:7500,  linkedOrder:'',             status:'Expired', effectiveStart:'2024-04-01 00:00', effectiveEnd:'2024-04-30 23:59', usedTime:'-' },
-  { no:'LI20240006', userId:1012, custName:'Saba Noor',      mobile:'+92 300 9988776', increaseAmount:5000,  baseLimit:12000, linkedOrder:'',             status:'Unused',  effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'-' },
-  { no:'LI20240007', userId:1016, custName:'Nadia Shah',     mobile:'+92 300 7788991', increaseAmount:10000, baseLimit:15000, linkedOrder:'LN2024060412', status:'Locked',  effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'-' },
-  { no:'LI20240008', userId:1017, custName:'Omar Farooq',    mobile:'+92 312 4433221', increaseAmount:15000, baseLimit:25000, linkedOrder:'LN2024060413', status:'Used',    effectiveStart:'2024-05-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'2024-05-18 14:30' },
-  { no:'LI20240009', userId:1020, custName:'Amira Khan',     mobile:'+92 346 8877665', increaseAmount:5000,  baseLimit:10000, linkedOrder:'',             status:'Unused',  effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'-' },
-  { no:'LI20240010', userId:1014, custName:'Rabia Yousuf',   mobile:'+92 333 6655443', increaseAmount:8000,  baseLimit:15000, linkedOrder:'LN2024060412', status:'Used',    effectiveStart:'2024-05-15 00:00', effectiveEnd:'2024-06-15 23:59', usedTime:'2024-06-02 08:40' },
+  { no:'LI20240001', userId:1001, custName:'Ali Hassan',     mobile:'+92 321 4561234', increaseAmount:5000,  linkedOrder:'LN2024060401', status:'Used',    effectiveStart:'2024-05-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'2024-05-20 14:00' },
+  { no:'LI20240002', userId:1003, custName:'Muhammad Raza',  mobile:'+92 311 2223333', increaseAmount:10000, linkedOrder:'LN2024060403', status:'Used',    effectiveStart:'2024-05-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'2024-05-25 10:30' },
+  { no:'LI20240003', userId:1005, custName:'Usman Khan',     mobile:'+92 300 1234567', increaseAmount:5000,  linkedOrder:'',             status:'Unused',  effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'-' },
+  { no:'LI20240004', userId:1006, custName:'Zainab Hussain', mobile:'+92 312 7788990', increaseAmount:15000, linkedOrder:'LN2024060406', status:'Used',    effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'2024-06-03 15:20' },
+  { no:'LI20240005', userId:1009, custName:'Asad Javed',     mobile:'+92 321 6677889', increaseAmount:3000,  linkedOrder:'',             status:'Expired', effectiveStart:'2024-04-01 00:00', effectiveEnd:'2024-04-30 23:59', usedTime:'-' },
+  { no:'LI20240006', userId:1012, custName:'Saba Noor',      mobile:'+92 300 9988776', increaseAmount:5000,  linkedOrder:'',             status:'Unused',  effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'-' },
+  { no:'LI20240007', userId:1016, custName:'Nadia Shah',     mobile:'+92 300 7788991', increaseAmount:10000, linkedOrder:'LN2024060412', status:'Locked',  effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'-' },
+  { no:'LI20240008', userId:1017, custName:'Omar Farooq',    mobile:'+92 312 4433221', increaseAmount:15000, linkedOrder:'LN2024060413', status:'Used',    effectiveStart:'2024-05-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'2024-05-18 14:30' },
+  { no:'LI20240009', userId:1020, custName:'Amira Khan',     mobile:'+92 346 8877665', increaseAmount:5000,  linkedOrder:'',             status:'Unused',  effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'-' },
+  { no:'LI20240010', userId:1014, custName:'Rabia Yousuf',   mobile:'+92 333 6655443', increaseAmount:8000,  linkedOrder:'LN2024060412', status:'Used',    effectiveStart:'2024-05-15 00:00', effectiveEnd:'2024-06-15 23:59', usedTime:'2024-06-02 08:40' },
 ];
 
 let repayCoupons = [
@@ -3985,7 +3985,7 @@ function renderCoupons(list) {
       <td><code style="font-size:12px;">${c.no}</code></td>
       <td><code style="font-size:12px;">${customerIdDisplay(c)}</code></td>
       <td style="font-weight:600;color:${isLimit?'#16a34a':'inherit'};">PKR ${(isLimit ? c.increaseAmount : c.amount).toLocaleString()}</td>
-      <td style="font-size:13px;">${isLimit ? `PKR ${c.baseLimit.toLocaleString()} <i class="bi bi-arrow-right" style="color:#94a3b8;margin:0 4px;"></i> <strong>PKR ${(c.baseLimit+c.increaseAmount).toLocaleString()}</strong>` : `PKR ${c.minRepay.toLocaleString()}`}</td>
+      ${!isLimit ? `<td style="font-size:13px;">PKR ${c.minRepay.toLocaleString()}</td>` : ''}
       ${!isLimit ? `<td><span class="role-tag" style="font-size:11px;">${c.deductType}</span></td><td><span class="role-tag" style="font-size:11px;">${c.repayType}</span></td>` : ''}
       <td>${couponBadge(c.status)}</td>
       <td style="font-size:12px;color:#94a3b8;">${c.effectiveStart} ~ ${c.effectiveEnd}</td>
@@ -3999,8 +3999,8 @@ function renderCoupons(list) {
   const linkedOrderCol = isLimit ? `<th>${t('th.loanOrderNo')}</th>` : '';
   document.getElementById('coupon-table-container').innerHTML = `
     <div class="table-scroll"><table class="table table-hover mb-0">
-      <thead><tr><th>${t('th.couponNo')}</th><th>${t('th.customer')}</th><th>${isLimit?(currentLang==='zh'?'提额金额 (PKR)':'Increase (PKR)'):t('th.amountPKR')}</th><th>${isLimit?(currentLang==='zh'?'额度变化':'Credit Limit Change'):t('th.minRepay')}</th>${extraCols}<th>${t('th.status')}</th><th>${t('th.effectivePeriod')}</th>${linkedOrderCol}<th>${t('th.usedTime')}</th><th>${t('th.actions')}</th></tr></thead>
-      <tbody>${rows || `<tr><td colspan="${isLimit?9:10}"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>`}</tbody>
+      <thead><tr><th>${t('th.couponNo')}</th><th>${t('th.customer')}</th><th>${isLimit?(currentLang==='zh'?'提额金额 (PKR)':'Increase (PKR)'):t('th.amountPKR')}</th>${!isLimit?`<th>${t('th.minRepay')}</th>`:''}${extraCols}<th>${t('th.status')}</th><th>${t('th.effectivePeriod')}</th>${linkedOrderCol}<th>${t('th.usedTime')}</th><th>${t('th.actions')}</th></tr></thead>
+      <tbody>${rows || `<tr><td colspan="${isLimit?8:10}"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>`}</tbody>
     </table></div>`;
 }
 
@@ -4041,10 +4041,13 @@ function openIssueCouponModal() {
 
 function updateIssueCouponForm() {
   const isLimit = document.getElementById('ic-type').value === 'limit';
-  document.getElementById('ic-amount-label').innerHTML = `${isLimit ? 'Increase Amount (PKR)' : 'Coupon Amount (PKR)'} <span class="text-danger">*</span>`;
-  document.getElementById('ic-threshold-label').innerHTML = `${isLimit ? 'Base Credit Limit (PKR)' : 'Min Remaining Principal (PKR)'} <span class="text-danger">*</span>`;
-  document.getElementById('ic-amount').placeholder = isLimit ? 'e.g. 5000' : 'e.g. 500';
-  document.getElementById('ic-threshold').placeholder = isLimit ? 'e.g. 15000' : 'e.g. 5000';
+  document.getElementById('ic-amount-label').innerHTML = `${isLimit ? (currentLang === 'zh' ? '提额金额 (PKR，100 的倍数)' : 'Increase Amount (PKR, multiples of 100)') : 'Coupon Amount (PKR)'} <span class="text-danger">*</span>`;
+  document.getElementById('ic-threshold-group').style.display = isLimit ? 'none' : '';
+  document.getElementById('ic-threshold-label').innerHTML = `Min Remaining Principal (PKR) <span class="text-danger">*</span>`;
+  document.getElementById('ic-amount').min = isLimit ? '100' : '1';
+  document.getElementById('ic-amount').step = isLimit ? '100' : '1';
+  document.getElementById('ic-amount').placeholder = isLimit ? 'e.g. 200 / 300 / 1000' : 'e.g. 500';
+  document.getElementById('ic-threshold').placeholder = 'e.g. 5000';
   if (currentLang === 'zh') localizeHardcoded(document.getElementById('issueCouponModal'));
 }
 
@@ -4054,12 +4057,14 @@ function saveIssueCoupon() {
   const threshold = +document.getElementById('ic-threshold').value;
   const start = document.getElementById('ic-start').value;
   const end = document.getElementById('ic-end').value;
-  if (!mobile || amount <= 0 || threshold <= 0 || !start || !end) { toast('Please fill required fields with positive amounts', 'error'); return; }
-  if (new Date(start) >= new Date(end)) { toast('Expiry time must be later than effective start', 'error'); return; }
   const type = document.getElementById('ic-type').value;
+  if (!mobile || amount <= 0 || !start || !end) { toast('Please fill required fields with positive amounts', 'error'); return; }
+  if (type === 'limit' && amount % 100 !== 0) { toast('Increase amount must be a multiple of 100', 'error'); return; }
+  if (type === 'repay' && threshold <= 0) { toast('Please enter a positive minimum remaining principal', 'error'); return; }
+  if (new Date(start) >= new Date(end)) { toast('Expiry time must be later than effective start', 'error'); return; }
   const no = (type === 'limit' ? 'LI' : 'RC') + new Date().getFullYear() + String(nextCouponId++).padStart(4,'0');
   const common = { no, userId:0, custName:'(Manual Issue)', mobile, status:'Unused', effectiveStart:start.replace('T',' '), effectiveEnd:end.replace('T',' '), usedTime:'-' };
-  if (type === 'limit') limitIncreaseCoupons.unshift({ ...common, increaseAmount:amount, baseLimit:threshold, linkedOrder:'' });
+  if (type === 'limit') limitIncreaseCoupons.unshift({ ...common, increaseAmount:amount, linkedOrder:'' });
   else repayCoupons.unshift({ ...common, amount, minRepay:threshold, deductType:'Principal', repayType:'All' });
   activeCouponTab = type;
   document.querySelectorAll('#coupon-tabs .nav-link').forEach((a,i)=>{ a.classList.toggle('active', (type==='limit'&&i===0)||(type==='repay'&&i===1)); });
