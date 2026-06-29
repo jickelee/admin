@@ -293,6 +293,9 @@
 
   <div class="sidebar-section" data-i18n="nav.config">Configuration</div>
   <div class="nav-item-wrap">
+    <a class="nav-link-item" onclick="navigate('loanProducts')" id="nav-loanProducts">
+      <i class="bi bi-box-seam-fill"></i> <span data-i18n="nav.loanProducts">Loan Products</span>
+    </a>
     <a class="nav-link-item" onclick="navigate('amountrules')" id="nav-amountrules">
       <i class="bi bi-sliders"></i> <span data-i18n="nav.amountrules">Amount Term Rules</span>
     </a>
@@ -976,6 +979,39 @@
           <span style="font-size:12.5px;color:#718096;" id="rec-count-label"></span>
           <nav><ul class="pagination pagination-sm mb-0"><li class="page-item disabled"><a class="page-link">Prev</a></li><li class="page-item active"><a class="page-link">1</a></li><li class="page-item disabled"><a class="page-link">Next</a></li></ul></nav>
         </div>
+      </div>
+    </div>
+
+    <!-- LOAN PRODUCTS -->
+    <div class="page" id="page-loanProducts">
+      <div class="table-card">
+        <div class="table-card-header">
+          <span class="title" data-i18n="page.loanProducts">Loan Products</span>
+          <div class="search-row ms-auto">
+            <input type="text" class="form-control form-control-sm" placeholder="Product name..." style="width:180px;" id="product-search" oninput="filterLoanProducts()">
+            <select class="form-select form-select-sm" style="width:125px;" id="product-user-filter" onchange="filterLoanProducts()">
+              <option value="">All User Types</option><option value="ALL">ALL</option><option value="NEW">NEW</option><option value="OLD">OLD</option>
+            </select>
+            <select class="form-select form-select-sm" style="width:125px;" id="product-risk-filter" onchange="filterLoanProducts()">
+              <option value="">All Risk Levels</option><option value="NORMAL">NORMAL</option><option value="HIGH">HIGH</option><option value="LOW">LOW</option>
+            </select>
+            <select class="form-select form-select-sm" style="width:115px;" id="product-status-filter" onchange="filterLoanProducts()">
+              <option value="">All Status</option><option value="1">Active</option><option value="0">Inactive</option>
+            </select>
+            <button class="btn btn-primary btn-sm" style="border-radius:8px;" onclick="openLoanProductModal()">
+              <i class="bi bi-plus-lg me-1"></i><span data-i18n="product.add">Add Product</span>
+            </button>
+          </div>
+        </div>
+        <div id="product-table-container"></div>
+        <div class="px-3 py-2 border-top d-flex align-items-center justify-content-between">
+          <span style="font-size:12.5px;color:#718096;" id="product-count-label"></span>
+          <nav><ul class="pagination pagination-sm mb-0"><li class="page-item disabled"><a class="page-link">Prev</a></li><li class="page-item active"><a class="page-link">1</a></li><li class="page-item disabled"><a class="page-link">Next</a></li></ul></nav>
+        </div>
+      </div>
+      <div class="mt-3" style="background:#eef6ff;border:1px solid #bfdbfe;border-radius:10px;padding:14px 18px;font-size:13px;color:#1e40af;">
+        <i class="bi bi-info-circle-fill me-2"></i>
+        <span data-i18n="product.tip">Rates are entered as percentages in the form and stored as decimals. System ID and timestamps are generated automatically.</span>
       </div>
     </div>
 
@@ -1707,6 +1743,65 @@
   </div>
 </div>
 
+<!-- Loan Product Modal -->
+<div class="modal fade" id="loanProductModal" tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productModalTitle">Add Loan Product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div style="font-size:11px;font-weight:700;color:#3a5bdf;letter-spacing:.7px;margin-bottom:10px;">BASIC LOAN TERMS</div>
+        <div class="row g-3 mb-4">
+          <div class="col-md-6"><label class="form-label">Product Name <span class="text-danger">*</span></label><input class="form-control form-control-sm" id="lp-name" maxlength="100" placeholder="e.g. 15-day 2-installment cash loan"></div>
+          <div class="col-md-2"><label class="form-label">Currency <span class="text-danger">*</span></label><input class="form-control form-control-sm" id="lp-currency" value="PKR" maxlength="10"></div>
+          <div class="col-md-2"><label class="form-label">Sort No. <span class="text-danger">*</span></label><input type="number" min="0" class="form-control form-control-sm" id="lp-sort" value="0"></div>
+          <div class="col-md-2"><label class="form-label">Status <span class="text-danger">*</span></label><select class="form-select form-select-sm" id="lp-status"><option value="1">Active</option><option value="0">Inactive</option></select></div>
+          <div class="col-md-3"><label class="form-label">Min Loan Amount (PKR) <span class="text-danger">*</span></label><input type="number" min="0" step="0.01" class="form-control form-control-sm" id="lp-min-amount"></div>
+          <div class="col-md-3"><label class="form-label">Max Loan Amount (PKR) <span class="text-danger">*</span></label><input type="number" min="0" step="0.01" class="form-control form-control-sm" id="lp-max-amount"></div>
+          <div class="col-md-3"><label class="form-label">Amount Step (PKR) <span class="text-danger">*</span></label><input type="number" min="0.01" step="0.01" class="form-control form-control-sm" id="lp-amount-step" value="1000"></div>
+          <div class="col-md-3"><label class="form-label">Period Days <span class="text-danger">*</span></label><input type="number" min="1" class="form-control form-control-sm" id="lp-period-days" value="15"></div>
+          <div class="col-md-3"><label class="form-label">Min Installments <span class="text-danger">*</span></label><input type="number" min="1" class="form-control form-control-sm" id="lp-min-installments" value="1"></div>
+          <div class="col-md-3"><label class="form-label">Max Installments <span class="text-danger">*</span></label><input type="number" min="1" class="form-control form-control-sm" id="lp-max-installments" value="1"></div>
+          <div class="col-md-3"><label class="form-label">Default Installments <span class="text-danger">*</span></label><input type="number" min="1" class="form-control form-control-sm" id="lp-default-installments" value="1"></div>
+          <div class="col-md-3"><label class="form-label">Max Total Days <span class="text-danger">*</span></label><input type="number" min="1" class="form-control form-control-sm" id="lp-max-total-days"></div>
+        </div>
+        <div style="font-size:11px;font-weight:700;color:#3a5bdf;letter-spacing:.7px;margin-bottom:10px;">RATES & COOLING-OFF</div>
+        <div class="row g-3 mb-4">
+          <div class="col-md-3"><label class="form-label">Daily Interest Rate (%) <span class="text-danger">*</span></label><input type="number" min="0" max="100" step="0.0001" class="form-control form-control-sm" id="lp-interest-rate" value="0"></div>
+          <div class="col-md-3"><label class="form-label">Daily Service Fee Rate (%) <span class="text-danger">*</span></label><input type="number" min="0" max="100" step="0.0001" class="form-control form-control-sm" id="lp-service-rate" value="0"></div>
+          <div class="col-md-3"><label class="form-label">Daily Overdue Rate (%) <span class="text-danger">*</span></label><input type="number" min="0" max="100" step="0.0001" class="form-control form-control-sm" id="lp-overdue-rate" value="0"></div>
+          <div class="col-md-3"><label class="form-label">Cooling-off Hours <span class="text-danger">*</span></label><input type="number" min="0" class="form-control form-control-sm" id="lp-cooling-hours" value="24"></div>
+          <div class="col-md-3"><label class="form-label">Cooling-off Fee Free <span class="text-danger">*</span></label><select class="form-select form-select-sm" id="lp-cooling-free"><option value="1">Yes</option><option value="0">No</option></select></div>
+          <div class="col-md-3"><label class="form-label">Max Overdue Days</label><input type="number" min="0" class="form-control form-control-sm" id="lp-max-overdue-days" placeholder="No limit"></div>
+          <div class="col-md-3"><label class="form-label">Overdue Fee Cap (% of principal)</label><input type="number" min="0" max="1000" step="0.01" class="form-control form-control-sm" id="lp-overdue-cap" placeholder="e.g. 100"></div>
+        </div>
+        <div style="font-size:11px;font-weight:700;color:#3a5bdf;letter-spacing:.7px;margin-bottom:10px;">REPAYMENT POLICY</div>
+        <div class="row g-3 mb-4">
+          <div class="col-md-3"><label class="form-label">Early Repayment <span class="text-danger">*</span></label><select class="form-select form-select-sm" id="lp-early-repay"><option value="1">Enabled</option><option value="0">Disabled</option></select></div>
+          <div class="col-md-3"><label class="form-label">Early Repay Open Days <span class="text-danger">*</span></label><input type="number" min="0" class="form-control form-control-sm" id="lp-early-open-days" value="3"></div>
+          <div class="col-md-3"><label class="form-label">Early Settlement <span class="text-danger">*</span></label><select class="form-select form-select-sm" id="lp-early-settlement"><option value="1">Enabled</option><option value="0">Disabled</option></select></div>
+          <div class="col-md-3"><label class="form-label">Partial Repayment <span class="text-danger">*</span></label><select class="form-select form-select-sm" id="lp-partial-repay" onchange="syncLoanProductFields()"><option value="1">Enabled</option><option value="0">Disabled</option></select></div>
+          <div class="col-md-3"><label class="form-label">Min Partial Repay (PKR)</label><input type="number" min="0" step="0.01" class="form-control form-control-sm" id="lp-min-partial" placeholder="No limit"></div>
+          <div class="col-md-5"><label class="form-label">Repay Allocation Rule <span class="text-danger">*</span></label><select class="form-select form-select-sm" id="lp-allocation"><option value="OVERDUE_FEE_FIRST">Overdue Fee → Interest → Service Fee → Principal</option><option value="PRINCIPAL_FIRST">Principal → Interest → Service Fee → Overdue Fee</option></select></div>
+          <div class="col-md-4"><label class="form-label">Rounding Rule <span class="text-danger">*</span></label><select class="form-select form-select-sm" id="lp-rounding"><option value="FLOOR_TO_INTEGER">Floor to 1 PKR</option><option value="ROUND_TO_INTEGER">Round to 1 PKR</option><option value="CEIL_TO_INTEGER">Ceil to 1 PKR</option></select></div>
+        </div>
+        <div style="font-size:11px;font-weight:700;color:#3a5bdf;letter-spacing:.7px;margin-bottom:10px;">AUDIENCE & NOTES</div>
+        <div class="row g-3">
+          <div class="col-md-3"><label class="form-label">User Type</label><select class="form-select form-select-sm" id="lp-user-type"><option value="ALL">ALL</option><option value="NEW">NEW</option><option value="OLD">OLD</option></select></div>
+          <div class="col-md-3"><label class="form-label">Risk Level</label><select class="form-select form-select-sm" id="lp-risk"><option value="">Not limited</option><option value="NORMAL">NORMAL</option><option value="HIGH">HIGH</option><option value="LOW">LOW</option></select></div>
+          <div class="col-md-6"><label class="form-label">Remark</label><input class="form-control form-control-sm" id="lp-remark" maxlength="500" placeholder="Optional product description"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="saveLoanProduct()">Save Product</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Amount Term Rule Modal -->
 <div class="modal fade" id="amountRuleModal" tabindex="-1">
   <div class="modal-dialog modal-lg">
@@ -2151,10 +2246,10 @@ Object.assign(i18n.en, {
   'cs.tabTasks':'Collection Tasks','cs.tabFollowups':'Follow-up Records','cs.tabPromises':'Promise-to-Pay',
   'cs.recordFollowup':'Record Follow-up',
   'ar.tabSlots':'Resource Slots','ar.tabLog':'Change Log','ar.addSlot':'Add Slot Config',
-  'nav.config':'Configuration','nav.amountrules':'Amount Term Rules','nav.termconfig':'User Term Config',
-  'page.amountrules':'Loan Amount Term Rules','page.termconfig':'User Term Config',
-  'page.sub.amountrules':'Configure amount-to-installment rules','page.sub.termconfig':'Per-user installment overrides',
-  'btn.addRule':'Add Rule','btn.addConfig':'Add Config',
+  'nav.config':'Configuration','nav.loanProducts':'Loan Products','nav.amountrules':'Amount Term Rules','nav.termconfig':'User Term Config',
+  'page.loanProducts':'Loan Products','page.amountrules':'Loan Amount Term Rules','page.termconfig':'User Term Config',
+  'page.sub.loanProducts':'Configure loan amount, rates, terms and repayment policies','page.sub.amountrules':'Configure amount-to-installment rules','page.sub.termconfig':'Per-user installment overrides',
+  'product.add':'Add Product','product.tip':'Rates are entered as percentages in the form and stored as decimals. System ID and timestamps are generated automatically.','btn.addRule':'Add Rule','btn.addConfig':'Add Config',
   'th.amountRange':'Amount Range (PKR)','th.availableTerms':'Available Terms','th.defaultTerm':'Default Term','th.periodDays':'Period (days)','th.active':'Active','th.effectivePeriod':'Effective Period','th.custId':'Customer','th.termUnit':'Term Unit','th.changeType':'Change Type','th.changeReason':'Change Reason','th.before':'Before','th.after':'After','th.changedAt':'Changed At',
   'rule.tip.title':'How rules work:','rule.tip.body':' When a customer applies for a loan, the system matches the requested amount against these rules to determine available installment options. Only one active rule applies per amount range.',
   'termcfg.tab.list':'Config List','termcfg.tab.log':'Change Log',
@@ -2170,10 +2265,10 @@ Object.assign(i18n.zh, {
   'cs.tabTasks':'催收任务','cs.tabFollowups':'跟进记录','cs.tabPromises':'承诺还款管理',
   'cs.recordFollowup':'记录跟进',
   'ar.tabSlots':'资源位配置','ar.tabLog':'变更记录','ar.addSlot':'新增资源位',
-  'nav.config':'产品配置','nav.amountrules':'金额期数规则','nav.termconfig':'用户分期配置',
-  'page.amountrules':'借款金额期数规则','page.termconfig':'用户分期配置',
-  'page.sub.amountrules':'配置借款金额与可借期数的映射规则','page.sub.termconfig':'为特定用户配置专属可借期数',
-  'btn.addRule':'新增规则','btn.addConfig':'新增配置',
+  'nav.config':'产品配置','nav.loanProducts':'资金产品','nav.amountrules':'金额期数规则','nav.termconfig':'用户分期配置',
+  'page.loanProducts':'资金产品配置','page.amountrules':'借款金额期数规则','page.termconfig':'用户分期配置',
+  'page.sub.loanProducts':'配置借款金额、费率、期限与还款策略','page.sub.amountrules':'配置借款金额与可借期数的映射规则','page.sub.termconfig':'为特定用户配置专属可借期数',
+  'product.add':'新增产品','product.tip':'表单按百分比录入费率，系统按小数存储；产品ID及创建、更新时间由系统生成。','btn.addRule':'新增规则','btn.addConfig':'新增配置',
   'th.amountRange':'借款金额区间 (PKR)','th.availableTerms':'可选期数','th.defaultTerm':'默认期数','th.periodDays':'每期天数','th.active':'是否启用','th.effectivePeriod':'生效期间','th.custId':'客户','th.termUnit':'期数单位','th.changeType':'变更类型','th.changeReason':'变更原因','th.before':'变更前','th.after':'变更后','th.changedAt':'变更时间',
   'rule.tip.title':'规则说明：','rule.tip.body':'客户申请借款时，系统根据借款金额匹配规则表，确定可选期数和默认期数。每个金额区间只应有一条生效规则，匹配到第一条即停止。',
   'termcfg.tab.list':'配置列表','termcfg.tab.log':'变更记录',
@@ -2301,6 +2396,10 @@ const phraseZh = {
   'Code':'编码','Login':'登录',
   'PartiallyMatched':'部分匹配','Unused':'未使用','Coupon':'优惠券','Slot Name / Key':'资源位名称 / 位置标识',
 };
+
+Object.assign(phraseZh,{
+  'Loan Products':'资金产品','Add Product':'新增产品','Add Loan Product':'新增资金产品','Edit Loan Product':'编辑资金产品','Save Product':'保存产品','Product Name':'产品名称','Currency':'币种','Sort No.':'排序号','BASIC LOAN TERMS':'基础借款条件','RATES & COOLING-OFF':'费率与冷静期','REPAYMENT POLICY':'还款策略','AUDIENCE & NOTES':'适用范围与备注','Amount Step (PKR)':'金额步长 (PKR)','Min Installments':'最小分期期数','Max Installments':'最大分期期数','Default Installments':'默认分期期数','Max Total Days':'最大总期限','Daily Interest Rate (%)':'日利率 (%)','Daily Service Fee Rate (%)':'日服务费率 (%)','Daily Overdue Rate (%)':'日逾期费率 (%)','Cooling-off Hours':'冷静期小时数','Cooling-off Fee Free':'冷静期免息费','Max Overdue Days':'最大逾期天数','Overdue Fee Cap (% of principal)':'逾期费封顶比例（本金%）','Early Repayment':'支持当期提前还款','Early Repay Open Days':'提前还款开放天数','Early Settlement':'支持提前结清','Partial Repayment':'支持部分还款','Min Partial Repay (PKR)':'最低部分还款金额 (PKR)','Repay Allocation Rule':'还款冲抵规则','Rounding Rule':'取整规则','User Type':'适用用户类型','Risk Level':'风险等级','Not limited':'不限制','Optional product description':'可选产品说明','Product':'产品','Amount Range':'金额区间','Installments':'分期期数','Daily Rates':'日费率','Repayment Policy':'还款策略','Audience':'适用范围','Sort':'排序','Updated At':'更新时间','No products':'暂无产品','Enabled':'启用','Floor to 1 PKR':'向下取整到 1 PKR','Round to 1 PKR':'四舍五入到 1 PKR','Ceil to 1 PKR':'向上取整到 1 PKR'
+});
 
 const phraseEn = Object.fromEntries(Object.entries(phraseZh).map(([en, zh]) => [zh, en]));
 
@@ -2467,7 +2566,12 @@ let permissions = [
       { id:423, parentId:42, code:'finance:reconciliation:ignore', name:'Ignore Difference', type:'Button', route:'', sort:3, status:'Active', expanded:false },
   // Configuration
   { id:50, parentId:0, code:'config', name:'Business Configuration', type:'Menu', route:'', sort:6, status:'Active', expanded:true },
-    { id:51, parentId:50, code:'config:amount_term_rule', name:'Amount Term Rules', type:'Menu', route:'/config/amount-term-rules', sort:1, status:'Active', expanded:true },
+    { id:52, parentId:50, code:'config:loan_product', name:'Loan Products', type:'Menu', route:'/config/loan-products', sort:1, status:'Active', expanded:true },
+      { id:521, parentId:52, code:'config:loan_product:view', name:'View', type:'Button', route:'', sort:1, status:'Active', expanded:false },
+      { id:522, parentId:52, code:'config:loan_product:create', name:'Create Product', type:'Button', route:'', sort:2, status:'Active', expanded:false },
+      { id:523, parentId:52, code:'config:loan_product:edit', name:'Edit Product', type:'Button', route:'', sort:3, status:'Active', expanded:false },
+      { id:524, parentId:52, code:'config:loan_product:toggle', name:'Enable / Disable', type:'Button', route:'', sort:4, status:'Active', expanded:false },
+    { id:51, parentId:50, code:'config:amount_term_rule', name:'Amount Term Rules', type:'Menu', route:'/config/amount-term-rules', sort:2, status:'Active', expanded:true },
       { id:511, parentId:51, code:'config:amount_term_rule:view', name:'View', type:'Button', route:'', sort:1, status:'Active', expanded:false },
       { id:512, parentId:51, code:'config:amount_term_rule:create', name:'Create Rule', type:'Button', route:'', sort:2, status:'Active', expanded:false },
       { id:513, parentId:51, code:'config:amount_term_rule:edit', name:'Edit Rule', type:'Button', route:'', sort:3, status:'Active', expanded:false },
@@ -2510,7 +2614,7 @@ Object.assign(roles.find(r => r.code === 'FINANCE'), {
   perms:['dashboard','loan','loan:order','loan:order:view','loan:bill','loan:bill:view','loan:bill_fee','loan:bill_fee:view','loan:fee_change:view','loan:disbursement','loan:disbursement:view','loan:repayment','loan:repayment:view','loan:repayment_bill:view','loan:repayment_allocation','loan:repayment_allocation:view','loan:adjustment','loan:adjustment:create','loan:adjustment:approve','finance','finance:transaction','finance:transaction:view','finance:transaction:export','finance:reconciliation','finance:reconciliation:view','finance:reconciliation:handle','finance:reconciliation:ignore']
 });
 Object.assign(roles.find(r => r.code === 'OPERATIONS'), {
-  perms:['dashboard','loan','loan:order','loan:order:view','coupon','coupon:limit_increase','coupon:limit_increase:view','coupon:limit_increase:issue','coupon:limit_increase:void','coupon:repay','coupon:repay:view','coupon:repay:issue','coupon:repay:void','coupon:usage','coupon:usage:view','config','config:amount_term_rule','config:amount_term_rule:view','config:amount_term_rule:create','config:amount_term_rule:edit','config:amount_term_rule:delete']
+  perms:['dashboard','loan','loan:order','loan:order:view','coupon','coupon:limit_increase','coupon:limit_increase:view','coupon:limit_increase:issue','coupon:limit_increase:void','coupon:repay','coupon:repay:view','coupon:repay:issue','coupon:repay:void','coupon:usage','coupon:usage:view','config','config:loan_product','config:loan_product:view','config:loan_product:create','config:loan_product:edit','config:loan_product:toggle','config:amount_term_rule','config:amount_term_rule:view','config:amount_term_rule:create','config:amount_term_rule:edit','config:amount_term_rule:delete']
 });
 
 let nextUserId = 16, nextRoleId = 7, nextPermId = 1000;
@@ -2535,6 +2639,7 @@ const pageMap = {
   otpLogs:     { titleKey:'nav.otpLogs',      subKey:'page.sub.otpLogs' },
   devices:     { titleKey:'nav.devices',      subKey:'page.sub.devices' },
   auditlog:    { titleKey:'nav.auditlog',     subKey:'page.sub.auditlog' },
+  loanProducts:   { titleKey:'nav.loanProducts',   subKey:'page.sub.loanProducts' },
   amountrules:    { titleKey:'nav.amountrules',    subKey:'page.sub.amountrules' },
   termconfig:     { titleKey:'nav.termconfig',     subKey:'page.sub.termconfig' },
   loanBills:      { titleKey:'nav.loanBills',      subKey:'page.sub.loanBills' },
@@ -2577,6 +2682,7 @@ function navigate(page) {
   if (page === 'auditlog')        renderAuditLog();
   if (page === 'otpLogs')         filterOtpLogs();
   if (page === 'devices')         filterDevices();
+  if (page === 'loanProducts')    filterLoanProducts();
   if (page === 'amountrules')     renderAmountRules();
   if (page === 'loanBills')       filterBills();
   if (page === 'loanBillFees')    filterLoanBillFees();
@@ -5015,6 +5121,126 @@ function renderCustDetailTab(tab,id) {
 }
 
 // ============================================================
+// ============================================================
+// LOAN PRODUCTS (loan_product)
+// ============================================================
+let loanProducts = [
+  { id:1, productName:'15-day flexible cash loan', currency:'PKR', minLoanAmount:2000, maxLoanAmount:100000, amountStep:1000, minInstallmentCount:2, maxInstallmentCount:6, defaultInstallmentCount:2, periodDays:15, maxTotalDays:90, dailyInterestRate:0.00675, dailyServiceFeeRate:0.00075, overdueRate:0.02, coolingOffHours:24, coolingOffFeeFree:1, earlyRepayEnabled:1, earlyRepayOpenDays:3, earlySettlementEnabled:1, partialRepayEnabled:1, minPartialRepayAmount:500, maxOverdueDays:43, maxOverdueFeeCapRate:1, repayAllocationRule:'OVERDUE_FEE_FIRST', roundingRule:'FLOOR_TO_INTEGER', userType:'ALL', riskLevel:'NORMAL', sortNo:1, status:1, remark:'Standard product for normal-risk customers', createdAt:'2026-05-01 09:00', updatedAt:'2026-06-20 14:30' },
+  { id:2, productName:'New customer starter loan', currency:'PKR', minLoanAmount:1000, maxLoanAmount:10000, amountStep:500, minInstallmentCount:1, maxInstallmentCount:2, defaultInstallmentCount:1, periodDays:15, maxTotalDays:30, dailyInterestRate:0.006, dailyServiceFeeRate:0.0005, overdueRate:0.02, coolingOffHours:24, coolingOffFeeFree:1, earlyRepayEnabled:1, earlyRepayOpenDays:3, earlySettlementEnabled:1, partialRepayEnabled:0, minPartialRepayAmount:null, maxOverdueDays:30, maxOverdueFeeCapRate:1, repayAllocationRule:'OVERDUE_FEE_FIRST', roundingRule:'FLOOR_TO_INTEGER', userType:'NEW', riskLevel:'LOW', sortNo:2, status:1, remark:'Entry product for newly approved customers', createdAt:'2026-05-10 10:00', updatedAt:'2026-06-18 11:20' },
+  { id:3, productName:'High-risk short-term loan', currency:'PKR', minLoanAmount:5000, maxLoanAmount:50000, amountStep:1000, minInstallmentCount:2, maxInstallmentCount:4, defaultInstallmentCount:2, periodDays:30, maxTotalDays:120, dailyInterestRate:0.0075, dailyServiceFeeRate:0.001, overdueRate:0.02, coolingOffHours:24, coolingOffFeeFree:0, earlyRepayEnabled:1, earlyRepayOpenDays:5, earlySettlementEnabled:1, partialRepayEnabled:1, minPartialRepayAmount:1000, maxOverdueDays:43, maxOverdueFeeCapRate:1, repayAllocationRule:'OVERDUE_FEE_FIRST', roundingRule:'FLOOR_TO_INTEGER', userType:'OLD', riskLevel:'HIGH', sortNo:9, status:0, remark:'Paused pending risk policy review', createdAt:'2026-05-15 15:00', updatedAt:'2026-06-25 09:10' },
+];
+let nextLoanProductId = 4, editingLoanProductId = null;
+
+function loanProductMoney(value) { return `PKR ${Number(value).toLocaleString(undefined,{minimumFractionDigits:0,maximumFractionDigits:2})}`; }
+function loanProductPct(value) { return `${(Number(value)*100).toFixed(4).replace(/0+$/,'').replace(/\.$/,'')}%`; }
+
+function renderLoanProducts(list) {
+  const data = (list || loanProducts).slice().sort((a,b)=>a.sortNo-b.sortNo||a.id-b.id);
+  document.getElementById('product-count-label').textContent = t('count.showing')(data.length, data.length);
+  const rows = data.map(p=>`<tr>
+    <td><div style="font-weight:600;">${p.productName}</div><div style="font-size:11.5px;color:#94a3b8;">${p.currency}</div></td>
+    <td><div style="font-weight:600;">${loanProductMoney(p.minLoanAmount)} — ${loanProductMoney(p.maxLoanAmount)}</div><div style="font-size:11.5px;color:#94a3b8;">Step ${loanProductMoney(p.amountStep)}</div></td>
+    <td><div>${p.minInstallmentCount}–${p.maxInstallmentCount} × ${p.periodDays}d</div><div style="font-size:11.5px;color:#94a3b8;">Default ${p.defaultInstallmentCount} · Max ${p.maxTotalDays}d</div></td>
+    <td style="font-size:12px;"><div>Interest ${loanProductPct(p.dailyInterestRate)}</div><div>Service ${loanProductPct(p.dailyServiceFeeRate)}</div><div>Overdue ${loanProductPct(p.overdueRate)}</div></td>
+    <td style="font-size:12px;"><div>${p.coolingOffHours}h cooling-off ${p.coolingOffFeeFree?'· fee free':''}</div><div>${p.earlySettlementEnabled?'Early settlement':'No early settlement'} · ${p.partialRepayEnabled?'Partial repay':'No partial repay'}</div></td>
+    <td><span class="role-tag" style="font-size:11px;">${p.userType||'ALL'}</span> ${p.riskLevel?`<span class="role-tag" style="font-size:11px;">${p.riskLevel}</span>`:''}</td>
+    <td><span class="status-badge ${p.status?'badge-active':'badge-disabled'}">${p.status?'Active':'Inactive'}</span></td>
+    <td>${p.sortNo}</td>
+    <td style="font-size:12px;color:#94a3b8;white-space:nowrap;">${p.updatedAt}</td>
+    <td><div class="d-flex gap-1"><button class="btn btn-sm btn-outline-primary action-btn" onclick="openLoanProductModal(${p.id})"><i class="bi bi-pencil"></i> ${t('btn.edit')}</button><button class="btn btn-sm ${p.status?'btn-outline-warning':'btn-outline-success'} action-btn" onclick="toggleLoanProduct(${p.id})">${p.status?t('btn.disable'):t('btn.enable')}</button></div></td>
+  </tr>`).join('');
+  document.getElementById('product-table-container').innerHTML=`<div class="table-scroll"><table class="table table-hover mb-0"><thead><tr><th>Product</th><th>Amount Range</th><th>Installments</th><th>Daily Rates</th><th>Repayment Policy</th><th>Audience</th><th>Status</th><th>Sort</th><th>Updated At</th><th>Actions</th></tr></thead><tbody>${rows||'<tr><td colspan="10"><div class="empty-state"><i class="bi bi-box-seam"></i>No products</div></td></tr>'}</tbody></table></div>`;
+}
+
+function filterLoanProducts() {
+  const q=document.getElementById('product-search').value.trim().toLowerCase();
+  const user=document.getElementById('product-user-filter').value;
+  const risk=document.getElementById('product-risk-filter').value;
+  const status=document.getElementById('product-status-filter').value;
+  renderLoanProducts(loanProducts.filter(p=>(!q||p.productName.toLowerCase().includes(q)||String(p.id)===q)&&(!user||p.userType===user)&&(!risk||p.riskLevel===risk)&&(status===''||String(p.status)===status)));
+}
+
+const loanProductFieldMap = {
+  productName:'lp-name', currency:'lp-currency', minLoanAmount:'lp-min-amount', maxLoanAmount:'lp-max-amount', amountStep:'lp-amount-step',
+  minInstallmentCount:'lp-min-installments', maxInstallmentCount:'lp-max-installments', defaultInstallmentCount:'lp-default-installments', periodDays:'lp-period-days', maxTotalDays:'lp-max-total-days',
+  coolingOffHours:'lp-cooling-hours', coolingOffFeeFree:'lp-cooling-free', earlyRepayEnabled:'lp-early-repay', earlyRepayOpenDays:'lp-early-open-days', earlySettlementEnabled:'lp-early-settlement',
+  partialRepayEnabled:'lp-partial-repay', minPartialRepayAmount:'lp-min-partial', maxOverdueDays:'lp-max-overdue-days', repayAllocationRule:'lp-allocation', roundingRule:'lp-rounding',
+  userType:'lp-user-type', riskLevel:'lp-risk', sortNo:'lp-sort', status:'lp-status', remark:'lp-remark'
+};
+const loanProductNumericFields = new Set(['minLoanAmount','maxLoanAmount','amountStep','minInstallmentCount','maxInstallmentCount','defaultInstallmentCount','periodDays','maxTotalDays','coolingOffHours','coolingOffFeeFree','earlyRepayEnabled','earlyRepayOpenDays','earlySettlementEnabled','partialRepayEnabled','minPartialRepayAmount','maxOverdueDays','sortNo','status']);
+
+function setLoanProductForm(product) {
+  Object.entries(loanProductFieldMap).forEach(([key,id])=>document.getElementById(id).value=product[key]??'');
+  document.getElementById('lp-interest-rate').value=Number(product.dailyInterestRate||0)*100;
+  document.getElementById('lp-service-rate').value=Number(product.dailyServiceFeeRate||0)*100;
+  document.getElementById('lp-overdue-rate').value=Number(product.overdueRate||0)*100;
+  document.getElementById('lp-overdue-cap').value=product.maxOverdueFeeCapRate==null?'':Number(product.maxOverdueFeeCapRate)*100;
+  syncLoanProductFields();
+}
+
+function openLoanProductModal(id) {
+  editingLoanProductId=id||null;
+  document.getElementById('productModalTitle').textContent=id?'Edit Loan Product':'Add Loan Product';
+  const defaults={ productName:'',currency:'PKR',minLoanAmount:'',maxLoanAmount:'',amountStep:1000,minInstallmentCount:1,maxInstallmentCount:1,defaultInstallmentCount:1,periodDays:15,maxTotalDays:15,dailyInterestRate:0,dailyServiceFeeRate:0,overdueRate:0,coolingOffHours:24,coolingOffFeeFree:1,earlyRepayEnabled:1,earlyRepayOpenDays:3,earlySettlementEnabled:1,partialRepayEnabled:1,minPartialRepayAmount:null,maxOverdueDays:null,maxOverdueFeeCapRate:null,repayAllocationRule:'OVERDUE_FEE_FIRST',roundingRule:'FLOOR_TO_INTEGER',userType:'ALL',riskLevel:'',sortNo:0,status:1,remark:'' };
+  setLoanProductForm(id?loanProducts.find(p=>p.id===id):defaults);
+  new bootstrap.Modal(document.getElementById('loanProductModal')).show();
+}
+
+function syncLoanProductFields() {
+  const partial=+document.getElementById('lp-partial-repay').value===1;
+  document.getElementById('lp-min-partial').disabled=!partial;
+  if(!partial) document.getElementById('lp-min-partial').value='';
+}
+
+function readLoanProductForm() {
+  const product={};
+  Object.entries(loanProductFieldMap).forEach(([key,id])=>{
+    const raw=document.getElementById(id).value.trim();
+    product[key]=loanProductNumericFields.has(key)?(raw===''?null:Number(raw)):raw;
+  });
+  product.dailyInterestRate=Number(document.getElementById('lp-interest-rate').value)/100;
+  product.dailyServiceFeeRate=Number(document.getElementById('lp-service-rate').value)/100;
+  product.overdueRate=Number(document.getElementById('lp-overdue-rate').value)/100;
+  const cap=document.getElementById('lp-overdue-cap').value;
+  product.maxOverdueFeeCapRate=cap===''?null:Number(cap)/100;
+  if(!product.partialRepayEnabled) product.minPartialRepayAmount=null;
+  return product;
+}
+
+function validateLoanProduct(p, editingId=null) {
+  if(!p.productName||!p.currency) return 'Product name and currency are required';
+  if(!(p.minLoanAmount>0)||!(p.maxLoanAmount>0)||!(p.amountStep>0)||p.minLoanAmount>=p.maxLoanAmount) return 'Loan amount range and step are invalid';
+  if((p.maxLoanAmount-p.minLoanAmount)%p.amountStep!==0) return 'Amount range must align with the amount step';
+  if(!(p.minInstallmentCount>=1)||p.maxInstallmentCount<p.minInstallmentCount||p.defaultInstallmentCount<p.minInstallmentCount||p.defaultInstallmentCount>p.maxInstallmentCount) return 'Default installments must be within the min/max range';
+  if(!(p.periodDays>=1)||p.maxTotalDays!==p.maxInstallmentCount*p.periodDays) return 'Max total days must equal max installments × period days';
+  if([p.dailyInterestRate,p.dailyServiceFeeRate,p.overdueRate].some(v=>v<0||v>1)) return 'Rates must be between 0% and 100%';
+  if(p.earlyRepayOpenDays<0||p.earlyRepayOpenDays>p.periodDays) return 'Early repay open days must be within one period';
+  if(p.minPartialRepayAmount!=null&&p.minPartialRepayAmount<=0) return 'Minimum partial repayment must be positive';
+  if(p.maxOverdueDays!=null&&p.maxOverdueDays<0) return 'Maximum overdue days cannot be negative';
+  if(p.maxOverdueFeeCapRate!=null&&p.maxOverdueFeeCapRate<0) return 'Overdue fee cap cannot be negative';
+  if(p.sortNo<0) return 'Sort number cannot be negative';
+  if(loanProducts.some(x=>x.id!==editingId&&x.productName.trim().toLowerCase()===p.productName.trim().toLowerCase())) return 'Product name already exists';
+  return '';
+}
+
+function saveLoanProduct() {
+  const product=readLoanProductForm();
+  const error=validateLoanProduct(product,editingLoanProductId);
+  if(error){toast(error,'error');return;}
+  const now=new Date().toISOString().slice(0,16).replace('T',' ');
+  if(editingLoanProductId){const current=loanProducts.find(p=>p.id===editingLoanProductId);Object.assign(current,product,{updatedAt:now});toast('Product updated');}
+  else{loanProducts.push({...product,id:nextLoanProductId++,createdAt:now,updatedAt:now});toast('Product created');}
+  bootstrap.Modal.getInstance(document.getElementById('loanProductModal')).hide();
+  filterLoanProducts();
+}
+
+function toggleLoanProduct(id) {
+  const product=loanProducts.find(p=>p.id===id);
+  product.status=product.status?0:1;
+  product.updatedAt=new Date().toISOString().slice(0,16).replace('T',' ');
+  toast(`Product ${product.status?'activated':'deactivated'}`);
+  filterLoanProducts();
+}
 // LOAN AMOUNT TERM RULES
 // ============================================================
 let amountRules = [
