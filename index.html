@@ -656,13 +656,13 @@
     <!-- COUPONS -->
     <div class="page" id="page-coupons">
       <ul class="nav nav-tabs mb-3" id="coupon-tabs">
-        <li class="nav-item"><a class="nav-link active" href="#" onclick="switchCouponTab('loan',this)" data-i18n="coupon.loanTab">Loan Coupons</a></li>
+        <li class="nav-item"><a class="nav-link active" href="#" onclick="switchCouponTab('loan',this)" data-i18n="coupon.limitTab">Limit Increase Coupons</a></li>
         <li class="nav-item"><a class="nav-link" href="#" onclick="switchCouponTab('repay',this)" data-i18n="coupon.repayTab">Repayment Coupons</a></li>
         <li class="nav-item"><a class="nav-link" href="#" onclick="switchCouponTab('usage',this)" data-i18n="coupon.usageTab">Usage Records</a></li>
       </ul>
       <div class="table-card">
         <div class="table-card-header">
-          <span class="title" id="coupon-tab-title">Loan Coupons</span>
+          <span class="title" id="coupon-tab-title">Limit Increase Coupons</span>
           <div class="search-row ms-auto">
             <input type="text" class="form-control form-control-sm" data-i18n-ph="filter.searchCouponPh" placeholder="Coupon No / Mobile..." style="width:190px;" id="coupon-search" oninput="filterCoupons()">
             <select class="form-select form-select-sm" style="width:130px;" id="coupon-status-filter" onchange="filterCoupons()">
@@ -1829,8 +1829,8 @@
         <div class="row g-3">
           <div class="col-md-6">
             <label class="form-label" style="font-size:13px;font-weight:600;">Coupon Type</label>
-            <select class="form-select form-select-sm" id="ic-type">
-              <option value="loan">Loan Coupon</option>
+            <select class="form-select form-select-sm" id="ic-type" onchange="updateIssueCouponForm()">
+              <option value="limit">Limit Increase Coupon</option>
               <option value="repay">Repayment Coupon</option>
             </select>
           </div>
@@ -1839,15 +1839,15 @@
             <input type="text" class="form-control form-control-sm" id="ic-mobile" placeholder="+92 ...">
           </div>
           <div class="col-md-6">
-            <label class="form-label" style="font-size:13px;font-weight:600;">Coupon Amount (PKR) <span class="text-danger">*</span></label>
+            <label class="form-label" id="ic-amount-label" style="font-size:13px;font-weight:600;">Increase Amount (PKR) <span class="text-danger">*</span></label>
             <input type="number" class="form-control form-control-sm" id="ic-amount" placeholder="e.g. 500">
           </div>
           <div class="col-md-6">
-            <label class="form-label" style="font-size:13px;font-weight:600;">Min Loan Amount (PKR)</label>
-            <input type="number" class="form-control form-control-sm" id="ic-min" placeholder="e.g. 5000">
+            <label class="form-label" id="ic-threshold-label" style="font-size:13px;font-weight:600;">Base Credit Limit (PKR) <span class="text-danger">*</span></label>
+            <input type="number" class="form-control form-control-sm" id="ic-threshold" placeholder="e.g. 10000">
           </div>
           <div class="col-md-6">
-            <label class="form-label" style="font-size:13px;font-weight:600;">Effective Start</label>
+            <label class="form-label" style="font-size:13px;font-weight:600;">Effective Start <span class="text-danger">*</span></label>
             <input type="datetime-local" class="form-control form-control-sm" id="ic-start">
           </div>
           <div class="col-md-6">
@@ -2102,10 +2102,10 @@ const i18n = {
     'dash.title':'Dashboard','dash.sub':'Overview & key metrics','dash.totalCustomers':'Total Customers','dash.activeLoanBalance':'Active Loan Balance','dash.overdueOrders':'Overdue Orders','dash.pendingReviews':'Pending Credit Reviews','dash.recentOrders':'Recent Loan Orders','btn.viewAll':'View All',
     'th.orderNo':'Order No.','th.customer':'Customer','th.borrowCount':'Borrow Count','th.amountPKR':'Amount (PKR)','th.installments':'Installments','th.status':'Status','th.appliedAt':'Applied At','th.email':'Email','th.mobile':'Mobile','th.roles':'Roles','th.lastLogin':'Last Login','th.actions':'Actions','th.quickReview':'Quick Review','th.roleCode':'Code','th.roleName':'Role Name','th.description':'Description','th.users':'Users','th.sort':'Sort','th.permName':'Permission Name','th.permCode':'Code','th.type':'Type','th.routePath':'Route Path','th.idCard':'ID Card','th.creditStatus':'Credit Status','th.creditInfo':'Credit Info','th.wallet':'Wallet','th.blacklisted':'Blacklisted','th.registered':'Registered','th.amount':'Amount','th.channel':'Channel','th.disbursedAt':'Disbursed At','th.finalDue':'Final Due','th.repaymentNo':'Repayment No.','th.loanOrderNo':'Loan Order No.','th.repayType':'Type','th.reconcile':'Reconcile','th.payTime':'Pay Time','th.principal':'Principal','th.overdueDays':'Overdue Days','th.overdueFee':'Overdue Fee','th.totalRemaining':'Total Remaining','th.dueDate':'Due Date','th.collector':'Collector','th.couponNo':'Coupon No.','th.minLoan':'Min Loan','th.minRepay':'Min Repay','th.deductType':'Deduct Type','th.repayTypeCol':'Repay Type','th.effectivePeriod':'Effective Period','th.usedTime':'Used Time','th.time':'Time','th.operator':'Operator','th.module':'Module','th.action':'Action','th.target':'Target','th.ip':'IP','th.result':'Result','th.accountType':'Account Type','th.accountNo':'Account No.','th.boundMobile':'Bound Mobile','th.relation':'Relation','th.verifyStatus':'Verify Status','th.default':'Default','th.lastVerified':'Last Verified','th.updatedAt':'Updated At','th.requestNo':'Request No.','th.eligibility':'Eligibility','th.otpStatus':'OTP Status','th.openLoanCheck':'Open Loan Check','th.reviewedBy':'Reviewed By','th.reviewTime':'Review Time','th.scene':'Scene','th.sentAt':'Sent At','th.expiresAt':'Expires At','th.attempts':'Attempts','th.lockStatus':'Lock Status','th.deviceIp':'Device / IP','th.message':'Message','th.deviceId':'Device ID','th.platform':'Platform','th.fingerprint':'Fingerprint','th.riskLevel':'Risk','th.currentDevice':'Current',
     'btn.createUser':'Create User','btn.createRole':'Create Role','btn.addPerm':'Add Permission','btn.issueCoupon':'Issue Coupon','btn.expandAll':'Expand All','btn.collapseAll':'Collapse All','btn.edit':'Edit','btn.delete':'Delete','btn.resetPwd':'Pwd','btn.disable':'Disable','btn.enable':'Enable','btn.detail':'Detail','btn.blacklist':'Blacklist','btn.unblock':'Unblock','btn.freeze':'Freeze','btn.unfreeze':'Unfreeze','btn.remind':'Remind','btn.void':'Void','btn.perms':'Perms','btn.save':'Save','btn.cancel':'Cancel','btn.confirm':'Confirm','btn.close':'Close','btn.selectAll':'Select All','btn.clearAll':'Clear All','btn.issue':'Issue','btn.verify':'Verify','btn.resend':'Resend','btn.unlock':'Unlock','btn.invalidate':'Invalidate','btn.trust':'Trust','btn.approve':'Approve','btn.reject':'Reject',
-    'page.adminUsers':'Admin Users','page.roles':'Roles','page.permTree':'Permission Tree','page.customers':'Customers','page.walletAccounts':'Wallet Accounts','page.accountCancel':'Account Cancellation','page.otpLogs':'OTP Logs','page.devices':'Device Management','page.loanOrders':'Loan Orders','page.repayments':'Repayment Orders','page.overdueOrders':'Overdue Orders','page.loanCoupons':'Loan Coupons','page.repayCoupons':'Repayment Coupons','page.auditLog':'Audit Log',
+    'page.adminUsers':'Admin Users','page.roles':'Roles','page.permTree':'Permission Tree','page.customers':'Customers','page.walletAccounts':'Wallet Accounts','page.accountCancel':'Account Cancellation','page.otpLogs':'OTP Logs','page.devices':'Device Management','page.loanOrders':'Loan Orders','page.repayments':'Repayment Orders','page.overdueOrders':'Overdue Orders','page.limitIncreaseCoupons':'Limit Increase Coupons','page.repayCoupons':'Repayment Coupons','page.auditLog':'Audit Log',
     'filter.searchUserPh':'Search username / name...','filter.allStatus':'All Status','filter.active':'Active','filter.disabled':'Disabled','filter.allRoles':'All Roles','filter.searchRolePh':'Search role...','filter.searchCustPh':'Name / Mobile / ID card...','filter.searchWalletPh':'Customer ID / Account...','filter.searchCancelPh':'Request No / Customer ID...','filter.searchOtpPh':'Request ID / Mobile / Device...','filter.searchDevicePh':'Device ID / Customer ID / Fingerprint...','filter.allVerifyStatus':'All Verify Status','filter.allEligibility':'All Eligibility','filter.allScenes':'All Scenes','filter.allRisk':'All Risk','filter.allCreditStatus':'All Credit Status','filter.allBlacklist':'Blacklist: All','filter.blacklisted':'Blacklisted','filter.normal':'Normal','filter.searchLoanPh':'Order No...','filter.allChannels':'All Channels','filter.allQuickReview':'All Review Types','filter.quickYes':'Quick Review','filter.quickNo':'Normal Review','filter.searchRepayPh':'Repayment No / Loan No...','filter.searchOdPh':'Order No / Mobile...','filter.allOverdueDays':'All Overdue Days','filter.od17':'1–7 Days','filter.od830':'8–30 Days','filter.od30p':'30+ Days','filter.searchCouponPh':'Coupon No / Mobile...','filter.searchAuditPh':'Operator / Action...','filter.allModules':'All Modules','filter.allResults':'All Results',
     'od.statTotal':'Total Overdue Orders','od.stat17':'1–7 Days Overdue','od.stat830':'8–30 Days Overdue','od.stat30p':'30+ Days Overdue',
-    'coupon.loanTab':'Loan Coupons','coupon.repayTab':'Repayment Coupons',
+    'coupon.limitTab':'Limit Increase Coupons','coupon.repayTab':'Repayment Coupons',
     'modal.createUser':'Create Admin User','modal.editUser':'Edit Admin User','modal.resetPwd':'Reset Password','modal.createRole':'Create Role','modal.editRole':'Edit Role','modal.assignPerms':'Assign Permissions — ','modal.addPerm':'Add Permission','modal.editPerm':'Edit Permission','modal.custDetail':'Customer Detail','modal.loanDetail':'Loan Order Detail','modal.issueCoupon':'Issue Coupon',
     'field.username':'Username','field.realName':'Real Name','field.email':'Email','field.mobile':'Mobile','field.assignRoles':'Assign Role(s)','field.status':'Status','field.notes':'Notes','field.newPwd':'New Password','field.roleCode':'Role Code','field.roleName':'Role Name','field.description':'Description','field.sortOrder':'Sort Order','field.parentNode':'Parent Node','field.permName':'Permission Name','field.permCode':'Permission Code','field.routePath':'Route Path','field.couponType':'Coupon Type','field.custMobile':'Customer Mobile','field.couponAmount':'Coupon Amount (PKR)','field.minLoanAmount':'Min Loan Amount (PKR)','field.effectiveStart':'Effective Start','field.expiryTime':'Expiry Time',
     'detail.basicInfo':'BASIC INFO','detail.creditWallet':'CREDIT & WALLET','detail.loanInfo':'LOAN INFO','detail.statusPayment':'STATUS & PAYMENT',
@@ -2115,7 +2115,7 @@ const i18n = {
     'confirm.title':'Confirm',
     'dash.activeLoansCount':'Active Loans','dash.todayDisbursed':'Today Disbursed','dash.todayRepaid':'Today Repaid','dash.pendingAdjust':'Pending Fee Adjustments','dash.repayRate':'On-time Repayment Rate','dash.overdueRate':'Overdue Rate','dash.pendingReconcile':'Pending Reconciliation','dash.pendingSettlement':'Pending Early Settlement',
     'count.showing':(n,tot)=>`Showing 1–${n} of ${tot}`,
-    'page.sub.dashboard':'Overview & key metrics','page.sub.customers':'View and manage loan customers','page.sub.walletAccounts':'Manage wallet and receiving accounts','page.sub.accountCancel':'Review account cancellation requests','page.sub.loans':'Manage loan orders','page.sub.repayments':'Track repayments','page.sub.overdue':'Handle overdue orders','page.sub.coupons':'Manage loan & repayment coupons','page.sub.users':'Manage admin operator accounts','page.sub.roles':'Define roles and assign permissions','page.sub.permissions':'Manage the permission tree','page.sub.otpLogs':'Track OTP, SMS, and WhatsApp verification','page.sub.devices':'Manage customer login devices','page.sub.auditlog':'System operation audit trail',
+    'page.sub.dashboard':'Overview & key metrics','page.sub.customers':'View and manage loan customers','page.sub.walletAccounts':'Manage wallet and receiving accounts','page.sub.accountCancel':'Review account cancellation requests','page.sub.loans':'Manage loan orders','page.sub.repayments':'Track repayments','page.sub.overdue':'Handle overdue orders','page.sub.coupons':'Manage limit increase & repayment coupons','page.sub.users':'Manage admin operator accounts','page.sub.roles':'Define roles and assign permissions','page.sub.permissions':'Manage the permission tree','page.sub.otpLogs':'Track OTP, SMS, and WhatsApp verification','page.sub.devices':'Manage customer login devices','page.sub.auditlog':'System operation audit trail',
   },
   zh: {
     'logo.sub':'运营后台','nav.overview':'概览','nav.dashboard':'仪表盘','nav.business':'业务管理','nav.customers':'客户管理','nav.walletAccounts':'收款账号管理','nav.accountCancel':'账号注销','nav.loans':'借款订单','nav.repayments':'还款管理','nav.overdue':'逾期管理','nav.coupons':'优惠券','nav.system':'系统管理','nav.users':'用户管理','nav.roles':'角色管理','nav.permissions':'权限管理','nav.otpLogs':'OTP 记录','nav.devices':'设备管理','nav.auditlog':'审计日志',
@@ -2123,10 +2123,10 @@ const i18n = {
     'dash.title':'仪表盘','dash.sub':'概览 & 关键指标','dash.totalCustomers':'总客户数','dash.activeLoanBalance':'在贷余额','dash.overdueOrders':'逾期订单','dash.pendingReviews':'待审核授信','dash.recentOrders':'最新借款订单','btn.viewAll':'查看全部',
     'th.orderNo':'订单号','th.customer':'客户','th.borrowCount':'借款次数','th.amountPKR':'金额 (PKR)','th.installments':'期数','th.status':'状态','th.appliedAt':'申请时间','th.email':'邮箱','th.mobile':'手机号','th.roles':'角色','th.lastLogin':'最近登录','th.actions':'操作','th.quickReview':'快速审核','th.roleCode':'角色编码','th.roleName':'角色名称','th.description':'描述','th.users':'用户数','th.sort':'排序','th.permName':'权限名称','th.permCode':'权限编码','th.type':'类型','th.routePath':'路由路径','th.idCard':'身份证','th.creditStatus':'授信状态','th.creditInfo':'授信信息','th.wallet':'钱包','th.blacklisted':'黑名单','th.registered':'注册时间','th.amount':'金额','th.channel':'渠道','th.disbursedAt':'放款时间','th.finalDue':'最终到期日','th.repaymentNo':'还款单号','th.loanOrderNo':'借款订单号','th.repayType':'还款类型','th.reconcile':'对账状态','th.payTime':'支付时间','th.principal':'本金','th.overdueDays':'逾期天数','th.overdueFee':'逾期费','th.totalRemaining':'剩余应还','th.dueDate':'到期日','th.collector':'催收员','th.couponNo':'券号','th.minLoan':'最低借款','th.minRepay':'最低还款','th.deductType':'抵扣类型','th.repayTypeCol':'还款类型','th.effectivePeriod':'有效期','th.usedTime':'使用时间','th.time':'时间','th.operator':'操作人','th.module':'模块','th.action':'操作','th.target':'目标对象','th.ip':'IP','th.result':'结果','th.accountType':'账号类型','th.accountNo':'账号','th.boundMobile':'绑定手机号','th.relation':'关系','th.verifyStatus':'验证状态','th.default':'默认','th.lastVerified':'最近验证','th.updatedAt':'更新时间','th.requestNo':'申请单号','th.eligibility':'可注销校验','th.otpStatus':'OTP 状态','th.openLoanCheck':'在贷校验','th.reviewedBy':'审核人','th.reviewTime':'审核时间','th.scene':'场景','th.sentAt':'发送时间','th.expiresAt':'过期时间','th.attempts':'次数','th.lockStatus':'锁定状态','th.deviceIp':'设备 / IP','th.message':'消息','th.deviceId':'设备 ID','th.platform':'平台','th.fingerprint':'指纹','th.riskLevel':'风险','th.currentDevice':'当前设备',
     'btn.createUser':'新建用户','btn.createRole':'新建角色','btn.addPerm':'新增权限','btn.issueCoupon':'发放券','btn.expandAll':'展开全部','btn.collapseAll':'收起全部','btn.edit':'编辑','btn.delete':'删除','btn.resetPwd':'改密','btn.disable':'禁用','btn.enable':'启用','btn.detail':'详情','btn.blacklist':'拉黑','btn.unblock':'解黑','btn.freeze':'冻结','btn.unfreeze':'解冻','btn.remind':'催收','btn.void':'作废','btn.perms':'配权','btn.save':'保存','btn.cancel':'取消','btn.confirm':'确认','btn.close':'关闭','btn.selectAll':'全选','btn.clearAll':'清空','btn.issue':'发放','btn.verify':'验证','btn.resend':'重发','btn.unlock':'解锁','btn.invalidate':'失效','btn.trust':'信任','btn.approve':'通过','btn.reject':'拒绝',
-    'page.adminUsers':'管理员用户','page.roles':'角色列表','page.permTree':'权限树','page.customers':'客户列表','page.walletAccounts':'收款账号管理','page.accountCancel':'账号注销','page.otpLogs':'OTP 记录','page.devices':'设备管理','page.loanOrders':'借款订单','page.repayments':'还款订单','page.overdueOrders':'逾期订单','page.loanCoupons':'借款优惠券','page.repayCoupons':'还款优惠券','page.auditLog':'审计日志',
+    'page.adminUsers':'管理员用户','page.roles':'角色列表','page.permTree':'权限树','page.customers':'客户列表','page.walletAccounts':'收款账号管理','page.accountCancel':'账号注销','page.otpLogs':'OTP 记录','page.devices':'设备管理','page.loanOrders':'借款订单','page.repayments':'还款订单','page.overdueOrders':'逾期订单','page.limitIncreaseCoupons':'提额券','page.repayCoupons':'还款优惠券','page.auditLog':'审计日志',
     'filter.searchUserPh':'搜索用户名/姓名...','filter.allStatus':'全部状态','filter.active':'启用','filter.disabled':'禁用','filter.allRoles':'全部角色','filter.searchRolePh':'搜索角色...','filter.searchCustPh':'姓名/手机/身份证...','filter.searchWalletPh':'客户ID/收款账号...','filter.searchCancelPh':'申请单号/客户ID...','filter.searchOtpPh':'请求ID/手机号/设备...','filter.searchDevicePh':'设备ID/客户ID/设备指纹...','filter.allVerifyStatus':'全部验证状态','filter.allEligibility':'全部校验结果','filter.allScenes':'全部场景','filter.allRisk':'全部风险','filter.allCreditStatus':'全部授信状态','filter.allBlacklist':'黑名单：全部','filter.blacklisted':'已拉黑','filter.normal':'正常','filter.searchLoanPh':'订单号...','filter.allChannels':'全部渠道','filter.allQuickReview':'全部审核类型','filter.quickYes':'快速审核','filter.quickNo':'普通审核','filter.searchRepayPh':'还款单号/借款单号...','filter.searchOdPh':'订单号/手机号...','filter.allOverdueDays':'全部逾期天数','filter.od17':'1–7天','filter.od830':'8–30天','filter.od30p':'30天以上','filter.searchCouponPh':'券号/手机号...','filter.searchAuditPh':'操作人/操作内容...','filter.allModules':'全部模块','filter.allResults':'全部结果',
     'od.statTotal':'总逾期订单','od.stat17':'1–7天逾期','od.stat830':'8–30天逾期','od.stat30p':'30天以上逾期',
-    'coupon.loanTab':'借款优惠券','coupon.repayTab':'还款优惠券',
+    'coupon.limitTab':'提额券','coupon.repayTab':'还款优惠券',
     'modal.createUser':'新建管理员','modal.editUser':'编辑管理员','modal.resetPwd':'重置密码','modal.createRole':'新建角色','modal.editRole':'编辑角色','modal.assignPerms':'配置权限 — ','modal.addPerm':'新增权限','modal.editPerm':'编辑权限','modal.custDetail':'客户详情','modal.loanDetail':'借款订单详情','modal.issueCoupon':'发放优惠券',
     'field.username':'登录账号','field.realName':'真实姓名','field.email':'邮箱','field.mobile':'手机号','field.assignRoles':'分配角色','field.status':'状态','field.notes':'备注','field.newPwd':'新密码','field.roleCode':'角色编码','field.roleName':'角色名称','field.description':'描述','field.sortOrder':'排序','field.parentNode':'父节点','field.permName':'权限名称','field.permCode':'权限编码','field.routePath':'路由路径','field.couponType':'券类型','field.custMobile':'客户手机号','field.couponAmount':'券面额 (PKR)','field.minLoanAmount':'最低借款金额 (PKR)','field.effectiveStart':'生效时间','field.expiryTime':'到期时间',
     'detail.basicInfo':'基本信息','detail.creditWallet':'授信 & 钱包','detail.loanInfo':'借款信息','detail.statusPayment':'状态 & 支付',
@@ -2136,7 +2136,7 @@ const i18n = {
     'confirm.title':'确认操作',
     'dash.activeLoansCount':'在贷订单数','dash.todayDisbursed':'今日放款','dash.todayRepaid':'今日还款','dash.pendingAdjust':'待审费用调整','dash.repayRate':'按时还款率','dash.overdueRate':'逾期率','dash.pendingReconcile':'待处理对账','dash.pendingSettlement':'待结清提前结清',
     'count.showing':(n,tot)=>`共 ${tot} 条，显示 1–${n}`,
-    'page.sub.dashboard':'概览 & 关键指标','page.sub.customers':'查看与管理借款客户','page.sub.walletAccounts':'管理钱包和收款账号','page.sub.accountCancel':'审核账号注销申请','page.sub.loans':'管理借款订单','page.sub.repayments':'追踪还款记录','page.sub.overdue':'处理逾期订单','page.sub.coupons':'管理借款券与还款券','page.sub.users':'管理后台操作员账号','page.sub.roles':'定义角色与分配权限','page.sub.permissions':'管理权限树','page.sub.otpLogs':'追踪 OTP、SMS、WhatsApp 验证','page.sub.devices':'管理客户登录设备','page.sub.auditlog':'系统操作审计日志',
+    'page.sub.dashboard':'概览 & 关键指标','page.sub.customers':'查看与管理借款客户','page.sub.walletAccounts':'管理钱包和收款账号','page.sub.accountCancel':'审核账号注销申请','page.sub.loans':'管理借款订单','page.sub.repayments':'追踪还款记录','page.sub.overdue':'处理逾期订单','page.sub.coupons':'管理提额券与还款券','page.sub.users':'管理后台操作员账号','page.sub.roles':'定义角色与分配权限','page.sub.permissions':'管理权限树','page.sub.otpLogs':'追踪 OTP、SMS、WhatsApp 验证','page.sub.devices':'管理客户登录设备','page.sub.auditlog':'系统操作审计日志',
   }
 };
 
@@ -2210,7 +2210,7 @@ const phraseZh = {
   'Application No.':'申请单号','Submit Time':'提交时间','Review Result':'审核结果','Credit Limit':'授信额度','Next Applicable Time':'下次可申请时间','Face State':'人脸状态','Application Step':'申请步骤','Current Step':'当前步骤','Latest Approved':'最近通过','Latest Application':'最新申请','Rejected Attempt':'被拒记录',
   'Order No.':'订单号','Customer':'客户','Borrow Count':'借款次数','First':'首次','Loan Amount':'借款金额','Contract Principal':'合同本金','Installments':'分期','Daily Interest Rate':'日利率','Overdue Rate':'逾期费率','Total Interest':'总利息','Total Service Fee':'总服务费','Total Repayable':'总应还',
   'Order Status':'订单状态','Risk Status':'风控状态','Disbursement Channel':'放款渠道','Disbursed At':'放款时间','First Due Date':'首期到期日','Final Due Date':'最终到期日','Paid Amount':'已还金额','Remaining Amount':'剩余金额',
-  'Customer ID':'客户 ID','Product ID':'产品 ID','Loan Coupon Amount':'借款优惠券金额','Installment Count':'分期期数','Total Days':'总借款天数','Theoretical Repay Amount':'理论应还金额','Rounding Waiver Amount':'抹零优惠金额','Display Bill Amount':'展示应还金额','Fee Cap Amount':'费用上限金额',
+  'Customer ID':'客户 ID','Product ID':'产品 ID','Limit Increase Amount':'提额券金额','Installment Count':'分期期数','Total Days':'总借款天数','Theoretical Repay Amount':'理论应还金额','Rounding Waiver Amount':'抹零优惠金额','Display Bill Amount':'展示应还金额','Fee Cap Amount':'费用上限金额',
   'Bill Start Time':'账单开始时间','Bill End Time':'账单结束时间','Cooling-off Start Time':'冷静期开始时间','Cooling-off End Time':'冷静期结束时间','Approve Time':'审批时间','Accumulated Fee Amount':'累计费用金额','Total Overdue Fee':'总逾期费','Repayment Coupon Amount':'还款优惠券金额',
   'Paid Principal':'已还本金','Paid Interest':'已还利息','Paid Service Fee':'已还服务费','Paid Overdue Fee':'已还逾期费','Remaining Principal':'剩余应还本金','Remaining Interest':'剩余应还利息','Remaining Service Fee':'剩余应还服务费','Remaining Overdue Fee':'剩余应还逾期费',
   'Wallet Name':'收款钱包名称','Wallet Account Name':'收款账户姓名','Wallet Account No.':'收款账户号','Disbursement Status':'放款状态','Disbursement Time':'放款时间','Fee Capped':'是否达到费用上限','Fee Capped Time':'达到费用上限时间',
@@ -2241,8 +2241,8 @@ const phraseZh = {
   'Reset password for':'为以下用户重置密码','Front':'正面','Back':'反面',
   'Active':'启用','Disabled':'禁用','Inactive':'停用','Menu':'菜单','Button / Action':'按钮 / 操作','Root (Top Level)':'根节点（顶级）',
   '— Root (Top Level) —':'— 根节点（顶级）—',
-  'Dashboard':'仪表盘','Customer Management':'客户管理','Customer List':'客户列表','Wallet Accounts':'收款账号管理','Account Cancellation':'账号注销','Credit Review':'授信审核','Loan Management':'借款管理','Loan Orders':'借款订单','Repayment Orders':'还款订单','Overdue Management':'逾期管理','Fee Adjustment':'费用调整','Loan Bills':'分期账单','Disbursement Records':'放款记录','Early Settlement':'提前结清','Fee Details':'费用明细','Fee Change Records':'费用变更记录','Repayment Details':'还款明细','Repayment Allocation':'还款分配','Coupon Management':'优惠券管理','Loan Coupons':'借款优惠券','Repayment Coupons':'还款优惠券','Coupon Usage Records':'优惠券使用记录','Finance & Reconciliation':'财务与对账','Account Transactions':'账务流水','Repayment Reconciliation':'还款对账','Business Configuration':'业务配置','Amount Term Rules':'金额期数规则','User Term Config':'用户分期配置','System Management':'系统管理','User Management':'用户管理','Role Management':'角色管理','Permission Management':'权限管理','OTP Logs':'OTP记录','Device Management':'设备管理','Audit Log':'审计日志',
-  'Loan Coupon':'借款优惠券','Repayment Coupon':'还款优惠券','Decrease':'减少','Waive':'全免','Increase':'增加',
+  'Dashboard':'仪表盘','Customer Management':'客户管理','Customer List':'客户列表','Wallet Accounts':'收款账号管理','Account Cancellation':'账号注销','Credit Review':'授信审核','Loan Management':'借款管理','Loan Orders':'借款订单','Repayment Orders':'还款订单','Overdue Management':'逾期管理','Fee Adjustment':'费用调整','Loan Bills':'分期账单','Disbursement Records':'放款记录','Early Settlement':'提前结清','Fee Details':'费用明细','Fee Change Records':'费用变更记录','Repayment Details':'还款明细','Repayment Allocation':'还款分配','Coupon Management':'优惠券管理','Limit Increase Coupons':'提额券','Repayment Coupons':'还款优惠券','Coupon Usage Records':'优惠券使用记录','Finance & Reconciliation':'财务与对账','Account Transactions':'账务流水','Repayment Reconciliation':'还款对账','Business Configuration':'业务配置','Amount Term Rules':'金额期数规则','User Term Config':'用户分期配置','System Management':'系统管理','User Management':'用户管理','Role Management':'角色管理','Permission Management':'权限管理','OTP Logs':'OTP记录','Device Management':'设备管理','Audit Log':'审计日志',
+  'Limit Increase Coupon':'提额券','Repayment Coupon':'还款优惠券','Decrease':'减少','Waive':'全免','Increase':'增加',
   'Approved':'已通过','Pending':'待处理','Rejected':'已拒绝','Success':'成功','Failed':'失败','Cancelled':'已取消','Verified':'已验证','Sent':'已发送','Locked':'已锁定','Trusted':'已信任','Invalidated':'已失效','Blocked':'已阻断','Pass':'通过','Low':'低','Medium':'中','High':'高','Matched':'已匹配','Unmatched':'未匹配','AmountMismatch':'金额不一致','ManualConfirmed':'人工确认','Handled':'已处理','Ignored':'已忽略',
   'Not Started':'未开始','Manual Review':'人工复核','Incomplete':'未完成','Pending Review':'待审核','Expired':'已过期','Blacklisted':'黑名单',
   'Identity Verification':'身份认证','Emergency Contacts':'紧急联系人','Review Queue':'等待审核','Completed':'已完成','Step':'步骤',
@@ -2446,10 +2446,10 @@ let permissions = [
       { id:351, parentId:35, code:'loan:repayment_allocation:view', name:'View Repayment Allocation', type:'Button', route:'', sort:1, status:'Active', expanded:false },
   // Coupon Management
   { id:30, parentId:0, code:'coupon', name:'Coupon Management', type:'Menu', route:'', sort:4, status:'Active', expanded:true },
-    { id:31, parentId:30, code:'coupon:loan', name:'Loan Coupons', type:'Menu', route:'/coupon/loan', sort:1, status:'Active', expanded:true },
-      { id:311, parentId:31, code:'coupon:loan:view', name:'View', type:'Button', route:'', sort:1, status:'Active', expanded:false },
-      { id:312, parentId:31, code:'coupon:loan:issue', name:'Issue Coupon', type:'Button', route:'', sort:2, status:'Active', expanded:false },
-      { id:313, parentId:31, code:'coupon:loan:void', name:'Void Coupon', type:'Button', route:'', sort:3, status:'Active', expanded:false },
+    { id:31, parentId:30, code:'coupon:limit_increase', name:'Limit Increase Coupons', type:'Menu', route:'/coupon/limit-increase', sort:1, status:'Active', expanded:true },
+      { id:311, parentId:31, code:'coupon:limit_increase:view', name:'View', type:'Button', route:'', sort:1, status:'Active', expanded:false },
+      { id:312, parentId:31, code:'coupon:limit_increase:issue', name:'Issue Coupon', type:'Button', route:'', sort:2, status:'Active', expanded:false },
+      { id:313, parentId:31, code:'coupon:limit_increase:void', name:'Void Coupon', type:'Button', route:'', sort:3, status:'Active', expanded:false },
     { id:32, parentId:30, code:'coupon:repay', name:'Repayment Coupons', type:'Menu', route:'/coupon/repay', sort:2, status:'Active', expanded:true },
       { id:321, parentId:32, code:'coupon:repay:view', name:'View', type:'Button', route:'', sort:1, status:'Active', expanded:false },
       { id:322, parentId:32, code:'coupon:repay:issue', name:'Issue Coupon', type:'Button', route:'', sort:2, status:'Active', expanded:false },
@@ -2510,7 +2510,7 @@ Object.assign(roles.find(r => r.code === 'FINANCE'), {
   perms:['dashboard','loan','loan:order','loan:order:view','loan:bill','loan:bill:view','loan:bill_fee','loan:bill_fee:view','loan:fee_change:view','loan:disbursement','loan:disbursement:view','loan:repayment','loan:repayment:view','loan:repayment_bill:view','loan:repayment_allocation','loan:repayment_allocation:view','loan:adjustment','loan:adjustment:create','loan:adjustment:approve','finance','finance:transaction','finance:transaction:view','finance:transaction:export','finance:reconciliation','finance:reconciliation:view','finance:reconciliation:handle','finance:reconciliation:ignore']
 });
 Object.assign(roles.find(r => r.code === 'OPERATIONS'), {
-  perms:['dashboard','loan','loan:order','loan:order:view','coupon','coupon:loan','coupon:loan:view','coupon:loan:issue','coupon:loan:void','coupon:repay','coupon:repay:view','coupon:repay:issue','coupon:repay:void','coupon:usage','coupon:usage:view','config','config:amount_term_rule','config:amount_term_rule:view','config:amount_term_rule:create','config:amount_term_rule:edit','config:amount_term_rule:delete']
+  perms:['dashboard','loan','loan:order','loan:order:view','coupon','coupon:limit_increase','coupon:limit_increase:view','coupon:limit_increase:issue','coupon:limit_increase:void','coupon:repay','coupon:repay:view','coupon:repay:issue','coupon:repay:void','coupon:usage','coupon:usage:view','config','config:amount_term_rule','config:amount_term_rule:view','config:amount_term_rule:create','config:amount_term_rule:edit','config:amount_term_rule:delete']
 });
 
 let nextUserId = 16, nextRoleId = 7, nextPermId = 1000;
@@ -2573,7 +2573,7 @@ function navigate(page) {
   if (page === 'loans')       renderLoans();
   if (page === 'repayments')  renderRepayments();
   if (page === 'overdue')   { setupOverdueTabs(); renderOverdue(); }
-  if (page === 'coupons')   { activeCouponTab='loan'; renderCoupons(); }
+  if (page === 'coupons')   { activeCouponTab='limit'; renderCoupons(); }
   if (page === 'auditlog')        renderAuditLog();
   if (page === 'otpLogs')         filterOtpLogs();
   if (page === 'devices')         filterDevices();
@@ -3456,7 +3456,7 @@ loanOrders.forEach((l, index) => {
     productId: 1,
     borrowCount: Number(l.borrowCount) || 1,
     loanAmount: l.amount,
-    loanCouponAmount: 0,
+    limitIncreaseAmount: 0,
     installmentCount: l.installments,
     totalDays: l.installments * l.periodDays,
     dailyInterestRate: 0.0075,
@@ -3675,7 +3675,7 @@ function viewLoanDetail(no) {
         <div style="background:#f8fafc;border-radius:8px;padding:16px;">
           <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:12px;">${currentLang === 'zh' ? '金额与计费' : 'AMOUNT & PRICING'}</div>
           ${detailRow('Loan Amount', loanMoney(l.loanAmount))}
-          ${detailRow('Loan Coupon Amount', loanMoney(l.loanCouponAmount))}
+          ${detailRow('Limit Increase Amount', loanMoney(l.limitIncreaseAmount))}
           ${detailRow('Contract Principal', loanMoney(l.contractPrincipal))}
           ${detailRow('Total Interest', loanMoney(l.totalInterest))}
           ${detailRow('Total Service Fee', loanMoney(l.totalServiceFee))}
@@ -3928,17 +3928,17 @@ function filterOverdue() {
 // ============================================================
 // COUPON DATA & MODULE
 // ============================================================
-let loanCoupons = [
-  { no:'LC20240001', userId:1001, custName:'Ali Hassan',     mobile:'+92 321 4561234', amount:500,  minLoan:5000,  status:'Used',    effectiveStart:'2024-05-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'2024-05-20 14:00' },
-  { no:'LC20240002', userId:1003, custName:'Muhammad Raza',  mobile:'+92 311 2223333', amount:1000, minLoan:10000, status:'Used',    effectiveStart:'2024-05-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'2024-05-25 10:30' },
-  { no:'LC20240003', userId:1005, custName:'Usman Khan',     mobile:'+92 300 1234567', amount:500,  minLoan:5000,  status:'Unused',  effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'-' },
-  { no:'LC20240004', userId:1006, custName:'Zainab Hussain', mobile:'+92 312 7788990', amount:1500, minLoan:15000, status:'Used',    effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'2024-06-03 15:20' },
-  { no:'LC20240005', userId:1009, custName:'Asad Javed',     mobile:'+92 321 6677889', amount:300,  minLoan:5000,  status:'Expired', effectiveStart:'2024-04-01 00:00', effectiveEnd:'2024-04-30 23:59', usedTime:'-' },
-  { no:'LC20240006', userId:1012, custName:'Saba Noor',      mobile:'+92 300 9988776', amount:500,  minLoan:5000,  status:'Unused',  effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'-' },
-  { no:'LC20240007', userId:1016, custName:'Nadia Shah',     mobile:'+92 300 7788991', amount:1000, minLoan:10000, status:'Locked',  effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'-' },
-  { no:'LC20240008', userId:1017, custName:'Omar Farooq',    mobile:'+92 312 4433221', amount:1500, minLoan:15000, status:'Used',    effectiveStart:'2024-05-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'2024-05-18 14:30' },
-  { no:'LC20240009', userId:1020, custName:'Amira Khan',     mobile:'+92 346 8877665', amount:500,  minLoan:5000,  status:'Unused',  effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'-' },
-  { no:'LC20240010', userId:1014, custName:'Rabia Yousuf',   mobile:'+92 333 6655443', amount:800,  minLoan:8000,  status:'Used',    effectiveStart:'2024-05-15 00:00', effectiveEnd:'2024-06-15 23:59', usedTime:'2024-06-02 08:40' },
+let limitIncreaseCoupons = [
+  { no:'LI20240001', userId:1001, custName:'Ali Hassan',     mobile:'+92 321 4561234', increaseAmount:5000,  baseLimit:15000, linkedOrder:'LN2024060401', status:'Used',    effectiveStart:'2024-05-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'2024-05-20 14:00' },
+  { no:'LI20240002', userId:1003, custName:'Muhammad Raza',  mobile:'+92 311 2223333', increaseAmount:10000, baseLimit:20000, linkedOrder:'LN2024060403', status:'Used',    effectiveStart:'2024-05-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'2024-05-25 10:30' },
+  { no:'LI20240003', userId:1005, custName:'Usman Khan',     mobile:'+92 300 1234567', increaseAmount:5000,  baseLimit:12000, linkedOrder:'',             status:'Unused',  effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'-' },
+  { no:'LI20240004', userId:1006, custName:'Zainab Hussain', mobile:'+92 312 7788990', increaseAmount:15000, baseLimit:25000, linkedOrder:'LN2024060406', status:'Used',    effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'2024-06-03 15:20' },
+  { no:'LI20240005', userId:1009, custName:'Asad Javed',     mobile:'+92 321 6677889', increaseAmount:3000,  baseLimit:7500,  linkedOrder:'',             status:'Expired', effectiveStart:'2024-04-01 00:00', effectiveEnd:'2024-04-30 23:59', usedTime:'-' },
+  { no:'LI20240006', userId:1012, custName:'Saba Noor',      mobile:'+92 300 9988776', increaseAmount:5000,  baseLimit:12000, linkedOrder:'',             status:'Unused',  effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'-' },
+  { no:'LI20240007', userId:1016, custName:'Nadia Shah',     mobile:'+92 300 7788991', increaseAmount:10000, baseLimit:15000, linkedOrder:'LN2024060412', status:'Locked',  effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'-' },
+  { no:'LI20240008', userId:1017, custName:'Omar Farooq',    mobile:'+92 312 4433221', increaseAmount:15000, baseLimit:25000, linkedOrder:'LN2024060413', status:'Used',    effectiveStart:'2024-05-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'2024-05-18 14:30' },
+  { no:'LI20240009', userId:1020, custName:'Amira Khan',     mobile:'+92 346 8877665', increaseAmount:5000,  baseLimit:10000, linkedOrder:'',             status:'Unused',  effectiveStart:'2024-06-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'-' },
+  { no:'LI20240010', userId:1014, custName:'Rabia Yousuf',   mobile:'+92 333 6655443', increaseAmount:8000,  baseLimit:15000, linkedOrder:'LN2024060412', status:'Used',    effectiveStart:'2024-05-15 00:00', effectiveEnd:'2024-06-15 23:59', usedTime:'2024-06-02 08:40' },
 ];
 
 let repayCoupons = [
@@ -3952,14 +3952,14 @@ let repayCoupons = [
   { no:'RC20240008', userId:1014, custName:'Rabia Yousuf',   mobile:'+92 333 6655443', amount:400,  minRepay:5000, deductType:'Interest',   repayType:'Normal',    status:'Used',    effectiveStart:'2024-05-15 00:00', effectiveEnd:'2024-06-15 23:59', usedTime:'2024-06-02 08:40' },
 ];
 
-let activeCouponTab = 'loan';
+let activeCouponTab = 'limit';
 let nextCouponId = 11;
 
 function switchCouponTab(tab, el) {
   activeCouponTab = tab;
   document.querySelectorAll('#coupon-tabs .nav-link').forEach(a => a.classList.remove('active'));
   el.classList.add('active');
-  const titleMap = { loan: t('coupon.loanTab'), repay: t('coupon.repayTab'), usage: t('coupon.usageTab') };
+  const titleMap = { limit: t('coupon.limitTab'), repay: t('coupon.repayTab'), usage: t('coupon.usageTab') };
   document.getElementById('coupon-tab-title').textContent = titleMap[tab] || tab;
   document.getElementById('coupon-search').value = '';
   document.getElementById('coupon-status-filter').value = '';
@@ -3976,32 +3976,32 @@ function couponBadge(s) {
 }
 
 function renderCoupons(list) {
-  const src = activeCouponTab === 'loan' ? loanCoupons : repayCoupons;
+  const src = activeCouponTab === 'limit' ? limitIncreaseCoupons : repayCoupons;
   const data = list || src;
-  document.getElementById('coupon-count-label').textContent = `Showing 1–${data.length} of ${data.length}`;
-  const isLoan = activeCouponTab === 'loan';
+  document.getElementById('coupon-count-label').textContent = t('count.showing')(data.length, data.length);
+  const isLimit = activeCouponTab === 'limit';
   const rows = data.map(c => `
     <tr>
       <td><code style="font-size:12px;">${c.no}</code></td>
-      <td>
-        <code style="font-size:12px;">${customerIdDisplay(c)}</code>
-      </td>
-      <td style="font-weight:600;">PKR ${c.amount.toLocaleString()}</td>
-      <td style="font-size:13px;">PKR ${(isLoan ? c.minLoan : c.minRepay).toLocaleString()}</td>
-      ${!isLoan ? `<td><span class="role-tag" style="font-size:11px;">${c.deductType}</span></td><td><span class="role-tag" style="font-size:11px;">${c.repayType}</span></td>` : ''}
+      <td><code style="font-size:12px;">${customerIdDisplay(c)}</code></td>
+      <td style="font-weight:600;color:${isLimit?'#16a34a':'inherit'};">PKR ${(isLimit ? c.increaseAmount : c.amount).toLocaleString()}</td>
+      <td style="font-size:13px;">${isLimit ? `PKR ${c.baseLimit.toLocaleString()} <i class="bi bi-arrow-right" style="color:#94a3b8;margin:0 4px;"></i> <strong>PKR ${(c.baseLimit+c.increaseAmount).toLocaleString()}</strong>` : `PKR ${c.minRepay.toLocaleString()}`}</td>
+      ${!isLimit ? `<td><span class="role-tag" style="font-size:11px;">${c.deductType}</span></td><td><span class="role-tag" style="font-size:11px;">${c.repayType}</span></td>` : ''}
       <td>${couponBadge(c.status)}</td>
       <td style="font-size:12px;color:#94a3b8;">${c.effectiveStart} ~ ${c.effectiveEnd}</td>
+      ${isLimit ? `<td><code style="font-size:11px;">${c.linkedOrder||'-'}</code></td>` : ''}
       <td style="font-size:12px;color:#94a3b8;">${c.usedTime !== '-' ? c.usedTime : '-'}</td>
       <td>
         ${c.status === 'Unused' ? `<button class="btn btn-sm btn-outline-danger action-btn" onclick="invalidateCoupon('${c.no}')"><i class="bi bi-x-circle"></i> ${t('btn.void')}</button>` : ''}
       </td>
     </tr>`).join('');
-  const extraCols = !isLoan ? `<th>${t('th.deductType')}</th><th>${t('th.repayTypeCol')}</th>` : '';
+  const extraCols = !isLimit ? `<th>${t('th.deductType')}</th><th>${t('th.repayTypeCol')}</th>` : '';
+  const linkedOrderCol = isLimit ? `<th>${t('th.loanOrderNo')}</th>` : '';
   document.getElementById('coupon-table-container').innerHTML = `
-    <table class="table table-hover mb-0">
-      <thead><tr><th>${t('th.couponNo')}</th><th>${t('th.customer')}</th><th>${t('th.amountPKR')}</th><th>${isLoan?t('th.minLoan'):t('th.minRepay')}</th>${extraCols}<th>${t('th.status')}</th><th>${t('th.effectivePeriod')}</th><th>${t('th.usedTime')}</th><th>${t('th.actions')}</th></tr></thead>
-      <tbody>${rows || '<tr><td colspan="9"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
-    </table>`;
+    <div class="table-scroll"><table class="table table-hover mb-0">
+      <thead><tr><th>${t('th.couponNo')}</th><th>${t('th.customer')}</th><th>${isLimit?(currentLang==='zh'?'提额金额 (PKR)':'Increase (PKR)'):t('th.amountPKR')}</th><th>${isLimit?(currentLang==='zh'?'额度变化':'Credit Limit Change'):t('th.minRepay')}</th>${extraCols}<th>${t('th.status')}</th><th>${t('th.effectivePeriod')}</th>${linkedOrderCol}<th>${t('th.usedTime')}</th><th>${t('th.actions')}</th></tr></thead>
+      <tbody>${rows || `<tr><td colspan="${isLimit?9:10}"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>`}</tbody>
+    </table></div>`;
 }
 
 function filterCoupons() {
@@ -4014,7 +4014,7 @@ function filterCoupons() {
     ));
     return;
   }
-  const src = activeCouponTab === 'loan' ? loanCoupons : repayCoupons;
+  const src = activeCouponTab === 'limit' ? limitIncreaseCoupons : repayCoupons;
   renderCoupons(src.filter(c =>
     (!q || c.no.toLowerCase().includes(q) || c.custName.toLowerCase().includes(q) || c.mobile.includes(q)) &&
     (!st || c.status === st)
@@ -4023,7 +4023,7 @@ function filterCoupons() {
 
 function invalidateCoupon(no) {
   showConfirm(`Void coupon ${no}? It will be marked as Invalid.`, () => {
-    const src = activeCouponTab === 'loan' ? loanCoupons : repayCoupons;
+    const src = activeCouponTab === 'limit' ? limitIncreaseCoupons : repayCoupons;
     const c = src.find(x=>x.no===no);
     if (c) c.status = 'Invalid';
     toast('Coupon voided');
@@ -4032,23 +4032,40 @@ function invalidateCoupon(no) {
 }
 
 function openIssueCouponModal() {
+  const type = activeCouponTab === 'repay' ? 'repay' : 'limit';
+  document.getElementById('ic-type').value = type;
+  ['ic-mobile','ic-amount','ic-threshold','ic-start','ic-end'].forEach(id => document.getElementById(id).value = '');
+  updateIssueCouponForm();
   new bootstrap.Modal(document.getElementById('issueCouponModal')).show();
+}
+
+function updateIssueCouponForm() {
+  const isLimit = document.getElementById('ic-type').value === 'limit';
+  document.getElementById('ic-amount-label').innerHTML = `${isLimit ? 'Increase Amount (PKR)' : 'Coupon Amount (PKR)'} <span class="text-danger">*</span>`;
+  document.getElementById('ic-threshold-label').innerHTML = `${isLimit ? 'Base Credit Limit (PKR)' : 'Min Remaining Principal (PKR)'} <span class="text-danger">*</span>`;
+  document.getElementById('ic-amount').placeholder = isLimit ? 'e.g. 5000' : 'e.g. 500';
+  document.getElementById('ic-threshold').placeholder = isLimit ? 'e.g. 15000' : 'e.g. 5000';
+  if (currentLang === 'zh') localizeHardcoded(document.getElementById('issueCouponModal'));
 }
 
 function saveIssueCoupon() {
   const mobile = document.getElementById('ic-mobile').value.trim();
   const amount = +document.getElementById('ic-amount').value;
+  const threshold = +document.getElementById('ic-threshold').value;
+  const start = document.getElementById('ic-start').value;
   const end = document.getElementById('ic-end').value;
-  if (!mobile || !amount || !end) { toast('Please fill required fields', 'error'); return; }
+  if (!mobile || amount <= 0 || threshold <= 0 || !start || !end) { toast('Please fill required fields with positive amounts', 'error'); return; }
+  if (new Date(start) >= new Date(end)) { toast('Expiry time must be later than effective start', 'error'); return; }
   const type = document.getElementById('ic-type').value;
-  const no = (type === 'loan' ? 'LC' : 'RC') + '2024' + String(nextCouponId++).padStart(4,'0');
-  const newCoupon = { no, userId:0, custName:'(Manual Issue)', mobile, amount, minLoan: +document.getElementById('ic-min').value||0, minRepay: +document.getElementById('ic-min').value||0, deductType:'Principal', repayType:'All', status:'Unused', effectiveStart: document.getElementById('ic-start').value||'2024-06-04 00:00', effectiveEnd: end.replace('T',' '), usedTime:'-' };
-  if (type === 'loan') loanCoupons.unshift(newCoupon);
-  else repayCoupons.unshift(newCoupon);
+  const no = (type === 'limit' ? 'LI' : 'RC') + new Date().getFullYear() + String(nextCouponId++).padStart(4,'0');
+  const common = { no, userId:0, custName:'(Manual Issue)', mobile, status:'Unused', effectiveStart:start.replace('T',' '), effectiveEnd:end.replace('T',' '), usedTime:'-' };
+  if (type === 'limit') limitIncreaseCoupons.unshift({ ...common, increaseAmount:amount, baseLimit:threshold, linkedOrder:'' });
+  else repayCoupons.unshift({ ...common, amount, minRepay:threshold, deductType:'Principal', repayType:'All' });
   activeCouponTab = type;
-  document.querySelectorAll('#coupon-tabs .nav-link').forEach((a,i)=>{ a.classList.toggle('active', (type==='loan'&&i===0)||(type==='repay'&&i===1)); });
+  document.querySelectorAll('#coupon-tabs .nav-link').forEach((a,i)=>{ a.classList.toggle('active', (type==='limit'&&i===0)||(type==='repay'&&i===1)); });
+  document.getElementById('coupon-tab-title').textContent = type === 'limit' ? t('coupon.limitTab') : t('coupon.repayTab');
   bootstrap.Modal.getInstance(document.getElementById('issueCouponModal')).hide();
-  toast(`Coupon ${no} issued`);
+  toast(`${type === 'limit' ? 'Limit increase coupon' : 'Repayment coupon'} ${no} issued`);
   filterCoupons();
 }
 
@@ -4061,7 +4078,7 @@ let auditLogs = [
   { id:3,  time:'2024-06-04 11:10', operator:'usman.collect',  module:'Repayment',         action:'Add manual repayment note', target:'LN2024060404', ip:'192.168.1.35', result:'Success' },
   { id:4,  time:'2024-06-04 11:02', operator:'ali.reviewer',   module:'Loan Order',        action:'View loan detail',          target:'LN2024060407', ip:'192.168.1.22', result:'Success' },
   { id:5,  time:'2024-06-04 10:55', operator:'fatima.cs',      module:'Customer',          action:'View customer detail',      target:'USR-1007',      ip:'192.168.1.41', result:'Success' },
-  { id:6,  time:'2024-06-04 10:33', operator:'kamran.ops',     module:'Coupon',            action:'Issue loan coupon',         target:'LC20240010',   ip:'192.168.1.18', result:'Success' },
+  { id:6,  time:'2024-06-04 10:33', operator:'kamran.ops',     module:'Coupon',            action:'Issue limit increase coupon',         target:'LI20240010',   ip:'192.168.1.18', result:'Success' },
   { id:7,  time:'2024-06-04 10:20', operator:'super.admin',    module:'User Management',   action:'Create admin user',         target:'omar.admin',   ip:'192.168.1.10', result:'Success' },
   { id:8,  time:'2024-06-04 10:05', operator:'rabia.finance',  module:'Repayment',         action:'Manual reconciliation',     target:'RP20240604004',ip:'192.168.1.52', result:'Failed' },
   { id:9,  time:'2024-06-04 09:50', operator:'bilal.reviewer', module:'Customer',          action:'Reject credit application', target:'USR-1011',      ip:'192.168.1.29', result:'Success' },
@@ -4074,7 +4091,7 @@ let auditLogs = [
   { id:16, time:'2024-06-04 08:30', operator:'super.admin',    module:'User Management',   action:'Disable admin user',        target:'amna.cs',      ip:'192.168.1.10', result:'Success' },
   { id:17, time:'2024-06-04 08:10', operator:'zara.reviewer',  module:'Customer',          action:'View customer detail',      target:'USR-1018',      ip:'192.168.1.25', result:'Success' },
   { id:18, time:'2024-06-04 08:05', operator:'rabia.finance',  module:'Repayment',         action:'View repayment detail',     target:'RP20240604003',ip:'192.168.1.52', result:'Success' },
-  { id:19, time:'2024-06-04 07:55', operator:'hamza.ops',      module:'Coupon',            action:'Void coupon',               target:'LC20240005',   ip:'192.168.1.60', result:'Success' },
+  { id:19, time:'2024-06-04 07:55', operator:'hamza.ops',      module:'Coupon',            action:'Void coupon',               target:'LI20240005',   ip:'192.168.1.60', result:'Success' },
   { id:20, time:'2024-06-03 18:30', operator:'bilal.reviewer', module:'Permission Management','action':'View permission tree', target:'-',            ip:'192.168.1.29', result:'Success' },
   { id:21, time:'2024-06-03 17:40', operator:'fatima.cs',      module:'Customer',          action:'View customer list',        target:'-',            ip:'192.168.1.41', result:'Success' },
   { id:22, time:'2024-06-03 16:20', operator:'nadia.cs',       module:'Loan Order',        action:'View loan detail',          target:'LN2024060403', ip:'192.168.1.44', result:'Success' },
@@ -4777,15 +4794,15 @@ function filterReconciliation() {
 // COUPON USAGE RECORDS (coupon_usage_record)
 // ============================================================
 let couponUsageRecords = [
-  { id:1,  couponId:1, couponType:'LoanCoupon',      couponNo:'LC20240001', userId:1001, custName:'Ali Hassan',      loanOrderNo:'LN2024060401', repayOrderNo:'',            billNo:'',               lockedAmount:500,  usedAmount:500,  deductType:'Principal', status:'Used',     expiration:'2024-06-30', lockedTime:'2024-05-20 13:55', usedTime:'2024-05-20 14:00', returnedTime:'', returnReason:'' },
-  { id:2,  couponId:2, couponType:'LoanCoupon',      couponNo:'LC20240002', userId:1003, custName:'Muhammad Raza',  loanOrderNo:'LN2024060403', repayOrderNo:'',            billNo:'',               lockedAmount:1000, usedAmount:1000, deductType:'Principal', status:'Used',     expiration:'2024-06-30', lockedTime:'2024-05-25 10:25', usedTime:'2024-05-25 10:31', returnedTime:'', returnReason:'' },
+  { id:1,  couponId:1, couponType:'LimitIncreaseCoupon', couponNo:'LI20240001', userId:1001, custName:'Ali Hassan',      loanOrderNo:'LN2024060401', repayOrderNo:'',            billNo:'',               lockedAmount:5000,  usedAmount:5000,  deductType:'CreditLimit', status:'Used',     expiration:'2024-06-30', lockedTime:'2024-05-20 13:55', usedTime:'2024-05-20 14:00', returnedTime:'', returnReason:'' },
+  { id:2,  couponId:2, couponType:'LimitIncreaseCoupon', couponNo:'LI20240002', userId:1003, custName:'Muhammad Raza',  loanOrderNo:'LN2024060403', repayOrderNo:'',            billNo:'',               lockedAmount:10000, usedAmount:10000, deductType:'CreditLimit', status:'Used',     expiration:'2024-06-30', lockedTime:'2024-05-25 10:25', usedTime:'2024-05-25 10:31', returnedTime:'', returnReason:'' },
   { id:3,  couponId:4, couponType:'RepaymentCoupon', couponNo:'RC20240004', userId:1005, custName:'Usman Khan',     loanOrderNo:'LN2024060405', repayOrderNo:'RP20240601001',billNo:'LB2024060405001', lockedAmount:400,  usedAmount:400,  deductType:'ServiceFee',status:'Used',     expiration:'2024-05-31', lockedTime:'2024-05-16 10:00', usedTime:'2024-05-16 10:05', returnedTime:'', returnReason:'' },
-  { id:4,  couponId:6, couponType:'LoanCoupon',      couponNo:'LC20240004', userId:1006, custName:'Zainab Hussain', loanOrderNo:'LN2024060406', repayOrderNo:'',            billNo:'',               lockedAmount:1500, usedAmount:1500, deductType:'Principal', status:'Used',     expiration:'2024-06-30', lockedTime:'2024-06-03 15:15', usedTime:'2024-06-03 15:22', returnedTime:'', returnReason:'' },
-  { id:5,  couponId:7, couponType:'LoanCoupon',      couponNo:'LC20240007', userId:1016, custName:'Nadia Shah',     loanOrderNo:'LN2024060412', repayOrderNo:'',            billNo:'',               lockedAmount:1000, usedAmount:0,    deductType:'Principal', status:'Locked',   expiration:'2024-06-30', lockedTime:'2024-06-03 10:00', usedTime:'', returnedTime:'', returnReason:'' },
-  { id:6,  couponId:8, couponType:'LoanCoupon',      couponNo:'LC20240008', userId:1017, custName:'Omar Farooq',    loanOrderNo:'LN2024060413', repayOrderNo:'',            billNo:'',               lockedAmount:1500, usedAmount:1500, deductType:'Principal', status:'Used',     expiration:'2024-06-30', lockedTime:'2024-05-18 14:25', usedTime:'2024-05-18 14:30', returnedTime:'', returnReason:'' },
+  { id:4,  couponId:6, couponType:'LimitIncreaseCoupon', couponNo:'LI20240004', userId:1006, custName:'Zainab Hussain', loanOrderNo:'LN2024060406', repayOrderNo:'',            billNo:'',               lockedAmount:15000, usedAmount:15000, deductType:'CreditLimit', status:'Used',     expiration:'2024-06-30', lockedTime:'2024-06-03 15:15', usedTime:'2024-06-03 15:22', returnedTime:'', returnReason:'' },
+  { id:5,  couponId:7, couponType:'LimitIncreaseCoupon', couponNo:'LI20240007', userId:1016, custName:'Nadia Shah',     loanOrderNo:'LN2024060412', repayOrderNo:'',            billNo:'',               lockedAmount:10000, usedAmount:0,     deductType:'CreditLimit', status:'Locked',   expiration:'2024-06-30', lockedTime:'2024-06-03 10:00', usedTime:'', returnedTime:'', returnReason:'' },
+  { id:6,  couponId:8, couponType:'LimitIncreaseCoupon', couponNo:'LI20240008', userId:1017, custName:'Omar Farooq',    loanOrderNo:'LN2024060413', repayOrderNo:'',            billNo:'',               lockedAmount:15000, usedAmount:15000, deductType:'CreditLimit', status:'Used',     expiration:'2024-06-30', lockedTime:'2024-05-18 14:25', usedTime:'2024-05-18 14:30', returnedTime:'', returnReason:'' },
   { id:7,  couponId:10,couponType:'RepaymentCoupon', couponNo:'RC20240008', userId:1014, custName:'Rabia Yousuf',   loanOrderNo:'LN2024060412', repayOrderNo:'RP20240604002',billNo:'LB2024060412001', lockedAmount:400,  usedAmount:400,  deductType:'Interest',  status:'Used',     expiration:'2024-06-15', lockedTime:'2024-06-02 08:35', usedTime:'2024-06-02 08:40', returnedTime:'', returnReason:'' },
-  { id:8,  couponId:5, couponType:'LoanCoupon',      couponNo:'LC20240005', userId:1009, custName:'Asad Javed',     loanOrderNo:'',             repayOrderNo:'',            billNo:'',               lockedAmount:300,  usedAmount:0,    deductType:'Principal', status:'Expired',  expiration:'2024-04-30', lockedTime:'', usedTime:'', returnedTime:'2024-04-30 23:59', returnReason:'优惠券到期' },
-  { id:9,  couponId:9, couponType:'LoanCoupon',      couponNo:'LC20240009', userId:1020, custName:'Amira Khan',     loanOrderNo:'',             repayOrderNo:'',            billNo:'',               lockedAmount:0,    usedAmount:0,    deductType:'Principal', status:'Returned', expiration:'2024-06-30', lockedTime:'2024-06-01 10:00', usedTime:'', returnedTime:'2024-06-01 11:00', returnReason:'审核拒绝' },
+  { id:8,  couponId:5, couponType:'LimitIncreaseCoupon', couponNo:'LI20240005', userId:1009, custName:'Asad Javed',     loanOrderNo:'',             repayOrderNo:'',            billNo:'',               lockedAmount:3000, usedAmount:0, deductType:'CreditLimit', status:'Expired',  expiration:'2024-04-30', lockedTime:'', usedTime:'', returnedTime:'2024-04-30 23:59', returnReason:'提额券到期' },
+  { id:9,  couponId:9, couponType:'LimitIncreaseCoupon', couponNo:'LI20240009', userId:1020, custName:'Amira Khan',     loanOrderNo:'',             repayOrderNo:'',            billNo:'',               lockedAmount:5000, usedAmount:0, deductType:'CreditLimit', status:'Returned', expiration:'2024-06-30', lockedTime:'2024-06-01 10:00', usedTime:'', returnedTime:'2024-06-01 11:00', returnReason:'借款审核拒绝' },
   { id:10, couponId:3, couponType:'RepaymentCoupon', couponNo:'RC20240003', userId:1004, custName:'Ayesha Siddiqui',loanOrderNo:'LN2024060404', repayOrderNo:'',            billNo:'',               lockedAmount:300,  usedAmount:0,    deductType:'OverdueFee',status:'Locked',   expiration:'2024-06-30', lockedTime:'2024-06-04 09:00', usedTime:'', returnedTime:'', returnReason:'' },
 ];
 
@@ -4797,7 +4814,7 @@ function renderCouponUsage(list) {
     const c=sc[u.status]||'';
     return `<tr>
       <td><code style="font-size:12px;">${u.couponNo}</code></td>
-      <td><span class="role-tag" style="${u.couponType==='LoanCoupon'?'background:#eef1fd;color:#3a5bdf;':'background:#fce7f3;color:#9d174d;'} font-size:11px;">${u.couponType}</span></td>
+      <td><span class="role-tag" style="${u.couponType==='LimitIncreaseCoupon'?'background:#eef1fd;color:#3a5bdf;':'background:#fce7f3;color:#9d174d;'} font-size:11px;">${currentLang==='zh'?(u.couponType==='LimitIncreaseCoupon'?'提额券':'还款优惠券'):u.couponType}</span></td>
       <td><code style="font-size:12px;">${customerIdDisplay(u)}</code></td>
       <td><code style="font-size:11px;">${u.loanOrderNo||'-'}</code></td>
       <td><code style="font-size:11px;">${u.repayOrderNo||'-'}</code></td>
@@ -4810,10 +4827,10 @@ function renderCouponUsage(list) {
     </tr>`;
   }).join('');
   document.getElementById('coupon-table-container').innerHTML=`
-    <table class="table table-hover mb-0">
+    <div class="table-scroll"><table class="table table-hover mb-0">
       <thead><tr><th>${t('th.couponNo2')}</th><th>${t('th.couponType2')}</th><th>${t('th.customer')}</th><th>${t('th.loanOrderNo')}</th><th>Repay Order</th><th>${t('th.lockedAmt')}</th><th>${t('th.usedAmt')}</th><th>${t('th.deductType2')}</th><th>${t('th.status')}</th><th>${t('th.usedTime')}</th><th>Return Reason</th></tr></thead>
       <tbody>${rows||'<tr><td colspan="11"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
-    </table>`;
+    </table></div>`;
 }
 
 // ============================================================
