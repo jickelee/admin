@@ -322,9 +322,6 @@
       <i class="bi bi-headset"></i> <span data-i18n="nav.collection">Collection</span>
       <span class="badge-count" id="badge-collection">5</span>
     </a>
-    <a class="nav-link-item" onclick="navigate('earlySettlement')" id="nav-earlySettlement">
-      <i class="bi bi-lightning-fill"></i> <span data-i18n="nav.earlySettlement">Early Settlement</span>
-    </a>
     <a class="nav-link-item" onclick="navigate('coupons')">
       <i class="bi bi-ticket-perforated-fill"></i> <span data-i18n="nav.coupons">Coupons</span>
     </a>
@@ -417,7 +414,6 @@
         <div class="col-md-3"><div class="stat-card"><div class="stat-icon" style="background:#f0fdf4;"><i class="bi bi-percent" style="color:#16a34a;"></i></div><div><div class="stat-value">96.8%</div><div class="stat-label" data-i18n="dash.repayRate">On-time Repayment Rate</div></div></div></div>
         <div class="col-md-3"><div class="stat-card"><div class="stat-icon" style="background:#fef2f2;"><i class="bi bi-exclamation-triangle-fill" style="color:#dc2626;"></i></div><div><div class="stat-value">3.2%</div><div class="stat-label" data-i18n="dash.overdueRate">Overdue Rate</div></div></div></div>
         <div class="col-md-3"><div class="stat-card"><div class="stat-icon" style="background:#eff6ff;"><i class="bi bi-check2-all" style="color:#2563eb;"></i></div><div><div class="stat-value">3</div><div class="stat-label" data-i18n="dash.pendingReconcile">Pending Reconciliation</div></div></div></div>
-        <div class="col-md-3"><div class="stat-card"><div class="stat-icon" style="background:#fefce8;"><i class="bi bi-lightning-fill" style="color:#ca8a04;"></i></div><div><div class="stat-value">1</div><div class="stat-label" data-i18n="dash.pendingSettlement">Pending Early Settlement</div></div></div></div>
       </div>
     </div>
 
@@ -837,43 +833,12 @@
         <div class="table-card-header">
           <span class="title" data-i18n="page.repaymentAllocations">Repayment Allocation</span>
           <div class="search-row ms-auto">
-            <input type="text" class="form-control form-control-sm" placeholder="Allocation / Repayment / Voucher / Bill..." style="width:280px;" id="alloc-search" oninput="filterRepaymentAllocations()">
-            <select class="form-select form-select-sm" style="width:140px;" id="alloc-fee-filter" onchange="filterRepaymentAllocations()">
-              <option value="" data-i18n="filter.allFeeTypes">All Fee Types</option>
-              <option value="Principal">Principal</option>
-              <option value="Interest">Interest</option>
-              <option value="ServiceFee">ServiceFee</option>
-              <option value="OverdueFee">OverdueFee</option>
-            </select>
+            <input type="text" class="form-control form-control-sm" placeholder="Repayment / Voucher / Bill..." style="width:280px;" id="alloc-search" oninput="filterRepaymentAllocations()">
           </div>
         </div>
         <div id="alloc-table-container"></div>
         <div class="px-3 py-2 border-top d-flex align-items-center justify-content-between">
           <span style="font-size:12.5px;color:#718096;" id="alloc-count-label"></span>
-          <nav><ul class="pagination pagination-sm mb-0"><li class="page-item disabled"><a class="page-link">Prev</a></li><li class="page-item active"><a class="page-link">1</a></li><li class="page-item disabled"><a class="page-link">Next</a></li></ul></nav>
-        </div>
-      </div>
-    </div>
-
-    <!-- EARLY SETTLEMENT -->
-    <div class="page" id="page-earlySettlement">
-      <div class="table-card">
-        <div class="table-card-header">
-          <span class="title" data-i18n="page.earlySettlement">Early Settlement Records</span>
-          <div class="search-row ms-auto">
-            <input type="text" class="form-control form-control-sm" placeholder="Settlement No / Loan No..." style="width:210px;" id="es-search" oninput="filterEarlySettlement()">
-            <select class="form-select form-select-sm" style="width:130px;" id="es-status-filter" onchange="filterEarlySettlement()">
-              <option value="">All Status</option>
-              <option value="Pending">Pending</option>
-              <option value="Paid">Paid</option>
-              <option value="Cancelled">Cancelled</option>
-              <option value="Expired">Expired</option>
-            </select>
-          </div>
-        </div>
-        <div id="es-table-container"></div>
-        <div class="px-3 py-2 border-top d-flex align-items-center justify-content-between">
-          <span style="font-size:12.5px;color:#718096;" id="es-count-label"></span>
           <nav><ul class="pagination pagination-sm mb-0"><li class="page-item disabled"><a class="page-link">Prev</a></li><li class="page-item active"><a class="page-link">1</a></li><li class="page-item disabled"><a class="page-link">Next</a></li></ul></nav>
         </div>
       </div>
@@ -2266,7 +2231,7 @@ const phraseZh = {
   'BILL INFO':'账单信息','AMOUNT SUMMARY':'金额汇总','Bill No.':'账单号','Loan Voucher':'借款借据','Installment':'期次','Period':'周期','Settled At':'结清时间',
   'Payable Principal':'应还本金','Payable Interest':'应还利息','Payable Service Fee':'应还服务费','Payable Overdue Fee':'应还逾期费','Total Bill Amount':'账单总额','Overdue Days':'逾期天数',
   'REPAYMENT ORDER':'还款订单','PAYMENT DETAILS':'支付信息','Repayment No.':'还款单号','Channel':'渠道','Reconcile':'对账状态','Pay Time':'支付时间','Channel Txn No.':'渠道流水号',
-  'Summary':'摘要','Bill Allocation':'账单分配','Fee Allocation':'费用分配',
+  'Summary':'摘要','Fee Allocation':'费用分配',
   'APPLICATION BASIC INFO':'申请基础信息','IDENTITY VERIFICATION':'身份认证','EMERGENCY CONTACTS':'紧急联系人','CREDIT & WALLET':'授信 & 钱包','BASIC INFO':'基础信息','LOAN INFO':'借款信息','STATUS & PAYMENT':'状态 & 支付',
   'This adjustment requires supervisor approval before taking effect.':'该费用调整需要主管审批后才会生效。',
   'Hold Ctrl/Cmd to select multiple':'按住 Ctrl/Cmd 可多选','Uppercase letters, underscores only. Cannot be changed after creation.':'仅支持大写字母和下划线，创建后不可修改。',
@@ -2370,7 +2335,7 @@ const phraseZh = {
   'Summer Loan Offer':'夏季借款优惠','Apply Loan':'申请借款','Repay Now':'立即还款','Welcome! Get PKR 500 off':'欢迎！立减 PKR 500','Pay Now ⚠':'立即还款 ⚠','Refer & Earn PKR 200':'邀请好友赚取 PKR 200','Home':'首页','My Loans':'我的借款',
   'Summer campaign launch':'夏季活动上线','Updated image URL':'更新图片地址','Paused for review':'暂停并等待审核','Active, URL: summer':'启用，链接：summer',
   'No credit records':'暂无授信记录','No application basic info':'暂无申请基础信息','No identity verification data':'暂无身份认证数据','No emergency contacts':'暂无紧急联系人','No credit change history':'暂无授信变更记录',
-  'No results':'暂无结果','No fee details':'暂无费用明细','No change records':'暂无变更记录','No bill allocation data':'暂无账单分配数据','No fee allocation data':'暂无费用分配数据',
+  'No results':'暂无结果','No fee details':'暂无费用明细','No change records':'暂无变更记录','No fee allocation data':'暂无费用分配数据',
   'Add Loan Product':'新增资金产品','Edit Loan Product':'编辑资金产品','Create Product':'新增产品','Edit Product':'编辑产品','Enable / Disable':'启用 / 禁用','Save Product':'保存产品','Loan Products':'资金产品','Basic Information':'基础信息',
   'Product Name':'产品名称','Currency':'币种','User Type':'适用用户类型','Risk Level':'风险等级','Not Limited':'不限制','Leave blank for no limit':'留空表示不限制','Product description for back-office reference':'后台产品说明',
   'Loan Amount & Term':'借款金额与期限','Minimum Loan Amount':'最低借款金额','Maximum Loan Amount':'最高借款金额','Amount Step':'金额步长','Maximum Total Days':'最大总期限',
@@ -2579,9 +2544,6 @@ let permissions = [
     { id:26, parentId:20, code:'loan:disbursement', name:'Disbursement Records', type:'Menu', route:'/loan/disbursements', sort:6, status:'Active', expanded:true },
       { id:261, parentId:26, code:'loan:disbursement:view', name:'View', type:'Button', route:'', sort:1, status:'Active', expanded:false },
       { id:262, parentId:26, code:'loan:disbursement:retry', name:'Retry Disbursement', type:'Button', route:'', sort:2, status:'Active', expanded:false },
-    { id:27, parentId:20, code:'loan:early_settlement', name:'Early Settlement', type:'Menu', route:'/loan/early-settlement', sort:7, status:'Active', expanded:true },
-      { id:271, parentId:27, code:'loan:early_settlement:view', name:'View', type:'Button', route:'', sort:1, status:'Active', expanded:false },
-      { id:272, parentId:27, code:'loan:early_settlement:confirm', name:'Confirm Settlement', type:'Button', route:'', sort:2, status:'Active', expanded:false },
     { id:28, parentId:20, code:'loan:bill_amount', name:'Bill Amount Details', type:'Menu', route:'/loan/bill-amounts', sort:8, status:'Active', expanded:true },
       { id:281, parentId:28, code:'loan:bill_amount:view', name:'View Amount Details', type:'Button', route:'', sort:1, status:'Active', expanded:false },
       { id:282, parentId:28, code:'loan:bill_amount:change_log', name:'View Change Log', type:'Button', route:'', sort:2, status:'Active', expanded:false },
@@ -2695,7 +2657,6 @@ const pageMap = {
   loanBillFees:   { titleKey:'nav.loanBillFees',   subKey:'page.sub.loanBillFees' },
   disbursements:  { titleKey:'nav.disbursements',  subKey:'page.sub.disbursements' },
   repaymentAllocations: { titleKey:'nav.repaymentAllocations', subKey:'page.sub.repaymentAllocations' },
-  earlySettlement:{ titleKey:'nav.earlySettlement',subKey:'page.sub.earlySettlement' },
   feeAdjust:      { titleKey:'nav.feeAdjust',      subKey:'page.sub.feeAdjust' },
   transactions:   { titleKey:'nav.transactions',   subKey:'page.sub.transactions' },
   reconciliation: { titleKey:'nav.reconciliation', subKey:'page.sub.reconciliation' },
@@ -2735,7 +2696,6 @@ function navigate(page) {
   if (page === 'loanBillFees')    filterLoanBillFees();
   if (page === 'disbursements')   filterDisbursements();
   if (page === 'repaymentAllocations') filterRepaymentAllocations();
-  if (page === 'earlySettlement') filterEarlySettlement();
   if (page === 'feeAdjust')       filterAdjustments();
   if (page === 'transactions')    filterTransactions();
   if (page === 'reconciliation')  filterReconciliation();
@@ -3340,11 +3300,11 @@ function toggleBlacklist(id) {
 // LOAN APPLICATIONS (loan_apply_record)
 // ============================================================
 let loanApplications = [
-  { id:1, applyNo:'AP2024052001', userId:1001, productId:1, loanAmount:15000, couponNo:'LI20240001', couponAmount:5000, term:2, periodDays:15, totalDays:30, dailyRate:'0.75%', overdueRate:'2.3%', totalInterest:3375, totalServiceFee:1125, totalRepayAmount:19500, roundingWaiver:0, displayPayable:19500, startDate:'2024-05-20', endDate:'2024-06-19', quickReview:true, state:'Disbursed', preState:'Passed', riskState:'Approved', rejectReason:'', reviewTime:'2024-05-20 13:52', paymentAccountId:501, disbursementState:'Success', disbursementTime:'2024-05-20 14:02', disbursementNo:'DB2024052001', voucherNo:'LN2024060401', createdAt:'2024-05-20 13:45' },
-  { id:2, applyNo:'AP2024060402', userId:1002, productId:1, loanAmount:8000,  couponNo:'', couponAmount:0, term:2, periodDays:15, totalDays:30, dailyRate:'0.75%', overdueRate:'2.3%', totalInterest:1800, totalServiceFee:600, totalRepayAmount:10400, roundingWaiver:0, displayPayable:10400, startDate:'2024-06-04', endDate:'2024-07-04', quickReview:true, state:'Disbursing', preState:'Passed', riskState:'Approved', rejectReason:'', reviewTime:'2024-06-04 09:45', paymentAccountId:502, disbursementState:'Pending', disbursementTime:'', disbursementNo:'DB2024060401', voucherNo:'', createdAt:'2024-06-04 09:36' },
-  { id:3, applyNo:'AP2024060403', userId:1007, productId:1, loanAmount:10000, couponNo:'', couponAmount:0, term:2, periodDays:15, totalDays:30, dailyRate:'0.75%', overdueRate:'2.3%', totalInterest:2250, totalServiceFee:750, totalRepayAmount:13000, roundingWaiver:0, displayPayable:13000, startDate:'2024-06-04', endDate:'2024-07-04', quickReview:false, state:'PendingReview', preState:'Passed', riskState:'Pending', rejectReason:'', reviewTime:'', paymentAccountId:507, disbursementState:'-', disbursementTime:'', disbursementNo:'', voucherNo:'', createdAt:'2024-06-04 10:55' },
-  { id:4, applyNo:'AP2024060404', userId:1011, productId:1, loanAmount:6000, couponNo:'', couponAmount:0, term:2, periodDays:15, totalDays:30, dailyRate:'0.75%', overdueRate:'2.3%', totalInterest:1350, totalServiceFee:450, totalRepayAmount:7800, roundingWaiver:0, displayPayable:7800, startDate:'2024-06-04', endDate:'2024-07-04', quickReview:false, state:'Rejected', preState:'Passed', riskState:'Rejected', rejectReason:'Risk score below product threshold', reviewTime:'2024-06-04 11:20', paymentAccountId:511, disbursementState:'-', disbursementTime:'', disbursementNo:'', voucherNo:'', createdAt:'2024-06-04 11:05' },
-  { id:5, applyNo:'AP2024060405', userId:1015, productId:1, loanAmount:9000, couponNo:'LI20240009', couponAmount:5000, term:2, periodDays:15, totalDays:30, dailyRate:'0.75%', overdueRate:'2.3%', totalInterest:2025, totalServiceFee:675, totalRepayAmount:11700, roundingWaiver:0, displayPayable:11700, startDate:'2024-06-04', endDate:'2024-07-04', quickReview:true, state:'DisbursementFailed', preState:'Passed', riskState:'Approved', rejectReason:'', reviewTime:'2024-06-04 11:35', paymentAccountId:515, disbursementState:'Failed', disbursementTime:'', disbursementNo:'DB2024060403', voucherNo:'', createdAt:'2024-06-04 11:28' },
+  { id:1, applyNo:'AP2024052001', userId:1001, productId:1, loanAmount:15000, couponNo:'LI20240001', couponAmount:5000, term:2, periodDays:15, totalDays:30, dailyInterestRate:'0.75%', dailyServiceRate:'0.25%', dailyOverdueRate:'2.3%', totalInterest:3375, totalServiceFee:1125, totalRepayAmount:19500, roundingWaiver:0, displayPayable:19500, startDate:'2024-05-20', endDate:'2024-06-19', quickReview:true, state:'Disbursed', preState:'Passed', riskState:'Approved', rejectReason:'', reviewTime:'2024-05-20 13:52', paymentAccountId:501, disbursementState:'Success', disbursementTime:'2024-05-20 14:02', disbursementNo:'DB2024052001', createdAt:'2024-05-20 13:45' },
+  { id:2, applyNo:'AP2024060402', userId:1002, productId:1, loanAmount:8000,  couponNo:'', couponAmount:0, term:2, periodDays:15, totalDays:30, dailyInterestRate:'0.75%', dailyServiceRate:'0.25%', dailyOverdueRate:'2.3%', totalInterest:1800, totalServiceFee:600, totalRepayAmount:10400, roundingWaiver:0, displayPayable:10400, startDate:'2024-06-04', endDate:'2024-07-04', quickReview:true, state:'Disbursing', preState:'Passed', riskState:'Approved', rejectReason:'', reviewTime:'2024-06-04 09:45', paymentAccountId:502, disbursementState:'Pending', disbursementTime:'', disbursementNo:'DB2024060401', createdAt:'2024-06-04 09:36' },
+  { id:3, applyNo:'AP2024060403', userId:1007, productId:1, loanAmount:10000, couponNo:'', couponAmount:0, term:2, periodDays:15, totalDays:30, dailyInterestRate:'0.75%', dailyServiceRate:'0.25%', dailyOverdueRate:'2.3%', totalInterest:2250, totalServiceFee:750, totalRepayAmount:13000, roundingWaiver:0, displayPayable:13000, startDate:'2024-06-04', endDate:'2024-07-04', quickReview:false, state:'PendingReview', preState:'Passed', riskState:'Pending', rejectReason:'', reviewTime:'', paymentAccountId:507, disbursementState:'-', disbursementTime:'', disbursementNo:'', createdAt:'2024-06-04 10:55' },
+  { id:4, applyNo:'AP2024060404', userId:1011, productId:1, loanAmount:6000, couponNo:'', couponAmount:0, term:2, periodDays:15, totalDays:30, dailyInterestRate:'0.75%', dailyServiceRate:'0.25%', dailyOverdueRate:'2.3%', totalInterest:1350, totalServiceFee:450, totalRepayAmount:7800, roundingWaiver:0, displayPayable:7800, startDate:'2024-06-04', endDate:'2024-07-04', quickReview:false, state:'Rejected', preState:'Passed', riskState:'Rejected', rejectReason:'Risk score below product threshold', reviewTime:'2024-06-04 11:20', paymentAccountId:511, disbursementState:'-', disbursementTime:'', disbursementNo:'', createdAt:'2024-06-04 11:05' },
+  { id:5, applyNo:'AP2024060405', userId:1015, productId:1, loanAmount:9000, couponNo:'LI20240009', couponAmount:5000, term:2, periodDays:15, totalDays:30, dailyInterestRate:'0.75%', dailyServiceRate:'0.25%', dailyOverdueRate:'2.3%', totalInterest:2025, totalServiceFee:675, totalRepayAmount:11700, roundingWaiver:0, displayPayable:11700, startDate:'2024-06-04', endDate:'2024-07-04', quickReview:true, state:'DisbursementFailed', preState:'Passed', riskState:'Approved', rejectReason:'', reviewTime:'2024-06-04 11:35', paymentAccountId:515, disbursementState:'Failed', disbursementTime:'', disbursementNo:'DB2024060403', createdAt:'2024-06-04 11:28' },
 ];
 
 function applicationBadge(s) {
@@ -3384,8 +3344,8 @@ function viewApplicationDetail(no) {
   document.querySelector('#loanDetailModal .modal-title').textContent=currentLang==='zh'?'借款申请详情':'Loan Application Detail';
   document.getElementById('loan-detail-body').innerHTML=`<div class="row g-3">
     <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">APPLICATION</div>${detailRow('Application No.',a.applyNo)}${detailRow('Customer ID','#'+a.userId)}${detailRow('Product ID','#'+a.productId)}${detailRow('Loan Amount',fmtMoney(a.loanAmount))}${detailRow('Limit Coupon',a.couponNo?`${a.couponNo} / ${fmtMoney(a.couponAmount)}`:'-')}${detailRow('Term',a.term+' × '+a.periodDays+' days')}${detailRow('Total Days',a.totalDays)}${detailRow('Applied At',a.createdAt)}</div></div>
-    <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">REVIEW & DISBURSEMENT</div>${detailRow('Application Status',a.state)}${detailRow('Pre-check Status',a.preState)}${detailRow('Risk Status',a.riskState)}${detailRow('Quick Review',a.quickReview?'Yes':'No')}${detailRow('Review Time',a.reviewTime||'-')}${detailRow('Reject Reason',a.rejectReason||'-')}${detailRow('Payment Account ID',a.paymentAccountId?'#'+a.paymentAccountId:'-')}${detailRow('Disbursement Status',a.disbursementState)}${detailRow('Disbursement No.',a.disbursementNo||'-')}${detailRow('Voucher No.',a.voucherNo||'-')}</div></div>
-    <div class="col-12"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">AMOUNT SNAPSHOT</div><div class="row"><div class="col-md-6">${detailRow('Daily Interest Rate',a.dailyRate)}${detailRow('Overdue Rate',a.overdueRate)}${detailRow('Total Interest',fmtMoney(a.totalInterest))}${detailRow('Total Service Fee',fmtMoney(a.totalServiceFee))}</div><div class="col-md-6">${detailRow('Theoretical Repayable',fmtMoney(a.totalRepayAmount))}${detailRow('Rounding Waiver',fmtMoney(a.roundingWaiver))}${detailRow('Display Payable',fmtMoney(a.displayPayable))}${detailRow('Schedule',a.startDate+' ~ '+a.endDate)}</div></div></div></div>
+    <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">REVIEW & DISBURSEMENT</div>${detailRow('Application Status',a.state)}${detailRow('Pre-check Status',a.preState)}${detailRow('Risk Status',a.riskState)}${detailRow('Quick Review',a.quickReview?'Yes':'No')}${detailRow('Review Time',a.reviewTime||'-')}${detailRow('Reject Reason',a.rejectReason||'-')}${detailRow('Payment Account ID',a.paymentAccountId?'#'+a.paymentAccountId:'-')}${detailRow('Disbursement Status',a.disbursementState)}${detailRow('Disbursement No.',a.disbursementNo||'-')}${detailRow('Disbursement Time',a.disbursementTime||'-')}</div></div>
+    <div class="col-12"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">AMOUNT SNAPSHOT</div><div class="row"><div class="col-md-6">${detailRow('Daily Interest Rate',a.dailyInterestRate)}${detailRow('Daily Service Rate',a.dailyServiceRate)}${detailRow('Daily Overdue Rate',a.dailyOverdueRate)}${detailRow('Total Interest',fmtMoney(a.totalInterest))}${detailRow('Total Service Fee',fmtMoney(a.totalServiceFee))}</div><div class="col-md-6">${detailRow('Theoretical Repayable',fmtMoney(a.totalRepayAmount))}${detailRow('Rounding Waiver',fmtMoney(a.roundingWaiver))}${detailRow('Display Payable',fmtMoney(a.displayPayable))}${detailRow('Schedule',a.startDate+' ~ '+a.endDate)}</div></div></div></div>
   </div>`;
   new bootstrap.Modal(document.getElementById('loanDetailModal')).show();
 }
@@ -3441,8 +3401,13 @@ loanOrders.forEach((l,index)=>Object.assign(l,{
   feeCapAmount:l.amount,
   feeCapped:false,
   settledType:l.status==='Paid'?'NORMAL':'NONE',
-  settledTime:l.status==='Paid'?l.finalDue:'-'
+  settledTime:l.status==='Paid'?l.finalDue:'-',
+  dailyInterestRate:l.dailyRate,
+  dailyServiceRate:'0.25%',
+  dailyOverdueRate:l.overdueRate,
+  batchingTime:l.disbursedAt==='-'?'-':'2024-06-04 00:05'
 }));
+loanOrders.forEach(l=>{ delete l.dailyRate; delete l.overdueRate; });
 const loanVouchers=loanOrders.filter(l=>!['PendingApproval','PendingDisbursement','Rejected'].includes(l.status));
 
 const loanStatusColor = {
@@ -3536,24 +3501,6 @@ function printContract() {
   setTimeout(() => { w.print(); w.close(); }, 500);
 }
 
-function openCoolingOffSettlementEntry(no) {
-  const loan = loanOrders.find(x => x.no === no);
-  if (!loan || loan.status !== 'CoolingOff') return;
-  const wasOpen = !!loan.earlySettlementEntryOpen;
-  loan.earlySettlementEntryOpen = true;
-  toast(wasOpen ? localizePhrase('Settlement entry already open') : localizePhrase('Settlement entry opened'));
-  renderLoans();
-  const detailModalEl = document.getElementById('loanDetailModal');
-  const detailModal = bootstrap.Modal.getInstance(detailModalEl);
-  if (detailModal) detailModal.hide();
-  navigate('earlySettlement');
-  const search = document.getElementById('es-search');
-  if (search) {
-    search.value = no;
-    filterEarlySettlement();
-  }
-}
-
 function filterLoans() {
   const q = document.getElementById('loan-search').value.toLowerCase();
   const st = document.getElementById('loan-status-filter').value;
@@ -3566,18 +3513,6 @@ function filterLoans() {
 function viewLoanDetail(no) {
   const l = loanOrders.find(x=>x.no===no);
   document.querySelector('#loanDetailModal .modal-title').textContent=currentLang==='zh'?'借款借据详情':'Loan Voucher Detail';
-  const coolingOffEntry = l.status === 'CoolingOff' ? `
-    <div class="col-12">
-      <div style="background:#f8fafc;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-        <div>
-          <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:4px;">${localizePhrase('Early Settlement')}</div>
-          <div style="font-size:13px;color:#64748b;">${localizePhrase(l.earlySettlementEntryOpen ? 'Settlement Entry Open' : 'Settlement Entry Closed')}</div>
-        </div>
-        <button class="btn btn-sm ${l.earlySettlementEntryOpen ? 'btn-outline-success' : 'btn-outline-warning'} action-btn" onclick="openCoolingOffSettlementEntry('${l.no}')">
-          <i class="bi ${l.earlySettlementEntryOpen ? 'bi-box-arrow-up-right' : 'bi-unlock'}"></i> ${localizePhrase(l.earlySettlementEntryOpen ? 'View Settlement Entry' : 'Open Settlement Entry')}
-        </button>
-      </div>
-    </div>` : '';
   document.getElementById('loan-detail-body').innerHTML = `
     <div class="row g-3">
       <div class="col-md-6">
@@ -3588,7 +3523,7 @@ function viewLoanDetail(no) {
           ${detailRow('Borrow Count', formatBorrowCount(l.borrowCount))}
           ${detailRow('Loan Amount', fmtMoney(l.amount))}
           ${detailRow('Installments', l.installments + ' × ' + l.periodDays + ' days')}
-          ${detailRow('Daily Interest Rate', l.dailyRate)}${detailRow('Overdue Rate', l.overdueRate)}
+          ${detailRow('Daily Interest Rate', l.dailyInterestRate)}${detailRow('Daily Service Rate', l.dailyServiceRate)}${detailRow('Daily Overdue Rate', l.dailyOverdueRate)}
           ${detailRow('Total Interest', fmtMoney(l.totalInterest))}${detailRow('Total Service Fee', fmtMoney(l.totalFee))}
           ${detailRow('Theoretical Repayable', fmtMoney(l.totalRepay))}${detailRow('Rounding Waiver',fmtMoney(l.waiverAmount))}
         </div>
@@ -3599,12 +3534,11 @@ function viewLoanDetail(no) {
           ${detailRow('Voucher Status', l.status)}${detailRow('Schedule',l.firstDue+' ~ '+l.finalDue)}
           ${detailRow('Cooling-off Start',l.coolingOffStart)}${detailRow('Cooling-off End',l.coolingOffEnd)}
           ${detailRow('Fee Cap Amount',fmtMoney(l.feeCapAmount))}${detailRow('Fee Capped',l.feeCapped?'Yes':'No')}
-          ${detailRow('Settlement Type',l.settledType)}${detailRow('Settled At',l.settledTime)}
+          ${detailRow('Settlement Type',l.settledType)}${detailRow('Settled At',l.settledTime)}${detailRow('Last Batching Time',l.batchingTime)}
         </div>
       </div>
       <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:12px;">PAID BREAKDOWN</div>${detailRow('Paid Principal',fmtMoney(l.paidPrincipal))}${detailRow('Paid Interest',fmtMoney(l.paidInterest))}${detailRow('Paid Service Fee',fmtMoney(l.paidServiceFee))}${detailRow('Paid Overdue Fee',fmtMoney(l.paidOverdueFee))}${detailRow('Repayment Coupon',fmtMoney(l.repayCouponAmount))}${detailRow('Total Paid',fmtMoney(l.paidAmount))}</div></div>
       <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:12px;">REMAINING BREAKDOWN</div>${detailRow('Remaining Principal',fmtMoney(l.remainingPrincipal))}${detailRow('Remaining Interest',fmtMoney(l.remainingInterest))}${detailRow('Remaining Service Fee',fmtMoney(l.remainingServiceFee))}${detailRow('Remaining Overdue Fee',fmtMoney(l.remainingOverdueFee))}${detailRow('Total Remaining',fmtMoney(l.remainingAmount))}</div></div>
-      ${coolingOffEntry}
       <div class="col-12">
         ${buildContractCard(l)}
       </div>
@@ -3621,7 +3555,7 @@ function buildContractCard(l) {
     : `<span class="status-badge badge-pending" style="font-size:11px;">${localizePhrase('Not Generated')}</span>`;
   const actionBtns = hasContract ? `
     <div style="display:flex;gap:8px;flex-shrink:0;">
-      <button class="btn btn-sm btn-primary action-btn" onclick="viewContract('${l.no}','Customer #${l.userId}',${l.amount},${l.installments},${l.periodDays},'${l.disbursedAt}','${l.finalDue}','${l.dailyRate}',${l.totalRepay})">
+      <button class="btn btn-sm btn-primary action-btn" onclick="viewContract('${l.no}','Customer #${l.userId}',${l.amount},${l.installments},${l.periodDays},'${l.disbursedAt}','${l.finalDue}','${l.dailyInterestRate}',${l.totalRepay})">
         <i class="bi bi-file-earmark-text-fill me-1"></i>${localizePhrase('View Contract')}
       </button>
       <button class="btn btn-sm btn-outline-secondary action-btn" onclick="downloadContract('${contractNo}')">
@@ -3661,42 +3595,45 @@ let repayments = [
   { no:'RP20240604008', loanNo:'LN2024060015', custName:'Tariq Mehmood',   mobile:'+92 321 1122334', amount:8000,  type:'Manual',         channel:'Manual',    walletAcc:'-',                       txnNo:'MANUAL001',  status:'Success', payTime:'2024-03-10 16:00', reconcile:'ManualConfirmed' },
 ];
 
-const repaymentExtraFields = [
-  { loanStatus:'Paid', dueDate:'2024-05-15 23:59', amountAfterDueDate:7800, installmentNo:'1/2', remainingInstallments:'1', remainingInstallmentAmount:7800, nextPaymentDueDate:'2024-05-30 23:59', rrn:'405161005120', channelFee:23.40 },
-  { loanStatus:'Paid', dueDate:'2024-05-30 23:59', amountAfterDueDate:7800, installmentNo:'2/2', remainingInstallments:'0', remainingInstallmentAmount:0, nextPaymentDueDate:'-', rrn:'405310950330', channelFee:23.40 },
-  { loanStatus:'Paid', dueDate:'2024-05-30 23:59', amountAfterDueDate:0, installmentNo:'1/4', remainingInstallments:'3', remainingInstallmentAmount:14625, nextPaymentDueDate:'2024-06-14 23:59', rrn:'405301130120', channelFee:14.63 },
-  { loanStatus:'Paid', dueDate:'2024-06-14 23:59', amountAfterDueDate:0, installmentNo:'2/4', remainingInstallments:'2', remainingInstallmentAmount:9750, nextPaymentDueDate:'2024-06-29 23:59', rrn:'406141015230', channelFee:14.63 },
-  { loanStatus:'Overdue', dueDate:'2024-06-04 23:59', amountAfterDueDate:8000, installmentNo:'1/4', remainingInstallments:'3', remainingInstallmentAmount:24000, nextPaymentDueDate:'2024-06-19 23:59', rrn:'406091422810', channelFee:24.00 },
-  { loanStatus:'Paid', dueDate:'2024-06-02 23:59', amountAfterDueDate:0, installmentNo:'1/2', remainingInstallments:'1', remainingInstallmentAmount:6000, nextPaymentDueDate:'2024-06-17 23:59', rrn:'406020840920', channelFee:18.00 },
-  { loanStatus:'Pending', dueDate:'2024-06-19 23:59', amountAfterDueDate:0, installmentNo:'ALL', remainingInstallments:'0', remainingInstallmentAmount:0, nextPaymentDueDate:'-', rrn:'', channelFee:144.00 },
-  { loanStatus:'Overdue', dueDate:'2024-05-05 23:59', amountAfterDueDate:7200, installmentNo:'1/2', remainingInstallments:'2', remainingInstallmentAmount:14400, nextPaymentDueDate:'2024-05-20 23:59', rrn:'', channelFee:21.60 },
-  { loanStatus:'Pending', dueDate:'2024-06-19 23:59', amountAfterDueDate:0, installmentNo:'1/2', remainingInstallments:'2', remainingInstallmentAmount:19500, nextPaymentDueDate:'2024-06-19 23:59', rrn:'', channelFee:29.25 },
-  { loanStatus:'PartiallyPaid', dueDate:'2024-04-27 23:59', amountAfterDueDate:10000, installmentNo:'2/4', remainingInstallments:'2', remainingInstallmentAmount:15000, nextPaymentDueDate:'2024-05-12 23:59', rrn:'404281310460', channelFee:30.00 },
-  { loanStatus:'Paid', dueDate:'2024-06-06 23:59', amountAfterDueDate:0, installmentNo:'1/2', remainingInstallments:'1', remainingInstallmentAmount:7800, nextPaymentDueDate:'2024-06-21 23:59', rrn:'406060900370', channelFee:23.40 },
-  { loanStatus:'Paid', dueDate:'2024-03-10 23:59', amountAfterDueDate:0, installmentNo:'1/2', remainingInstallments:'1', remainingInstallmentAmount:8000, nextPaymentDueDate:'2024-03-25 23:59', rrn:'MANUAL-RRN-001', channelFee:0 },
-];
-
-repayments.forEach((r,index)=>{
+repayments = repayments.map((r,index)=>{
   const voucher=loanOrders.find(l=>l.no===r.loanNo);
-  r.voucherNo=r.loanNo;
-  r.userId=voucher?.userId||1000+index+1;
-  r.payableAmount=r.payableAmount||r.amount;
-  r.repayAmount=r.amount;
-  r.differenceAmount=r.differenceAmount||0;
-  r.couponNo=r.couponNo||'';
-  r.couponAmount=r.couponAmount||0;
-  r.payState=r.status;
-  r.matchState=r.reconcile;
-  r.repayStartTime=r.payTime==='-'?'-':r.payTime;
-  r.repaySuccessTime=r.status==='Success'?r.payTime:'-';
-  r.expireTime=r.status==='Pending'?'2024-06-05 23:59':'-';
-  Object.assign(r, repaymentExtraFields[index]);
+  const stateMap={Pending:0,Success:1,Failed:2,Cancelled:3};
+  const repaymentTypeMap={Normal:'normal',EarlySettlement:'early_settlement',Partial:'normal',Overdue:'normal',Manual:'normal'};
+  return {
+    id:index+1,
+    repaymentNo:r.no,
+    voucherNo:r.loanNo,
+    userId:voucher?.userId||1000+index+1,
+    remainingAmount:voucher?.remainingAmount||r.amount,
+    payableAmount:r.amount,
+    couponNo:'',
+    couponAmount:0,
+    repaySuccessTime:r.status==='Success'?r.payTime:'-',
+    repaymentType:repaymentTypeMap[r.type]||'normal',
+    partible:r.type==='Partial'?1:0,
+    state:stateMap[r.status]??0,
+    paymentInstitutionCode:r.channel,
+    payerName:r.custName,
+    payerAccount:r.walletAcc,
+    repaidAmount:r.amount,
+    callbackTime:r.status==='Success'?r.payTime:'-',
+    repaidTime:r.status==='Success'?r.payTime:'-',
+    payTxnNo:r.txnNo,
+    failReason:r.status==='Failed'?'Payment channel rejected the transaction':'',
+    expireTime:r.status==='Pending'?'2024-06-05 23:59':'-',
+    isDel:0,
+    createTime:r.payTime==='-'?'2024-06-04 10:00':r.payTime,
+    modifyTime:r.payTime==='-'?'2024-06-04 10:00':r.payTime
+  };
 });
 
 const repayStatusColor = { Success:'badge-active', Pending:'badge-pending', Failed:'badge-disabled', Cancelled:'background:#f1f5f9;color:#64748b;' };
 function repayBadge(s) {
   const c = repayStatusColor[s] || '';
   return `<span class="status-badge ${c.includes(':')?'':c}" style="${c.includes(':')?c:''}">${localizePhrase(s)}</span>`;
+}
+function repaymentStateLabel(state) {
+  return ({0:'Pending',1:'Success',2:'Failed',3:'Cancelled'})[state] || 'Pending';
 }
 function repaymentLoanStatusBadge(s) {
   const styles = { Paid:'badge-active', Pending:'badge-pending', Overdue:'badge-disabled', PartiallyPaid:'background:#eff6ff;color:#2563eb;' };
@@ -3715,32 +3652,25 @@ function renderRepayments(list) {
   document.getElementById('repay-count-label').textContent = t('count.showing')(data.length,data.length);
   const rows = data.map(r => `
     <tr>
-      <td><code style="font-size:12px;">${r.no}</code></td>
+      <td><code style="font-size:12px;">${r.repaymentNo}</code></td>
       <td><code style="font-size:12px;">${r.voucherNo}</code></td>
       <td><strong>#${r.userId}</strong></td>
+      <td style="font-weight:600;">${repaymentMoney(r.remainingAmount)}</td>
       <td style="font-weight:600;">${repaymentMoney(r.payableAmount)}</td>
-      <td style="font-weight:600;color:#16a34a;">${repaymentMoney(r.repayAmount)}</td>
-      <td style="font-weight:600;color:${r.amountAfterDueDate?'#dc2626':'#94a3b8'};">${repaymentMoney(r.amountAfterDueDate)}</td>
-      <td style="color:${r.differenceAmount?'#dc2626':'#94a3b8'};">${repaymentMoney(r.differenceAmount)}</td>
-      <td>${repaymentLoanStatusBadge(r.loanStatus)}</td>
-      <td style="font-size:12px;color:#64748b;">${r.dueDate}</td>
-      <td><span class="role-tag">${r.installmentNo}</span></td>
-      <td style="text-align:center;font-weight:600;">${r.remainingInstallments}</td>
-      <td style="font-weight:600;">${repaymentMoney(r.remainingInstallmentAmount)}</td>
-      <td style="font-size:12px;color:#64748b;">${r.nextPaymentDueDate}</td>
-      <td><span class="role-tag" style="font-size:11px;">${r.type}</span></td>
-      <td><span class="role-tag" style="font-size:11px;">${r.channel}</span></td>
-      <td><code style="font-size:11px;letter-spacing:.3px;">${r.rrn||'-'}</code></td>
-      <td style="font-weight:600;color:#64748b;">${repaymentMoney(r.channelFee)}</td>
-      <td>${repayBadge(r.status)}</td>
-      <td>${repaymentReconcileBadge(r.reconcile)}</td>
-      <td style="font-size:12px;color:#94a3b8;">${r.payTime}</td>
-      <td><button class="btn btn-sm btn-outline-primary action-btn" onclick="viewRepaymentDetail('${r.no}')"><i class="bi bi-eye"></i> ${t('btn.detail')}</button></td>
+      <td style="font-weight:600;color:#16a34a;">${repaymentMoney(r.repaidAmount)}</td>
+      <td>${r.couponNo?`<code>${r.couponNo}</code><div>${repaymentMoney(r.couponAmount)}</div>`:'-'}</td>
+      <td><span class="role-tag" style="font-size:11px;">${r.repaymentType}</span></td>
+      <td>${r.partible?'<span class="status-badge badge-active">Yes</span>':'No'}</td>
+      <td><span class="role-tag" style="font-size:11px;">${r.paymentInstitutionCode}</span></td>
+      <td>${repayBadge(repaymentStateLabel(r.state))}</td>
+      <td><code style="font-size:11px;letter-spacing:.3px;">${r.payTxnNo||'-'}</code></td>
+      <td style="font-size:12px;color:#94a3b8;">${r.repaidTime}</td>
+      <td><button class="btn btn-sm btn-outline-primary action-btn" onclick="viewRepaymentDetail('${r.repaymentNo}')"><i class="bi bi-eye"></i> ${t('btn.detail')}</button></td>
     </tr>`).join('');
   document.getElementById('repay-table-container').innerHTML = `
-    <div class="table-scroll"><table class="table table-hover mb-0" style="min-width:3300px;">
-      <thead><tr><th>${t('th.repaymentNo')}</th><th>Voucher No.</th><th>Customer ID</th><th>${t('th.totalPayableAmount')}</th><th>Paid</th><th>${t('th.amountAfterDueDate')}</th><th>Difference</th><th>${t('th.loanStatus')}</th><th>${t('th.dueDate')}</th><th>${t('th.currentInstallment')}</th><th>${t('th.remainingInstallments')}</th><th>${t('th.remainingInstallmentAmount')}</th><th>${t('th.nextPaymentDueDate')}</th><th>${t('th.repayType')}</th><th>${t('th.channel')}</th><th>${t('th.repaymentRrn')}</th><th>${t('th.channelFee')}</th><th>${t('th.status')}</th><th>${t('th.reconcile')}</th><th>${t('th.payTime')}</th><th>${t('th.actions')}</th></tr></thead>
-      <tbody>${rows || '<tr><td colspan="21"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+    <div class="table-scroll"><table class="table table-hover mb-0" style="min-width:1900px;">
+      <thead><tr><th>${t('th.repaymentNo')}</th><th>Voucher No.</th><th>Customer ID</th><th>Remaining Amount</th><th>Payable Amount</th><th>Repaid Amount</th><th>Coupon</th><th>${t('th.repayType')}</th><th>Partible</th><th>Payment Institution</th><th>${t('th.status')}</th><th>Payment Txn No.</th><th>Repaid Time</th><th>${t('th.actions')}</th></tr></thead>
+      <tbody>${rows || '<tr><td colspan="14"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
     </table></div>`;
 }
 
@@ -3749,8 +3679,8 @@ function filterRepayments() {
   const st = document.getElementById('repay-status-filter').value;
   const ch = document.getElementById('repay-channel-filter').value;
   renderRepayments(repayments.filter(r =>
-    (!q || r.no.toLowerCase().includes(q) || r.voucherNo.toLowerCase().includes(q) || r.rrn.toLowerCase().includes(q) || String(r.userId).includes(q)) &&
-    (!st || r.status === st) && (!ch || r.channel === ch)
+    (!q || r.repaymentNo.toLowerCase().includes(q) || r.voucherNo.toLowerCase().includes(q) || r.payTxnNo.toLowerCase().includes(q) || String(r.userId).includes(q)) &&
+    (!st || repaymentStateLabel(r.state) === st) && (!ch || r.paymentInstitutionCode === ch)
   ));
 }
 
@@ -4053,12 +3983,10 @@ Object.assign(i18n.zh, {
   'page.sub.reconciliation':'查看文件批次，标记差异为处理中或已处理'
 });
 Object.assign(i18n.en, {
-  'filter.searchRepayPh':'Repayment / Voucher / Customer ID / RRN...',
-  'th.totalPayableAmount':'Total Payable Amount','th.loanStatus':'Loan Status','th.amountAfterDueDate':'Amount Paid After Due Date','th.currentInstallment':'Current Installment','th.remainingInstallments':'Remaining Installments','th.remainingInstallmentAmount':'Remaining Amount','th.nextPaymentDueDate':'Next Payment Due Date','th.repaymentRrn':'Repayment RRN'
+  'filter.searchRepayPh':'Repayment / Voucher / Customer ID / Payment Txn...'
 });
 Object.assign(i18n.zh, {
-  'filter.searchRepayPh':'还款单号 / 借据号 / 客户 ID / RRN...',
-  'th.totalPayableAmount':'应还总金额','th.loanStatus':'账单状态','th.amountAfterDueDate':'到期日之后还款金额','th.currentInstallment':'当前分期数','th.remainingInstallments':'剩余分期数','th.remainingInstallmentAmount':'剩余金额','th.nextPaymentDueDate':'下次还款日','th.repaymentRrn':'还款检索码'
+  'filter.searchRepayPh':'还款单号 / 借据号 / 客户 ID / 支付流水号...'
 });
 Object.assign(i18n.en,{
   'nav.loanBillFees':'Bill Amount Details','nav.repaymentAllocations':'Repayment Allocation',
@@ -4089,32 +4017,32 @@ Object.assign(i18n.zh,{
 // REPAYMENT SCHEDULES (loan_voucher_bill)
 // ============================================================
 let loanBills = [
-  { id:1,  billNo:'LB2024060401001', loanOrderNo:'LN2024060401', userId:1001, custName:'Ali Hassan',       installmentNo:1, totalInstallments:2, periodStart:'2024-05-20', dueDate:'2024-06-04', payablePrincipal:7500,  payableInterest:1687.5, payableServiceFee:562.5, payableOverdueFee:0,    billAmount:9750,  paidAmount:0,    remainingAmount:9750,  overdueDays:0,  isOverdue:0, status:'Active',             settledTime:'' },
-  { id:2,  billNo:'LB2024060401002', loanOrderNo:'LN2024060401', userId:1001, custName:'Ali Hassan',       installmentNo:2, totalInstallments:2, periodStart:'2024-06-04', dueDate:'2024-06-19', payablePrincipal:7500,  payableInterest:1687.5, payableServiceFee:562.5, payableOverdueFee:0,    billAmount:9750,  paidAmount:0,    remainingAmount:9750,  overdueDays:0,  isOverdue:0, status:'Active',             settledTime:'' },
-  { id:3,  billNo:'LB2024060404001', loanOrderNo:'LN2024060404', userId:1004, custName:'Ayesha Siddiqui',  installmentNo:1, totalInstallments:2, periodStart:'2024-05-10', dueDate:'2024-05-25', payablePrincipal:2500,  payableInterest:562.5,  payableServiceFee:187.5, payableOverdueFee:1150, billAmount:4400,  paidAmount:0,    remainingAmount:4400,  overdueDays:10, isOverdue:1, status:'Overdue',            settledTime:'' },
-  { id:4,  billNo:'LB2024060404002', loanOrderNo:'LN2024060404', userId:1004, custName:'Ayesha Siddiqui',  installmentNo:2, totalInstallments:2, periodStart:'2024-05-25', dueDate:'2024-06-09', payablePrincipal:2500,  payableInterest:562.5,  payableServiceFee:187.5, payableOverdueFee:0,    billAmount:3250,  paidAmount:0,    remainingAmount:3250,  overdueDays:0,  isOverdue:0, status:'Active',             settledTime:'' },
-  { id:5,  billNo:'LB2024060405001', loanOrderNo:'LN2024060405', userId:1005, custName:'Usman Khan',       installmentNo:1, totalInstallments:2, periodStart:'2024-05-01', dueDate:'2024-05-16', payablePrincipal:6000,  payableInterest:1350,   payableServiceFee:450,   payableOverdueFee:0,    billAmount:7800,  paidAmount:7800, remainingAmount:0,     overdueDays:0,  isOverdue:0, status:'Paid',               settledTime:'2024-05-16 10:05' },
-  { id:6,  billNo:'LB2024060405002', loanOrderNo:'LN2024060405', userId:1005, custName:'Usman Khan',       installmentNo:2, totalInstallments:2, periodStart:'2024-05-16', dueDate:'2024-05-31', payablePrincipal:6000,  payableInterest:1350,   payableServiceFee:450,   payableOverdueFee:0,    billAmount:7800,  paidAmount:7800, remainingAmount:0,     overdueDays:0,  isOverdue:0, status:'Paid',               settledTime:'2024-05-31 09:50' },
-  { id:7,  billNo:'LB2024060406001', loanOrderNo:'LN2024060406', userId:1006, custName:'Zainab Hussain',   installmentNo:1, totalInstallments:4, periodStart:'2024-06-03', dueDate:'2024-06-18', payablePrincipal:6250,  payableInterest:1406.3, payableServiceFee:468.8, payableOverdueFee:0,    billAmount:8125,  paidAmount:0,    remainingAmount:8125,  overdueDays:0,  isOverdue:0, status:'Active',             settledTime:'' },
-  { id:8,  billNo:'LB2024060408001', loanOrderNo:'LN2024060408', userId:1008, custName:'Hina Baig',        installmentNo:1, totalInstallments:4, periodStart:'2024-04-20', dueDate:'2024-05-05', payablePrincipal:4500,  payableInterest:1012.5, payableServiceFee:337.5, payableOverdueFee:5520, billAmount:11370, paidAmount:7200, remainingAmount:4170,  overdueDays:30, isOverdue:1, status:'OverduePartiallyPaid',settledTime:'' },
-  { id:9,  billNo:'LB2024060408002', loanOrderNo:'LN2024060408', userId:1008, custName:'Hina Baig',        installmentNo:2, totalInstallments:4, periodStart:'2024-05-05', dueDate:'2024-05-20', payablePrincipal:4500,  payableInterest:1012.5, payableServiceFee:337.5, payableOverdueFee:6210, billAmount:12060, paidAmount:0,    remainingAmount:12060, overdueDays:15, isOverdue:1, status:'Overdue',            settledTime:'' },
-  { id:10, billNo:'LB2024060409001', loanOrderNo:'LN2024060409', userId:1009, custName:'Asad Javed',       installmentNo:1, totalInstallments:2, periodStart:'2024-05-15', dueDate:'2024-05-30', payablePrincipal:3750,  payableInterest:843.75, payableServiceFee:281.25,payableOverdueFee:0,    billAmount:4875,  paidAmount:4875, remainingAmount:0,     overdueDays:0,  isOverdue:0, status:'Paid',               settledTime:'2024-05-30 11:30' },
-  { id:11, billNo:'LB2024060409002', loanOrderNo:'LN2024060409', userId:1009, custName:'Asad Javed',       installmentNo:2, totalInstallments:2, periodStart:'2024-05-30', dueDate:'2024-06-14', payablePrincipal:3750,  payableInterest:843.75, payableServiceFee:281.25,payableOverdueFee:0,    billAmount:4875,  paidAmount:4875, remainingAmount:0,     overdueDays:0,  isOverdue:0, status:'Paid',               settledTime:'2024-06-14 10:15' },
-  { id:12, billNo:'LB2024060410001', loanOrderNo:'LN2024060410', userId:1010, custName:'Mahnoor Tariq',    installmentNo:1, totalInstallments:4, periodStart:'2024-06-04', dueDate:'2024-06-19', payablePrincipal:7500,  payableInterest:1687.5, payableServiceFee:562.5, payableOverdueFee:0,    billAmount:9750,  paidAmount:0,    remainingAmount:9750,  overdueDays:0,  isOverdue:0, status:'CoolingOff',         settledTime:'' },
-  { id:13, billNo:'LB2024060413001', loanOrderNo:'LN2024060413', userId:1017, custName:'Omar Farooq',      installmentNo:1, totalInstallments:4, periodStart:'2024-04-15', dueDate:'2024-04-30', payablePrincipal:6250,  payableInterest:1406.3, payableServiceFee:468.8, payableOverdueFee:10125,billAmount:18250, paidAmount:10000,remainingAmount:8250,  overdueDays:35, isOverdue:1, status:'OverduePartiallyPaid',settledTime:'' },
-  { id:14, billNo:'LB2024060412001', loanOrderNo:'LN2024060412', userId:1014, custName:'Rabia Yousuf',     installmentNo:1, totalInstallments:4, periodStart:'2024-05-18', dueDate:'2024-06-02', payablePrincipal:3750,  payableInterest:843.75, payableServiceFee:281.25,payableOverdueFee:0,    billAmount:4875,  paidAmount:4875, remainingAmount:0,     overdueDays:0,  isOverdue:0, status:'Paid',               settledTime:'2024-06-02 08:40' },
-  { id:15, billNo:'LB2024060411001', loanOrderNo:'LN2024060411', userId:1012, custName:'Saba Noor',        installmentNo:1, totalInstallments:2, periodStart:'2024-05-22', dueDate:'2024-06-06', payablePrincipal:6000,  payableInterest:1350,   payableServiceFee:450,   payableOverdueFee:0,    billAmount:7800,  paidAmount:7800, remainingAmount:0,     overdueDays:0,  isOverdue:0, status:'Paid',               settledTime:'2024-06-06 09:00' },
+  { id:1,  billNo:'LB2024060401001', loanOrderNo:'LN2024060401', userId:1001, custName:'Ali Hassan',       installmentNo:1, totalInstallments:2, periodStart:'2024-05-20', dueDate:'2024-06-04', payablePrincipal:7500,  payableInterestFee:1687.5, payableServiceFee:562.5, payableOverdueFee:0,    billAmount:9750,  paidAmount:0,    remainingAmount:9750,  overdueDays:0, status:'Active',             settledTime:'' },
+  { id:2,  billNo:'LB2024060401002', loanOrderNo:'LN2024060401', userId:1001, custName:'Ali Hassan',       installmentNo:2, totalInstallments:2, periodStart:'2024-06-04', dueDate:'2024-06-19', payablePrincipal:7500,  payableInterestFee:1687.5, payableServiceFee:562.5, payableOverdueFee:0,    billAmount:9750,  paidAmount:0,    remainingAmount:9750,  overdueDays:0, status:'Active',             settledTime:'' },
+  { id:3,  billNo:'LB2024060404001', loanOrderNo:'LN2024060404', userId:1004, custName:'Ayesha Siddiqui',  installmentNo:1, totalInstallments:2, periodStart:'2024-05-10', dueDate:'2024-05-25', payablePrincipal:2500,  payableInterestFee:562.5,  payableServiceFee:187.5, payableOverdueFee:1150, billAmount:4400,  paidAmount:0,    remainingAmount:4400,  overdueDays:10, status:'Overdue',            settledTime:'' },
+  { id:4,  billNo:'LB2024060404002', loanOrderNo:'LN2024060404', userId:1004, custName:'Ayesha Siddiqui',  installmentNo:2, totalInstallments:2, periodStart:'2024-05-25', dueDate:'2024-06-09', payablePrincipal:2500,  payableInterestFee:562.5,  payableServiceFee:187.5, payableOverdueFee:0,    billAmount:3250,  paidAmount:0,    remainingAmount:3250,  overdueDays:0, status:'Active',             settledTime:'' },
+  { id:5,  billNo:'LB2024060405001', loanOrderNo:'LN2024060405', userId:1005, custName:'Usman Khan',       installmentNo:1, totalInstallments:2, periodStart:'2024-05-01', dueDate:'2024-05-16', payablePrincipal:6000,  payableInterestFee:1350,   payableServiceFee:450,   payableOverdueFee:0,    billAmount:7800,  paidAmount:7800, remainingAmount:0,     overdueDays:0, status:'Paid',               settledTime:'2024-05-16 10:05' },
+  { id:6,  billNo:'LB2024060405002', loanOrderNo:'LN2024060405', userId:1005, custName:'Usman Khan',       installmentNo:2, totalInstallments:2, periodStart:'2024-05-16', dueDate:'2024-05-31', payablePrincipal:6000,  payableInterestFee:1350,   payableServiceFee:450,   payableOverdueFee:0,    billAmount:7800,  paidAmount:7800, remainingAmount:0,     overdueDays:0, status:'Paid',               settledTime:'2024-05-31 09:50' },
+  { id:7,  billNo:'LB2024060406001', loanOrderNo:'LN2024060406', userId:1006, custName:'Zainab Hussain',   installmentNo:1, totalInstallments:4, periodStart:'2024-06-03', dueDate:'2024-06-18', payablePrincipal:6250,  payableInterestFee:1406.3, payableServiceFee:468.8, payableOverdueFee:0,    billAmount:8125,  paidAmount:0,    remainingAmount:8125,  overdueDays:0, status:'Active',             settledTime:'' },
+  { id:8,  billNo:'LB2024060408001', loanOrderNo:'LN2024060408', userId:1008, custName:'Hina Baig',        installmentNo:1, totalInstallments:4, periodStart:'2024-04-20', dueDate:'2024-05-05', payablePrincipal:4500,  payableInterestFee:1012.5, payableServiceFee:337.5, payableOverdueFee:5520, billAmount:11370, paidAmount:7200, remainingAmount:4170,  overdueDays:30, status:'OverduePartiallyPaid',settledTime:'' },
+  { id:9,  billNo:'LB2024060408002', loanOrderNo:'LN2024060408', userId:1008, custName:'Hina Baig',        installmentNo:2, totalInstallments:4, periodStart:'2024-05-05', dueDate:'2024-05-20', payablePrincipal:4500,  payableInterestFee:1012.5, payableServiceFee:337.5, payableOverdueFee:6210, billAmount:12060, paidAmount:0,    remainingAmount:12060, overdueDays:15, status:'Overdue',            settledTime:'' },
+  { id:10, billNo:'LB2024060409001', loanOrderNo:'LN2024060409', userId:1009, custName:'Asad Javed',       installmentNo:1, totalInstallments:2, periodStart:'2024-05-15', dueDate:'2024-05-30', payablePrincipal:3750,  payableInterestFee:843.75, payableServiceFee:281.25,payableOverdueFee:0,    billAmount:4875,  paidAmount:4875, remainingAmount:0,     overdueDays:0, status:'Paid',               settledTime:'2024-05-30 11:30' },
+  { id:11, billNo:'LB2024060409002', loanOrderNo:'LN2024060409', userId:1009, custName:'Asad Javed',       installmentNo:2, totalInstallments:2, periodStart:'2024-05-30', dueDate:'2024-06-14', payablePrincipal:3750,  payableInterestFee:843.75, payableServiceFee:281.25,payableOverdueFee:0,    billAmount:4875,  paidAmount:4875, remainingAmount:0,     overdueDays:0, status:'Paid',               settledTime:'2024-06-14 10:15' },
+  { id:12, billNo:'LB2024060410001', loanOrderNo:'LN2024060410', userId:1010, custName:'Mahnoor Tariq',    installmentNo:1, totalInstallments:4, periodStart:'2024-06-04', dueDate:'2024-06-19', payablePrincipal:7500,  payableInterestFee:1687.5, payableServiceFee:562.5, payableOverdueFee:0,    billAmount:9750,  paidAmount:0,    remainingAmount:9750,  overdueDays:0, status:'CoolingOff',         settledTime:'' },
+  { id:13, billNo:'LB2024060413001', loanOrderNo:'LN2024060413', userId:1017, custName:'Omar Farooq',      installmentNo:1, totalInstallments:4, periodStart:'2024-04-15', dueDate:'2024-04-30', payablePrincipal:6250,  payableInterestFee:1406.3, payableServiceFee:468.8, payableOverdueFee:10125,billAmount:18250, paidAmount:10000,remainingAmount:8250,  overdueDays:35, status:'OverduePartiallyPaid',settledTime:'' },
+  { id:14, billNo:'LB2024060412001', loanOrderNo:'LN2024060412', userId:1014, custName:'Rabia Yousuf',     installmentNo:1, totalInstallments:4, periodStart:'2024-05-18', dueDate:'2024-06-02', payablePrincipal:3750,  payableInterestFee:843.75, payableServiceFee:281.25,payableOverdueFee:0,    billAmount:4875,  paidAmount:4875, remainingAmount:0,     overdueDays:0, status:'Paid',               settledTime:'2024-06-02 08:40' },
+  { id:15, billNo:'LB2024060411001', loanOrderNo:'LN2024060411', userId:1012, custName:'Saba Noor',        installmentNo:1, totalInstallments:2, periodStart:'2024-05-22', dueDate:'2024-06-06', payablePrincipal:6000,  payableInterestFee:1350,   payableServiceFee:450,   payableOverdueFee:0,    billAmount:7800,  paidAmount:7800, remainingAmount:0,     overdueDays:0, status:'Paid',               settledTime:'2024-06-06 09:00' },
 ];
 
 loanBills.forEach(b=>{
   b.voucherNo=b.voucherNo||b.loanOrderNo;
   let paid=b.paidAmount;
   b.paidPrincipal=Math.min(paid,b.payablePrincipal); paid-=b.paidPrincipal;
-  b.paidInterest=Math.min(Math.max(0,paid),b.payableInterest); paid-=b.paidInterest;
+  b.paidInterest=Math.min(Math.max(0,paid),b.payableInterestFee); paid-=b.paidInterest;
   b.paidServiceFee=Math.min(Math.max(0,paid),b.payableServiceFee); paid-=b.paidServiceFee;
   b.paidOverdueFee=Math.min(Math.max(0,paid),b.payableOverdueFee);
   b.remainingPrincipal=Math.max(0,b.payablePrincipal-b.paidPrincipal);
-  b.remainingInterest=Math.max(0,b.payableInterest-b.paidInterest);
+  b.remainingInterestFee=Math.max(0,b.payableInterestFee-b.paidInterest);
   b.remainingServiceFee=Math.max(0,b.payableServiceFee-b.paidServiceFee);
   b.remainingOverdueFee=Math.max(0,b.payableOverdueFee-b.paidOverdueFee);
   b.settledType=b.status==='Paid'?'NORMAL':'NONE';
@@ -4136,7 +4064,7 @@ function renderBills(list) {
       <td style="font-weight:600;">PKR ${b.billAmount.toLocaleString()}</td>
       <td style="color:#16a34a;">PKR ${b.paidAmount.toLocaleString()}</td>
       <td style="color:${b.remainingAmount>0?'#dc2626':'#16a34a'};">PKR ${b.remainingAmount.toLocaleString()}</td>
-      <td>${b.isOverdue?`<span class="status-badge badge-disabled">${b.overdueDays}d</span>`:'<span style="color:#94a3b8;font-size:12px;">-</span>'}</td>
+      <td>${b.overdueDays>0?`<span class="status-badge badge-disabled">${b.overdueDays}d</span>`:'<span style="color:#94a3b8;font-size:12px;">-</span>'}</td>
       <td>${badge}</td>
       <td><button class="btn btn-sm btn-outline-primary action-btn" onclick="viewBillDetail(${b.id})"><i class="bi bi-eye"></i> ${t('btn.detail')}</button></td>
     </tr>`;
@@ -4151,7 +4079,7 @@ function filterBills() {
   const q=document.getElementById('bill-search').value.toLowerCase();
   const s=document.getElementById('bill-status-filter').value;
   const o=document.getElementById('bill-overdue-filter').value;
-  renderBills(loanBills.filter(b=>(!q||b.billNo.toLowerCase().includes(q)||b.voucherNo.toLowerCase().includes(q)||String(b.userId).includes(q))&&(!s||b.status===s)&&(o===''||String(b.isOverdue)===o)));
+  renderBills(loanBills.filter(b=>(!q||b.billNo.toLowerCase().includes(q)||b.voucherNo.toLowerCase().includes(q)||String(b.userId).includes(q))&&(!s||b.status===s)&&(o===''||String(b.overdueDays>0?1:0)===o)));
 }
 // viewBillDetail: replaced by tabbed version below
 
@@ -4173,40 +4101,29 @@ let disbursements = [
   { id:12, disbNo:'DB2024022001', loanOrderNo:'LN2024060415', userId:1013, custName:'Tariq Mehmood',  channel:'JazzCash',  walletName:'JazzCash',  walletAcc:'+92 321 1122334', amount:20000, channelTxnNo:'JC20240201009900', status:'Success', failReason:'', requestTime:'2024-02-01 09:58', successTime:'2024-02-01 10:02', callbackTime:'2024-02-01 10:03' },
 ];
 
-const disbursementChannelFees = [45,60,15,36,75,90,54,0,22.50,75,0,60];
-const disbursementRRNs = ['405201340210','405251031340','405100901560','405011102780','406031522900','406041143120','404201002340','','405150931560','404150802780','','402011002900'];
-const disbursementReconcileStatuses = ['Matched','Matched','Matched','Matched','Matched','Pending','Matched','Pending','Unmatched','Matched','Pending','Matched'];
-disbursements.forEach((d,index)=>{
+disbursements.forEach(d=>{
   const app=loanApplications.find(a=>a.disbursementNo===d.disbNo);
   d.applyNo=app?.applyNo||d.applyNo||('AP-'+d.disbNo);
   d.applyAmount=app?.loanAmount||d.amount;
   d.disbursedAmount=d.status==='Success'?d.amount:0;
   d.paymentAccountId=app?.paymentAccountId||'-';
-  d.channelFee=disbursementChannelFees[index] ?? 0;
-  d.rrn=disbursementRRNs[index] || '';
-  d.reconcileStatus=disbursementReconcileStatuses[index] || 'Pending';
 });
 
 function renderDisbursements(list) {
   const data=list||disbursements;
   document.getElementById('disb-count-label').textContent=t('count.showing')(data.length,data.length);
   const sc={Success:'badge-active',Pending:'badge-pending',Failed:'badge-disabled',Cancelled:'background:#f1f5f9;color:#64748b;'};
-  const rc={Matched:'badge-active',Pending:'badge-pending',Unmatched:'badge-disabled',AmountMismatch:'background:#fff7ed;color:#c2410c;'};
   const rows=data.map(d=>{
     const c=sc[d.status]||'';
-    const r=rc[d.reconcileStatus]||'';
     return `<tr>
       <td><code style="font-size:12px;">${d.disbNo}</code></td>
       <td><code style="font-size:11.5px;color:#94a3b8;">${d.applyNo}</code></td>
       <td><strong>#${d.userId}</strong></td>
       <td>PKR ${d.applyAmount.toLocaleString()}</td>
       <td style="font-weight:600;">PKR ${d.disbursedAmount.toLocaleString()}</td>
-      <td style="font-weight:600;color:#64748b;">PKR ${d.channelFee.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
       <td><span class="role-tag" style="font-size:11px;">${d.channel}</span></td>
       <td style="font-size:11.5px;color:#64748b;font-family:monospace;">${d.paymentAccountId==="-"?'-':'#'+d.paymentAccountId}</td>
       <td><code style="font-size:11px;">${d.channelTxnNo||'-'}</code></td>
-      <td><code style="font-size:11px;letter-spacing:.3px;">${d.rrn||'-'}</code></td>
-      <td><span class="status-badge ${r.includes(':')?'':r}" style="${r.includes(':')?r:''}">${localizePhrase(d.reconcileStatus)}</span></td>
       <td><span class="status-badge ${c.includes(':')?'':c}" style="${c.includes(':')?c:''}">${d.status}</span></td>
       <td style="font-size:12px;color:#94a3b8;">${d.successTime||'-'}</td>
       <td style="font-size:12px;color:#94a3b8;">${d.callbackTime||'-'}</td>
@@ -4215,16 +4132,16 @@ function renderDisbursements(list) {
     </tr>`;
   }).join('');
   document.getElementById('disb-table-container').innerHTML=`
-    <div class="table-scroll"><table class="table table-hover mb-0" style="min-width:2350px;">
-      <thead><tr><th>${t('th.disbNo')}</th><th>Application No.</th><th>Customer ID</th><th>Applied Amount</th><th>Disbursed Amount</th><th>${t('th.channelFee')}</th><th>${t('th.channel')}</th><th>Payment Account ID</th><th>${t('th.txnNo')}</th><th>${t('th.rrn')}</th><th>${t('th.reconcileStatus')}</th><th>${t('th.status')}</th><th>${t('th.successTime')}</th><th>${t('th.callbackTime')}</th><th>${t('th.failReason')}</th><th>${t('th.requestTime')}</th></tr></thead>
-      <tbody>${rows||'<tr><td colspan="16"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+    <div class="table-scroll"><table class="table table-hover mb-0" style="min-width:1850px;">
+      <thead><tr><th>${t('th.disbNo')}</th><th>Application No.</th><th>Customer ID</th><th>Applied Amount</th><th>Disbursed Amount</th><th>${t('th.channel')}</th><th>Payment Account ID</th><th>${t('th.txnNo')}</th><th>${t('th.status')}</th><th>${t('th.successTime')}</th><th>${t('th.callbackTime')}</th><th>${t('th.failReason')}</th><th>${t('th.requestTime')}</th></tr></thead>
+      <tbody>${rows||'<tr><td colspan="13"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
     </table></div>`;
 }
 function filterDisbursements() {
   const q=document.getElementById('disb-search').value.toLowerCase();
   const s=document.getElementById('disb-status-filter').value;
   const c=document.getElementById('disb-channel-filter').value;
-  renderDisbursements(disbursements.filter(d=>(!q||d.disbNo.toLowerCase().includes(q)||d.applyNo.toLowerCase().includes(q)||d.rrn.toLowerCase().includes(q)||String(d.userId).includes(q))&&(!s||d.status===s)&&(!c||d.channel===c)));
+  renderDisbursements(disbursements.filter(d=>(!q||d.disbNo.toLowerCase().includes(q)||d.applyNo.toLowerCase().includes(q)||d.channelTxnNo.toLowerCase().includes(q)||String(d.userId).includes(q))&&(!s||d.status===s)&&(!c||d.channel===c)));
 }
 
 // ============================================================
@@ -4682,16 +4599,56 @@ const creditBasicInfo = {
   1006:{education:'Master',marital:'Married',children:'2',occupation:'Salaried',monthlyIncome:'50000-100000',industry:'IT',payrollPeriod:'Monthly',workYears:'8',existingLoan:false,totalLoanAmount:0},
   1010:{education:'Master',marital:'Married',children:'1',occupation:'Business',monthlyIncome:'100000+',industry:'Real Estate',payrollPeriod:'Monthly',workYears:'15+',existingLoan:false,totalLoanAmount:0},
 };
+Object.entries(creditBasicInfo).forEach(([userId,bi],index)=>Object.assign(bi,{
+  id:index+1,
+  userId:Number(userId),
+  creditId:100+index,
+  educationLevel:bi.education,
+  maritalStatus:bi.marital,
+  childrenCount:bi.children,
+  email:customers.find(c=>c.id===Number(userId))?.name.toLowerCase().replace(/\s+/g,'.')+'@example.com',
+  payPeriod:bi.payrollPeriod,
+  salaryDay:'25',
+  isDel:0,
+  createTime:'2024-01-15 09:50',
+  modifyTime:'2024-01-15 10:20'
+}));
+Object.values(creditBasicInfo).forEach(bi=>{ delete bi.education; delete bi.marital; delete bi.children; delete bi.payrollPeriod; });
 const creditIdentity = {
   1001:{name:'Ali Hassan',idCard:'4220112345671',frontImg:'id_front_1001.jpg',backImg:'id_back_1001.jpg',province:'Sindh',city:'Karachi',address:'House 12, Block A, Gulshan',birthday:'1990-05-15',issueDate:'2018-01-01',gender:'Male'},
   1004:{name:'Ayesha Siddiqui',idCard:'4210498765431',frontImg:'id_front_1004.jpg',backImg:'id_back_1004.jpg',province:'Sindh',city:'Karachi',address:'Flat 5, Tower B, DHA',birthday:'1995-08-22',issueDate:'2019-03-15',gender:'Female'},
   1006:{name:'Zainab Hussain',idCard:'4230678901234',frontImg:'id_front_1006.jpg',backImg:'id_back_1006.jpg',province:'Sindh',city:'Karachi',address:'House 45, Clifton',birthday:'1988-12-10',issueDate:'2017-06-01',gender:'Female'},
 };
+Object.entries(creditIdentity).forEach(([userId,identity],index)=>Object.assign(identity,{
+  id:index+1,
+  userId:Number(userId),
+  creditId:100+index,
+  residentialProvinceCode:identity.province,
+  residentialCityCode:identity.city,
+  residentialAddress:identity.address,
+  icIssueDate:identity.issueDate,
+  ocrResult:'VERIFIED',
+  isDel:0,
+  createTime:'2024-01-15 10:00',
+  modifyTime:'2024-01-15 10:10'
+}));
+Object.values(creditIdentity).forEach(identity=>{ delete identity.province; delete identity.city; delete identity.address; delete identity.issueDate; });
 const creditContacts = {
   1001:[{relationship:'Spouse',name:'Fatima Ali',mobile:'+92 321 9876543'},{relationship:'Parent',name:'Hassan Ali',mobile:'+92 333 1234567'}],
   1004:[{relationship:'Spouse',name:'Ahmed Siddiqui',mobile:'+92 300 5556666'},{relationship:'Sibling',name:'Iqra Siddiqui',mobile:'+92 321 2223333'}],
   1006:[{relationship:'Spouse',name:'Ali Hussain',mobile:'+92 311 8899001'},{relationship:'Parent',name:'Anwar Hussain',mobile:'+92 345 6677889'}],
 };
+Object.entries(creditContacts).forEach(([userId,contacts])=>contacts.forEach((contact,index)=>Object.assign(contact,{
+  id:Number(userId)*10+index,
+  userId:Number(userId),
+  creditId:Number(userId),
+  contactName:contact.name,
+  contactMobile:contact.mobile,
+  isDel:0,
+  createTime:'2024-01-15 10:05',
+  modifyTime:'2024-01-15 10:05'
+})));
+Object.values(creditContacts).flat().forEach(contact=>{ delete contact.name; delete contact.mobile; });
 const customerWalletBindings = [
   {id:'7c62aef8-8db8-4b82-a127-cfc2cde21001',customer_id:1001,payment_institution_id:'EASYPAISA',account_identifier_masked:'+92 321 **** 1234',account_status:'VERIFIED',verification_time:'2024-06-04 09:18:25 PKT',created_at:'2024-01-15 10:25:00+05',updated_at:'2024-06-04 09:18:25+05'},
   {id:'79b2cfd3-9d8b-4f21-885d-bf2516de1002',customer_id:1001,payment_institution_id:'JAZZCASH',account_identifier_masked:'+92 300 **** 8821',account_status:'VERIFIED',verification_time:'2024-05-28 16:40:11 PKT',created_at:'2024-03-02 12:08:00+05',updated_at:'2024-05-28 16:40:11+05'},
@@ -4706,6 +4663,20 @@ const creditChangeLogs = {
   1004:[{id:1,changeType:'CREDIT_APPROVED',changeAmount:10000,beforeTotal:0,afterTotal:10000,loanOrderNo:'',remark:'Initial credit approval',createdAt:'2024-03-12 11:45'},{id:2,changeType:'CREDIT_USED',changeAmount:5000,beforeTotal:10000,afterTotal:10000,loanOrderNo:'LN2024060404',remark:'Loan disbursed',createdAt:'2024-05-10 09:01'}],
   1006:[{id:1,changeType:'CREDIT_APPROVED',changeAmount:30000,beforeTotal:0,afterTotal:30000,loanOrderNo:'',remark:'Initial credit approval',createdAt:'2024-01-10 16:30'},{id:2,changeType:'CREDIT_USED',changeAmount:25000,beforeTotal:30000,afterTotal:30000,loanOrderNo:'LN2024060406',remark:'Loan disbursed',createdAt:'2024-06-03 15:22'}],
 };
+Object.entries(creditChangeLogs).forEach(([userId,logs])=>logs.forEach(log=>Object.assign(log,{
+  userId:Number(userId),
+  creditId:Number(userId),
+  beforeUsedCredit:log.changeType==='CREDIT_USED'?0:0,
+  beforeLockedCredit:0,
+  afterUsedCredit:log.changeType==='CREDIT_USED'?log.changeAmount:0,
+  afterLockedCredit:0,
+  beforeTotalCredit:log.beforeTotal,
+  afterTotalCredit:log.afterTotal,
+  loanRepayNo:'',
+  createTime:log.createdAt,
+  modifyTime:log.createdAt
+})));
+Object.values(creditChangeLogs).flat().forEach(log=>{ delete log.beforeTotal; delete log.afterTotal; delete log.createdAt; });
 
 function walletStatusBadge(status) {
   const styles = {
@@ -4750,14 +4721,16 @@ function renderCustDetailTab(tab,id) {
     const biHtml = bi ? `<div style="border-top:1px solid #e8ecf4;padding-top:14px;margin-top:4px;">
       <div style="font-size:12px;font-weight:700;color:#94a3b8;margin-bottom:8px;">APPLICATION BASIC INFO</div>
       <div class="row g-2" style="font-size:13px;">
-        <div class="col-md-3">${detailRow('Education',bi.education)}</div>
-        <div class="col-md-3">${detailRow('Marital',bi.marital)}</div>
-        <div class="col-md-3">${detailRow('Children',bi.children)}</div>
+        <div class="col-md-3">${detailRow('Education',bi.educationLevel)}</div>
+        <div class="col-md-3">${detailRow('Marital',bi.maritalStatus)}</div>
+        <div class="col-md-3">${detailRow('Children',bi.childrenCount)}</div>
         <div class="col-md-3">${detailRow('Occupation',bi.occupation)}</div>
         <div class="col-md-3">${detailRow('Income (PKR)',bi.monthlyIncome)}</div>
         <div class="col-md-3">${detailRow('Industry',bi.industry)}</div>
-        <div class="col-md-3">${detailRow('Payroll Period',bi.payrollPeriod)}</div>
+        <div class="col-md-3">${detailRow('Pay Period',bi.payPeriod)}</div>
         <div class="col-md-3">${detailRow('Work Years',bi.workYears)}</div>
+        <div class="col-md-6">${detailRow('Email',bi.email)}</div>
+        <div class="col-md-6">${detailRow('Salary Day',bi.salaryDay)}</div>
         <div class="col-12">${detailRow('Existing Other Loans',bi.existingLoan?'Yes — PKR '+bi.totalLoanAmount:'No')}</div>
       </div></div>` : '';
     body.innerHTML = biHtml || '<div class="empty-state"><i class="bi bi-file-earmark-x"></i>No application basic info</div>';
@@ -4771,7 +4744,7 @@ function renderCustDetailTab(tab,id) {
       <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">IDENTITY VERIFICATION</div>
       <div class="row g-2">
         <div class="col-md-6">${detailRow('Name',sensitiveValue('name',id2.name))}${detailRow('ID Card No.',sensitiveValue('id',id2.idCard))}${detailRow('Birthday',id2.birthday)}${detailRow('Gender',id2.gender)}</div>
-        <div class="col-md-6">${detailRow('ID Issue Date',id2.issueDate)}${detailRow('Province',id2.province)}${detailRow('City',id2.city)}${detailRow('Address',id2.address)}</div>
+        <div class="col-md-6">${detailRow('ID Issue Date',id2.icIssueDate)}${detailRow('Province Code',id2.residentialProvinceCode)}${detailRow('City Code',id2.residentialCityCode)}${detailRow('Address',id2.residentialAddress)}${detailRow('OCR Result',id2.ocrResult)}</div>
         <div class="col-12 mt-2"><div style="display:flex;gap:12px;flex-wrap:wrap;">
           <div style="background:#e2e8f0;border-radius:8px;padding:12px 20px;font-size:12px;color:#64748b;"><i class="bi bi-card-image me-2"></i>Front: ${id2.frontImg}</div>
           <div style="background:#e2e8f0;border-radius:8px;padding:12px 20px;font-size:12px;color:#64748b;"><i class="bi bi-card-image me-2"></i>Back: ${id2.backImg}</div>
@@ -4787,10 +4760,10 @@ function renderCustDetailTab(tab,id) {
       <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">EMERGENCY CONTACTS</div>
       ${contacts.map((ct,i)=>`<div class="mb-3 pb-3 ${i<contacts.length-1?'border-bottom':''}">
         <div class="d-flex gap-4">
-          <div class="${customerDetailSensitiveVisible ? '' : 'masked-value'}" style="font-weight:600;font-size:14px;">${sensitiveValue('name',ct.name)}</div>
+          <div class="${customerDetailSensitiveVisible ? '' : 'masked-value'}" style="font-weight:600;font-size:14px;">${sensitiveValue('name',ct.contactName)}</div>
           <span class="role-tag">${ct.relationship}</span>
         </div>
-        <div class="${customerDetailSensitiveVisible ? '' : 'masked-value'}" style="font-size:13px;color:#64748b;margin-top:4px;"><i class="bi bi-phone me-1"></i>${sensitiveValue('mobile',ct.mobile)}</div>
+        <div class="${customerDetailSensitiveVisible ? '' : 'masked-value'}" style="font-size:13px;color:#64748b;margin-top:4px;"><i class="bi bi-phone me-1"></i>${sensitiveValue('mobile',ct.contactMobile)}</div>
       </div>`).join('')}
     </div>`;
   } else if(tab==='wallet') {
@@ -4858,18 +4831,23 @@ function renderCustDetailTab(tab,id) {
         }).join('')}</tbody>
       </table></div>` : '';
     const logsHtml = logs&&logs.length ? `<div style="font-size:12px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin:16px 0 8px;">${t('section.creditChanges')} (${logs.length})</div>
-    <table class="table table-hover mb-0" style="font-size:13.5px;">
-      <thead><tr><th>Time</th><th>Type</th><th>Change Amount</th><th>Before Total</th><th>After Total</th><th>Linked Order</th><th>Remark</th></tr></thead>
+    <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:13px;min-width:1500px;">
+      <thead><tr><th>Time</th><th>Type</th><th>Change Amount</th><th>Before Total</th><th>Before Used</th><th>Before Locked</th><th>After Total</th><th>After Used</th><th>After Locked</th><th>Loan Order</th><th>Repayment No.</th><th>Remark</th></tr></thead>
       <tbody>${logs.map(l=>`<tr>
-        <td style="color:#94a3b8;font-size:12px;white-space:nowrap;">${l.createdAt}</td>
+        <td style="color:#94a3b8;font-size:12px;white-space:nowrap;">${l.createTime}</td>
         <td><span class="role-tag" style="font-size:11px;">${l.changeType}</span></td>
         <td style="font-weight:600;">${l.changeAmount>0?'+':''}PKR ${l.changeAmount.toLocaleString()}</td>
-        <td>PKR ${l.beforeTotal.toLocaleString()}</td>
-        <td>PKR ${l.afterTotal.toLocaleString()}</td>
+        <td>PKR ${l.beforeTotalCredit.toLocaleString()}</td>
+        <td>PKR ${l.beforeUsedCredit.toLocaleString()}</td>
+        <td>PKR ${l.beforeLockedCredit.toLocaleString()}</td>
+        <td>PKR ${l.afterTotalCredit.toLocaleString()}</td>
+        <td>PKR ${l.afterUsedCredit.toLocaleString()}</td>
+        <td>PKR ${l.afterLockedCredit.toLocaleString()}</td>
         <td><code style="font-size:11.5px;">${l.loanOrderNo||'-'}</code></td>
+        <td><code style="font-size:11.5px;">${l.loanRepayNo||'-'}</code></td>
         <td style="font-size:12.5px;color:#64748b;">${l.remark}</td>
       </tr>`).join('')}</tbody>
-    </table>` : '';
+    </table></div>` : '';
     body.innerHTML = recsHtml + logsHtml || '<div class="empty-state"><i class="bi bi-clock-history"></i>No credit records</div>';
   }
 }
@@ -4960,9 +4938,9 @@ function togglePaymentInstitutionStatus(id) {
 // LOAN PRODUCTS
 // ============================================================
 let loanProducts = [
-  { id:1, productName:'15-day 2-installment Cash Loan', status:1, currency:'PKR', minLoanAmount:2000, maxLoanAmount:30000, amountStep:1000, minInstallmentCount:2, maxInstallmentCount:2, defaultInstallmentCount:2, periodDays:15, maxTotalDays:30, dailyInterestRate:0.006750, dailyServiceFeeRate:0.000750, overdueRate:0.020000, coolingOffHours:24, coolingOffFeeFree:1, earlyRepayEnabled:1, earlyRepayOpenDays:3, earlySettlementEnabled:1, partialRepayEnabled:1, minPartialRepayAmount:500, maxOverdueDays:43, maxOverdueFeeCapRate:1, repayAllocationRule:'OVERDUE_FEE_FIRST', roundingRule:'FLOOR_TO_INTEGER', userType:'ALL', riskLevel:'NORMAL', sortNo:10, remark:'Main cash loan product', createdAt:'2024-01-01 09:00', updatedAt:'2024-06-01 10:20' },
-  { id:2, productName:'15-day Flexible Installment Loan', status:1, currency:'PKR', minLoanAmount:5000, maxLoanAmount:100000, amountStep:1000, minInstallmentCount:2, maxInstallmentCount:6, defaultInstallmentCount:2, periodDays:15, maxTotalDays:90, dailyInterestRate:0.005500, dailyServiceFeeRate:0.001000, overdueRate:0.020000, coolingOffHours:24, coolingOffFeeFree:1, earlyRepayEnabled:1, earlyRepayOpenDays:3, earlySettlementEnabled:1, partialRepayEnabled:1, minPartialRepayAmount:null, maxOverdueDays:43, maxOverdueFeeCapRate:1, repayAllocationRule:'OVERDUE_FEE_FIRST', roundingRule:'FLOOR_TO_INTEGER', userType:'OLD', riskLevel:'LOW', sortNo:20, remark:'For returning low-risk customers', createdAt:'2024-04-15 11:00', updatedAt:'2024-06-03 16:45' },
-  { id:3, productName:'New Customer Trial Loan', status:0, currency:'PKR', minLoanAmount:2000, maxLoanAmount:10000, amountStep:1000, minInstallmentCount:1, maxInstallmentCount:2, defaultInstallmentCount:1, periodDays:15, maxTotalDays:30, dailyInterestRate:0.006750, dailyServiceFeeRate:0.000750, overdueRate:0.020000, coolingOffHours:24, coolingOffFeeFree:1, earlyRepayEnabled:1, earlyRepayOpenDays:3, earlySettlementEnabled:1, partialRepayEnabled:0, minPartialRepayAmount:null, maxOverdueDays:null, maxOverdueFeeCapRate:null, repayAllocationRule:'OVERDUE_FEE_FIRST', roundingRule:'FLOOR_TO_INTEGER', userType:'NEW', riskLevel:'NORMAL', sortNo:30, remark:'Pilot product', createdAt:'2024-06-01 10:00', updatedAt:'2024-06-01 10:00' },
+  { id:1, productName:'15-day 2-installment Cash Loan', status:1, currency:'PKR', minLoanAmount:2000, maxLoanAmount:30000, amountStep:1000, minInstallmentCount:2, maxInstallmentCount:2, defaultInstallmentCount:2, periodDays:15, maxTotalDays:30, dailyInterestRate:0.006750, dailyServiceRate:0.000750, overdueRate:0.020000, coolingOffHours:24, coolingOffFeeFree:1, earlyRepayEnabled:1, earlyRepayOpenDays:3, earlySettlementEnabled:1, partialRepayEnabled:1, minPartialRepayAmount:500, maxOverdueDays:43, maxOverdueFeeCapRate:1, repayAllocationRule:'OVERDUE_FEE_FIRST', roundingRule:'FLOOR_TO_INTEGER', userType:'ALL', riskLevel:'NORMAL', sortNo:10, remark:'Main cash loan product', createdAt:'2024-01-01 09:00', updatedAt:'2024-06-01 10:20' },
+  { id:2, productName:'15-day Flexible Installment Loan', status:1, currency:'PKR', minLoanAmount:5000, maxLoanAmount:100000, amountStep:1000, minInstallmentCount:2, maxInstallmentCount:6, defaultInstallmentCount:2, periodDays:15, maxTotalDays:90, dailyInterestRate:0.005500, dailyServiceRate:0.001000, overdueRate:0.020000, coolingOffHours:24, coolingOffFeeFree:1, earlyRepayEnabled:1, earlyRepayOpenDays:3, earlySettlementEnabled:1, partialRepayEnabled:1, minPartialRepayAmount:null, maxOverdueDays:43, maxOverdueFeeCapRate:1, repayAllocationRule:'OVERDUE_FEE_FIRST', roundingRule:'FLOOR_TO_INTEGER', userType:'OLD', riskLevel:'LOW', sortNo:20, remark:'For returning low-risk customers', createdAt:'2024-04-15 11:00', updatedAt:'2024-06-03 16:45' },
+  { id:3, productName:'New Customer Trial Loan', status:0, currency:'PKR', minLoanAmount:2000, maxLoanAmount:10000, amountStep:1000, minInstallmentCount:1, maxInstallmentCount:2, defaultInstallmentCount:1, periodDays:15, maxTotalDays:30, dailyInterestRate:0.006750, dailyServiceRate:0.000750, overdueRate:0.020000, coolingOffHours:24, coolingOffFeeFree:1, earlyRepayEnabled:1, earlyRepayOpenDays:3, earlySettlementEnabled:1, partialRepayEnabled:0, minPartialRepayAmount:null, maxOverdueDays:null, maxOverdueFeeCapRate:null, repayAllocationRule:'OVERDUE_FEE_FIRST', roundingRule:'FLOOR_TO_INTEGER', userType:'NEW', riskLevel:'NORMAL', sortNo:30, remark:'Pilot product', createdAt:'2024-06-01 10:00', updatedAt:'2024-06-01 10:00' },
 ];
 let nextLoanProductId = 4, editingLoanProductId = null;
 
@@ -4987,7 +4965,7 @@ function renderLoanProducts() {
       <td style="min-width:180px;"><div style="font-weight:600;">${p.currency} ${p.minLoanAmount.toLocaleString()} — ${p.maxLoanAmount.toLocaleString()}</div><div style="font-size:11px;color:#94a3b8;">${localizePhrase('Amount Step')}: ${p.currency} ${p.amountStep.toLocaleString()}</div></td>
       <td style="min-width:145px;"><div>${p.minInstallmentCount} — ${p.maxInstallmentCount} ${currentLang==='zh'?'期':'installments'}</div><div style="font-size:11px;color:#4f46e5;">${localizePhrase('Default')}: ${p.defaultInstallmentCount}</div></td>
       <td style="min-width:115px;"><div>${p.periodDays} ${currentLang==='zh'?'天/期':'days / period'}</div><div style="font-size:11px;color:#94a3b8;">${localizePhrase('Max')}: ${p.maxTotalDays} ${currentLang==='zh'?'天':'days'}</div></td>
-      <td style="min-width:160px;font-size:11.5px;"><div>${localizePhrase('Interest')}: <strong>${formatProductRate(p.dailyInterestRate)}</strong></div><div>${localizePhrase('Service Fee')}: <strong>${formatProductRate(p.dailyServiceFeeRate)}</strong></div><div>${localizePhrase('Overdue Fee')}: <strong>${formatProductRate(p.overdueRate)}</strong></div></td>
+      <td style="min-width:160px;font-size:11.5px;"><div>${localizePhrase('Interest')}: <strong>${formatProductRate(p.dailyInterestRate)}</strong></div><div>${localizePhrase('Service Fee')}: <strong>${formatProductRate(p.dailyServiceRate)}</strong></div><div>${localizePhrase('Overdue Fee')}: <strong>${formatProductRate(p.overdueRate)}</strong></div></td>
       <td style="min-width:210px;">${features}<div style="font-size:11px;color:#94a3b8;margin-top:4px;">${localizePhrase('Cooling-off Hours')}: ${p.coolingOffHours}${currentLang==='zh'?'小时':'h'} · ${p.coolingOffFeeFree ? localizePhrase('Fee Free') : '—'}</div></td>
       <td style="min-width:180px;font-size:11px;"><code>${p.repayAllocationRule}</code><div style="color:#94a3b8;margin-top:4px;"><code>${p.roundingRule}</code></div></td>
       <td style="min-width:110px;"><span class="role-tag">${p.userType}</span><div style="font-size:11px;color:#64748b;margin-top:5px;">${p.riskLevel || localizePhrase('Not Limited')}</div></td>
@@ -5004,8 +4982,8 @@ function openLoanProductModal(id) {
   editingLoanProductId = id || null;
   document.getElementById('loanProductModalTitle').textContent = id ? 'Edit Loan Product' : 'Add Loan Product';
   const p = id ? loanProducts.find(x => x.id === id) : null;
-  const values = p || { productName:'', status:1, currency:'PKR', minLoanAmount:'', maxLoanAmount:'', amountStep:1000, minInstallmentCount:1, maxInstallmentCount:1, defaultInstallmentCount:1, periodDays:'', maxTotalDays:'', dailyInterestRate:0, dailyServiceFeeRate:0, overdueRate:0, coolingOffHours:24, coolingOffFeeFree:1, earlyRepayEnabled:1, earlyRepayOpenDays:3, earlySettlementEnabled:1, partialRepayEnabled:1, minPartialRepayAmount:'', maxOverdueDays:'', maxOverdueFeeCapRate:'', repayAllocationRule:'OVERDUE_FEE_FIRST', roundingRule:'FLOOR_TO_INTEGER', userType:'ALL', riskLevel:'', sortNo:0, remark:'' };
-  const fields = {'lp-name':'productName','lp-currency':'currency','lp-user-type':'userType','lp-risk':'riskLevel','lp-sort':'sortNo','lp-status':'status','lp-remark':'remark','lp-min-amount':'minLoanAmount','lp-max-amount-input':'maxLoanAmount','lp-amount-step':'amountStep','lp-period-days':'periodDays','lp-max-total-days':'maxTotalDays','lp-min-installments':'minInstallmentCount','lp-max-installments':'maxInstallmentCount','lp-default-installments':'defaultInstallmentCount','lp-interest-rate':'dailyInterestRate','lp-service-rate':'dailyServiceFeeRate','lp-overdue-rate':'overdueRate','lp-cooling-hours':'coolingOffHours','lp-cooling-free':'coolingOffFeeFree','lp-early-repay':'earlyRepayEnabled','lp-early-open-days':'earlyRepayOpenDays','lp-early-settlement':'earlySettlementEnabled','lp-partial-repay':'partialRepayEnabled','lp-min-partial':'minPartialRepayAmount','lp-max-overdue-days':'maxOverdueDays','lp-overdue-cap':'maxOverdueFeeCapRate','lp-allocation-rule':'repayAllocationRule','lp-rounding-rule':'roundingRule'};
+  const values = p || { productName:'', status:1, currency:'PKR', minLoanAmount:'', maxLoanAmount:'', amountStep:1000, minInstallmentCount:1, maxInstallmentCount:1, defaultInstallmentCount:1, periodDays:'', maxTotalDays:'', dailyInterestRate:0, dailyServiceRate:0, overdueRate:0, coolingOffHours:24, coolingOffFeeFree:1, earlyRepayEnabled:1, earlyRepayOpenDays:3, earlySettlementEnabled:1, partialRepayEnabled:1, minPartialRepayAmount:'', maxOverdueDays:'', maxOverdueFeeCapRate:'', repayAllocationRule:'OVERDUE_FEE_FIRST', roundingRule:'FLOOR_TO_INTEGER', userType:'ALL', riskLevel:'', sortNo:0, remark:'' };
+  const fields = {'lp-name':'productName','lp-currency':'currency','lp-user-type':'userType','lp-risk':'riskLevel','lp-sort':'sortNo','lp-status':'status','lp-remark':'remark','lp-min-amount':'minLoanAmount','lp-max-amount-input':'maxLoanAmount','lp-amount-step':'amountStep','lp-period-days':'periodDays','lp-max-total-days':'maxTotalDays','lp-min-installments':'minInstallmentCount','lp-max-installments':'maxInstallmentCount','lp-default-installments':'defaultInstallmentCount','lp-interest-rate':'dailyInterestRate','lp-service-rate':'dailyServiceRate','lp-overdue-rate':'overdueRate','lp-cooling-hours':'coolingOffHours','lp-cooling-free':'coolingOffFeeFree','lp-early-repay':'earlyRepayEnabled','lp-early-open-days':'earlyRepayOpenDays','lp-early-settlement':'earlySettlementEnabled','lp-partial-repay':'partialRepayEnabled','lp-min-partial':'minPartialRepayAmount','lp-max-overdue-days':'maxOverdueDays','lp-overdue-cap':'maxOverdueFeeCapRate','lp-allocation-rule':'repayAllocationRule','lp-rounding-rule':'roundingRule'};
   Object.entries(fields).forEach(([field, key]) => setLoanProductField(field, values[key]));
   new bootstrap.Modal(document.getElementById('loanProductModal')).show();
 }
@@ -5014,8 +4992,8 @@ function saveLoanProduct() {
   const value = id => document.getElementById(id).value.trim();
   const number = id => Number(value(id));
   const nullableNumber = id => value(id) === '' ? null : Number(value(id));
-  const data = { productName:value('lp-name'), currency:value('lp-currency').toUpperCase(), userType:value('lp-user-type'), riskLevel:value('lp-risk'), sortNo:number('lp-sort'), status:number('lp-status'), remark:value('lp-remark'), minLoanAmount:number('lp-min-amount'), maxLoanAmount:number('lp-max-amount-input'), amountStep:number('lp-amount-step'), minInstallmentCount:number('lp-min-installments'), maxInstallmentCount:number('lp-max-installments'), defaultInstallmentCount:number('lp-default-installments'), periodDays:number('lp-period-days'), maxTotalDays:number('lp-max-total-days'), dailyInterestRate:number('lp-interest-rate'), dailyServiceFeeRate:number('lp-service-rate'), overdueRate:number('lp-overdue-rate'), coolingOffHours:number('lp-cooling-hours'), coolingOffFeeFree:number('lp-cooling-free'), earlyRepayEnabled:number('lp-early-repay'), earlyRepayOpenDays:number('lp-early-open-days'), earlySettlementEnabled:number('lp-early-settlement'), partialRepayEnabled:number('lp-partial-repay'), minPartialRepayAmount:nullableNumber('lp-min-partial'), maxOverdueDays:nullableNumber('lp-max-overdue-days'), maxOverdueFeeCapRate:nullableNumber('lp-overdue-cap'), repayAllocationRule:value('lp-allocation-rule'), roundingRule:value('lp-rounding-rule') };
-  const requiredNumbers = ['minLoanAmount','maxLoanAmount','amountStep','minInstallmentCount','maxInstallmentCount','defaultInstallmentCount','periodDays','maxTotalDays','dailyInterestRate','dailyServiceFeeRate','overdueRate','coolingOffHours','earlyRepayOpenDays'];
+  const data = { productName:value('lp-name'), currency:value('lp-currency').toUpperCase(), userType:value('lp-user-type'), riskLevel:value('lp-risk'), sortNo:number('lp-sort'), status:number('lp-status'), remark:value('lp-remark'), minLoanAmount:number('lp-min-amount'), maxLoanAmount:number('lp-max-amount-input'), amountStep:number('lp-amount-step'), minInstallmentCount:number('lp-min-installments'), maxInstallmentCount:number('lp-max-installments'), defaultInstallmentCount:number('lp-default-installments'), periodDays:number('lp-period-days'), maxTotalDays:number('lp-max-total-days'), dailyInterestRate:number('lp-interest-rate'), dailyServiceRate:number('lp-service-rate'), overdueRate:number('lp-overdue-rate'), coolingOffHours:number('lp-cooling-hours'), coolingOffFeeFree:number('lp-cooling-free'), earlyRepayEnabled:number('lp-early-repay'), earlyRepayOpenDays:number('lp-early-open-days'), earlySettlementEnabled:number('lp-early-settlement'), partialRepayEnabled:number('lp-partial-repay'), minPartialRepayAmount:nullableNumber('lp-min-partial'), maxOverdueDays:nullableNumber('lp-max-overdue-days'), maxOverdueFeeCapRate:nullableNumber('lp-overdue-cap'), repayAllocationRule:value('lp-allocation-rule'), roundingRule:value('lp-rounding-rule') };
+  const requiredNumbers = ['minLoanAmount','maxLoanAmount','amountStep','minInstallmentCount','maxInstallmentCount','defaultInstallmentCount','periodDays','maxTotalDays','dailyInterestRate','dailyServiceRate','overdueRate','coolingOffHours','earlyRepayOpenDays'];
   if (!data.productName || !data.currency || requiredNumbers.some(k => !Number.isFinite(data[k])) || data.amountStep <= 0 || data.periodDays <= 0) { toast('Please fill all required product fields','error'); return; }
   if (data.minLoanAmount >= data.maxLoanAmount) { toast('Minimum loan amount must be less than maximum loan amount','error'); return; }
   if (data.minInstallmentCount > data.maxInstallmentCount || data.defaultInstallmentCount < data.minInstallmentCount || data.defaultInstallmentCount > data.maxInstallmentCount) { toast('Default installments must be within the configured range','error'); return; }
@@ -5226,94 +5204,81 @@ const loanBillFeeChanges = {
   ],
 };
 
-// REPAYMENT ORDER DETAIL (loan_repayment_bill + loan_repayment_allocation)
+Object.values(loanBillFeeChanges).flat().forEach(change => {
+  change.remark = change.remark || '';
+});
+
+// REPAYMENT ORDER DETAIL (loan_repayment_allocation)
 // + OVERDUE RECORDS TAB (loan_overdue_record)
 // ============================================================
-const repaymentOrderBills = {
-  'RP20240601001': [
-    { id:1, loanOrderNo:'LN2024060405', billNo:'LB2024060405001', userId:1005, periodNo:1, originalBillAmount:7800, billRemainingAmount:7800, couponAmount:400, payableAmount:7400, allocatedAmount:7800, differenceAmount:400, paidTime:'2024-05-16 10:05', status:'Paid', createdAt:'2024-05-16 10:00' },
-  ],
-  'RP20240602001': [
-    { id:2, loanOrderNo:'LN2024060405', billNo:'LB2024060405002', userId:1005, periodNo:2, originalBillAmount:7800, billRemainingAmount:7800, couponAmount:0, payableAmount:7800, allocatedAmount:7800, differenceAmount:0, paidTime:'2024-05-31 09:50', status:'Paid', createdAt:'2024-05-31 09:45' },
-  ],
-  'RP20240603001': [
-    { id:3, loanOrderNo:'LN2024060409', billNo:'LB2024060409001', userId:1009, periodNo:1, originalBillAmount:4875, billRemainingAmount:4875, couponAmount:0, payableAmount:4875, allocatedAmount:4875, differenceAmount:0, paidTime:'2024-05-30 11:30', status:'Paid', createdAt:'2024-05-30 11:25' },
-  ],
-  'RP20240604002': [
-    { id:4, loanOrderNo:'LN2024060412', billNo:'LB2024060412001', userId:1014, periodNo:1, originalBillAmount:4875, billRemainingAmount:4875, couponAmount:400, payableAmount:4475, allocatedAmount:4875, differenceAmount:400, paidTime:'2024-06-02 08:40', status:'Paid', createdAt:'2024-06-02 08:35' },
-  ],
-};
-
 const repaymentAllocations = {
   'RP20240601001': [
-    { id:1, allocationNo:'AL240516001001', repaymentOrderNo:'RP20240601001', voucherNo:'LN2024060405', billNo:'LB2024060405001', userId:1005, productId:1, installmentNo:1, feeType:'Principal', allocatedAmount:6000, allocationOrder:1, createdAt:'2024-05-16 10:05' },
-    { id:2, allocationNo:'AL240516001002', repaymentOrderNo:'RP20240601001', voucherNo:'LN2024060405', billNo:'LB2024060405001', userId:1005, productId:1, installmentNo:1, feeType:'Interest', allocatedAmount:1350, allocationOrder:2, createdAt:'2024-05-16 10:05' },
-    { id:3, allocationNo:'AL240516001003', repaymentOrderNo:'RP20240601001', voucherNo:'LN2024060405', billNo:'LB2024060405001', userId:1005, productId:1, installmentNo:1, feeType:'ServiceFee', allocatedAmount:50, allocationOrder:3, createdAt:'2024-05-16 10:05' },
+    { id:1, repaymentNo:'RP20240601001', voucherNo:'LN2024060405', billNo:'LB2024060405001', userId:1005, termSeq:1, allocatedAmount:7400, allocatedOverdueFee:0, allocatedInterest:1350, allocatedServiceFee:50, allocatedPrincipal:6000, isDel:0, createTime:'2024-05-16 10:05', modifyTime:'2024-05-16 10:05' },
   ],
 };
 
-const loanOverdueRecords = [
-  { id:1,  overdueRecordNo:'OD20240604001', loanOrderNo:'LN2024060404', billNo:'LB2024060404001', userId:1004, productId:1, installmentNo:1, overdueDate:'2024-05-26', overdueDays:1,  overdueRate:0.023, overduePrincipal:2500, overdueBaseAmount:2500, overdueFeeAmount:57.5,  originalOverdueFee:57.5,  postedOverdueFee:57.5,  postedTime:'2024-05-26 00:01', createdAt:'2024-05-26 00:01' },
-  { id:2,  overdueRecordNo:'OD20240605001', loanOrderNo:'LN2024060404', billNo:'LB2024060404001', userId:1004, productId:1, installmentNo:1, overdueDate:'2024-05-27', overdueDays:2,  overdueRate:0.023, overduePrincipal:2500, overdueBaseAmount:2500, overdueFeeAmount:57.5,  originalOverdueFee:57.5,  postedOverdueFee:57.5,  postedTime:'2024-05-27 00:01', createdAt:'2024-05-27 00:01' },
-  { id:3,  overdueRecordNo:'OD20240605002', loanOrderNo:'LN2024060408', billNo:'LB2024060408001', userId:1008, productId:1, installmentNo:1, overdueDate:'2024-05-06', overdueDays:1,  overdueRate:0.023, overduePrincipal:4500, overdueBaseAmount:4500, overdueFeeAmount:103.5, originalOverdueFee:103.5, postedOverdueFee:103.5, postedTime:'2024-05-06 00:01', createdAt:'2024-05-06 00:01' },
-  { id:4,  overdueRecordNo:'OD20240615001', loanOrderNo:'LN2024060408', billNo:'LB2024060408001', userId:1008, productId:1, installmentNo:1, overdueDate:'2024-06-04', overdueDays:30, overdueRate:0.023, overduePrincipal:4500, overdueBaseAmount:4500, overdueFeeAmount:103.5, originalOverdueFee:103.5, postedOverdueFee:103.5, postedTime:'2024-06-04 00:01', createdAt:'2024-06-04 00:01' },
-  { id:5,  overdueRecordNo:'OD20240616001', loanOrderNo:'LN2024060413', billNo:'LB2024060413001', userId:1017, productId:1, installmentNo:1, overdueDate:'2024-05-01', overdueDays:1,  overdueRate:0.023, overduePrincipal:6250, overdueBaseAmount:6250, overdueFeeAmount:143.75,originalOverdueFee:143.75,postedOverdueFee:143.75,postedTime:'2024-05-01 00:01', createdAt:'2024-05-01 00:01' },
-  { id:6,  overdueRecordNo:'OD20240617001', loanOrderNo:'LN2024060413', billNo:'LB2024060413001', userId:1017, productId:1, installmentNo:1, overdueDate:'2024-06-04', overdueDays:35, overdueRate:0.023, overduePrincipal:6250, overdueBaseAmount:6250, overdueFeeAmount:143.75,originalOverdueFee:143.75,postedOverdueFee:143.75,postedTime:'2024-06-04 00:01', createdAt:'2024-06-04 00:01' },
-  { id:7,  overdueRecordNo:'OD20240618001', loanOrderNo:'LN2024060415', billNo:'LB2024060415001', userId:1013, productId:1, installmentNo:1, overdueDate:'2024-02-17', overdueDays:1,  overdueRate:0.023, overduePrincipal:5000, overdueBaseAmount:5000, overdueFeeAmount:115,   originalOverdueFee:115,   postedOverdueFee:115,   postedTime:'2024-02-17 00:01', createdAt:'2024-02-17 00:01' },
-  { id:8,  overdueRecordNo:'OD20240619001', loanOrderNo:'LN2024060415', billNo:'LB2024060415001', userId:1013, productId:1, installmentNo:1, overdueDate:'2024-06-04', overdueDays:90, overdueRate:0.023, overduePrincipal:5000, overdueBaseAmount:5000, overdueFeeAmount:115,   originalOverdueFee:460,   postedOverdueFee:115,   postedTime:'2024-06-04 00:01', createdAt:'2024-06-04 00:01' },
+const rawLoanOverdueRecords = [
+  { id:1, overdueRecordNo:'OD20240604001', loanOrderNo:'LN2024060404', billNo:'LB2024060404001', userId:1004, installmentNo:1, overdueDate:'2024-05-26', overdueDays:1, overdueRate:0.023, overduePrincipal:2500, overdueFeeAmount:57.5, originalOverdueFee:57.5, postedTime:'2024-05-26 00:01', createdAt:'2024-05-26 00:01' },
+  { id:2, overdueRecordNo:'OD20240605001', loanOrderNo:'LN2024060404', billNo:'LB2024060404001', userId:1004, installmentNo:1, overdueDate:'2024-05-27', overdueDays:2, overdueRate:0.023, overduePrincipal:2500, overdueFeeAmount:57.5, originalOverdueFee:57.5, postedTime:'2024-05-27 00:01', createdAt:'2024-05-27 00:01' },
+  { id:3, overdueRecordNo:'OD20240605002', loanOrderNo:'LN2024060408', billNo:'LB2024060408001', userId:1008, installmentNo:1, overdueDate:'2024-05-06', overdueDays:1, overdueRate:0.023, overduePrincipal:4500, overdueFeeAmount:103.5, originalOverdueFee:103.5, postedTime:'2024-05-06 00:01', createdAt:'2024-05-06 00:01' },
+  { id:4, overdueRecordNo:'OD20240615001', loanOrderNo:'LN2024060408', billNo:'LB2024060408001', userId:1008, installmentNo:1, overdueDate:'2024-06-04', overdueDays:30, overdueRate:0.023, overduePrincipal:4500, overdueFeeAmount:103.5, originalOverdueFee:103.5, postedTime:'2024-06-04 00:01', createdAt:'2024-06-04 00:01' },
+  { id:5, overdueRecordNo:'OD20240616001', loanOrderNo:'LN2024060413', billNo:'LB2024060413001', userId:1017, installmentNo:1, overdueDate:'2024-05-01', overdueDays:1, overdueRate:0.023, overduePrincipal:6250, overdueFeeAmount:143.75, originalOverdueFee:143.75, postedTime:'2024-05-01 00:01', createdAt:'2024-05-01 00:01' },
+  { id:6, overdueRecordNo:'OD20240617001', loanOrderNo:'LN2024060413', billNo:'LB2024060413001', userId:1017, installmentNo:1, overdueDate:'2024-06-04', overdueDays:35, overdueRate:0.023, overduePrincipal:6250, overdueFeeAmount:143.75, originalOverdueFee:143.75, postedTime:'2024-06-04 00:01', createdAt:'2024-06-04 00:01' },
+  { id:7, overdueRecordNo:'OD20240618001', loanOrderNo:'LN2024060415', billNo:'LB2024060415001', userId:1013, installmentNo:1, overdueDate:'2024-02-17', overdueDays:1, overdueRate:0.023, overduePrincipal:5000, overdueFeeAmount:115, originalOverdueFee:115, postedTime:'2024-02-17 00:01', createdAt:'2024-02-17 00:01' },
+  { id:8, overdueRecordNo:'OD20240619001', loanOrderNo:'LN2024060415', billNo:'LB2024060415001', userId:1013, installmentNo:1, overdueDate:'2024-06-04', overdueDays:90, overdueRate:0.023, overduePrincipal:5000, overdueFeeAmount:115, originalOverdueFee:460, postedTime:'2024-06-04 00:01', createdAt:'2024-06-04 00:01' },
 ];
+const loanOverdueRecords = rawLoanOverdueRecords.map(r=>({
+  id:r.id,
+  overdueRecordNo:r.overdueRecordNo,
+  voucherNo:r.loanOrderNo,
+  billNo:r.billNo,
+  userId:r.userId,
+  termSeq:r.installmentNo,
+  overdueDate:r.overdueDate,
+  overdueDays:r.overdueDays,
+  overdueRate:r.overdueRate,
+  overduePrincipal:r.overduePrincipal,
+  overdueFeeAmount:r.overdueFeeAmount,
+  originalOverdueFee:r.originalOverdueFee,
+  postedTime:r.postedTime,
+  isDel:0,
+  createTime:r.createdAt,
+  modifyTime:r.createdAt
+}));
 
 // Add Repayment Detail button and modal
 function viewRepaymentDetail(no) {
-  const r = repayments.find(x => x.no === no);
-  const bills = repaymentOrderBills[no] || [];
+  const r = repayments.find(x => x.repaymentNo === no);
   const allocs = repaymentAllocations[no] || [];
 
   const summaryHtml = `<div class="row g-3">
     <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
       <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">REPAYMENT ORDER</div>
-      ${detailRow('Repayment No.',r.no)}${detailRow('Voucher No.',r.voucherNo)}
+      ${detailRow('Repayment No.',r.repaymentNo)}${detailRow('Voucher No.',r.voucherNo)}
       ${detailRow('Customer ID','#'+r.userId)}
-      ${detailRow('Type',r.type)}${detailRow('Channel',r.channel)}
-      ${detailRow('Total Payable Amount',repaymentMoney(r.payableAmount))}${detailRow('Repay Amount',repaymentMoney(r.repayAmount))}${detailRow('Amount Paid After Due Date',repaymentMoney(r.amountAfterDueDate))}${detailRow('Difference Amount',repaymentMoney(r.differenceAmount))}
-      ${detailRow('Loan Status',r.loanStatus)}${detailRow('Due Date',r.dueDate)}${detailRow('Current Installment',r.installmentNo)}${detailRow('Remaining Installments',r.remainingInstallments)}${detailRow('Remaining Amount',repaymentMoney(r.remainingInstallmentAmount))}${detailRow('Next Payment Due Date',r.nextPaymentDueDate)}
+      ${detailRow('Remaining Amount',repaymentMoney(r.remainingAmount))}${detailRow('Payable Amount',repaymentMoney(r.payableAmount))}${detailRow('Repaid Amount',repaymentMoney(r.repaidAmount))}
       ${detailRow('Coupon',r.couponNo?`${r.couponNo} / ${fmtMoney(r.couponAmount)}`:'-')}
-      ${detailRow('Status',r.status)}${detailRow('Reconcile',r.reconcile)}
-      ${detailRow('Pay Time',r.payTime||'-')}
+      ${detailRow('Repayment Type',r.repaymentType)}${detailRow('Partible',r.partible?'Yes':'No')}${detailRow('State',r.state+' / '+repaymentStateLabel(r.state))}
+      ${detailRow('Created At',r.createTime)}${detailRow('Updated At',r.modifyTime)}
     </div></div>
     <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
       <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">PAYMENT DETAILS</div>
-      ${detailRow('Payment Account','Protected')}${detailRow('Channel Txn No.',r.txnNo||'-')}${detailRow('Repayment RRN',r.rrn||'-')}${detailRow('Channel Fee',repaymentMoney(r.channelFee))}${detailRow('Start Time',r.repayStartTime)}${detailRow('Success Time',r.repaySuccessTime)}${detailRow('Expire Time',r.expireTime)}
+      ${detailRow('Payment Institution',r.paymentInstitutionCode)}${detailRow('Payer Name',r.payerName)}${detailRow('Payer Account',r.payerAccount)}${detailRow('Payment Txn No.',r.payTxnNo||'-')}${detailRow('Callback Time',r.callbackTime)}${detailRow('Repay Success Time',r.repaySuccessTime)}${detailRow('Repaid Time',r.repaidTime)}${detailRow('Failure Reason',r.failReason||'-')}${detailRow('Expire Time',r.expireTime)}
     </div></div>
   </div>`;
 
-  const billAllocHtml = bills.length ? `<table class="table table-hover mb-0" style="font-size:13px;">
-    <thead><tr><th>Voucher No.</th><th>Bill No.</th><th>Period</th><th>Original Bill</th><th>Remaining Snapshot</th><th>Coupon</th><th>Payable</th><th>Allocated</th><th>Difference</th><th>Status</th><th>Paid Time</th></tr></thead>
-    <tbody>${bills.map(b=>`<tr>
-      <td><code style="font-size:11px;">${b.loanOrderNo}</code></td>
-      <td><code style="font-size:11px;">${b.billNo}</code></td>
-      <td style="font-size:12.5px;">P${b.periodNo}</td>
-      <td>PKR ${b.originalBillAmount.toLocaleString()}</td>
-      <td>PKR ${b.billRemainingAmount.toLocaleString()}</td>
-      <td style="color:#d97706;">PKR ${b.couponAmount.toLocaleString()}</td>
-      <td style="font-weight:600;">PKR ${b.payableAmount.toLocaleString()}</td>
-      <td style="color:#16a34a;font-weight:600;">PKR ${b.allocatedAmount.toLocaleString()}</td>
-      <td style="${b.differenceAmount!==0?'color:#dc2626;':'color:#94a3b8;'}">PKR ${b.differenceAmount.toLocaleString()}</td>
-      <td><span class="status-badge ${b.status==='Paid'?'badge-active':'badge-pending'}" style="font-size:11px;">${b.status}</span></td>
-      <td style="font-size:12px;color:#94a3b8;">${b.paidTime||'-'}</td>
-    </tr>`).join('')}</tbody>
-  </table>` : '<div class="empty-state"><i class="bi bi-receipt"></i>No bill allocation data</div>';
-
   const feeAllocHtml = allocs.length ? `<table class="table table-hover mb-0" style="font-size:13px;">
-    <thead><tr><th>Allocation No.</th><th>Bill No.</th><th>Period</th><th>Fee Type</th><th>Allocated Amount</th><th>Alloc. Order</th><th>Time</th></tr></thead>
+    <thead><tr><th>ID</th><th>Bill No.</th><th>Period</th><th>Principal</th><th>Interest</th><th>Service Fee</th><th>Overdue Fee</th><th>Allocated Amount</th><th>Time</th></tr></thead>
     <tbody>${allocs.map(a=>`<tr>
-      <td><code style="font-size:11px;">${a.allocationNo}</code></td>
+      <td><code style="font-size:11px;">${a.id}</code></td>
       <td><code style="font-size:11px;">${a.billNo}</code></td>
-      <td style="font-size:12.5px;">P${a.installmentNo}</td>
-      <td><span class="role-tag" style="font-size:11px;">${a.feeType}</span></td>
+      <td style="font-size:12.5px;">P${a.termSeq}</td>
+      <td>PKR ${a.allocatedPrincipal.toLocaleString()}</td>
+      <td>PKR ${a.allocatedInterest.toLocaleString()}</td>
+      <td>PKR ${a.allocatedServiceFee.toLocaleString()}</td>
+      <td>PKR ${a.allocatedOverdueFee.toLocaleString()}</td>
       <td style="font-weight:600;">PKR ${a.allocatedAmount.toLocaleString()}</td>
-      <td style="font-size:12.5px;">${a.allocationOrder}</td>
-      <td style="font-size:12px;color:#94a3b8;">${a.createdAt}</td>
+      <td style="font-size:12px;color:#94a3b8;">${a.createTime}</td>
     </tr>`).join('')}</tbody>
   </table>` : '<div class="empty-state"><i class="bi bi-diagram-3"></i>No fee allocation data</div>';
 
@@ -5322,18 +5287,16 @@ function viewRepaymentDetail(no) {
   document.getElementById('loan-detail-body').innerHTML = `
     <ul class="nav nav-tabs mb-3" id="repay-detail-tabs">
       <li class="nav-item"><a class="nav-link active" href="#" onclick="switchRepayDetailTab('summary',this)">Summary</a></li>
-      <li class="nav-item"><a class="nav-link" href="#" onclick="switchRepayDetailTab('bills',this)">Bill Allocation (${bills.length})</a></li>
       <li class="nav-item"><a class="nav-link" href="#" onclick="switchRepayDetailTab('fees',this)">Fee Allocation (${allocs.length})</a></li>
     </ul>
     <div id="rdt-summary">${summaryHtml}</div>
-    <div id="rdt-bills" style="display:none;">${billAllocHtml}</div>
     <div id="rdt-fees" style="display:none;">${feeAllocHtml}</div>`;
   new bootstrap.Modal(document.getElementById('loanDetailModal')).show();
 }
 function switchRepayDetailTab(tab, el) {
   document.querySelectorAll('#repay-detail-tabs .nav-link').forEach(a => a.classList.remove('active'));
   el.classList.add('active');
-  ['summary','bills','fees'].forEach(t => {
+  ['summary','fees'].forEach(t => {
     const el2 = document.getElementById('rdt-'+t);
     if (el2) el2.style.display = t === tab ? '' : 'none';
   });
@@ -5371,24 +5334,24 @@ function renderOverdueRecords(list) {
   document.getElementById('od-count-label').textContent = t('count.showing')(data.length, data.length);
   const rows = data.map(r => `<tr>
     <td><code style="font-size:12px;">${r.overdueRecordNo}</code></td>
-    <td><code style="font-size:11.5px;color:#94a3b8;">${r.loanOrderNo}</code></td>
+    <td><code style="font-size:11.5px;color:#94a3b8;">${r.voucherNo}</code></td>
     <td><code style="font-size:11.5px;color:#94a3b8;">${r.billNo}</code></td>
+    <td><strong>#${r.userId}</strong></td>
+    <td>${r.termSeq ?? '-'}</td>
     <td style="font-size:12px;">${r.overdueDate}</td>
     <td><span class="status-badge badge-disabled" style="font-size:11px;">${r.overdueDays}d</span></td>
     <td style="font-size:12.5px;">${(r.overdueRate*100).toFixed(1)}%</td>
     <td>PKR ${r.overduePrincipal.toLocaleString()}</td>
-    <td>PKR ${r.overdueBaseAmount.toLocaleString()}</td>
     <td style="font-weight:600;">PKR ${r.overdueFeeAmount.toLocaleString()}</td>
     <td style="color:#94a3b8;">PKR ${r.originalOverdueFee.toLocaleString()}</td>
-    <td style="color:#16a34a;font-weight:600;">PKR ${r.postedOverdueFee.toLocaleString()}</td>
     <td style="font-size:12px;color:#94a3b8;">${r.postedTime}</td>
   </tr>`).join('');
   document.getElementById('od-table-container').innerHTML = `
-    <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1360px;">
+    <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1180px;">
       <thead><tr>
-        <th>${t('th.overdueRecordNo')}</th><th>${t('th.loanOrderNo')}</th><th>${t('th.billNo')}</th><th>${t('th.overdueDate')}</th>
-        <th>${t('th.overdueDays')}</th><th>${t('th.overdueRate')}</th><th>${t('th.overduePrincipal')}</th><th>${t('th.baseAmount')}</th>
-        <th>${t('th.feeAmount')}</th><th>${t('th.originalFee')}</th><th>${t('th.postedFee')}</th><th>${t('th.postedTime')}</th>
+        <th>${t('th.overdueRecordNo')}</th><th>${t('th.loanOrderNo')}</th><th>${t('th.billNo')}</th><th>Customer ID</th><th>Term</th><th>${t('th.overdueDate')}</th>
+        <th>${t('th.overdueDays')}</th><th>${t('th.overdueRate')}</th><th>${t('th.overduePrincipal')}</th>
+        <th>${t('th.feeAmount')}</th><th>${t('th.originalFee')}</th><th>${t('th.postedTime')}</th>
       </tr></thead>
       <tbody>${rows}</tbody>
     </table></div>`;
@@ -5406,7 +5369,7 @@ function renderLoanBillFees(list) {
     <td><code style="font-size:11px;color:#64748b;">${b.voucherNo}</code></td>
     <td><strong>#${b.userId}</strong></td><td>${b.installmentNo} / ${b.totalInstallments}</td>
     <td>PKR ${b.payablePrincipal.toLocaleString()}</td><td>PKR ${b.paidPrincipal.toLocaleString()}</td><td>PKR ${b.remainingPrincipal.toLocaleString()}</td>
-    <td>PKR ${b.payableInterest.toLocaleString()}</td><td>PKR ${b.paidInterest.toLocaleString()}</td><td>PKR ${b.remainingInterest.toLocaleString()}</td>
+    <td>PKR ${b.payableInterestFee.toLocaleString()}</td><td>PKR ${b.paidInterest.toLocaleString()}</td><td>PKR ${b.remainingInterestFee.toLocaleString()}</td>
     <td>PKR ${b.payableServiceFee.toLocaleString()}</td><td>PKR ${b.paidServiceFee.toLocaleString()}</td><td>PKR ${b.remainingServiceFee.toLocaleString()}</td>
     <td>PKR ${b.payableOverdueFee.toLocaleString()}</td><td>PKR ${b.paidOverdueFee.toLocaleString()}</td><td>PKR ${b.remainingOverdueFee.toLocaleString()}</td>
     <td><button class="btn btn-sm btn-outline-primary action-btn" onclick="viewBillDetail(${b.id},'changes')"><i class="bi bi-clock-history"></i> Change Log</button></td>
@@ -5422,30 +5385,30 @@ function renderRepaymentAllocations(list) {
   const data = list || allRepaymentAllocations();
   document.getElementById('alloc-count-label').textContent = t('count.showing')(data.length, data.length);
   const rows = data.map(a => `<tr>
-    <td><code style="font-size:11px;">${a.allocationNo}</code></td>
-    <td><code style="font-size:11px;color:#64748b;">${a.repaymentOrderNo}</code></td>
+    <td><code style="font-size:11px;">${a.id}</code></td>
+    <td><code style="font-size:11px;color:#64748b;">${a.repaymentNo}</code></td>
     <td><code style="font-size:11px;color:#64748b;">${a.voucherNo||a.loanOrderNo}</code></td>
     <td><code style="font-size:11px;color:#64748b;">${a.billNo}</code></td>
     <td style="font-size:12px;">#${a.userId}</td>
-    <td>${a.installmentNo}</td>
-    <td><span class="role-tag" style="font-size:11px;">${a.feeType}</span></td>
+    <td>${a.termSeq}</td>
+    <td>PKR ${a.allocatedPrincipal.toLocaleString()}</td>
+    <td>PKR ${a.allocatedInterest.toLocaleString()}</td>
+    <td>PKR ${a.allocatedServiceFee.toLocaleString()}</td>
+    <td>PKR ${a.allocatedOverdueFee.toLocaleString()}</td>
     <td style="font-weight:600;">PKR ${a.allocatedAmount.toLocaleString()}</td>
-    <td>${a.allocationOrder}</td>
-    <td style="font-size:12px;color:#94a3b8;">${a.createdAt}</td>
+    <td style="font-size:12px;color:#94a3b8;">${a.createTime}</td>
   </tr>`).join('');
   document.getElementById('alloc-table-container').innerHTML = `
-    <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1280px;">
-      <thead><tr><th>${t('th.allocationNo')}</th><th>${t('th.repaymentOrderNo')}</th><th>Voucher No.</th><th>${t('th.billNo')}</th><th>${t('th.custId')}</th><th>${t('th.installmentNo')}</th><th>${t('th.feeType')}</th><th>${t('th.allocatedAmount')}</th><th>${t('th.allocationOrder')}</th><th>${t('th.createdAt')}</th></tr></thead>
-      <tbody>${rows||'<tr><td colspan="10"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+    <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1450px;">
+      <thead><tr><th>ID</th><th>${t('th.repaymentOrderNo')}</th><th>Voucher No.</th><th>${t('th.billNo')}</th><th>${t('th.custId')}</th><th>${t('th.installmentNo')}</th><th>Principal</th><th>Interest</th><th>Service Fee</th><th>Overdue Fee</th><th>${t('th.allocatedAmount')}</th><th>${t('th.createdAt')}</th></tr></thead>
+      <tbody>${rows||'<tr><td colspan="12"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
     </table></div>`;
 }
 
 function filterRepaymentAllocations() {
   const q = (document.getElementById('alloc-search')?.value||'').toLowerCase();
-  const feeType = document.getElementById('alloc-fee-filter')?.value || '';
   renderRepaymentAllocations(allRepaymentAllocations().filter(a =>
-    (!q || a.allocationNo.toLowerCase().includes(q) || a.repaymentOrderNo.toLowerCase().includes(q) || a.billNo.toLowerCase().includes(q) || (a.voucherNo||a.loanOrderNo).toLowerCase().includes(q)) &&
-    (!feeType || a.feeType === feeType)
+    (!q || a.repaymentNo.toLowerCase().includes(q) || a.billNo.toLowerCase().includes(q) || (a.voucherNo||a.loanOrderNo).toLowerCase().includes(q))
   ));
 }
 
@@ -5456,9 +5419,9 @@ function viewBillDetail(id,initialTab='summary') {
   const summary=`<div class="row g-3"><div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">BILL INFO</div>${detailRow('Bill No.',b.billNo)}${detailRow('Voucher No.',b.voucherNo)}${detailRow('Customer ID','#'+b.userId)}${detailRow('Product ID','#'+(b.productId||1))}${detailRow('Installment',b.installmentNo+' / '+b.totalInstallments)}${detailRow('Period',b.periodStart+' ~ '+b.dueDate)}${detailRow('Status',b.status)}${detailRow('Settlement Type',b.settledType)}${detailRow('Settled At',b.settledTime||'-')}</div></div>
   <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">TOTALS</div>${detailRow('Total Payable',fmtMoney(b.billAmount))}${detailRow('Total Paid',fmtMoney(b.paidAmount))}${detailRow('Total Remaining',fmtMoney(b.remainingAmount))}${detailRow('Overdue Days',b.overdueDays+' days')}${detailRow('Last Batching Time',b.batchingTime||'-')}</div></div>
   <div class="col-12"><div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;"><thead><tr><th>Component</th><th>Payable</th><th>Paid</th><th>Remaining</th></tr></thead><tbody>
-  ${[['Principal',b.payablePrincipal,b.paidPrincipal,b.remainingPrincipal],['Interest',b.payableInterest,b.paidInterest,b.remainingInterest],['Service Fee',b.payableServiceFee,b.paidServiceFee,b.remainingServiceFee],['Overdue Fee',b.payableOverdueFee,b.paidOverdueFee,b.remainingOverdueFee]].map(r=>`<tr><td><strong>${r[0]}</strong></td><td>${fmtMoney(r[1])}</td><td style="color:#16a34a;">${fmtMoney(r[2])}</td><td style="color:${r[3]>0?'#dc2626':'#16a34a'};">${fmtMoney(r[3])}</td></tr>`).join('')}</tbody></table></div></div></div>`;
-  const changeRows=changes.map(ch=>`<tr><td>#${ch.id}</td><td><span class="role-tag">${ch.feeType}</span></td><td>${ch.changeType}</td><td>${ch.sourceType}</td><td><code>${ch.sourceNo||'-'}</code></td><td>${fmtMoney(ch.beforePayable)}</td><td style="color:${ch.changeAmount<0?'#dc2626':'#16a34a'};">${ch.changeAmount>0?'+':''}${fmtMoney(ch.changeAmount)}</td><td>${fmtMoney(ch.afterPayable)}</td><td>${fmtMoney(ch.paidChangeAmount)}</td><td>${fmtMoney(ch.waivedChangeAmount)}</td><td>${ch.changeReason||'-'}</td><td>${ch.operatorId||'System'}</td><td>${ch.createdAt}</td></tr>`).join('');
-  const changeHtml=`<div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12px;min-width:1500px;"><thead><tr><th>ID</th><th>Fee Type</th><th>Change Type</th><th>Source</th><th>Source No.</th><th>Before Payable</th><th>Change</th><th>After Payable</th><th>Paid Change</th><th>Waived</th><th>Reason</th><th>Operator</th><th>Time</th></tr></thead><tbody>${changeRows||'<tr><td colspan="13"><div class="empty-state">No change records</div></td></tr>'}</tbody></table></div>`;
+  ${[['Principal',b.payablePrincipal,b.paidPrincipal,b.remainingPrincipal],['Interest Fee',b.payableInterestFee,b.paidInterest,b.remainingInterestFee],['Service Fee',b.payableServiceFee,b.paidServiceFee,b.remainingServiceFee],['Overdue Fee',b.payableOverdueFee,b.paidOverdueFee,b.remainingOverdueFee]].map(r=>`<tr><td><strong>${r[0]}</strong></td><td>${fmtMoney(r[1])}</td><td style="color:#16a34a;">${fmtMoney(r[2])}</td><td style="color:${r[3]>0?'#dc2626':'#16a34a'};">${fmtMoney(r[3])}</td></tr>`).join('')}</tbody></table></div></div></div>`;
+  const changeRows=changes.map(ch=>`<tr><td>#${ch.id}</td><td><span class="role-tag">${ch.feeType}</span></td><td>${ch.changeType}</td><td>${ch.sourceType}</td><td><code>${ch.sourceNo||'-'}</code></td><td>${fmtMoney(ch.beforePayable)}</td><td style="color:${ch.changeAmount<0?'#dc2626':'#16a34a'};">${ch.changeAmount>0?'+':''}${fmtMoney(ch.changeAmount)}</td><td>${fmtMoney(ch.afterPayable)}</td><td>${fmtMoney(ch.paidChangeAmount)}</td><td>${fmtMoney(ch.waivedChangeAmount)}</td><td>${ch.changeReason||'-'}</td><td>${ch.operatorId||'System'}</td><td>${ch.remark||'-'}</td><td>${ch.createdAt}</td></tr>`).join('');
+  const changeHtml=`<div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12px;min-width:1650px;"><thead><tr><th>ID</th><th>Fee Type</th><th>Change Type</th><th>Source</th><th>Source No.</th><th>Before Payable</th><th>Change</th><th>After Payable</th><th>Paid Change</th><th>Waived</th><th>Reason</th><th>Operator</th><th>Remark</th><th>Time</th></tr></thead><tbody>${changeRows||'<tr><td colspan="14"><div class="empty-state">No change records</div></td></tr>'}</tbody></table></div>`;
   document.getElementById('bill-detail-body').innerHTML=`<ul class="nav nav-tabs mb-3"><li class="nav-item"><a class="nav-link ${initialTab==='summary'?'active':''}" href="#" onclick="switchVoucherBillTab('summary',this)">Bill Amounts</a></li><li class="nav-item"><a class="nav-link ${initialTab==='changes'?'active':''}" href="#" onclick="switchVoucherBillTab('changes',this)">Change Log (${changes.length})</a></li></ul><div id="vbt-summary" style="display:${initialTab==='summary'?'':'none'};">${summary}</div><div id="vbt-changes" style="display:${initialTab==='changes'?'':'none'};">${changeHtml}</div>`;
   new bootstrap.Modal(document.getElementById('billDetailModal')).show();
 }
