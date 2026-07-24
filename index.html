@@ -302,17 +302,11 @@
     <a class="nav-link-item" onclick="navigate('loanBills')" id="nav-loanBills">
       <i class="bi bi-receipt-cutoff"></i> <span data-i18n="nav.loanBills">Loan Bills</span>
     </a>
-    <a class="nav-link-item" onclick="navigate('loanBillFees')" id="nav-loanBillFees">
-      <i class="bi bi-list-columns-reverse"></i> <span data-i18n="nav.loanBillFees">Fee Details</span>
-    </a>
     <a class="nav-link-item" onclick="navigate('disbursements')" id="nav-disbursements">
       <i class="bi bi-send-fill"></i> <span data-i18n="nav.disbursements">Disbursements</span>
     </a>
     <a class="nav-link-item" onclick="navigate('repayments')">
       <i class="bi bi-arrow-return-left"></i> <span data-i18n="nav.repayments">Repayments</span>
-    </a>
-    <a class="nav-link-item" onclick="navigate('repaymentAllocations')" id="nav-repaymentAllocations">
-      <i class="bi bi-diagram-3"></i> <span data-i18n="nav.repaymentAllocations">Repayment Allocation</span>
     </a>
     <a class="nav-link-item" onclick="navigate('overdue')">
       <i class="bi bi-exclamation-triangle-fill"></i> <span data-i18n="nav.overdue">Overdue</span>
@@ -679,6 +673,7 @@
         <li class="nav-item"><a class="nav-link active" href="#" onclick="switchCouponTab('limit',this)" data-i18n="coupon.limitTab">Limit Increase Coupons</a></li>
         <li class="nav-item"><a class="nav-link" href="#" onclick="switchCouponTab('repay',this)" data-i18n="coupon.repayTab">Repayment Coupons</a></li>
         <li class="nav-item"><a class="nav-link" href="#" onclick="switchCouponTab('usage',this)" data-i18n="coupon.usageTab">Usage Records</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="switchCouponTab('template',this)">Coupon Templates</a></li>
       </ul>
       <div class="table-card">
         <div class="table-card-header">
@@ -805,40 +800,6 @@
         <div id="disb-table-container"></div>
         <div class="px-3 py-2 border-top d-flex align-items-center justify-content-between">
           <span style="font-size:12.5px;color:#718096;" id="disb-count-label"></span>
-          <nav><ul class="pagination pagination-sm mb-0"><li class="page-item disabled"><a class="page-link">Prev</a></li><li class="page-item active"><a class="page-link">1</a></li><li class="page-item disabled"><a class="page-link">Next</a></li></ul></nav>
-        </div>
-      </div>
-    </div>
-
-    <!-- BILL AMOUNT DETAILS (derived from loan_voucher_bill) -->
-    <div class="page" id="page-loanBillFees">
-      <div class="table-card">
-        <div class="table-card-header">
-          <span class="title" data-i18n="page.loanBillFees">Bill Amount Details</span>
-          <div class="search-row ms-auto">
-            <input type="text" class="form-control form-control-sm" placeholder="Bill No / Voucher No / Customer ID..." style="width:260px;" id="fee-search" oninput="filterLoanBillFees()">
-          </div>
-        </div>
-        <div id="fee-table-container"></div>
-        <div class="px-3 py-2 border-top d-flex align-items-center justify-content-between">
-          <span style="font-size:12.5px;color:#718096;" id="fee-count-label"></span>
-          <nav><ul class="pagination pagination-sm mb-0"><li class="page-item disabled"><a class="page-link">Prev</a></li><li class="page-item active"><a class="page-link">1</a></li><li class="page-item disabled"><a class="page-link">Next</a></li></ul></nav>
-        </div>
-      </div>
-    </div>
-
-    <!-- REPAYMENT ALLOCATIONS -->
-    <div class="page" id="page-repaymentAllocations">
-      <div class="table-card">
-        <div class="table-card-header">
-          <span class="title" data-i18n="page.repaymentAllocations">Repayment Allocation</span>
-          <div class="search-row ms-auto">
-            <input type="text" class="form-control form-control-sm" placeholder="Repayment / Voucher / Bill..." style="width:280px;" id="alloc-search" oninput="filterRepaymentAllocations()">
-          </div>
-        </div>
-        <div id="alloc-table-container"></div>
-        <div class="px-3 py-2 border-top d-flex align-items-center justify-content-between">
-          <span style="font-size:12.5px;color:#718096;" id="alloc-count-label"></span>
           <nav><ul class="pagination pagination-sm mb-0"><li class="page-item disabled"><a class="page-link">Prev</a></li><li class="page-item active"><a class="page-link">1</a></li><li class="page-item disabled"><a class="page-link">Next</a></li></ul></nav>
         </div>
       </div>
@@ -1434,16 +1395,71 @@
       <div class="modal-body" style="padding:0;">
         <ul class="nav nav-tabs px-3 pt-2" id="cust-detail-tabs">
           <li class="nav-item"><a class="nav-link active" href="#" onclick="switchCustDetailTab('basic',this)">Basic Info</a></li>
-          <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('credit',this)">Credit Info</a></li>
-          <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('identity',this)">Identity</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('credit',this)">Application Info</a></li>
           <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('contacts',this)">Contacts</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('identity',this)">Identity</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('creditlog',this)">Credit Quota</a></li>
           <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('wallet',this)">Wallets</a></li>
-          <li class="nav-item"><a class="nav-link" href="#" onclick="switchCustDetailTab('creditlog',this)">Credit Records</a></li>
         </ul>
         <div id="cust-detail-body" style="font-size:13.5px;padding:20px;min-height:260px;"></div>
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loan Application Rejection Modal -->
+<div class="modal fade" id="applicationRejectModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h5 class="modal-title" id="application-reject-title">Reject Loan Application</h5>
+          <div id="application-reject-no" style="font-size:12px;color:#94a3b8;margin-top:2px;"></div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <label class="form-label" style="font-size:13px;font-weight:600;" id="application-reject-reason-label">Rejection Reason <span class="text-danger">*</span></label>
+        <textarea class="form-control form-control-sm" id="application-reject-reason" rows="4" maxlength="500"></textarea>
+        <div class="invalid-feedback" id="application-reject-validation">Rejection reason is required.</div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal" id="application-reject-cancel">Cancel</button>
+        <button class="btn btn-danger btn-sm" id="application-reject-submit" onclick="submitApplicationRejection()">Confirm Rejection</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Customer Credit Review Modal -->
+<div class="modal fade" id="customerCreditReviewModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h5 class="modal-title" id="customer-credit-review-title">Review Customer Credit</h5>
+          <div id="customer-credit-review-id" style="font-size:12px;color:#94a3b8;margin-top:2px;"></div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="customer-credit-amount-group" class="mb-3">
+          <label class="form-label" style="font-size:13px;font-weight:600;" id="customer-credit-amount-label">Credit Amount (PKR) <span class="text-danger">*</span></label>
+          <select class="form-select form-select-sm" id="customer-credit-amount"></select>
+          <div style="font-size:11px;color:#94a3b8;margin-top:4px;" id="customer-credit-amount-help">PKR 2,000–30,000, in increments of PKR 1,000.</div>
+        </div>
+        <div>
+          <label class="form-label" style="font-size:13px;font-weight:600;" id="customer-credit-review-reason-label">Review Remark <span class="text-danger">*</span></label>
+          <textarea class="form-control form-control-sm" id="customer-credit-review-reason" rows="4" maxlength="500"></textarea>
+          <div class="invalid-feedback" id="customer-credit-review-validation">Please complete all required fields.</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal" id="customer-credit-review-cancel">Cancel</button>
+        <button class="btn btn-primary btn-sm" id="customer-credit-review-submit" onclick="submitCustomerCreditReview()">Confirm</button>
       </div>
     </div>
   </div>
@@ -1459,6 +1475,9 @@
       </div>
       <div class="modal-body" id="loan-detail-body" style="font-size:13.5px;"></div>
       <div class="modal-footer">
+        <button class="btn btn-primary btn-sm" id="open-early-settlement-btn" style="display:none;" onclick="openEarlySettlementEntry()">
+          <i class="bi bi-box-arrow-up-right me-1"></i><span>Open Early Settlement</span>
+        </button>
         <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
@@ -2239,7 +2258,7 @@ const phraseZh = {
   'Reset password for':'为以下用户重置密码','Front':'正面','Back':'反面',
   'Active':'启用','Disabled':'禁用','Inactive':'停用','Menu':'菜单','Button / Action':'按钮 / 操作','Root (Top Level)':'根节点（顶级）',
   '— Root (Top Level) —':'— 根节点（顶级）—',
-  'Dashboard':'仪表盘','Customer Management':'客户管理','Customer List':'客户列表','Credit Review':'授信审核','Loan Management':'借款管理','Loan Applications':'借款申请','Loan Vouchers':'借款借据','Repayment Orders':'还款订单','Overdue Management':'逾期管理','Fee Adjustment':'费用调整','Loan Bills':'还款计划','Disbursement Records':'放款记录','Early Settlement':'提前结清','Bill Amount Details':'账单金额明细','Repayment Allocation':'还款分配','Coupon Management':'优惠券管理','Limit Increase Coupons':'提额券','Repayment Coupons':'还款优惠券','Coupon Usage Records':'优惠券使用记录','Finance & Reconciliation':'财务与对账','Account Transactions':'账务流水','Repayment Reconciliation':'还款对账','Business Configuration':'业务配置','Amount Term Rules':'金额期数规则','System Management':'系统管理','User Management':'用户管理','Role Management':'角色管理','Permission Management':'权限管理','Audit Log':'审计日志',
+  'Dashboard':'仪表盘','Customer Management':'客户管理','Customer List':'客户列表','Credit Review':'授信审核','Loan Management':'借款管理','Loan Applications':'借款申请','Loan Vouchers':'借款借据','Repayment Orders':'还款订单','Overdue Management':'逾期管理','Fee Adjustment':'费用调整','Loan Bills':'还款计划','Disbursement Records':'放款记录','Early Settlement':'提前结清','Coupon Management':'优惠券管理','Limit Increase Coupons':'提额券','Repayment Coupons':'还款优惠券','Coupon Usage Records':'优惠券使用记录','Finance & Reconciliation':'财务与对账','Account Transactions':'账务流水','Repayment Reconciliation':'还款对账','Business Configuration':'业务配置','Amount Term Rules':'金额期数规则','System Management':'系统管理','User Management':'用户管理','Role Management':'角色管理','Permission Management':'权限管理','Audit Log':'审计日志',
   'Limit Increase Coupon':'提额券','Repayment Coupon':'还款优惠券','Decrease':'减少','Waive':'全免','Increase':'增加','CreditLimit':'授信额度',
   'Approved':'已通过','Pending':'待处理','Rejected':'已拒绝','Success':'成功','Failed':'失败','Cancelled':'已取消','Matched':'已匹配','Unmatched':'未匹配','AmountMismatch':'金额不一致','ManualConfirmed':'人工确认','Handled':'已处理','Ignored':'已忽略',
   'Not Started':'未开始','Manual Review':'人工复核','Incomplete':'未完成','Pending Review':'待审核','Expired':'已过期','Blacklisted':'黑名单',
@@ -2544,11 +2563,6 @@ let permissions = [
     { id:26, parentId:20, code:'loan:disbursement', name:'Disbursement Records', type:'Menu', route:'/loan/disbursements', sort:6, status:'Active', expanded:true },
       { id:261, parentId:26, code:'loan:disbursement:view', name:'View', type:'Button', route:'', sort:1, status:'Active', expanded:false },
       { id:262, parentId:26, code:'loan:disbursement:retry', name:'Retry Disbursement', type:'Button', route:'', sort:2, status:'Active', expanded:false },
-    { id:28, parentId:20, code:'loan:bill_amount', name:'Bill Amount Details', type:'Menu', route:'/loan/bill-amounts', sort:8, status:'Active', expanded:true },
-      { id:281, parentId:28, code:'loan:bill_amount:view', name:'View Amount Details', type:'Button', route:'', sort:1, status:'Active', expanded:false },
-      { id:282, parentId:28, code:'loan:bill_amount:change_log', name:'View Change Log', type:'Button', route:'', sort:2, status:'Active', expanded:false },
-    { id:35, parentId:20, code:'loan:repayment_allocation', name:'Repayment Allocation', type:'Menu', route:'/loan/repayment-allocations', sort:11, status:'Active', expanded:true },
-      { id:351, parentId:35, code:'loan:repayment_allocation:view', name:'View Repayment Allocation', type:'Button', route:'', sort:1, status:'Active', expanded:false },
   // Coupon Management
   { id:30, parentId:0, code:'coupon', name:'Coupon Management', type:'Menu', route:'', sort:4, status:'Active', expanded:true },
     { id:31, parentId:30, code:'coupon:limit_increase', name:'Limit Increase Coupons', type:'Menu', route:'/coupon/limit-increase', sort:1, status:'Active', expanded:true },
@@ -2624,7 +2638,7 @@ Object.assign(roles.find(r => r.code === 'COLLECTION'), {
   perms:['dashboard','customer','customer:list','customer:list:view','loan','loan:bill','loan:bill:view','loan:repayment','loan:repayment:view','loan:overdue','loan:overdue:view','loan:overdue:remind']
 });
 Object.assign(roles.find(r => r.code === 'FINANCE'), {
-  perms:['dashboard','loan','loan:voucher','loan:voucher:view','loan:bill','loan:bill:view','loan:bill_amount','loan:bill_amount:view','loan:bill_amount:change_log','loan:disbursement','loan:disbursement:view','loan:repayment','loan:repayment:view','loan:repayment_allocation','loan:repayment_allocation:view','loan:adjustment','loan:adjustment:create','loan:adjustment:approve','finance','finance:transaction','finance:transaction:view','finance:transaction:export','finance:reconciliation','finance:reconciliation:view','finance:reconciliation:export','finance:reconciliation:download','finance:reconciliation:mark_handled','finance:reconciliation:audit']
+  perms:['dashboard','loan','loan:voucher','loan:voucher:view','loan:bill','loan:bill:view','loan:disbursement','loan:disbursement:view','loan:repayment','loan:repayment:view','loan:adjustment','loan:adjustment:create','loan:adjustment:approve','finance','finance:transaction','finance:transaction:view','finance:transaction:export','finance:reconciliation','finance:reconciliation:view','finance:reconciliation:export','finance:reconciliation:download','finance:reconciliation:mark_handled','finance:reconciliation:audit']
 });
 Object.assign(roles.find(r => r.code === 'OPERATIONS'), {
   perms:['dashboard','loan','loan:application','loan:application:view','loan:voucher','loan:voucher:view','coupon','coupon:limit_increase','coupon:limit_increase:view','coupon:limit_increase:issue','coupon:limit_increase:void','coupon:repay','coupon:repay:view','coupon:repay:issue','coupon:repay:void','coupon:usage','coupon:usage:view','config','config:loan_product','config:loan_product:view','config:loan_product:create','config:loan_product:edit','config:loan_product:toggle_status','config:payment_institution','config:payment_institution:view','config:payment_institution:create','config:payment_institution:edit','config:payment_institution:toggle_status','config:amount_term_rule','config:amount_term_rule:view','config:amount_term_rule:create','config:amount_term_rule:edit','config:amount_term_rule:delete']
@@ -2654,9 +2668,7 @@ const pageMap = {
   paymentInstitutions: { titleKey:'nav.paymentInstitutions', subKey:'page.sub.paymentInstitutions' },
   amountrules:    { titleKey:'nav.amountrules',    subKey:'page.sub.amountrules' },
   loanBills:      { titleKey:'nav.loanBills',      subKey:'page.sub.loanBills' },
-  loanBillFees:   { titleKey:'nav.loanBillFees',   subKey:'page.sub.loanBillFees' },
   disbursements:  { titleKey:'nav.disbursements',  subKey:'page.sub.disbursements' },
-  repaymentAllocations: { titleKey:'nav.repaymentAllocations', subKey:'page.sub.repaymentAllocations' },
   feeAdjust:      { titleKey:'nav.feeAdjust',      subKey:'page.sub.feeAdjust' },
   transactions:   { titleKey:'nav.transactions',   subKey:'page.sub.transactions' },
   reconciliation: { titleKey:'nav.reconciliation', subKey:'page.sub.reconciliation' },
@@ -2693,9 +2705,7 @@ function navigate(page) {
   if (page === 'paymentInstitutions') renderPaymentInstitutions();
   if (page === 'amountrules')     renderAmountRules();
   if (page === 'loanBills')       filterBills();
-  if (page === 'loanBillFees')    filterLoanBillFees();
   if (page === 'disbursements')   filterDisbursements();
-  if (page === 'repaymentAllocations') filterRepaymentAllocations();
   if (page === 'feeAdjust')       filterAdjustments();
   if (page === 'transactions')    filterTransactions();
   if (page === 'reconciliation')  filterReconciliation();
@@ -3146,6 +3156,30 @@ let customers = [
   { id:1020, name:'Amira Khan',        mobile:'+92 346 8877665', idCard:'4220501234567', creditStatus:'Approved', totalCredit:18000, usedCredit:9000,  blacklist:0, walletType:'Bank',       walletAccount:'PK36HABB00000001122334', regTime:'2024-03-08 10:30', city:'Karachi', occupation:'Salaried', income:'30000-50000' },
 ];
 
+customers.forEach((c,index)=>Object.assign(c,{
+  registeredName:c.name,
+  registeredIdCard:c.idCard,
+  whatsAccount:c.whatsAccount||c.mobile,
+  userState:c.userState??1,
+  gestureFailedCount:c.gestureFailedCount??0,
+  authTime:c.authTime||(c.creditStatus==='Not Applied'?'-':c.regTime),
+  portrait:c.portrait||`avatar-${String(index+1).padStart(2,'0')}.png`,
+  email:c.email||`${c.name.toLowerCase().replace(/\s+/g,'.')}@example.com`,
+  isDel:0,
+  createTime:c.createTime||c.regTime,
+  modifyTime:c.modifyTime||c.regTime
+}));
+
+function latestCustomerCreditRecord(customerId) {
+  const recs=(typeof userCreditRecords!=='undefined'&&userCreditRecords[customerId])||[];
+  return recs.length?recs[recs.length-1]:null;
+}
+
+function customerCreditStepLabel(step) {
+  const labels={1:'Basic Info',2:'Contact Info',3:'Identity Info',4:'Credit Quota',5:'Wallet Binding'};
+  return labels[step]||'-';
+}
+
 function creditBadge(s) {
   const map = { Approved:'badge-active', Pending:'badge-pending', Rejected:'badge-disabled', 'Not Applied':'background:#f1f5f9;color:#64748b;' };
   const cls = map[s] || '';
@@ -3224,18 +3258,22 @@ function toggleCustomerSensitive() {
 function renderCustomers(list) {
   const data = list || customers;
   document.getElementById('cust-count-label').textContent = `Showing 1–${data.length} of ${data.length}`;
-  const rows = data.map(c => `
+  const rows = data.map(c => {
+    const credit=latestCustomerCreditRecord(c.id);
+    const step=customerCreditStepLabel(credit?.step);
+    return `
     <tr>
       <td><code style="font-size:12px;">${c.id}</code></td>
       <td>
-        <div class="masked-value" style="font-weight:600;">${maskName(c.name)}</div>
+        <div class="${c.name?'masked-value':''}" style="font-weight:600;">${c.name?maskName(c.name):(currentLang==='zh'?'未完成身份认证':'Identity not completed')}</div>
         <div class="masked-value" style="font-size:11.5px;color:#94a3b8;">${maskMobile(c.mobile)}</div>
       </td>
-      <td class="masked-value" style="font-size:12.5px;font-family:monospace;">${maskId(c.idCard)}</td>
       <td>${c.creditStatus === 'Approved' ? `<span class="status-badge badge-active">${c.creditStatus}</span>` : c.creditStatus === 'Pending' ? `<span class="status-badge badge-pending">${c.creditStatus}</span>` : c.creditStatus === 'Rejected' ? `<span class="status-badge badge-disabled">${c.creditStatus}</span>` : `<span class="status-badge" style="background:#f1f5f9;color:#64748b;">${c.creditStatus}</span>`}</td>
+      <td><span class="role-tag" style="font-size:11px;">${currentLang==='zh'?localizePhrase(step):step}</span><div style="font-size:11px;color:#94a3b8;margin-top:3px;">Step ${credit?.step||'-'} · ${credit?.reviewType||'-'}</div></td>
       <td>
         <div style="font-size:13px;">Limit: <strong>${fmtMoney(c.totalCredit)}</strong></div>
         <div style="font-size:11.5px;color:#94a3b8;">Used: ${fmtMoney(c.usedCredit)}</div>
+        <div style="font-size:11.5px;color:#94a3b8;">Locked: ${fmtMoney(credit?.lockedCredit||0)}</div>
       </td>
       <td style="font-size:12.5px;">${c.walletType !== '-' ? `<span class="role-tag">${c.walletType}</span>` : '-'}</td>
       <td>${c.blacklist ? '<span class="status-badge badge-disabled">Yes</span>' : '<span class="status-badge" style="background:#f1f5f9;color:#64748b;">No</span>'}</td>
@@ -3243,15 +3281,16 @@ function renderCustomers(list) {
       <td>
         <div class="d-flex gap-1">
           <button class="btn btn-sm btn-outline-primary action-btn" onclick="viewCustDetail(${c.id})"><i class="bi bi-eye"></i> ${t('btn.detail')}</button>
+          ${c.creditStatus === 'Pending' ? `<button class="btn btn-sm btn-outline-success action-btn" onclick="openCustomerCreditReview(${c.id},true)">${currentLang==='zh'?'通过':'Approve'}</button><button class="btn btn-sm btn-outline-danger action-btn" onclick="openCustomerCreditReview(${c.id},false)">${currentLang==='zh'?'拒绝':'Reject'}</button>` : ''}
           <button class="btn btn-sm ${c.blacklist ? 'btn-outline-success' : 'btn-outline-danger'} action-btn" onclick="toggleBlacklist(${c.id})">
             ${c.blacklist ? `<i class="bi bi-unlock"></i> ${t('btn.unblock')}` : `<i class="bi bi-slash-circle"></i> ${t('btn.blacklist')}`}
           </button>
         </div>
       </td>
-    </tr>`).join('');
+    </tr>`}).join('');
   document.getElementById('cust-table-container').innerHTML = `
     <table class="table table-hover mb-0">
-      <thead><tr><th>${currentLang === 'zh' ? '客户 ID' : 'Customer ID'}</th><th>${t('th.customer')}</th><th>${t('th.idCard')}</th><th>${t('th.creditStatus')}</th><th>${t('th.creditInfo')}</th><th>${t('th.wallet')}</th><th>${t('th.blacklisted')}</th><th>${t('th.registered')}</th><th>${t('th.actions')}</th></tr></thead>
+      <thead><tr><th>${currentLang === 'zh' ? '客户 ID' : 'Customer ID'}</th><th>${t('th.customer')}</th><th>${t('th.creditStatus')}</th><th>${currentLang==='zh'?'当前步骤':'Current Step'}</th><th>${t('th.creditInfo')}</th><th>${t('th.wallet')}</th><th>${t('th.blacklisted')}</th><th>${t('th.registered')}</th><th>${t('th.actions')}</th></tr></thead>
       <tbody>${rows || '<tr><td colspan="9"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
     </table>`;
 }
@@ -3272,7 +3311,7 @@ function viewCustDetail(id) {
   currentCustDetailTab = 'basic';
   customerDetailSensitiveVisible = false;
   const c = customers.find(x=>x.id===id);
-  document.getElementById('cust-detail-title').textContent = `${currentLang === 'zh' ? '客户详情' : 'Customer Detail'} — ${maskName(c.name)}`;
+  document.getElementById('cust-detail-title').textContent = `${currentLang === 'zh' ? '客户详情' : 'Customer Detail'} — ${c.name?maskName(c.name):'#'+c.id}`;
   document.querySelectorAll('#cust-detail-tabs .nav-link').forEach((a,i)=>a.classList.toggle('active',i===0));
   updateCustomerDetailSensitiveButton();
   renderCustDetailTab('basic', id);
@@ -3306,6 +3345,11 @@ let loanApplications = [
   { id:4, applyNo:'AP2024060404', userId:1011, productId:1, loanAmount:6000, couponNo:'', couponAmount:0, term:2, periodDays:15, totalDays:30, dailyInterestRate:'0.75%', dailyServiceRate:'0.25%', dailyOverdueRate:'2.3%', totalInterest:1350, totalServiceFee:450, totalRepayAmount:7800, roundingWaiver:0, displayPayable:7800, startDate:'2024-06-04', endDate:'2024-07-04', quickReview:false, state:'Rejected', preState:'Passed', riskState:'Rejected', rejectReason:'Risk score below product threshold', reviewTime:'2024-06-04 11:20', paymentAccountId:511, disbursementState:'-', disbursementTime:'', disbursementNo:'', createdAt:'2024-06-04 11:05' },
   { id:5, applyNo:'AP2024060405', userId:1015, productId:1, loanAmount:9000, couponNo:'LI20240009', couponAmount:5000, term:2, periodDays:15, totalDays:30, dailyInterestRate:'0.75%', dailyServiceRate:'0.25%', dailyOverdueRate:'2.3%', totalInterest:2025, totalServiceFee:675, totalRepayAmount:11700, roundingWaiver:0, displayPayable:11700, startDate:'2024-06-04', endDate:'2024-07-04', quickReview:true, state:'DisbursementFailed', preState:'Passed', riskState:'Approved', rejectReason:'', reviewTime:'2024-06-04 11:35', paymentAccountId:515, disbursementState:'Failed', disbursementTime:'', disbursementNo:'DB2024060403', createdAt:'2024-06-04 11:28' },
 ];
+loanApplications.forEach(a=>Object.assign(a,{
+  termInfos:a.termInfos||`${a.term} installments × ${a.periodDays} days`,
+  isDel:0,
+  modifyTime:a.modifyTime||a.reviewTime||a.createdAt
+}));
 
 function applicationBadge(s) {
   const colors={PendingReview:'background:#fef3c7;color:#92400e;',Approved:'background:#dbeafe;color:#1d4ed8;',Rejected:'background:#fee2e2;color:#b91c1c;',Disbursing:'background:#e0e7ff;color:#4338ca;',DisbursementFailed:'background:#fee2e2;color:#b91c1c;',Disbursed:'background:#dcfce7;color:#15803d;'};
@@ -3341,9 +3385,10 @@ function filterApplications() {
 
 function viewApplicationDetail(no) {
   const a=loanApplications.find(x=>x.applyNo===no);
+  document.getElementById('open-early-settlement-btn').style.display='none';
   document.querySelector('#loanDetailModal .modal-title').textContent=currentLang==='zh'?'借款申请详情':'Loan Application Detail';
   document.getElementById('loan-detail-body').innerHTML=`<div class="row g-3">
-    <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">APPLICATION</div>${detailRow('Application No.',a.applyNo)}${detailRow('Customer ID','#'+a.userId)}${detailRow('Product ID','#'+a.productId)}${detailRow('Loan Amount',fmtMoney(a.loanAmount))}${detailRow('Limit Coupon',a.couponNo?`${a.couponNo} / ${fmtMoney(a.couponAmount)}`:'-')}${detailRow('Term',a.term+' × '+a.periodDays+' days')}${detailRow('Total Days',a.totalDays)}${detailRow('Applied At',a.createdAt)}</div></div>
+    <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">APPLICATION</div>${detailRow('Record ID','#'+a.id)}${detailRow('Application No.',a.applyNo)}${detailRow('Customer ID','#'+a.userId)}${detailRow('Product ID','#'+a.productId)}${detailRow('Loan Amount',fmtMoney(a.loanAmount))}${detailRow('Limit Coupon',a.couponNo?`${a.couponNo} / ${fmtMoney(a.couponAmount)}`:'-')}${detailRow('Term',a.term+' × '+a.periodDays+' days')}${detailRow('Term Infos',a.termInfos)}${detailRow('Total Days',a.totalDays)}${detailRow('Created At',a.createdAt)}${detailRow('Updated At',a.modifyTime)}</div></div>
     <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">REVIEW & DISBURSEMENT</div>${detailRow('Application Status',a.state)}${detailRow('Pre-check Status',a.preState)}${detailRow('Risk Status',a.riskState)}${detailRow('Quick Review',a.quickReview?'Yes':'No')}${detailRow('Review Time',a.reviewTime||'-')}${detailRow('Reject Reason',a.rejectReason||'-')}${detailRow('Payment Account ID',a.paymentAccountId?'#'+a.paymentAccountId:'-')}${detailRow('Disbursement Status',a.disbursementState)}${detailRow('Disbursement No.',a.disbursementNo||'-')}${detailRow('Disbursement Time',a.disbursementTime||'-')}</div></div>
     <div class="col-12"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">AMOUNT SNAPSHOT</div><div class="row"><div class="col-md-6">${detailRow('Daily Interest Rate',a.dailyInterestRate)}${detailRow('Daily Service Rate',a.dailyServiceRate)}${detailRow('Daily Overdue Rate',a.dailyOverdueRate)}${detailRow('Total Interest',fmtMoney(a.totalInterest))}${detailRow('Total Service Fee',fmtMoney(a.totalServiceFee))}</div><div class="col-md-6">${detailRow('Theoretical Repayable',fmtMoney(a.totalRepayAmount))}${detailRow('Rounding Waiver',fmtMoney(a.roundingWaiver))}${detailRow('Display Payable',fmtMoney(a.displayPayable))}${detailRow('Schedule',a.startDate+' ~ '+a.endDate)}</div></div></div></div>
   </div>`;
@@ -3352,8 +3397,121 @@ function viewApplicationDetail(no) {
 
 function reviewApplication(no,approved) {
   const a=loanApplications.find(x=>x.applyNo===no);
-  a.riskState=approved?'Approved':'Rejected'; a.state=approved?'Approved':'Rejected'; a.reviewTime=new Date().toISOString().slice(0,16).replace('T',' '); a.rejectReason=approved?'':'Manual review rejected';
-  filterApplications(); toast(approved?'Application approved':'Application rejected',approved?'success':'error');
+  if (!a || a.state!=='PendingReview') return;
+  if (!approved) {
+    openApplicationRejection(no);
+    return;
+  }
+  a.riskState='Approved';
+  a.state='Approved';
+  a.reviewTime=new Date().toISOString().slice(0,16).replace('T',' ');
+  a.rejectReason='';
+  filterApplications();
+  toast(currentLang==='zh'?'申请已通过':'Application approved');
+}
+
+let currentRejectedApplicationNo=null;
+
+function openApplicationRejection(no) {
+  const a=loanApplications.find(x=>x.applyNo===no);
+  if (!a || a.state!=='PendingReview') return;
+  currentRejectedApplicationNo=no;
+  const zh=currentLang==='zh';
+  document.getElementById('application-reject-title').textContent=zh?'拒绝借款申请':'Reject Loan Application';
+  document.getElementById('application-reject-no').textContent=(zh?'申请单号：':'Application No.: ')+no;
+  document.getElementById('application-reject-reason-label').innerHTML=(zh?'拒绝原因':'Rejection Reason')+' <span class="text-danger">*</span>';
+  const reason=document.getElementById('application-reject-reason');
+  reason.value='';
+  reason.placeholder=zh?'请输入拒绝原因':'Enter rejection reason';
+  reason.classList.remove('is-invalid');
+  document.getElementById('application-reject-validation').textContent=zh?'请填写拒绝原因。':'Rejection reason is required.';
+  document.getElementById('application-reject-cancel').textContent=zh?'取消':'Cancel';
+  document.getElementById('application-reject-submit').textContent=zh?'确认拒绝':'Confirm Rejection';
+  new bootstrap.Modal(document.getElementById('applicationRejectModal')).show();
+}
+
+function submitApplicationRejection() {
+  const a=loanApplications.find(x=>x.applyNo===currentRejectedApplicationNo);
+  const reasonInput=document.getElementById('application-reject-reason');
+  const reason=reasonInput.value.trim();
+  reasonInput.classList.toggle('is-invalid',!reason);
+  if (!a || !reason) return;
+  a.riskState='Rejected';
+  a.state='Rejected';
+  a.reviewTime=new Date().toISOString().slice(0,16).replace('T',' ');
+  a.rejectReason=reason;
+  bootstrap.Modal.getInstance(document.getElementById('applicationRejectModal'))?.hide();
+  currentRejectedApplicationNo=null;
+  filterApplications();
+  toast(currentLang==='zh'?'申请已拒绝':'Application rejected','error');
+}
+
+let currentCustomerCreditReview = null;
+
+function openCustomerCreditReview(customerId, approved) {
+  const customer=customers.find(c=>c.id===customerId);
+  if (!customer || customer.creditStatus!=='Pending') return;
+  currentCustomerCreditReview={customerId,approved};
+  const zh=currentLang==='zh';
+  document.getElementById('customer-credit-review-title').textContent=approved?(zh?'通过客户授信':'Approve Customer Credit'):(zh?'拒绝客户授信':'Reject Customer Credit');
+  document.getElementById('customer-credit-review-id').textContent=(zh?'客户：':'Customer: ')+`#${customer.id} · ${customer.name||customer.mobile}`;
+  document.getElementById('customer-credit-amount-group').style.display=approved?'':'none';
+  document.getElementById('customer-credit-amount-label').innerHTML=(zh?'授信金额 (PKR)':'Credit Amount (PKR)')+' <span class="text-danger">*</span>';
+  document.getElementById('customer-credit-amount-help').textContent=zh?'可选 2,000–30,000，步长 1,000。':'PKR 2,000–30,000, in increments of PKR 1,000.';
+  const amountSelect=document.getElementById('customer-credit-amount');
+  amountSelect.innerHTML=`<option value="">${zh?'请选择授信金额':'Select a credit amount'}</option>`+
+    Array.from({length:29},(_,i)=>(i+2)*1000).map(amount=>`<option value="${amount}">PKR ${amount.toLocaleString()}</option>`).join('');
+  document.getElementById('customer-credit-review-reason-label').innerHTML=(approved?(zh?'审核备注':'Review Remark'):(zh?'拒绝原因':'Rejection Reason'))+' <span class="text-danger">*</span>';
+  const reason=document.getElementById('customer-credit-review-reason');
+  reason.value='';
+  reason.placeholder=approved?(zh?'请输入通过备注':'Enter approval remarks'):(zh?'请输入拒绝原因':'Enter rejection reason');
+  reason.classList.remove('is-invalid');
+  amountSelect.classList.remove('is-invalid');
+  document.getElementById('customer-credit-review-cancel').textContent=zh?'取消':'Cancel';
+  const submit=document.getElementById('customer-credit-review-submit');
+  submit.textContent=approved?(zh?'确认通过':'Confirm Approval'):(zh?'确认拒绝':'Confirm Rejection');
+  submit.className=`btn btn-sm ${approved?'btn-success':'btn-danger'}`;
+  new bootstrap.Modal(document.getElementById('customerCreditReviewModal')).show();
+}
+
+function submitCustomerCreditReview() {
+  if (!currentCustomerCreditReview) return;
+  const {customerId,approved}=currentCustomerCreditReview;
+  const customer=customers.find(c=>c.id===customerId);
+  const amountSelect=document.getElementById('customer-credit-amount');
+  const reasonInput=document.getElementById('customer-credit-review-reason');
+  const amount=Number(amountSelect.value);
+  const reason=reasonInput.value.trim();
+  const amountValid=!approved||(amount>=2000&&amount<=30000&&amount%1000===0);
+  amountSelect.classList.toggle('is-invalid',!amountValid);
+  reasonInput.classList.toggle('is-invalid',!reason);
+  document.getElementById('customer-credit-review-validation').textContent=currentLang==='zh'?(approved?'请选择授信金额并填写审核备注。':'请填写拒绝原因。'):'Please complete all required fields.';
+  if (!amountValid||!reason) return;
+
+  customer.creditStatus=approved?'Approved':'Rejected';
+  customer.creditReviewTime=new Date().toISOString().slice(0,16).replace('T',' ');
+  customer.creditReviewRemark=reason;
+  customer.creditRejectReason=approved?'':reason;
+  const creditRecord=latestCustomerCreditRecord(customerId);
+  if (creditRecord) {
+    creditRecord.state=approved?2:4;
+    creditRecord.step=4;
+    creditRecord.reviewState=approved?1:2;
+    creditRecord.reviewTime=customer.creditReviewTime;
+    creditRecord.rejectReason=approved?'':reason;
+    creditRecord.totalCredit=approved?amount:0;
+    creditRecord.approvedTime=approved?customer.creditReviewTime:'';
+    creditRecord.remark=reason;
+    creditRecord.modifyTime=customer.creditReviewTime;
+  }
+  if (approved) {
+    customer.totalCredit=amount;
+    customer.profileStep=4;
+  }
+  bootstrap.Modal.getInstance(document.getElementById('customerCreditReviewModal'))?.hide();
+  currentCustomerCreditReview=null;
+  filterCustomers();
+  toast(approved?(currentLang==='zh'?`客户授信已通过，额度：PKR ${amount.toLocaleString()}`:'Customer credit approved'):(currentLang==='zh'?'客户授信已拒绝':'Customer credit rejected'),approved?'success':'error');
 }
 
 // ============================================================
@@ -3398,14 +3556,21 @@ loanOrders.forEach((l,index)=>Object.assign(l,{
   remainingOverdueFee:l.remainingOverdueFee||0,
   coolingOffStart:l.status==='CoolingOff'?l.disbursedAt:'-',
   coolingOffEnd:l.status==='CoolingOff'&&l.disbursedAt!=='-'?l.disbursedAt.slice(0,10)+' + 24h':'-',
+  totalDays:l.installments*l.periodDays,
+  accumulatedFeeAmount:l.totalInterest+l.totalFee+(l.totalOverdueFee||0),
+  paymentAccountId:loanApplications.find(a=>a.applyNo===l.applyNo)?.paymentAccountId||'-',
   feeCapAmount:l.amount,
   feeCapped:false,
+  feeCappedTime:'-',
   settledType:l.status==='Paid'?'NORMAL':'NONE',
   settledTime:l.status==='Paid'?l.finalDue:'-',
   dailyInterestRate:l.dailyRate,
   dailyServiceRate:'0.25%',
   dailyOverdueRate:l.overdueRate,
-  batchingTime:l.disbursedAt==='-'?'-':'2024-06-04 00:05'
+  batchingTime:l.disbursedAt==='-'?'-':'2024-06-04 00:05',
+  createTime:l.disbursedAt,
+  modifyTime:l.disbursedAt==='-'?'-':'2024-06-04 00:05',
+  isDel:0
 }));
 loanOrders.forEach(l=>{ delete l.dailyRate; delete l.overdueRate; });
 const loanVouchers=loanOrders.filter(l=>!['PendingApproval','PendingDisbursement','Rejected'].includes(l.status));
@@ -3512,6 +3677,7 @@ function filterLoans() {
 
 function viewLoanDetail(no) {
   const l = loanOrders.find(x=>x.no===no);
+  window.currentLoanDetailNo = no;
   document.querySelector('#loanDetailModal .modal-title').textContent=currentLang==='zh'?'借款借据详情':'Loan Voucher Detail';
   document.getElementById('loan-detail-body').innerHTML = `
     <div class="row g-3">
@@ -3519,10 +3685,10 @@ function viewLoanDetail(no) {
         <div style="background:#f8fafc;border-radius:8px;padding:16px;">
           <div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:12px;">VOUCHER INFO</div>
           ${detailRow('Voucher No.', l.no)}${detailRow('Application No.',l.applyNo)}${detailRow('Disbursement No.',l.disbursementNo)}
-          ${detailRow('Customer ID','#'+l.userId)}${detailRow('Product ID','#'+l.productId)}
+          ${detailRow('Customer ID','#'+l.userId)}${detailRow('Product ID','#'+l.productId)}${detailRow('Payment Account ID',l.paymentAccountId==='-'?'-':'#'+l.paymentAccountId)}
           ${detailRow('Borrow Count', formatBorrowCount(l.borrowCount))}
           ${detailRow('Loan Amount', fmtMoney(l.amount))}
-          ${detailRow('Installments', l.installments + ' × ' + l.periodDays + ' days')}
+          ${detailRow('Installments', l.installments + ' × ' + l.periodDays + ' days')}${detailRow('Total Days',l.totalDays)}
           ${detailRow('Daily Interest Rate', l.dailyInterestRate)}${detailRow('Daily Service Rate', l.dailyServiceRate)}${detailRow('Daily Overdue Rate', l.dailyOverdueRate)}
           ${detailRow('Total Interest', fmtMoney(l.totalInterest))}${detailRow('Total Service Fee', fmtMoney(l.totalFee))}
           ${detailRow('Theoretical Repayable', fmtMoney(l.totalRepay))}${detailRow('Rounding Waiver',fmtMoney(l.waiverAmount))}
@@ -3534,16 +3700,52 @@ function viewLoanDetail(no) {
           ${detailRow('Voucher Status', l.status)}${detailRow('Schedule',l.firstDue+' ~ '+l.finalDue)}
           ${detailRow('Cooling-off Start',l.coolingOffStart)}${detailRow('Cooling-off End',l.coolingOffEnd)}
           ${detailRow('Fee Cap Amount',fmtMoney(l.feeCapAmount))}${detailRow('Fee Capped',l.feeCapped?'Yes':'No')}
-          ${detailRow('Settlement Type',l.settledType)}${detailRow('Settled At',l.settledTime)}${detailRow('Last Batching Time',l.batchingTime)}
+          ${detailRow('Accumulated Fee',fmtMoney(l.accumulatedFeeAmount))}${detailRow('Settlement Type',l.settledType)}${detailRow('Settled At',l.settledTime)}${detailRow('Fee Capped Time',l.feeCappedTime)}${detailRow('Last Batching Time',l.batchingTime)}${detailRow('Created At',l.createTime)}${detailRow('Updated At',l.modifyTime)}
         </div>
       </div>
       <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:12px;">PAID BREAKDOWN</div>${detailRow('Paid Principal',fmtMoney(l.paidPrincipal))}${detailRow('Paid Interest',fmtMoney(l.paidInterest))}${detailRow('Paid Service Fee',fmtMoney(l.paidServiceFee))}${detailRow('Paid Overdue Fee',fmtMoney(l.paidOverdueFee))}${detailRow('Repayment Coupon',fmtMoney(l.repayCouponAmount))}${detailRow('Total Paid',fmtMoney(l.paidAmount))}</div></div>
       <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:12px;">REMAINING BREAKDOWN</div>${detailRow('Remaining Principal',fmtMoney(l.remainingPrincipal))}${detailRow('Remaining Interest',fmtMoney(l.remainingInterest))}${detailRow('Remaining Service Fee',fmtMoney(l.remainingServiceFee))}${detailRow('Remaining Overdue Fee',fmtMoney(l.remainingOverdueFee))}${detailRow('Total Remaining',fmtMoney(l.remainingAmount))}</div></div>
+      <div class="col-12" id="early-settlement-entry">
+        ${buildEarlySettlementEntry(l)}
+      </div>
       <div class="col-12">
         ${buildContractCard(l)}
       </div>
     </div>`;
+  updateEarlySettlementButton(l);
   new bootstrap.Modal(document.getElementById('loanDetailModal')).show();
+}
+
+function buildEarlySettlementEntry(l) {
+  if (!l.earlySettlementNo) return '';
+  return `
+    <div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#059669;letter-spacing:.5px;margin-bottom:5px;"><i class="bi bi-check-circle-fill me-1"></i>${currentLang==='zh'?'提前结清入口已打开':'EARLY SETTLEMENT ENTRY OPENED'}</div>
+        <div style="font-size:12px;color:#64748b;">${currentLang==='zh'?'提前结清号':'Early Settlement No.'}</div>
+      </div>
+      <div style="font-family:monospace;font-size:15px;font-weight:700;color:#047857;background:#fff;border:1px solid #d1fae5;border-radius:6px;padding:7px 12px;">${l.earlySettlementNo}</div>
+    </div>`;
+}
+
+function updateEarlySettlementButton(l) {
+  const btn = document.getElementById('open-early-settlement-btn');
+  const eligible = l.remainingAmount > 0 && !['Paid','WrittenOff'].includes(l.status);
+  btn.style.display = eligible && !l.earlySettlementNo ? '' : 'none';
+  btn.querySelector('span').textContent = currentLang==='zh'?'打开提前结清入口':'Open Early Settlement';
+}
+
+function openEarlySettlementEntry() {
+  const l = loanOrders.find(x=>x.no===window.currentLoanDetailNo);
+  if (!l || l.remainingAmount <= 0 || ['Paid','WrittenOff'].includes(l.status)) return;
+  if (!l.earlySettlementNo) {
+    const stamp = new Date().toISOString().replace(/\D/g,'').slice(0,14);
+    l.earlySettlementNo = `ES${stamp}${l.no.slice(-4)}`;
+    l.earlySettlementEntryOpen = true;
+  }
+  document.getElementById('early-settlement-entry').innerHTML = buildEarlySettlementEntry(l);
+  updateEarlySettlementButton(l);
+  toast((currentLang==='zh'?'提前结清入口已打开，结清号：':'Early settlement entry opened: ') + l.earlySettlementNo);
 }
 
 function buildContractCard(l) {
@@ -3754,6 +3956,7 @@ const couponTemplates=[
   {id:101,couponName:'Standard Limit Increase',couponType:'LimitIncrease',couponAmount:5000,productId:1,effectTime:'2024-01-01 00:00',expireTime:'2024-12-31 23:59',issuedCount:10,ruleConfig:{amountStep:100}},
   {id:201,couponName:'Standard Repayment Discount',couponType:'Repayment',couponAmount:500,productId:1,effectTime:'2024-01-01 00:00',expireTime:'2024-12-31 23:59',issuedCount:8,ruleConfig:{minRemainingPrincipal:3000}}
 ];
+couponTemplates.forEach(tpl=>Object.assign(tpl,{isDel:0,createTime:tpl.effectTime,modifyTime:tpl.effectTime}));
 let limitIncreaseCoupons = [
   { no:'LI20240001', userId:1001, custName:'Ali Hassan',     mobile:'+92 321 4561234', increaseAmount:5000,  linkedOrder:'LN2024060401', status:'Used',    effectiveStart:'2024-05-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'2024-05-20 14:00' },
   { no:'LI20240002', userId:1003, custName:'Muhammad Raza',  mobile:'+92 311 2223333', increaseAmount:10000, linkedOrder:'LN2024060403', status:'Used',    effectiveStart:'2024-05-01 00:00', effectiveEnd:'2024-06-30 23:59', usedTime:'2024-05-25 10:30' },
@@ -3791,13 +3994,13 @@ function switchCouponTab(tab, el) {
   activeCouponTab = tab;
   document.querySelectorAll('#coupon-tabs .nav-link').forEach(a => a.classList.remove('active'));
   el.classList.add('active');
-  const titleMap = { limit: t('coupon.limitTab'), repay: t('coupon.repayTab'), usage: t('coupon.usageTab') };
+  const titleMap = { limit: t('coupon.limitTab'), repay: t('coupon.repayTab'), usage: t('coupon.usageTab'), template: currentLang==='zh'?'优惠券模板':'Coupon Templates' };
   document.getElementById('coupon-tab-title').textContent = titleMap[tab] || tab;
   document.getElementById('coupon-search').value = '';
   document.getElementById('coupon-status-filter').value = '';
-  // show/hide Issue Coupon button — not applicable for usage tab
+  // show/hide Issue Coupon button — not applicable for usage/template tabs
   const issueBtn = document.querySelector('#page-coupons .btn-primary');
-  if (issueBtn) issueBtn.style.display = tab === 'usage' ? 'none' : '';
+  if (issueBtn) issueBtn.style.display = ['usage','template'].includes(tab) ? 'none' : '';
   filterCoupons();
 }
 
@@ -3808,6 +4011,10 @@ function couponBadge(s) {
 }
 
 function renderCoupons(list) {
+  if (activeCouponTab === 'template') {
+    renderCouponTemplates(list);
+    return;
+  }
   const src = activeCouponTab === 'limit' ? limitIncreaseCoupons : repayCoupons;
   const data = list || src;
   document.getElementById('coupon-count-label').textContent = t('count.showing')(data.length, data.length);
@@ -3837,6 +4044,16 @@ function renderCoupons(list) {
     </table></div>`;
 }
 
+function renderCouponTemplates(list) {
+  const data=list||couponTemplates;
+  document.getElementById('coupon-count-label').textContent=t('count.showing')(data.length,data.length);
+  document.getElementById('coupon-table-container').innerHTML=`<div class="table-scroll"><table class="table table-hover mb-0" style="min-width:1250px;">
+    <thead><tr><th>ID</th><th>Coupon Name</th><th>Coupon Type</th><th>Amount</th><th>Product ID</th><th>Effective Time</th><th>Expire Time</th><th>Issued Count</th><th>Rule Config</th><th>Created At</th><th>Updated At</th></tr></thead>
+    <tbody>${data.map(tpl=>`<tr>
+      <td><code>#${tpl.id}</code></td><td style="font-weight:600;">${tpl.couponName}</td><td><span class="role-tag">${tpl.couponType}</span></td><td>${fmtMoney(tpl.couponAmount)}</td><td><code>#${tpl.productId}</code></td><td>${tpl.effectTime}</td><td>${tpl.expireTime}</td><td>${tpl.issuedCount}</td><td><code style="font-size:11px;">${JSON.stringify(tpl.ruleConfig)}</code></td><td>${tpl.createTime||tpl.effectTime}</td><td>${tpl.modifyTime||tpl.effectTime}</td>
+    </tr>`).join('')}</tbody></table></div>`;
+}
+
 function filterCoupons() {
   const q = document.getElementById('coupon-search').value.toLowerCase();
   const st = document.getElementById('coupon-status-filter').value;
@@ -3844,6 +4061,12 @@ function filterCoupons() {
     renderCouponUsage(couponUsageRecords.filter(u =>
       (!q || u.couponNo.toLowerCase().includes(q) || String(u.userId).includes(q) || u.bizNo.toLowerCase().includes(q)) &&
       (!st || u.status === st)
+    ));
+    return;
+  }
+  if (activeCouponTab === 'template') {
+    renderCouponTemplates(couponTemplates.filter(tpl=>
+      !q||tpl.couponName.toLowerCase().includes(q)||tpl.couponType.toLowerCase().includes(q)||String(tpl.id).includes(q)
     ));
     return;
   }
@@ -3989,9 +4212,6 @@ Object.assign(i18n.zh, {
   'filter.searchRepayPh':'还款单号 / 借据号 / 客户 ID / 支付流水号...'
 });
 Object.assign(i18n.en,{
-  'nav.loanBillFees':'Bill Amount Details','nav.repaymentAllocations':'Repayment Allocation',
-  'page.loanBillFees':'Bill Amount Details','page.repaymentAllocations':'Repayment Allocation',
-  'page.sub.loanBillFees':'Amount components from loan_voucher_bill with inline change history','page.sub.repaymentAllocations':'Repayment-to-fee-type allocation records',
   'filter.searchFeePh':'Fee No / Bill No / Loan No...','filter.searchFeeChangePh':'Change No / Fee No / Source No...','filter.searchRepayBillPh':'Repayment No / Bill No / Loan No...','filter.searchAllocationPh':'Allocation No / Repayment No / Fee No...',
   'filter.allFeeTypes':'All Fee Types','filter.allChangeTypes':'All Change Types','filter.allSources':'All Sources',
   'th.feeNo':'Fee No.','th.feeName':'Fee Name','th.originalAmount':'Original Amount','th.payableAmount':'Payable Amount','th.paidAmount':'Paid Amount','th.remainingAmount':'Remaining Amount','th.waivedAmount':'Waived Amount','th.generateType':'Generate Type','th.remark':'Remark','th.resultTime':'Result / Time','th.successTime':'Success Time','th.callbackTime':'Callback Time','th.walletAccount':'Wallet Account','th.failReason':'Fail Reason',
@@ -4001,9 +4221,6 @@ Object.assign(i18n.en,{
   'tab.overdueOrders':'Overdue Orders','tab.dailyRecords':'Daily Records (loan_overdue_record)','section.creditRecords':'Credit Records','section.creditChanges':'Credit Changes'
 });
 Object.assign(i18n.zh,{
-  'nav.loanBillFees':'账单金额明细','nav.repaymentAllocations':'还款分配',
-  'page.loanBillFees':'账单金额明细','page.repaymentAllocations':'还款分配',
-  'page.sub.loanBillFees':'基于 loan_voucher_bill 展示金额组成并行内查看变更记录','page.sub.repaymentAllocations':'还款金额到费用类型的分配记录',
   'filter.searchFeePh':'费用号 / 账单号 / 借款单号...','filter.searchFeeChangePh':'变更号 / 费用号 / 来源单号...','filter.searchRepayBillPh':'还款单号 / 账单号 / 借款单号...','filter.searchAllocationPh':'分配号 / 还款单号 / 费用号...',
   'filter.allFeeTypes':'全部费用类型','filter.allChangeTypes':'全部变更类型','filter.allSources':'全部来源',
   'th.feeNo':'费用号','th.feeName':'费用名称','th.originalAmount':'原始金额','th.payableAmount':'应付金额','th.paidAmount':'已付金额','th.remainingAmount':'剩余金额','th.waivedAmount':'减免金额','th.generateType':'生成类型','th.remark':'备注','th.resultTime':'结果 / 时间','th.successTime':'成功时间','th.callbackTime':'回调时间','th.walletAccount':'收款账户','th.failReason':'失败原因',
@@ -4658,6 +4875,10 @@ const customerWalletBindings = [
   {id:'1f05b478-4f8e-427e-bfc7-1cecd06b6001',customer_id:1006,payment_institution_id:'EASYPAISA',account_identifier_masked:'+92 312 **** 8990',account_status:'VERIFIED',verification_time:'2024-06-03 15:05:30 PKT',created_at:'2024-01-10 16:25:00+05',updated_at:'2024-06-03 15:05:30+05'},
   {id:'8d67a8bd-3e7d-4ea3-a9c5-ecc52e9b6002',customer_id:1006,payment_institution_id:'UBL',account_identifier_masked:'PK91 **** **** 2048',account_status:'UNKNOWN',verification_time:'-',created_at:'2024-05-18 09:40:00+05',updated_at:'2024-05-18 09:40:00+05'},
 ];
+customerWalletBindings.forEach((wallet,index)=>Object.assign(wallet,{
+  identifier_unique:`ACC-${wallet.customer_id}-${String(index+1).padStart(2,'0')}`,
+  is_snapshot:index%3===2?1:0
+}));
 const creditChangeLogs = {
   1001:[{id:1,changeType:'CREDIT_APPROVED',changeAmount:20000,beforeTotal:0,afterTotal:20000,loanOrderNo:'',remark:'Initial credit approval',createdAt:'2024-01-15 10:30'},{id:2,changeType:'CREDIT_USED',changeAmount:15000,beforeTotal:20000,afterTotal:20000,loanOrderNo:'LN2024060401',remark:'Loan disbursed',createdAt:'2024-05-20 14:02'}],
   1004:[{id:1,changeType:'CREDIT_APPROVED',changeAmount:10000,beforeTotal:0,afterTotal:10000,loanOrderNo:'',remark:'Initial credit approval',createdAt:'2024-03-12 11:45'},{id:2,changeType:'CREDIT_USED',changeAmount:5000,beforeTotal:10000,afterTotal:10000,loanOrderNo:'LN2024060404',remark:'Loan disbursed',createdAt:'2024-05-10 09:01'}],
@@ -4705,11 +4926,11 @@ function renderCustDetailTab(tab,id) {
       </div></div>
       <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
         <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">BASIC INFO</div>
-        ${detailRow(currentLang === 'zh' ? '客户 ID' : 'Customer ID',c.id)}${detailRow('Full Name',sensitiveValue('name',c.name))}${detailRow('Mobile',sensitiveValue('mobile',c.mobile))}${detailRow('ID Card',sensitiveValue('id',c.idCard))}${detailRow('City',c.city)}${detailRow('Registered',c.regTime)}
+        ${detailRow(currentLang === 'zh' ? '客户 ID' : 'Customer ID',c.id)}${detailRow('Full Name',sensitiveValue('name',c.name))}${detailRow('Mobile',sensitiveValue('mobile',c.mobile))}${detailRow('WhatsApp',sensitiveValue('mobile',c.whatsAccount))}${detailRow('Email',c.email)}${detailRow('ID Card',sensitiveValue('id',c.idCard))}${detailRow('User State',c.userState)}${detailRow('Gesture Failed Count',c.gestureFailedCount)}${detailRow('Auth Time',c.authTime)}${detailRow('Portrait',c.portrait)}${detailRow('City',c.city)}${detailRow('Created At',c.createTime)}${detailRow('Updated At',c.modifyTime)}
       </div></div>
       <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
         <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">CREDIT OVERVIEW</div>
-        ${detailRow('Credit Status',c.creditStatus)}${detailRow('Total Limit',fmtMoney(c.totalCredit))}${detailRow('Used',fmtMoney(c.usedCredit))}${detailRow('Available',fmtMoney(c.totalCredit-c.usedCredit))}${detailRow('Blacklisted',c.blacklist?'🚫 Yes':'✅ No')}
+        ${detailRow('Credit Status',c.creditStatus)}${detailRow('Total Limit',fmtMoney(c.totalCredit))}${detailRow('Used',fmtMoney(c.usedCredit))}${detailRow('Available',fmtMoney(c.totalCredit-c.usedCredit))}${detailRow('Review Time',c.creditReviewTime||'-')}${detailRow(c.creditStatus==='Rejected'?'Reject Reason':'Review Remark',c.creditReviewRemark||'-')}${detailRow('Blacklisted',c.blacklist?'🚫 Yes':'✅ No')}
       </div></div></div>`;
   } else if(tab==='credit') {
     const recs = (typeof userCreditRecords !== 'undefined' && userCreditRecords[id]) ? userCreditRecords[id] : [];
@@ -4778,14 +4999,16 @@ function renderCustDetailTab(tab,id) {
     </div>
     <div class="table-scroll"><table class="table table-hover mb-0" style="min-width:1420px;font-size:12.5px;">
       <thead><tr>
-        <th>ID</th><th>${currentLang === 'zh' ? '客户 ID' : 'Customer ID'}</th><th>${currentLang === 'zh' ? '支付机构 ID' : 'Payment Institution ID'}</th><th>${currentLang === 'zh' ? '账号（脱敏）' : 'Account (Masked)'}</th><th>${currentLang === 'zh' ? '账户状态' : 'Account Status'}</th><th>${currentLang === 'zh' ? '最近验证时间' : 'Verification Time'}</th><th>${currentLang === 'zh' ? '创建时间' : 'Created At'}</th><th>${currentLang === 'zh' ? '更新时间' : 'Updated At'}</th>
+        <th>ID</th><th>${currentLang === 'zh' ? '客户 ID' : 'Customer ID'}</th><th>${currentLang === 'zh' ? '机构编码' : 'Institution Code'}</th><th>${currentLang === 'zh' ? '账号（脱敏）' : 'Account (Masked)'}</th><th>${currentLang === 'zh' ? '唯一标识' : 'Identifier Unique'}</th><th>${currentLang === 'zh' ? '账户状态' : 'Account Status'}</th><th>${currentLang === 'zh' ? '是否快照' : 'Snapshot'}</th><th>${currentLang === 'zh' ? '最近验证时间' : 'Verification Time'}</th><th>${currentLang === 'zh' ? '创建时间' : 'Created At'}</th><th>${currentLang === 'zh' ? '更新时间' : 'Updated At'}</th>
       </tr></thead>
       <tbody>${wallets.map(w=>`<tr>
         <td><code style="font-size:11px;white-space:nowrap;">${w.id}</code></td>
         <td><code>${w.customer_id}</code></td>
         <td><span class="role-tag" style="font-size:11px;">${w.payment_institution_id}</span></td>
         <td class="masked-value" style="font-family:monospace;font-weight:600;white-space:nowrap;">${w.account_identifier_masked}</td>
+        <td><code style="font-size:11px;">${w.identifier_unique}</code></td>
         <td>${walletStatusBadge(w.account_status)}</td>
+        <td>${w.is_snapshot?'Yes':'No'}</td>
         <td style="color:#64748b;white-space:nowrap;">${w.verification_time}</td>
         <td style="color:#64748b;white-space:nowrap;">${w.created_at}</td>
         <td style="color:#64748b;white-space:nowrap;">${w.updated_at}</td>
@@ -4796,7 +5019,7 @@ function renderCustDetailTab(tab,id) {
     const recs = (typeof userCreditRecords !== 'undefined' && userCreditRecords[id]) ? userCreditRecords[id] : [];
     const reviewStateLabel = {0:'Not Started',1:'Approved',2:'Rejected',3:'Manual Review'};
     const creditStateLabel = {0:'Incomplete',1:'Pending Review',2:'Approved',3:'Expired',4:'Rejected',5:'Blacklisted'};
-    const creditStepLabel = {1:'Basic Info',2:'Identity Verification',3:'Emergency Contacts',4:'Review Queue',5:'Completed'};
+    const creditStepLabel = {1:'Basic Info',2:'Contact Info',3:'Identity Info',4:'Credit Quota',5:'Wallet Binding'};
     const latest = recs[recs.length - 1];
     const recsHtml = recs.length ? `
       <div class="d-flex align-items-center justify-content-between mb-2">
@@ -5137,6 +5360,9 @@ document.getElementById('confirmOkBtn').addEventListener('click', () => {
 // FIX 5: MULTIPLE CREDIT RECORDS PER USER (usr_credit)
 // ============================================================
 const userCreditRecords = {
+  1007:[
+    { id:109, creditNo:'CR2024060401', userId:1007, mobile:'+92 300 5544332', state:1, faceState:2, step:4, submitTime:'2024-06-04 10:55', reviewType:'MANUAL', reviewState:3, reviewTime:'', rejectReason:'', totalCredit:0, usedCredit:0, lockedCredit:0, approvedTime:'', expireTime:'', faceImg:'face_1007.jpg', nextApplicableTime:'', remark:'Pending manual credit review', isDel:0, createdAt:'2024-06-04 10:55', modifyTime:'2024-06-04 10:55' },
+  ],
   1001:[
     { id:98, creditNo:'CR2023122001', userId:1001, mobile:'+92 321 4561234', state:4, faceState:2, step:5, submitTime:'2023-12-20 14:12', reviewType:'MANUAL', reviewState:2, reviewTime:'2023-12-20 17:40', rejectReason:'Income proof unclear', totalCredit:0, usedCredit:0, lockedCredit:0, approvedTime:'', expireTime:'', walletType:'Easypaisa', walletAccount:'+92 321 4561234', nextApplicableTime:'2024-01-15', remark:'Rejected before income proof resubmitted', createdAt:'2023-12-20 14:12' },
     { id:101, creditNo:'CR2024011501', userId:1001, mobile:'+92 321 4561234', state:2, faceState:2, step:5, submitTime:'2024-01-15 09:50', reviewType:'AUTO', reviewState:1, reviewTime:'2024-01-15 10:20', rejectReason:'', totalCredit:20000, usedCredit:15000, lockedCredit:0, approvedTime:'2024-01-15 10:22', expireTime:'2025-01-15', walletType:'Easypaisa', walletAccount:'+92 321 4561234', nextApplicableTime:'', remark:'Latest approved application', createdAt:'2024-01-15 09:50' },
@@ -5159,6 +5385,62 @@ const userCreditRecords = {
     { id:108, creditNo:'CR2024060301', userId:1018, mobile:'+92 321 5566778', state:1, faceState:1, step:2, submitTime:'2024-06-03 16:05', reviewType:'MANUAL', reviewState:0, reviewTime:'', rejectReason:'', totalCredit:0, usedCredit:0, lockedCredit:0, approvedTime:'', expireTime:'', walletType:'', walletAccount:'', nextApplicableTime:'', remark:'Application in progress: waiting for identity verification', createdAt:'2024-06-03 16:05' },
   ],
 };
+
+// Realistic progressive customer profiles:
+// every customer has a mobile number, while later-stage datasets only exist
+// after the preceding onboarding step has been completed.
+function buildProgressiveCustomerScenarios() {
+  const stagedPending={1007:2,1018:3};
+  customers.forEach((c,index)=>{
+    const step=c.creditStatus==='Approved'?5:c.creditStatus==='Rejected'?4:c.creditStatus==='Pending'?(stagedPending[c.id]||2):1;
+    c.profileStep=step;
+    c.name=step>=3?c.registeredName:'';
+    c.idCard=step>=3?c.registeredIdCard:'';
+    c.authTime=step>=3?c.regTime:'-';
+    c.totalCredit=step>=4?c.totalCredit:0;
+    c.usedCredit=step>=4?c.usedCredit:0;
+    c.walletType=step>=5?c.walletType:'-';
+    c.walletAccount=step>=5?c.walletAccount:'-';
+
+    if (!userCreditRecords[c.id]) userCreditRecords[c.id]=[];
+    let record=userCreditRecords[c.id][userCreditRecords[c.id].length-1];
+    if (!record) {
+      record={id:200+index,creditNo:`CR${c.regTime.slice(0,10).replace(/\D/g,'')}${String(index+1).padStart(2,'0')}`,userId:c.id,mobile:c.mobile,submitTime:c.regTime,reviewType:step>=4?'MANUAL':'-',reviewState:0,reviewTime:'',rejectReason:'',approvedTime:'',expireTime:'',nextApplicableTime:'',remark:'',isDel:0,createdAt:c.regTime,modifyTime:c.regTime};
+      userCreditRecords[c.id].push(record);
+    }
+    Object.assign(record,{
+      state:c.creditStatus==='Approved'?2:c.creditStatus==='Rejected'?4:step===1?0:1,
+      step,
+      faceState:step>=3?2:0,
+      totalCredit:step>=4?c.totalCredit:0,
+      usedCredit:step>=4?c.usedCredit:0,
+      lockedCredit:step===4&&c.creditStatus==='Pending'?2000:0,
+      reviewState:c.creditStatus==='Approved'?1:c.creditStatus==='Rejected'?2:step===4?3:0,
+      reviewType:step>=4?(record.reviewType==='-'?'MANUAL':record.reviewType):'-'
+    });
+
+    if (step>=1 && !creditBasicInfo[c.id]) {
+      creditBasicInfo[c.id]={id:300+index,userId:c.id,creditId:record.id,educationLevel:index%3===0?'Bachelor':'High School',maritalStatus:index%2===0?'Married':'Single',childrenCount:index%2,occupation:c.occupation,monthlyIncome:c.income,industry:index%2===0?'Services':'Retail',payPeriod:'Monthly',workYears:String(1+index%8),existingLoan:index%4===0,totalLoanAmount:index%4===0?5000:0,email:c.email,salaryDay:'25',isDel:0,createTime:c.regTime,modifyTime:c.regTime};
+    }
+    if (step<2) delete creditContacts[c.id];
+    else if (!creditContacts[c.id]) creditContacts[c.id]=[
+      {id:400+index*2,userId:c.id,creditId:record.id,relationship:'Parent',contactName:`Contact ${c.id}-A`,contactMobile:`+92 30${index%10} 55${String(c.id).slice(-4)}`,isDel:0,createTime:c.regTime,modifyTime:c.regTime},
+      {id:401+index*2,userId:c.id,creditId:record.id,relationship:'Sibling',contactName:`Contact ${c.id}-B`,contactMobile:`+92 31${index%10} 66${String(c.id).slice(-4)}`,isDel:0,createTime:c.regTime,modifyTime:c.regTime}
+    ];
+    if (step<3) delete creditIdentity[c.id];
+    else if (!creditIdentity[c.id]) creditIdentity[c.id]={id:500+index,userId:c.id,creditId:record.id,name:c.registeredName,idCard:c.registeredIdCard,frontImg:`id_front_${c.id}.jpg`,backImg:`id_back_${c.id}.jpg`,residentialProvinceCode:c.city,residentialCityCode:c.city,residentialAddress:`Registered address, ${c.city}`,birthday:`19${85+index%12}-0${1+index%9}-15`,icIssueDate:'2020-01-01',gender:index%2===0?'Male':'Female',ocrResult:'VERIFIED',isDel:0,createTime:c.regTime,modifyTime:c.regTime};
+  });
+
+  for (let i=customerWalletBindings.length-1;i>=0;i--) {
+    const customer=customers.find(c=>c.id===customerWalletBindings[i].customer_id);
+    if (!customer||customer.profileStep<5) customerWalletBindings.splice(i,1);
+  }
+  customers.filter(c=>c.profileStep>=5).forEach((c,index)=>{
+    if (customerWalletBindings.some(w=>w.customer_id===c.id)) return;
+    customerWalletBindings.push({id:`wallet-${c.id}`,customer_id:c.id,payment_institution_id:c.walletType==='-'?'EASYPAISA':c.walletType.toUpperCase(),account_identifier_masked:maskMobile(c.mobile),account_status:'VERIFIED',verification_time:c.regTime,identifier_unique:`ACC-${c.id}-01`,is_snapshot:index%4===0?1:0,created_at:c.regTime,updated_at:c.regTime});
+  });
+}
+buildProgressiveCustomerScenarios();
 
 const creditStateLabel = {0:'Incomplete',1:'Pending Review',2:'Approved',3:'Expired',4:'Rejected',5:'Blacklisted'};
 const reviewStateLabel = {0:'Not Started',1:'Approved',2:'Rejected',3:'Manual Review'};
@@ -5355,61 +5637,6 @@ function renderOverdueRecords(list) {
       </tr></thead>
       <tbody>${rows}</tbody>
     </table></div>`;
-}
-
-function allRepaymentAllocations() {
-  return Object.values(repaymentAllocations).flat();
-}
-
-function renderLoanBillFees(list) {
-  const data=list||loanBills;
-  document.getElementById('fee-count-label').textContent=t('count.showing')(data.length,data.length);
-  const rows=data.map(b=>`<tr>
-    <td><code style="font-size:11px;">${b.billNo}</code></td>
-    <td><code style="font-size:11px;color:#64748b;">${b.voucherNo}</code></td>
-    <td><strong>#${b.userId}</strong></td><td>${b.installmentNo} / ${b.totalInstallments}</td>
-    <td>PKR ${b.payablePrincipal.toLocaleString()}</td><td>PKR ${b.paidPrincipal.toLocaleString()}</td><td>PKR ${b.remainingPrincipal.toLocaleString()}</td>
-    <td>PKR ${b.payableInterestFee.toLocaleString()}</td><td>PKR ${b.paidInterest.toLocaleString()}</td><td>PKR ${b.remainingInterestFee.toLocaleString()}</td>
-    <td>PKR ${b.payableServiceFee.toLocaleString()}</td><td>PKR ${b.paidServiceFee.toLocaleString()}</td><td>PKR ${b.remainingServiceFee.toLocaleString()}</td>
-    <td>PKR ${b.payableOverdueFee.toLocaleString()}</td><td>PKR ${b.paidOverdueFee.toLocaleString()}</td><td>PKR ${b.remainingOverdueFee.toLocaleString()}</td>
-    <td><button class="btn btn-sm btn-outline-primary action-btn" onclick="viewBillDetail(${b.id},'changes')"><i class="bi bi-clock-history"></i> Change Log</button></td>
-  </tr>`).join('');
-  document.getElementById('fee-table-container').innerHTML=`<div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12px;min-width:1900px;"><thead><tr><th>Bill No.</th><th>Voucher No.</th><th>Customer ID</th><th>Term</th><th>Principal Payable</th><th>Principal Paid</th><th>Principal Remaining</th><th>Interest Payable</th><th>Interest Paid</th><th>Interest Remaining</th><th>Service Payable</th><th>Service Paid</th><th>Service Remaining</th><th>Overdue Payable</th><th>Overdue Paid</th><th>Overdue Remaining</th><th>Actions</th></tr></thead><tbody>${rows||'<tr><td colspan="17"><div class="empty-state">No results</div></td></tr>'}</tbody></table></div>`;
-}
-
-function filterLoanBillFees() {
-  const q=(document.getElementById('fee-search')?.value||'').toLowerCase();
-  renderLoanBillFees(loanBills.filter(b=>!q||b.billNo.toLowerCase().includes(q)||b.voucherNo.toLowerCase().includes(q)||String(b.userId).includes(q)));
-}
-function renderRepaymentAllocations(list) {
-  const data = list || allRepaymentAllocations();
-  document.getElementById('alloc-count-label').textContent = t('count.showing')(data.length, data.length);
-  const rows = data.map(a => `<tr>
-    <td><code style="font-size:11px;">${a.id}</code></td>
-    <td><code style="font-size:11px;color:#64748b;">${a.repaymentNo}</code></td>
-    <td><code style="font-size:11px;color:#64748b;">${a.voucherNo||a.loanOrderNo}</code></td>
-    <td><code style="font-size:11px;color:#64748b;">${a.billNo}</code></td>
-    <td style="font-size:12px;">#${a.userId}</td>
-    <td>${a.termSeq}</td>
-    <td>PKR ${a.allocatedPrincipal.toLocaleString()}</td>
-    <td>PKR ${a.allocatedInterest.toLocaleString()}</td>
-    <td>PKR ${a.allocatedServiceFee.toLocaleString()}</td>
-    <td>PKR ${a.allocatedOverdueFee.toLocaleString()}</td>
-    <td style="font-weight:600;">PKR ${a.allocatedAmount.toLocaleString()}</td>
-    <td style="font-size:12px;color:#94a3b8;">${a.createTime}</td>
-  </tr>`).join('');
-  document.getElementById('alloc-table-container').innerHTML = `
-    <div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12.5px;min-width:1450px;">
-      <thead><tr><th>ID</th><th>${t('th.repaymentOrderNo')}</th><th>Voucher No.</th><th>${t('th.billNo')}</th><th>${t('th.custId')}</th><th>${t('th.installmentNo')}</th><th>Principal</th><th>Interest</th><th>Service Fee</th><th>Overdue Fee</th><th>${t('th.allocatedAmount')}</th><th>${t('th.createdAt')}</th></tr></thead>
-      <tbody>${rows||'<tr><td colspan="12"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
-    </table></div>`;
-}
-
-function filterRepaymentAllocations() {
-  const q = (document.getElementById('alloc-search')?.value||'').toLowerCase();
-  renderRepaymentAllocations(allRepaymentAllocations().filter(a =>
-    (!q || a.repaymentNo.toLowerCase().includes(q) || a.billNo.toLowerCase().includes(q) || (a.voucherNo||a.loanOrderNo).toLowerCase().includes(q))
-  ));
 }
 
 function viewBillDetail(id,initialTab='summary') {
