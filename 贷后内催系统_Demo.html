@@ -305,6 +305,10 @@
   .lc-dpd { font-weight:700; color:#dc2626; }
   .lc-detail-pane { min-width:0; background:#fff; }
   .lc-case-head { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; padding:18px 20px; border-bottom:1px solid #e8ecf4; position:sticky; top:0; background:#fff; z-index:5; }
+  .lc-case-head > div:first-child { min-width:0; }
+  .lc-case-actions { display:flex; flex-wrap:nowrap; gap:5px; flex:none; white-space:nowrap; overflow-x:auto; max-width:100%; padding-bottom:1px; }
+  .lc-case-actions .btn { font-size:10.5px; line-height:1.2; padding:4px 7px; border-radius:5px; }
+  .lc-case-actions .btn i { margin-right:3px !important; }
   .lc-case-title { font-size:18px; font-weight:700; color:#172033; }
   .lc-case-sub { color:#64748b; font-size:12px; margin-top:3px; }
   .lc-amount-grid { display:grid; grid-template-columns:repeat(5,minmax(96px,1fr)); gap:8px; padding:14px 20px; background:#f8fafc; border-bottom:1px solid #e8ecf4; }
@@ -313,9 +317,18 @@
   .lc-amount-value { color:#1e293b; font-size:14px; font-weight:700; margin-top:3px; }
   .lc-amount-item.total { border-color:#fecaca; background:#fffafa; }
   .lc-amount-item.total .lc-amount-value { color:#dc2626; }
-  .lc-case-body { display:grid; grid-template-columns:minmax(0,1fr) 290px; min-height:465px; }
-  .lc-timeline { padding:18px 20px; border-right:1px solid #e8ecf4; }
-  .lc-side { padding:18px; background:#fbfcff; }
+  .lc-block-heading { display:flex; align-items:center; gap:8px; padding:10px 20px; font-size:12px; font-weight:750; color:#334155; border-bottom:1px solid #e8ecf4; }
+  .lc-block-heading i { width:25px; height:25px; border-radius:7px; display:grid; place-items:center; font-size:12px; }
+  .lc-finance-heading { background:#f4f5ff; color:#4338ca; }
+  .lc-finance-heading i { background:#e0e7ff; }
+  .lc-amount-grid.lc-finance-grid { background:#fafaff; border-left:4px solid #6366f1; padding-left:16px; }
+  .lc-ptp-strip { padding:11px 20px; border-bottom:1px solid #fed7aa; border-left:4px solid #f59e0b; background:#fffaf2; }
+  .lc-repayment-block { margin:12px 16px; padding:14px 16px; border:1px solid #bfdbfe; border-left:4px solid #3b82f6; border-radius:10px; background:#f8fbff; }
+  .lc-case-body { display:grid; grid-template-columns:minmax(0,1fr) 290px; gap:12px; min-height:465px; padding:12px 16px 16px; background:#f3f5f9; }
+  .lc-timeline { padding:17px 18px; border:1px solid #ddd6fe; border-top:4px solid #8b5cf6; border-radius:10px; background:#fff; }
+  .lc-side { padding:17px; border:1px solid #a7f3d0; border-top:4px solid #10b981; border-radius:10px; background:#fbfffd; }
+  .lc-timeline > .d-flex:first-child .lc-section-title { color:#6d28d9; }
+  .lc-side > .lc-section-title { color:#047857; }
   .lc-section-title { font-size:12px; font-weight:700; color:#475569; text-transform:uppercase; letter-spacing:.5px; margin-bottom:10px; }
   .lc-contact { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid #e8ecf4; }
   .lc-contact:last-child { border-bottom:0; }
@@ -2684,6 +2697,13 @@ Object.assign(phraseZh, {
   'Customer statement':'客户说明',
   'Customer’s commitment...':'填写客户承诺说明…',
   'Create PTP':'创建 PTP',
+  'PTP status':'PTP 状态',
+  'Promise date':'承诺日期',
+  'Promise amount':'承诺金额',
+  'Fulfilled':'已履约',
+  'PTP remaining':'承诺剩余',
+  'Update':'更新',
+  'No PTP has been created for this voucher':'当前借据尚未创建 PTP',
   'PTP is created per voucher. Partial repayments count toward the promised amount.':'PTP 按借据创建，部分还款会累计计入承诺金额。',
   'Claimed amount':'客户声称还款金额',
   'Payment time':'还款时间',
@@ -2765,6 +2785,10 @@ Object.assign(phraseZh, {
   ,'Loan & repayment progress':'借款与还款进度'
   ,'Repayment schedule':'还款计划'
   ,'Repayment schedule & records':'还款计划与还款记录'
+  ,'Amount overview':'金额概览'
+  ,'Payable and paid breakdown':'应还与已还明细'
+  ,'Show details':'展开查看'
+  ,'Hide details':'收起'
   ,'Repayment records / time':'还款记录 / 时间'
   ,'No repayment':'暂无还款'
   ,'Loan date':'借款时间'
@@ -6699,7 +6723,7 @@ var lcCallTimer = null;
 var lcCallSeconds = 0;
 
 var lcCases = [
-  {id:101,voucher:'LN-20260415-003',customerId:'CUS-1048',name:'Muhammad A.',province:'Punjab',type:'Existing',phone:'+92 3** *** 4821',fullPhone:'+92 312 884 4821',dpd:46,total:18450,principal:15000,interest:1450,service:1200,overdue:800,paidPrincipal:7000,paidInterest:1000,paidService:1000,paidOverdue:500,totalPaid:9500,due:'2026-06-15',collector:'Ali Hassan',last:'No answer',next:'Today 10:30',bucket:'today',ptp:'Broken',ptpAmount:8000,paid:3000,contacts:[{name:'Muhammad A.',relation:'Customer',phone:'+92 3** *** 4821',full:'+92 312 884 4821'},{name:'Ayesha A.',relation:'Spouse',phone:'+92 3** *** 1190',full:'+92 301 774 1190'}],events:[
+  {id:101,voucher:'LN-20260415-003',customerId:'CUS-1048',name:'Muhammad A.',province:'Punjab',type:'Existing',phone:'+92 3** *** 4821',fullPhone:'+92 312 884 4821',dpd:46,total:18450,principal:15000,interest:1450,service:1200,overdue:800,paidPrincipal:7000,paidInterest:1000,paidService:1000,paidOverdue:500,totalPaid:9500,due:'2026-06-15',collector:'Ali Hassan',last:'No answer',next:'Today 10:30',bucket:'today',ptp:'Broken',ptpDate:'2026-07-29',ptpAmount:8000,paid:3000,contacts:[{name:'Muhammad A.',relation:'Customer',phone:'+92 3** *** 4821',full:'+92 312 884 4821'},{name:'Ayesha A.',relation:'Spouse',phone:'+92 3** *** 1190',full:'+92 301 774 1190'}],events:[
     {type:'ai',title:'AI call connected',time:'Today 09:12',text:'42 sec · Customer asked for two more days. AI summary: income expected after salary settlement.'},
     {type:'sms',title:'SMS delivered',time:'Yesterday 10:00',text:'D16 payment reminder sent and delivered.'},
     {type:'ptp',title:'PTP partially paid, then broken',time:'Jul 29 18:00',text:'Promised PKR 8,000 · Cumulative payment PKR 3,000 · Remaining PKR 5,000.'}
@@ -6708,7 +6732,7 @@ var lcCases = [
     {type:'assign',title:'Assigned to Ali Hassan',time:'Today 08:40',text:'Allocated by collection supervisor · Province: Sindh · D9.'},
     {type:'push',title:'Push opened',time:'Yesterday 09:30',text:'Payment reminder opened 6 minutes after delivery.'}
   ]},
-  {id:103,voucher:'LN-20260724-006',customerId:'CUS-1101',name:'Bilal R.',province:'Punjab',type:'Existing',phone:'+92 3** *** 2275',fullPhone:'+92 300 771 2275',dpd:6,total:7300,principal:6500,interest:400,service:300,overdue:100,paidPrincipal:0,paidInterest:0,paidService:0,paidOverdue:0,totalPaid:0,due:'2026-07-25',collector:'Ali Hassan',last:'PTP due today',next:'Today 12:00',bucket:'ptp',ptp:'Due today',ptpAmount:7300,paid:0,contacts:[{name:'Bilal R.',relation:'Customer',phone:'+92 3** *** 2275',full:'+92 300 771 2275'},{name:'Asad R.',relation:'Brother',phone:'+92 3** *** 4498',full:'+92 315 622 4498'}],events:[
+  {id:103,voucher:'LN-20260724-006',customerId:'CUS-1101',name:'Bilal R.',province:'Punjab',type:'Existing',phone:'+92 3** *** 2275',fullPhone:'+92 300 771 2275',dpd:6,total:7300,principal:6500,interest:400,service:300,overdue:100,paidPrincipal:0,paidInterest:0,paidService:0,paidOverdue:0,totalPaid:0,due:'2026-07-25',collector:'Ali Hassan',last:'PTP due today',next:'Today 12:00',bucket:'ptp',ptp:'Due today',ptpDate:'2026-07-31',ptpAmount:7300,paid:0,contacts:[{name:'Bilal R.',relation:'Customer',phone:'+92 3** *** 2275',full:'+92 300 771 2275'},{name:'Asad R.',relation:'Brother',phone:'+92 3** *** 4498',full:'+92 315 622 4498'}],events:[
     {type:'ptp',title:'PTP due today',time:'Jul 29 16:20',text:'Customer promised PKR 7,300 by Jul 31. No payment received yet.'},
     {type:'call',title:'Manual call connected',time:'Jul 29 16:18',text:'2m 14s · Customer confirmed payment after salary credit.'}
   ]},
@@ -6719,7 +6743,7 @@ var lcCases = [
   {id:105,voucher:'LN-20260727-004',customerId:'CUS-1126',name:'Hamza S.',province:'Punjab',type:'New',phone:'+92 3** *** 3346',fullPhone:'+92 317 920 3346',dpd:3,total:5100,principal:4500,interest:300,service:250,overdue:50,paidPrincipal:0,paidInterest:0,paidService:0,paidOverdue:0,totalPaid:0,due:'2026-07-28',collector:'Ali Hassan',last:'No contact',next:'Today 15:00',bucket:'new',ptp:'None',ptpAmount:0,paid:0,contacts:[{name:'Hamza S.',relation:'Customer',phone:'+92 3** *** 3346',full:'+92 317 920 3346'}],events:[
     {type:'sms',title:'SMS delivered',time:'Today 10:00',text:'D3 reminder sent by Early Reminder strategy.'}
   ]},
-  {id:106,voucher:'LN-20260720-014',customerId:'CUS-1063',name:'Amna J.',province:'Sindh',type:'Existing',phone:'+92 3** *** 6670',fullPhone:'+92 302 148 6670',dpd:11,total:11200,principal:9500,interest:800,service:600,overdue:300,paidPrincipal:5500,paidInterest:300,paidService:150,paidOverdue:50,totalPaid:6000,due:'2026-07-20',collector:'Ali Hassan',last:'Partial PTP',next:'Today 16:30',bucket:'ptp',ptp:'Partial',ptpAmount:10000,paid:6000,contacts:[{name:'Amna J.',relation:'Customer',phone:'+92 3** *** 6670',full:'+92 302 148 6670'}],events:[
+  {id:106,voucher:'LN-20260720-014',customerId:'CUS-1063',name:'Amna J.',province:'Sindh',type:'Existing',phone:'+92 3** *** 6670',fullPhone:'+92 302 148 6670',dpd:11,total:11200,principal:9500,interest:800,service:600,overdue:300,paidPrincipal:5500,paidInterest:300,paidService:150,paidOverdue:50,totalPaid:6000,due:'2026-07-20',collector:'Ali Hassan',last:'Partial PTP',next:'Today 16:30',bucket:'ptp',ptp:'Partial',ptpDate:'2026-08-01',ptpAmount:10000,paid:6000,contacts:[{name:'Amna J.',relation:'Customer',phone:'+92 3** *** 6670',full:'+92 302 148 6670'}],events:[
     {type:'payment',title:'Partial payment confirmed',time:'Today 08:32',text:'PKR 6,000 confirmed by repayment system · PTP progress 60%.'},
     {type:'ptp',title:'PTP created',time:'Jul 30 11:15',text:'Promised PKR 10,000 by Aug 01.'}
   ]}
@@ -6853,6 +6877,10 @@ function lcEventIcon(type) {
 function lcRenderCase() {
   var c=lcCases.find(x=>x.id===lcSelectedCaseId)||lcCases[0];
   if(!c) return;
+  var ptpRemaining=Math.max(0,(c.ptpAmount||0)-(c.paid||0));
+  var ptpPanel=c.ptp==='None'
+    ? `<div class="lc-ptp-strip"><div class="d-flex align-items-center justify-content-between"><div class="d-flex align-items-center"><span style="width:28px;height:28px;border-radius:8px;background:#ffedd5;color:#ea580c;display:grid;place-items:center;margin-right:9px;"><i class="bi bi-calendar-check-fill"></i></span><div><strong style="font-size:12px;color:#9a3412;">PTP</strong><span style="font-size:12px;color:#94a3b8;margin-left:12px;">No PTP has been created for this voucher</span></div></div><button class="btn btn-outline-primary btn-sm action-btn" onclick="lcOpenPtp(${c.id})">Create PTP</button></div></div>`
+    : `<div class="lc-ptp-strip"><div class="d-flex align-items-center gap-3"><div style="width:34px;height:34px;border-radius:9px;background:#ffedd5;color:#ea580c;display:grid;place-items:center;"><i class="bi bi-calendar-check-fill"></i></div><div style="min-width:115px;"><div class="lc-amount-label">PTP status</div><div style="font-size:13px;font-weight:700;color:${c.ptp==='Broken'?'#dc2626':'#059669'};">${c.ptp}</div></div><div><div class="lc-amount-label">Promise date</div><strong style="font-size:12.5px;">${c.ptpDate||'--'} PKT</strong></div><div><div class="lc-amount-label">Promise amount</div><strong style="font-size:12.5px;">PKR ${(c.ptpAmount||0).toLocaleString()}</strong></div><div><div class="lc-amount-label">Fulfilled</div><strong style="font-size:12.5px;color:#059669;">PKR ${(c.paid||0).toLocaleString()}</strong></div><div><div class="lc-amount-label">PTP remaining</div><strong style="font-size:12.5px;color:${ptpRemaining?'#dc2626':'#059669'};">PKR ${ptpRemaining.toLocaleString()}</strong></div><div class="flex-grow-1" style="min-width:100px;"><div class="progress" style="height:7px;"><div class="progress-bar bg-success" style="width:${c.ptpAmount?Math.min(100,(c.paid||0)/c.ptpAmount*100):0}%;"></div></div><div style="font-size:10.5px;color:#94a3b8;margin-top:4px;">${c.ptpAmount?Math.round((c.paid||0)/c.ptpAmount*100):0}% fulfilled</div></div><button class="btn btn-outline-secondary btn-sm action-btn" onclick="lcOpenPtp(${c.id})">Update</button></div></div>`;
   var ptpColor=c.ptp==='Broken'?'#fee2e2;color:#dc2626':c.ptp==='Due today'?'#fef3c7;color:#d97706':c.ptp==='Partial'?'#dbeafe;color:#2563eb':'#f1f5f9;color:#64748b';
   var contacts=c.contacts.map((x,i)=>`<div class="lc-contact">
     <div class="lc-avatar">${x.name.split(' ').map(n=>n[0]).join('').slice(0,2)}</div>
@@ -6888,9 +6916,10 @@ function lcRenderCase() {
     : overdueTerms.map(x=>`Term ${x}`).join(', ');
   document.getElementById('lc-case-detail').innerHTML=`<div class="lc-case-head">
     <div><div class="d-flex align-items-center gap-2"><div class="lc-case-title">${c.name}</div><span class="status-badge" style="background:#fee2e2;color:#dc2626;">D${c.dpd}</span><span class="status-badge" style="background:${ptpColor};">${c.ptp==='None'?'No PTP':c.ptp}</span></div><div class="lc-case-sub">${c.customerId} · ${c.voucher} · ${c.province} · ${c.type} customer · Owner: ${c.collector}</div></div>
-    <div class="d-flex gap-2"><button class="btn btn-primary btn-sm" onclick="lcStartCall(${c.id},0)"><i class="bi bi-telephone-fill me-1"></i> Call customer</button><button class="btn btn-outline-primary btn-sm" onclick="lcOpenFollowup(${c.id})"><i class="bi bi-journal-plus me-1"></i> Record follow-up</button><div class="dropdown"><button class="btn btn-outline-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown">More</button><ul class="dropdown-menu dropdown-menu-end"><li><a class="dropdown-item" href="#" onclick="lcOpenPtp(${c.id});return false;"><i class="bi bi-calendar-check me-2"></i>Create / update PTP</a></li><li><a class="dropdown-item" href="#" onclick="lcOpenLedger(${c.id});return false;"><i class="bi bi-receipt me-2"></i>Manual payment record</a></li><li><a class="dropdown-item" href="#" onclick="lcOpenWaiver(${c.id});return false;"><i class="bi bi-percent me-2"></i>Waiver request</a></li></ul></div></div>
+    <div class="lc-case-actions"><button class="btn btn-primary btn-sm" onclick="lcStartCall(${c.id},0)"><i class="bi bi-telephone-fill"></i>Call customer</button><button class="btn btn-outline-primary btn-sm" onclick="lcOpenFollowup(${c.id})"><i class="bi bi-journal-plus"></i>Record follow-up</button><button class="btn btn-outline-secondary btn-sm" onclick="lcOpenLedger(${c.id})"><i class="bi bi-receipt"></i>Manual payment</button><button class="btn btn-outline-secondary btn-sm" onclick="lcOpenWaiver(${c.id})"><i class="bi bi-percent"></i>Waiver request</button></div>
   </div>
-  <div class="lc-amount-grid">
+  <div class="lc-block-heading lc-finance-heading"><i class="bi bi-wallet2"></i><span>Amount overview</span><span style="font-weight:400;color:#818cf8;">Payable and paid breakdown</span></div>
+  <div class="lc-amount-grid lc-finance-grid">
     <div class="lc-amount-item"><div class="lc-amount-label">Principal</div><div class="lc-amount-value">PKR ${c.principal.toLocaleString()}</div></div>
     <div class="lc-amount-item"><div class="lc-amount-label">Interest</div><div class="lc-amount-value">PKR ${c.interest.toLocaleString()}</div></div>
     <div class="lc-amount-item"><div class="lc-amount-label">Service fee</div><div class="lc-amount-value">PKR ${c.service.toLocaleString()}</div></div>
@@ -6902,7 +6931,8 @@ function lcRenderCase() {
     <div class="lc-amount-item"><div class="lc-amount-label">Paid Overdue Fee</div><div class="lc-amount-value">PKR ${(c.paidOverdue||0).toLocaleString()}</div></div>
     <div class="lc-amount-item" style="border-color:#bbf7d0;background:#f7fff9;"><div class="lc-amount-label">Total Paid</div><div class="lc-amount-value" style="color:#059669;">PKR ${(c.totalPaid||0).toLocaleString()}</div></div>
   </div>
-  <div style="padding:14px 20px;border-bottom:1px solid #e8ecf4;background:#fff;">
+  ${ptpPanel}
+  <div class="lc-repayment-block">
     <div class="d-flex align-items-center justify-content-between mb-2">
       <div class="lc-section-title mb-0">Loan & repayment progress</div>
       <div class="d-flex gap-2">
@@ -6918,9 +6948,9 @@ function lcRenderCase() {
     </div>
     <div class="d-flex align-items-center justify-content-between mb-2">
       <div style="font-size:12px;font-weight:700;color:#475569;">Repayment schedule & records</div>
-      <span style="font-size:11.5px;color:#94a3b8;">${currentLang==='zh'?`共 ${c.termCount} 期 · ${(c.repayments||[]).length} 笔还款`:`${c.termCount} installment(s) · ${(c.repayments||[]).length} repayment(s)`}</span>
+      <div class="d-flex align-items-center gap-2"><span style="font-size:11.5px;color:#94a3b8;">${currentLang==='zh'?`共 ${c.termCount} 期 · ${(c.repayments||[]).length} 笔还款`:`${c.termCount} installment(s) · ${(c.repayments||[]).length} repayment(s)`}</span><button class="btn btn-outline-primary btn-sm action-btn" id="lc-repayment-toggle-${c.id}" onclick="lcToggleRepaymentDetails(${c.id})"><i class="bi bi-chevron-down me-1"></i>Show details</button></div>
     </div>
-    <div class="table-card mb-3">
+    <div class="table-card mb-3" id="lc-repayment-details-${c.id}" style="display:none;">
       <div class="table-scroll"><table class="table table-hover mb-0" style="min-width:1540px;">
         <thead><tr><th>Installment</th><th>Due date</th><th style="text-align:right;">Principal</th><th style="text-align:right;">Interest</th><th style="text-align:right;">Service fee</th><th style="text-align:right;">Overdue fee</th><th style="text-align:right;">Payable</th><th style="text-align:right;">Paid</th><th style="text-align:right;">Remaining</th><th>Status</th><th>Repayment records / time</th></tr></thead>
         <tbody>${scheduleRows}</tbody>
@@ -6932,6 +6962,7 @@ function lcRenderCase() {
 }
 
 function lcRefreshTasks(){ toast('Tasks refreshed'); lcRenderTasks(); }
+function lcToggleRepaymentDetails(id){var panel=document.getElementById(`lc-repayment-details-${id}`),button=document.getElementById(`lc-repayment-toggle-${id}`);if(!panel||!button)return;var opening=panel.style.display==='none';panel.style.display=opening?'':'none';button.innerHTML=`<i class="bi bi-chevron-${opening?'up':'down'} me-1"></i>${currentLang==='zh'?(opening?'收起':'展开查看'):(opening?'Hide details':'Show details')}`;}
 function lcRevealPhone(caseId,index){var c=lcCases.find(x=>x.id===caseId);var el=document.getElementById(`lc-phone-${caseId}-${index}`);if(c&&el){el.textContent=c.contacts[index].full;toast('Full number viewed · audit record added');}}
 
 function lcStartCall(caseId,index) {
@@ -6958,7 +6989,7 @@ function lcToggleFollowupFields(){var v=document.getElementById('lc-fu-result').
 function lcSaveFollowup(id){var note=document.getElementById('lc-fu-note').value.trim();if(!note){toast('Collection note is required','error');return;}var c=lcCases.find(x=>x.id===id);var result=document.getElementById('lc-fu-result').value;c.events.unshift({type:'note',title:'Follow-up recorded',time:'Just now',text:note});c.last={retry:'Follow up again',ptp:'Promised to pay',paid:'Customer says paid',unable:'Unable to pay',refused:'Refused',dispute:'Dispute'}[result];lcCloseModal();lcRenderTasks();lcRenderCase();toast('Follow-up saved');if(result==='ptp')setTimeout(()=>lcOpenPtp(id),250);if(result==='paid')setTimeout(()=>lcOpenLedger(id),250);}
 
 function lcOpenPtp(id){var c=lcCases.find(x=>x.id===id);lcShowModal('Create Promise to Pay',`${c.name} · ${c.voucher}`,`<div class="lc-inline-note mb-3"><i class="bi bi-info-circle-fill"></i><span>PTP is created per voucher. Partial repayments count toward the promised amount.</span></div><div class="row g-3"><div class="col-md-6"><label class="form-label">Current remaining</label><input class="form-control form-control-sm" value="PKR ${c.total.toLocaleString()}" disabled></div><div class="col-md-6"><label class="form-label">Promise amount <span class="text-danger">*</span></label><input type="number" class="form-control form-control-sm" id="lc-ptp-amount" value="${c.total}"></div><div class="col-md-6"><label class="form-label">Promise date <span class="text-danger">*</span></label><input type="date" class="form-control form-control-sm" id="lc-ptp-date" value="2026-08-03"></div><div class="col-md-6"><label class="form-label">Payment method</label><select class="form-select form-select-sm"><option>Wallet</option><option>Bank transfer</option><option>Other</option></select></div><div class="col-12"><label class="form-label">Customer statement</label><textarea class="form-control form-control-sm" id="lc-ptp-note" rows="2" placeholder="Customer's commitment..."></textarea></div></div>`,`<button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary btn-sm" onclick="lcSavePtp(${id})">Create PTP</button>`);}
-function lcSavePtp(id){var c=lcCases.find(x=>x.id===id),amount=Number(document.getElementById('lc-ptp-amount').value),date=document.getElementById('lc-ptp-date').value;if(!amount||amount>c.total){toast('Promise amount must be between PKR 1 and remaining amount','error');return;}c.ptp='Active';c.ptpAmount=amount;c.paid=0;c.events.unshift({type:'ptp',title:'PTP created',time:'Just now',text:`Promised PKR ${amount.toLocaleString()} by ${date}. Partial repayments will be accumulated.`});lcCloseModal();lcRenderCase();lcRenderTasks();toast('PTP created');}
+function lcSavePtp(id){var c=lcCases.find(x=>x.id===id),amount=Number(document.getElementById('lc-ptp-amount').value),date=document.getElementById('lc-ptp-date').value;if(!amount||amount>c.total){toast('Promise amount must be between PKR 1 and remaining amount','error');return;}c.ptp='Active';c.ptpDate=date;c.ptpAmount=amount;c.paid=0;c.events.unshift({type:'ptp',title:'PTP created',time:'Just now',text:`Promised PKR ${amount.toLocaleString()} by ${date}. Partial repayments will be accumulated.`});lcCloseModal();lcRenderCase();lcRenderTasks();toast('PTP created');}
 
 function lcOpenLedger(id){var c=lcCases.find(x=>x.id===id);lcShowModal('Manual payment record',`${c.name} · ${c.voucher}`,`<div class="lc-inline-note mb-3"><i class="bi bi-shield-check"></i><span>This request will be sent to Finance. It will not change the bill until Finance confirms receipt.</span></div><div class="row g-3"><div class="col-md-6"><label class="form-label">Claimed amount <span class="text-danger">*</span></label><input type="number" class="form-control form-control-sm" id="lc-ledger-amount"></div><div class="col-md-6"><label class="form-label">Payment time</label><input type="datetime-local" class="form-control form-control-sm" value="2026-07-31T12:00"></div><div class="col-md-6"><label class="form-label">Channel</label><select class="form-select form-select-sm"><option>JazzCash</option><option>Easypaisa</option><option>Bank transfer</option></select></div><div class="col-md-6"><label class="form-label">Transaction reference <span class="text-danger">*</span></label><input class="form-control form-control-sm" id="lc-ledger-ref" placeholder="Enter reference"></div><div class="col-12"><label class="form-label">Payment proof</label><input type="file" class="form-control form-control-sm"></div></div>`,`<button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary btn-sm" onclick="lcSaveLedger(${id})">Submit to Finance</button>`);}
 function lcSaveLedger(id){var amount=Number(document.getElementById('lc-ledger-amount').value),ref=document.getElementById('lc-ledger-ref').value.trim();if(!amount||!ref){toast('Amount and transaction reference are required','error');return;}var c=lcCases.find(x=>x.id===id);c.events.unshift({type:'ledger',title:'Manual payment pending Finance confirmation',time:'Just now',text:`Claimed PKR ${amount.toLocaleString()} · Reference ${ref}. Bill remains unchanged.`});lcCloseModal();lcRenderCase();toast('Submitted to Finance for confirmation');}
