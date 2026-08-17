@@ -524,4 +524,214 @@ CREATE TABLE `loan_coupon_instance` (
   KEY `idx_coupon_instance_user_id` (`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='优惠券';;
 
+-- ============================================================
+-- MOCK DATA (Demo only)
+-- PKR / PKT (UTC+5). product_id=1 is assumed to exist in base configuration.
+-- Integer state mapping used only by this demo seed:
+-- application/disbursement/payment: 0 Pending, 1 Success/Approved, 2 Failed/Rejected, 3 Cancelled
+-- voucher: 0 CoolingOff, 1 Active, 2 Overdue, 3 Paid, 4 WrittenOff
+-- bill: 0 CoolingOff, 1 Active, 2 PartiallyPaid, 3 Overdue,
+--       4 OverduePartiallyPaid, 5 Paid, 6 EarlySettled, 7 WrittenOff
+-- user_id 9000001-9000020 are continuous mock identifiers. No user master table exists in this export.
+-- Existing rows are preserved; excluded configuration tables are intentionally not written.
+-- ============================================================
+
+INSERT INTO `loan_credit_quota`
+(`id`,`user_id`,`total_credit`,`used_credit`,`locked_credit`,`approved_time`,`is_del`,`create_time`,`modify_time`)
+WITH RECURSIVE n AS (SELECT 1 i UNION ALL SELECT i+1 FROM n WHERE i<20)
+SELECT 202608170100+i,9000000+i,8000+(i%5)*2000,
+       CASE WHEN i IN (6,7,8,11,14,17,19,20) THEN 0
+            WHEN i IN (3,5,12,18) THEN (4000+((i-1)%5)*1000)*0.75
+            ELSE 4000+((i-1)%5)*1000 END,
+       CASE WHEN i=19 THEN 3000 ELSE 0 END,
+       DATE_ADD('2026-07-05 10:00:00',INTERVAL i DAY),0,'2026-07-01 09:00:00','2026-08-17 09:00:00'
+FROM n;
+
+INSERT INTO `loan_payment_account`
+(`id`,`user_id`,`institution_code`,`identifier_enc`,`identifier_unique`,`state`,`is_snapshot`,`verification_time`,`create_time`,`modify_time`)
+WITH RECURSIVE n AS (SELECT 1 i UNION ALL SELECT i+1 FROM n WHERE i<20)
+SELECT 202608170200+i,9000000+i,IF(i%2=0,'JAZZCASH','EASYPAISA'),
+       CONCAT('mock_enc_',9000000+i),CONCAT('PK',9000000+i),IF(i=20,0,1),0,
+       DATE_ADD('2026-07-06 11:00:00',INTERVAL i DAY),'2026-07-01 09:00:00','2026-08-17 09:00:00'
+FROM n;
+
+INSERT INTO `loan_apply_record`
+(`id`,`apply_no`,`user_id`,`product_id`,`loan_amount`,`increase_limit_coupon_no`,`increase_limit_coupon_amount`,
+ `term`,`period_days`,`total_days`,`daily_interest_rate`,`overdue_rate`,`total_interest`,`total_service_fee`,
+ `total_repay_amount`,`rounding_waiver_amount`,`display_total_payable_amount`,`start_date`,`end_date`,`quick_review`,
+ `state`,`pre_state`,`risk_state`,`term_infos`,`reject_reason`,`review_time`,`payment_account_id`,
+ `disbursement_state`,`disbursement_time`,`disbursement_no`,`is_del`,`create_time`,`modify_time`)
+WITH RECURSIVE n AS (SELECT 1 i UNION ALL SELECT i+1 FROM n WHERE i<24),
+a AS (SELECT i,4000+((i-1)%5)*1000 amount FROM n)
+SELECT 202608170300+i,CONCAT('APP202608',LPAD(i,4,'0')),9000000+((i-1)%20)+1,1,amount,'0',0,
+       2,15,30,0.002000,0.010000,amount*0.06,amount*0.04,amount*1.10,0,amount*1.10,
+       '2026-07-10','2026-08-09',IF(i%3=0,1,0),
+       CASE WHEN i IN (19,24) THEN 0 WHEN i=22 THEN 2 WHEN i=23 THEN 3 ELSE 1 END,
+       1,CASE WHEN i IN (19,23,24) THEN 0 WHEN i=22 THEN 2 ELSE 1 END,
+       JSON_ARRAY(JSON_OBJECT('termSeq',1,'days',15),JSON_OBJECT('termSeq',2,'days',15)),
+       CASE WHEN i=21 THEN 'Payment account verification failed' WHEN i=22 THEN 'Risk policy declined'
+            WHEN i=23 THEN 'Cancelled by customer' ELSE NULL END,
+       IF(i IN (19,23,24),NULL,DATE_ADD('2026-07-10 12:00:00',INTERVAL i HOUR)),
+       202608170200+((i-1)%20)+1,
+       CASE WHEN i IN (19,22,23,24) THEN NULL WHEN i=20 THEN 0 WHEN i=21 THEN 2 ELSE 1 END,
+       IF(i<=18,DATE_ADD('2026-07-10 13:00:00',INTERVAL i HOUR),NULL),
+       IF(i IN (19,22,23,24),NULL,CONCAT('DSB202608',LPAD(i,4,'0'))),0,
+       DATE_ADD('2026-07-09 09:30:00',INTERVAL i HOUR),'2026-08-17 09:00:00'
+FROM a;
+
+INSERT INTO `loan_disbursement_record`
+(`id`,`disbursement_no`,`apply_no`,`user_id`,`product_id`,`apply_amount`,`disbursed_amount`,`disbursement_channel`,
+ `payment_account_id`,`channel_txn_no`,`state`,`fail_reason`,`request_time`,`success_time`,`callback_time`,`raw_payload`,
+ `is_del`,`create_time`,`modify_time`)
+WITH RECURSIVE n AS (SELECT 1 i UNION ALL SELECT i+1 FROM n WHERE i<21)
+SELECT 202608170400+i,CONCAT('DSB202608',LPAD(i,4,'0')),CONCAT('APP202608',LPAD(i,4,'0')),
+       9000000+((i-1)%20)+1,1,4000+((i-1)%5)*1000,
+       IF(i<=18,4000+((i-1)%5)*1000,NULL),IF(i%2=0,'JazzCash','Easypaisa'),
+       202608170200+((i-1)%20)+1,IF(i<=18,CONCAT('CH-DSB-',LPAD(i,4,'0')),NULL),
+       CASE WHEN i<=18 THEN 1 WHEN i=20 THEN 0 ELSE 2 END,
+       IF(i=21,'Payment account verification failed',NULL),
+       DATE_ADD('2026-07-10 12:30:00',INTERVAL i HOUR),
+       IF(i<=18,DATE_ADD('2026-07-10 13:00:00',INTERVAL i HOUR),NULL),
+       IF(i<=18,DATE_ADD('2026-07-10 13:00:05',INTERVAL i HOUR),NULL),
+       IF(i<=18,'{"mock":true,"result":"success"}','{"mock":true}'),0,
+       '2026-07-10 12:30:00','2026-08-17 09:00:00'
+FROM n
+WHERE i<>19;
+
+INSERT INTO `loan_voucher`
+(`id`,`voucher_no`,`apply_no`,`disbursement_no`,`user_id`,`product_id`,`borrow_count`,`loan_amount`,`term`,`period_days`,
+ `total_days`,`daily_interest_rate`,`overdue_rate`,`total_interest`,`total_service_fee`,`total_payable_amount`,`waiver_amount`,
+ `display_payable_amount`,`start_date`,`end_date`,`cooling_off_start_time`,`cooling_off_end_time`,`fee_cap_amount`,`state`,
+ `accumulated_fee_amount`,`total_overdue_fee`,`repay_coupon_amount`,`paid_principal`,`paid_interest`,`paid_service_fee`,
+ `paid_overdue_fee`,`paid_amount`,`remaining_principal`,`remaining_interest`,`remaining_service_fee`,`remaining_overdue_fee`,
+ `remaining_amount`,`payment_account_id`,`fee_capped`,`fee_capped_time`,`settled_type`,`settled_time`,`is_del`,`create_time`,`modify_time`)
+WITH RECURSIVE n AS (SELECT 1 i UNION ALL SELECT i+1 FROM n WHERE i<18),
+v AS (SELECT i,4000+((i-1)%5)*1000 amount,
+ CASE WHEN i=1 THEN 0 WHEN i IN (4,5,10,13,16) THEN 2 WHEN i IN (6,7,11,14,17) THEN 3
+      WHEN i=8 THEN 4 ELSE 1 END st FROM n),
+x AS (SELECT *,IF(st=3,amount,IF(i IN (3,12,18),amount*0.25,IF(i=5,amount*0.25,0))) pp,
+ IF(st=3,amount*0.06,IF(i IN (3,12,18,5),amount*0.015,0)) pi,
+ IF(st=3,amount*0.04,IF(i IN (3,12,18),amount*0.01,0)) ps,
+ IF(st=2,100+((i-1)%3)*50,IF(st=4,200,0)) od FROM v)
+SELECT 202608170500+i,CONCAT('VCH202608',LPAD(i,4,'0')),CONCAT('APP202608',LPAD(i,4,'0')),
+       CONCAT('DSB202608',LPAD(i,4,'0')),9000000+i,1,i-1,amount,2,15,30,0.002000,0.010000,
+       amount*0.06,amount*0.04,amount*1.10,0,amount*1.10,'2026-07-10','2026-08-09',
+       '2026-07-10 13:00:00','2026-07-11 13:00:00',amount,st,amount*0.10+od,od,0,
+       pp,pi,ps,0,pp+pi+ps,amount-pp,amount*0.06-pi,amount*0.04-ps,od,
+       amount-pp+amount*0.06-pi+amount*0.04-ps+od,202608170200+i,0,NULL,
+       CASE WHEN st=3 AND i=7 THEN 'EARLY' WHEN st=3 THEN 'NORMAL' ELSE 'NONE' END,
+       IF(st=3,'2026-08-10 16:00:00',NULL),0,'2026-07-10 13:00:00','2026-08-17 09:00:00'
+FROM x;
+
+INSERT INTO `loan_voucher_bill`
+(`id`,`bill_no`,`voucher_no`,`user_id`,`product_id`,`term_seq`,`term`,`start_date`,`end_date`,`repay_date`,`period_days`,`state`,
+ `payable_principal`,`payable_interest_amount`,`payable_service_fee`,`payable_overdue_fee`,`payable_amount`,`paid_principal`,
+ `paid_interest`,`paid_service_fee`,`paid_overdue_fee`,`paid_amount`,`remaining_principal`,`remaining_interest`,
+ `remaining_service_fee`,`remaining_overdue_fee`,`remaining_amount`,`overdue_days`,`is_overdue`,`settled_type`,`settled_time`,
+ `settlement_record_no`,`settlement_bill_no`,`batching_time`,`is_del`,`create_time`,`modify_time`)
+WITH RECURSIVE n AS (SELECT 1 i UNION ALL SELECT i+1 FROM n WHERE i<18),
+t AS (SELECT 1 term_seq UNION ALL SELECT 2),
+b AS (SELECT n.i,t.term_seq,4000+((n.i-1)%5)*1000 amount,
+ CASE WHEN n.i=1 THEN 0 WHEN n.i IN (4,10,13,16) AND t.term_seq=1 THEN 3
+      WHEN n.i=5 AND t.term_seq=1 THEN 4 WHEN n.i=8 THEN 7
+      WHEN n.i IN (6,11,14,17) THEN 5 WHEN n.i=7 THEN 6
+      WHEN n.i IN (3,12,18) AND t.term_seq=1 THEN 2 ELSE 1 END st FROM n CROSS JOIN t),
+x AS (SELECT *,amount/2 p,amount*0.03 intr,amount*0.02 svc,
+ IF(st IN (3,4),100+((i-1)%3)*50,IF(st=7,200,0)) od,
+ IF(st IN (5,6),amount/2,IF(st IN (2,4),amount/4,0)) pp,
+ IF(st IN (5,6),amount*0.03,IF(st IN (2,4),amount*0.015,0)) pi,
+ IF(st IN (5,6),amount*0.02,IF(st=2,amount*0.01,0)) ps FROM b)
+SELECT 202608171000+(i-1)*2+term_seq,CONCAT('BIL202608',LPAD(i,4,'0'),term_seq),
+       CONCAT('VCH202608',LPAD(i,4,'0')),9000000+i,1,term_seq,2,
+       IF(term_seq=1,'2026-07-10','2026-07-25'),IF(term_seq=1,'2026-07-24','2026-08-09'),
+       IF(term_seq=1,'2026-07-24','2026-08-09'),15,st,p,intr,svc,od,p+intr+svc+od,
+       pp,pi,ps,0,pp+pi+ps,p-pp,intr-pi,svc-ps,od,p+intr+svc+od-pp-pi-ps,
+       IF(st IN (3,4,7),5+i,0),IF(st IN (3,4,7),1,0),
+       CASE WHEN st=5 THEN 'NORMAL' WHEN st=6 THEN 'EARLY' ELSE 'NONE' END,
+       IF(st IN (5,6),'2026-08-10 16:00:00',NULL),
+       IF(st=6,CONCAT('ES202608',LPAD(i,4,'0')),NULL),IF(st=6,CONCAT('ESB202608',LPAD(i,4,'0')),NULL),
+       '2026-08-17 00:05:00',0,'2026-07-10 13:01:00','2026-08-17 09:00:00'
+FROM x;
+
+INSERT INTO `loan_repayment_order`
+(`id`,`repayment_no`,`voucher_no`,`user_id`,`product_id`,`channel_pay_no`,`payable_amount`,`difference_amount`,
+ `coupon_no`,`coupon_amount`,`repay_start_time`,`repay_success_time`,`repay_type`,`repay_amount`,`pay_channel`,`pay_txn_no`,
+ `wallet_type`,`wallet_real_name`,`wallet_account`,`pay_state`,`match_state`,`reconcile_state`,`fail_reason`,`reconciled_time`,
+ `expire_time`,`is_del`,`create_time`,`modify_time`)
+WITH RECURSIVE n AS (SELECT 1 i UNION ALL SELECT i+1 FROM n WHERE i<12)
+SELECT 202608172000+i,CONCAT('RPY202608',LPAD(i,4,'0')),CONCAT('VCH202608',LPAD(i+1,4,'0')),
+       9000001+i,1,IF(i IN (9,12),NULL,CONCAT('CP-',LPAD(i,4,'0'))),1500+(i%4)*500,
+       IF(i IN (9,11,12),1500+(i%4)*500,0),NULL,0,DATE_ADD('2026-08-02 10:00:00',INTERVAL i DAY),
+       IF(i IN (9,11,12),NULL,DATE_ADD('2026-08-02 10:02:00',INTERVAL i DAY)),
+       IF(i%3=0,'PARTIAL','SCHEDULED'),IF(i IN (9,11,12),0,1500+(i%4)*500),
+       IF(i%2=0,'JazzCash','Easypaisa'),IF(i IN (9,11,12),NULL,CONCAT('TXN-',LPAD(i,4,'0'))),
+       IF(i%2=0,'JazzCash','Easypaisa'),CONCAT('Mock Payer ',i),CONCAT('0300***',1000+i),
+       CASE WHEN i=11 THEN 0 WHEN i IN (9,12) THEN 2 ELSE 1 END,
+       IF(i IN (9,11,12),0,1),IF(i IN (9,11,12),0,1),
+       IF(i IN (9,12),'Insufficient wallet balance',NULL),IF(i IN (9,11,12),NULL,DATE_ADD('2026-08-02 11:00:00',INTERVAL i DAY)),
+       DATE_ADD('2026-08-02 10:30:00',INTERVAL i DAY),0,DATE_ADD('2026-08-02 10:00:00',INTERVAL i DAY),'2026-08-17 09:00:00'
+FROM n;
+
+INSERT INTO `loan_repayment_bill`
+(`id`,`voucher_no`,`bill_no`,`user_id`,`term_seq`,`state`,`original_bill_amount`,`bill_remaining_amount`,`coupon_amount`,
+ `payable_amount`,`allocated_amount`,`difference_amount`,`paid_time`,`is_del`,`create_time`,`modify_time`)
+WITH RECURSIVE n AS (SELECT 1 i UNION ALL SELECT i+1 FROM n WHERE i<12)
+SELECT 202608173000+i,CONCAT('VCH202608',LPAD(i+1,4,'0')),CONCAT('BIL202608',LPAD(i+1,4,'0'),'1'),
+       9000001+i,1,CASE WHEN i=11 THEN 0 WHEN i IN (9,12) THEN 2 ELSE 1 END,
+       (4000+(i%5)*1000)*0.55,(4000+(i%5)*1000)*0.55,0,1500+(i%4)*500,
+       IF(i IN (9,11,12),0,1500+(i%4)*500),IF(i IN (9,11,12),1500+(i%4)*500,0),
+       IF(i IN (9,11,12),NULL,DATE_ADD('2026-08-02 10:02:00',INTERVAL i DAY)),0,
+       DATE_ADD('2026-08-02 10:00:00',INTERVAL i DAY),'2026-08-17 09:00:00'
+FROM n;
+
+INSERT INTO `loan_repayment_allocation`
+(`id`,`repayment_no`,`voucher_no`,`bill_no`,`user_id`,`product_id`,`term_seq`,`fee_type`,`allocated_amount`,
+ `allocation_order`,`is_del`,`create_time`,`modify_time`)
+WITH RECURSIVE n AS (SELECT 1 i UNION ALL SELECT i+1 FROM n WHERE i<8),
+f AS (SELECT 1 seq,'Interest' typ,300 amt UNION ALL SELECT 2,'ServiceFee',200 UNION ALL SELECT 3,'Principal',1500)
+SELECT 202608174000+(i-1)*3+seq,CONCAT('RPY202608',LPAD(i,4,'0')),CONCAT('VCH202608',LPAD(i+1,4,'0')),
+       CONCAT('BIL202608',LPAD(i+1,4,'0'),'1'),9000001+i,1,1,typ,amt,seq,0,
+       DATE_ADD('2026-08-02 10:02:00',INTERVAL i DAY),'2026-08-17 09:00:00'
+FROM n CROSS JOIN f;
+
+INSERT INTO `loan_overdue_record`
+(`id`,`overdue_no`,`voucher_no`,`bill_no`,`user_id`,`product_id`,`term_seq`,`overdue_date`,`overdue_days`,
+ `overdue_rate`,`overdue_principal`,`overdue_base_amount`,`overdue_fee_amount`,`original_overdue_fee`,`posted_overdue_fee`,
+ `posted_time`,`is_del`,`create_time`,`modify_time`)
+WITH n AS (SELECT 4 i UNION ALL SELECT 5 UNION ALL SELECT 8 UNION ALL SELECT 10 UNION ALL SELECT 13 UNION ALL SELECT 16)
+SELECT 202608175000+ROW_NUMBER() OVER(ORDER BY i),CONCAT('OD202608',LPAD(ROW_NUMBER() OVER(ORDER BY i),4,'0')),
+       CONCAT('VCH202608',LPAD(i,4,'0')),CONCAT('BIL202608',LPAD(i,4,'0'),'1'),9000000+i,1,1,
+       '2026-07-25',5+i,0.01,(4000+((i-1)%5)*1000)/2,(4000+((i-1)%5)*1000)/2,
+       100+((i-1)%3)*50,100+((i-1)%3)*50,100+((i-1)%3)*50,'2026-08-17 00:05:00',0,
+       '2026-07-25 00:05:00','2026-08-17 00:05:00'
+FROM n;
+
+INSERT INTO `loan_fee_adjust`
+(`id`,`adjust_no`,`voucher_no`,`bill_no`,`user_id`,`product_id`,`fee_type`,`adjust_type`,`state`,`adjust_amount`,
+ `before_amount`,`after_amount`,`reason`,`operator_id`,`reviewer_id`,`review_time`,`is_del`,`create_time`,`modify_time`) VALUES
+(202608176001,'ADJ2026080001','VCH2026080004','BIL20260800041',9000004,1,'OverdueFee','Waive',0,50,150,100,'Customer hardship request',70001,NULL,NULL,0,'2026-08-16 09:00:00','2026-08-16 09:00:00'),
+(202608176002,'ADJ2026080002','VCH2026080005','BIL20260800051',9000005,1,'OverdueFee','Waive',1,80,200,120,'Approved complaint resolution',70001,70002,'2026-08-16 14:00:00',0,'2026-08-16 09:30:00','2026-08-16 14:00:00'),
+(202608176003,'ADJ2026080003','VCH2026080010','BIL20260800101',9000010,1,'ServiceFee','Decrease',2,30,100,100,'Evidence insufficient',70003,70002,'2026-08-16 15:00:00',0,'2026-08-16 10:00:00','2026-08-16 15:00:00');
+
+INSERT INTO `loan_early_settlement_record`
+(`id`,`settlement_no`,`voucher_no`,`user_id`,`product_id`,`settlement_date`,`original_remaining_contract_principal`,
+ `original_remaining_overdue_fee`,`paid_normal_principal_amount`,`paid_normal_fee_interest`,`paid_normal_fee_service_fee`,
+ `actual_used_days`,`actual_payable_interest`,`actual_payable_service_fee`,`settlement_payable_fee_amount`,`waived_interest`,
+ `waived_service_fee`,`waived_overdue_fee`,`settlement_amount`,`repayment_no`,`status`,`paid_time`,`is_del`,`create_time`,`modify_time`) VALUES
+(202608177001,'ES2026080007','VCH2026080007',9000007,1,'2026-08-10',5000,0,0,0,0,30,120,80,5200,0,0,0,5200,'RPY2026080006','Paid','2026-08-10 16:00:00',0,'2026-08-10 15:30:00','2026-08-10 16:00:00'),
+(202608177002,'ES2026080012','VCH2026080012',9000012,1,'2026-08-17',3750,0,1250,75,50,38,150,100,4000,50,20,0,3930,NULL,'Pending',NULL,0,'2026-08-17 08:30:00','2026-08-17 08:30:00');
+
+INSERT INTO `loan_bill_fee_changelog`
+(`id`,`voucher_no`,`bill_no`,`user_id`,`product_id`,`term_seq`,`fee_type`,`change_type`,`source_type`,`source_no`,
+ `change_amount`,`before_payable_amount`,`after_payable_amount`,`before_paid_amount`,`paid_change_amount`,`after_paid_amount`,
+ `before_remaining_amount`,`after_remaining_amount`,`waived_change_amount`,`change_reason`,`operator_id`,`remark`,`is_del`,
+ `create_time`,`modify_time`)
+WITH n AS (SELECT 4 i UNION ALL SELECT 5 UNION ALL SELECT 8 UNION ALL SELECT 10 UNION ALL SELECT 13 UNION ALL SELECT 16)
+SELECT 202608178000+ROW_NUMBER() OVER(ORDER BY i),CONCAT('VCH202608',LPAD(i,4,'0')),
+       CONCAT('BIL202608',LPAD(i,4,'0'),'1'),9000000+i,1,1,'OverdueFee','Increase','Overdue',
+       CONCAT('OD202608',LPAD(ROW_NUMBER() OVER(ORDER BY i),4,'0')),100+((i-1)%3)*50,0,100+((i-1)%3)*50,
+       0,0,0,0,100+((i-1)%3)*50,0,'Daily overdue fee posting',NULL,'Demo batch posting',0,
+       '2026-08-17 00:05:00','2026-08-17 00:05:00'
+FROM n;
+
 SET FOREIGN_KEY_CHECKS = 1;

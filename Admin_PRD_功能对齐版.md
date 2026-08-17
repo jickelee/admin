@@ -161,7 +161,7 @@
 
 ### 5.3 借款申请
 
-**数据源：** `loan_apply_record`
+**数据源：** `loan_apply_order`
 
 **查询条件**
 
@@ -311,7 +311,7 @@
 
 **每日逾期记录**
 
-- 数据源：`loan_overdue_record`
+- 数据源：`loan_overdue_info`
 - 字段：逾期记录号、借据号、账单号、客户 ID、期次、逾期日期、逾期天数、逾期费率、逾期本金、费用金额、原始费用、入账时间
 
 当前“发送提醒”为前端提示，短信、WhatsApp 或 Push 通道调用和发送结果记录待后端接入。
@@ -599,13 +599,13 @@
 | 业务模块 | 主要数据表 |
 |---|---|
 | 客户与授信 | `usr_account`、`usr_credit`、`usr_credit_basic_info`、`usr_credit_identity`、`usr_credit_contact`、`usr_credit_change_log` |
-| 借款申请 | `loan_apply_record` |
+| 借款申请 | `loan_apply_order` |
 | 借款借据 | `loan_voucher` |
 | 还款计划与费用变更 | `loan_voucher_bill`、`loan_bill_fee_changelog` |
 | 放款 | `loan_disbursement_record` |
 | 还款 | `loan_repayment_order`、`loan_repayment_allocation` |
 | 提前结清 | `loan_early_settlement_record` |
-| 逾期 | `loan_overdue_record` |
+| 逾期 | `loan_overdue_info` |
 | 费用调整 | `loan_fee_adjust` |
 | 优惠券 | `loan_coupon_template`、`loan_coupon_instance`、`loan_coupon_log` |
 | 产品与支付 | `loan_product`、`loan_product_term_rule`、`loan_payment_institution`、`loan_payment_account` |

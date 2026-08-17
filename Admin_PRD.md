@@ -39,8 +39,8 @@ Anole Loan 面向巴基斯坦用户提供移动端现金借贷服务。随着业
 | 模块 | 主要表 |
 |---|---|
 | 客户与授信 | `usr_account`、`usr_credit`、`usr_credit_basic_info`、`usr_credit_identity`、`usr_credit_contact`、`usr_credit_change_log` |
-| 借款与账单 | `loan_apply_record`、`loan_disbursement_record`、`loan_voucher`、`loan_voucher_bill`、`loan_bill_fee_changelog` |
-| 还款与逾期 | `loan_repayment_order`、`loan_repayment_allocation`、`loan_overdue_record` |
+| 借款与账单 | `loan_apply_order`、`loan_disbursement_record`、`loan_voucher`、`loan_voucher_bill`、`loan_bill_fee_changelog` |
+| 还款与逾期 | `loan_repayment_order`、`loan_repayment_allocation`、`loan_overdue_info` |
 | 费用调整 | `loan_fee_adjust` |
 | 优惠券 | `loan_coupon_template`、`loan_coupon_instance`、`loan_coupon_log` |
 | 授信与支付 | `loan_credit_quota`、`loan_payment_institution`、`loan_payment_account` |
@@ -165,7 +165,7 @@ system                                   系统管理
 
 ### 5.4 借款申请
 
-- 数据源：`loan_apply_record`。
+- 数据源：`loan_apply_order`。
 - 字段：申请单号、客户 ID、产品 ID、申请金额、提额券号、提额金额、分期期数、每期天数、总借款天数、日利率、日服务费率、日逾期费率、总利息、总服务费、理论应还金额、抹零金额、展示应还金额、是否快速审核、申请状态、前置验证状态、风控状态、拒绝原因、审批时间、收款账户 ID、放款状态、放款时间、放款单号、创建时间。
 - 筛选：申请单号/客户 ID、申请状态、风控状态、放款状态、申请时间。
 - 操作：查看详情、审批、拒绝、发起放款、查看放款记录。
@@ -565,7 +565,7 @@ Munsalik 对账
 - 金额与期限：最低/最高借款金额、金额步长、最小/最大/默认分期期数、每期天数、最大总期限。
 - 费率与冷静期：日利率、日服务费率、日逾期费率、冷静期小时数、冷静期内是否免利息和服务费。费率按数据库小数值填写，例如 `0.006750 = 0.675%`。
 - 还款策略：是否支持当期提前还款、提前还款开放天数、是否支持提前结清、是否支持部分还款、最低部分还款金额、最大逾期天数、逾期费封顶比例、还款冲抵规则、取整规则。
-- 默认值：币种 `PKR`，金额步长 `1000`，冷静期 `24` 小时，还款冲抵规则 `OVERDUE_FEE_FIRST`，取整规则 `FLOOR_TO_INTEGER`，用户类型 `ALL`，状态为启用。
+- 默认值：币种 `PKR`，金额步长 `1000`，冷静期 `24` 小时，还款冲抵规则 `OVERDUE_FEE_FIRST`，取整类型 `DOWN`，用户类型 `ALL`，状态为启用。
 - 列表支持按产品名称、状态、适用用户类型筛选；操作包括新增、编辑、启用和禁用。
 - 保存校验：最低金额必须小于最高金额；默认期数必须位于最小/最大期数之间；最大总期限不得小于 `最大期数 × 每期天数`；必填费率允许为 `0`。
 

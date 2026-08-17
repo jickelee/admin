@@ -2354,7 +2354,7 @@ function t(key) {
 }
 
 const phraseZh = {
-  'Customer Detail':'客户详情','Basic Info':'基本信息','Credit Info':'授信信息','Identity':'身份认证','Contacts':'联系人','Credit Records':'授信记录','Credit Changes':'授信变更',
+  'Customer Detail':'客户详情','Basic Info':'基本信息','Application Info':'申请信息','Credit Info':'授信信息','Identity':'身份认证','Contacts':'联系人','Credit Records':'授信记录','Credit Changes':'授信变更',
   'Loan Voucher Detail':'借款借据详情','Repayment Order Detail':'还款订单详情','Bill Detail':'账单详情','Create Fee Adjustment':'创建费用调整','Review Adjustment':'审核费用调整',
   'Add Amount Term Rule':'新增金额期数规则','Edit Amount Term Rule':'编辑金额期数规则',
   'Issue Coupon':'发放优惠券','Create Admin User':'新建管理员','Edit Admin User':'编辑管理员','Reset Password':'重置密码','Create Role':'新建角色','Edit Role':'编辑角色',
@@ -2370,8 +2370,9 @@ const phraseZh = {
   'Change Reason':'变更原因','Remark':'备注','Coupon Type':'券类型','Customer Mobile':'客户手机号','Coupon Amount (PKR)':'券金额 (PKR)','Increase Amount (PKR)':'提额金额 (PKR)','Min Remaining Principal (PKR)':'最低剩余本金 (PKR)','Expiry Time':'到期时间',
   'Username':'用户名','Real Name':'真实姓名','Email':'邮箱','Mobile':'手机号','Assign Role(s)':'分配角色','Notes':'备注','New Password':'新密码',
   'Role Code':'角色编码','Role Name':'角色名称','Description':'描述','Sort Order':'排序','Parent Node':'父节点','Permission Name':'权限名称','Permission Code':'权限编码','Type':'类型','Route Path':'路由路径',
-  'Full Name':'姓名','ID Card':'证件号','City':'城市','Registered':'注册时间','Credit Status':'授信状态','Total Limit':'总额度','Used':'已用额度','Available':'可用额度','Wallet':'钱包','Blacklisted':'黑名单',
-  'Education':'学历','Marital':'婚姻状态','Children':'子女数','Occupation':'职业','Income (PKR)':'收入 (PKR)','Industry':'行业','Payroll Period':'发薪周期','Work Years':'工作年限','Existing Other Loans':'其他贷款',
+  'Full Name':'姓名','ID Card':'证件号','City':'城市','Registered':'注册时间','Credit Status':'授信状态','Total Limit':'总额度','Used':'已用额度','Locked':'锁定额度','Available':'可用额度','Wallet':'钱包','Blacklisted':'黑名单',
+  'Education':'学历','Marital':'婚姻状态','Children':'子女数','Occupation':'职业','Income (PKR)':'收入 (PKR)','Industry':'行业','Payroll Period':'发薪周期','Pay Period':'发薪周期','Work Years':'工作年限','Salary Day':'发薪日','Existing Other Loans':'其他贷款',
+  'User State':'客户状态','Gesture Failed Count':'手势密码失败次数','Auth Time':'实名认证时间','Portrait':'头像','Review Remark':'审核备注',
   'Name':'姓名','ID Card No.':'证件号','Birthday':'生日','Gender':'性别','ID Issue Date':'证件签发日','Province':'省份','Address':'地址',
   'Time':'时间','Change Amount':'变更金额','Before Total':'变更前总额','After Total':'变更后总额','Linked Order':'关联订单',
   'Amount':'金额','Type':'类型','Normal':'正常','Partial':'部分还款','EarlySettlement':'提前结清','Overdue':'逾期','Manual':'人工','Bank':'银行',
@@ -3617,8 +3618,9 @@ function latestCustomerCreditRecord(customerId) {
 }
 
 function customerCreditStepLabel(step) {
+  const normalized=Number(step)>=1000?Number(step)/1000:Number(step);
   const labels={1:'Basic Info',2:'Contact Info',3:'Identity Info',4:'Credit Quota',5:'Wallet Binding'};
-  return labels[step]||'-';
+  return labels[normalized]||'-';
 }
 
 function creditBadge(s) {
@@ -3626,7 +3628,7 @@ function creditBadge(s) {
   const cls = map[s] || '';
   return `<span class="status-badge" style="${cls.includes(':')?cls:''}" ${!cls.includes(':') ? `class="status-badge ${cls}"` : ''}>${s}</span>`;
 }
-function fmtMoney(n) { return n ? 'PKR ' + n.toLocaleString() : '-'; }
+function fmtMoney(n) { return n === null || n === undefined || n === '' ? '--' : 'PKR ' + Number(n).toLocaleString(); }
 function maskId(id) {
   const value = String(id || '');
   return value.length > 7 ? value.slice(0,4) + '****' + value.slice(-3) : '****';
@@ -3768,7 +3770,7 @@ function renderCustomers(list) {
     </table>`;
 }
 
-function searchCustomers(showValidation=true) {
+async function searchCustomers(showValidation=true) {
   const input = document.getElementById('cust-search');
   const type = document.getElementById('cust-search-type').value;
   const raw = input.value.trim();
@@ -3777,6 +3779,8 @@ function searchCustomers(showValidation=true) {
     input.focus();
     return;
   }
+  // A customer search is a fresh database read, not a filter over page-load data.
+  if (showValidation) await loadTestDatabaseData(false);
   const normalizedDigits = raw.replace(/\D/g,'');
   let data = [];
   if (type === 'id') {
@@ -3912,7 +3916,6 @@ function viewApplicationDetail(no) {
   document.getElementById('loan-detail-body').innerHTML=`<div class="row g-3">
     <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">APPLICATION</div>${detailRow('Record ID','#'+a.id)}${detailRow('Application No.',a.applyNo)}${detailRow('Customer ID','#'+a.userId)}${detailRow('Product ID','#'+a.productId)}${detailRow('Loan Amount',fmtMoney(a.loanAmount))}${detailRow('Limit Coupon',a.couponNo?`${a.couponNo} / ${fmtMoney(a.couponAmount)}`:'-')}${detailRow('Term',a.term+' × '+a.periodDays+' days')}${detailRow('Total Days',a.totalDays)}${detailRow('Created At',a.createdAt)}${detailRow('Updated At',a.modifyTime)}</div></div>
     <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">REVIEW & DISBURSEMENT</div>${detailRow('Application Status',a.state)}${detailRow('Pre-check Status',a.preState)}${detailRow('Risk Status',a.riskState)}${detailRow('Quick Review',a.quickReview?'Yes':'No')}${detailRow('Review Time',a.reviewTime||'-')}${detailRow('Reject Reason',a.rejectReason||'-')}${detailRow('Payment Account ID',a.paymentAccountId?'#'+a.paymentAccountId:'-')}${detailRow('Disbursement Status',a.disbursementState)}${detailRow('Disbursement No.',a.disbursementNo||'-')}${detailRow('Disbursement Time',a.disbursementTime||'-')}</div></div>
-    <div class="col-12"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">${currentLang==='zh'?'分期方案':'INSTALLMENT PLAN'}</div>${renderApplicationTermPlan(a.termInfos)}</div></div>
     <div class="col-12"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">AMOUNT SNAPSHOT</div><div class="row"><div class="col-md-6">${detailRow('Daily Interest Rate',a.dailyInterestRate)}${detailRow('Daily Service Rate',a.dailyServiceRate)}${detailRow('Daily Overdue Rate',a.dailyOverdueRate)}${detailRow('Total Interest',fmtMoney(a.totalInterest))}${detailRow('Total Service Fee',fmtMoney(a.totalServiceFee))}</div><div class="col-md-6">${detailRow('Theoretical Repayable',fmtMoney(a.totalRepayAmount))}${detailRow('Rounding Waiver',fmtMoney(a.roundingWaiver))}${detailRow('Display Payable',fmtMoney(a.displayPayable))}${detailRow('Schedule',a.startDate+' ~ '+a.endDate)}</div></div></div></div>
   </div>`;
   new bootstrap.Modal(document.getElementById('loanDetailModal')).show();
@@ -4959,6 +4962,7 @@ let loanBills = [
 
 loanBills.forEach(b=>{
   b.voucherNo=b.voucherNo||b.loanOrderNo;
+  b.batchingTime=b.batchingTime||`${b.dueDate} 00:05`;
   let paid=b.paidAmount;
   b.paidPrincipal=Math.min(paid,b.payablePrincipal); paid-=b.paidPrincipal;
   b.paidInterest=Math.min(Math.max(0,paid),b.payableInterestFee); paid-=b.paidInterest;
@@ -5649,13 +5653,12 @@ function renderCustDetailTab(tab,id) {
       </div></div>
       <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
         <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">CREDIT OVERVIEW</div>
-        ${detailRow('Credit Status',c.creditStatus)}${detailRow('Total Limit',fmtMoney(c.totalCredit))}${detailRow('Used',fmtMoney(c.usedCredit))}${detailRow('Available',fmtMoney(c.totalCredit-c.usedCredit))}${detailRow('Review Time',c.creditReviewTime||'-')}${detailRow(c.creditStatus==='Rejected'?'Reject Reason':'Review Remark',c.creditReviewRemark||'-')}${detailRow('Blacklisted',c.blacklist?'🚫 Yes':'✅ No')}
+        ${detailRow('Credit Status',c.creditStatus)}${detailRow('Total Limit',fmtMoney(c.totalCredit))}${detailRow('Used',fmtMoney(c.usedCredit))}${detailRow('Locked',fmtMoney(c.lockedCredit||0))}${detailRow('Available',fmtMoney(Math.max(0,c.totalCredit-c.usedCredit-(c.lockedCredit||0))))}${detailRow('Review Time',c.creditReviewTime||'-')}${detailRow(c.creditStatus==='Rejected'?'Reject Reason':'Review Remark',c.creditReviewRemark||'-')}${detailRow('Blacklisted',c.blacklist?'🚫 Yes':'✅ No')}
       </div></div></div>`;
   } else if(tab==='credit') {
-    const recs = (typeof userCreditRecords !== 'undefined' && userCreditRecords[id]) ? userCreditRecords[id] : [];
     const bi = (typeof creditBasicInfo !== 'undefined') ? creditBasicInfo[id] : null;
-    if (!recs.length && !bi) {
-      body.innerHTML = '<div class="empty-state"><i class="bi bi-file-earmark-x"></i>No credit records</div>';
+    if (!bi) {
+      body.innerHTML = '<div class="empty-state"><i class="bi bi-file-earmark-x"></i>No application basic info</div>';
       return;
     }
     const biHtml = bi ? `<div style="border-top:1px solid #e8ecf4;padding-top:14px;margin-top:4px;">
@@ -5673,7 +5676,7 @@ function renderCustDetailTab(tab,id) {
         <div class="col-md-6">${detailRow('Salary Day',bi.salaryDay)}</div>
         <div class="col-12">${detailRow('Existing Other Loans',bi.existingLoan?'Yes — PKR '+bi.totalLoanAmount:'No')}</div>
       </div></div>` : '';
-    body.innerHTML = biHtml || '<div class="empty-state"><i class="bi bi-file-earmark-x"></i>No application basic info</div>';
+    body.innerHTML = biHtml;
   } else if(tab==='identity') {
     const id2=creditIdentity[id];
     if(!id2){body.innerHTML='<div class="empty-state"><i class="bi bi-person-vcard"></i>No identity verification data</div>';return;}
@@ -7151,11 +7154,78 @@ const dbNumber = value => Number(value || 0);
 const dbDate = value => value ? String(value).replace('T',' ').replace(/\.000Z$/,'') : '-';
 const dbState = (value, labels, fallback='Unknown') => labels[Number(value)] || `${fallback} (${value})`;
 
-async function loadTestDatabaseData() {
+async function loadTestDatabaseData(refreshUi=true) {
   try {
     const response = await fetch('/api/db-data', { cache:'no-store' });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
+
+    // Customer master and onboarding data are loaded from the database on every
+    // request. Do not retain the seeded demo profiles after a successful load.
+    const regionNames=Object.fromEntries((data.pakRegions||[]).map(r=>[String(r.code),r.name_en||r.name_ur||r.code]));
+    const groupByUser=rows=>(rows||[]).reduce((map,row)=>{
+      const key=String(row.user_id); (map[key]||(map[key]=[])).push(row); return map;
+    },{});
+    const recordsByUser=groupByUser(data.creditRecords);
+    const basicByUser=groupByUser(data.creditBasicInfo);
+    const identitiesByUser=groupByUser(data.creditIdentity);
+    const contactsByUser=groupByUser(data.creditContacts);
+    const quotaByUser=Object.fromEntries((data.creditQuotas||[]).map(q=>[String(q.user_id),q]));
+    const creditStatusFromRecord=record=>({5:'Not Applied',10:'Pending',20:'Pending',30:'Approved',40:'Rejected',50:'Expired'}[Number(record?.state)]||'Not Applied');
+    const recordStateLabel={5:'Incomplete',10:'Submitted',20:'Pending Review',30:'Approved',40:'Rejected',50:'Expired'};
+    const reviewLabel={0:'Not Started',10:'Approved',20:'Rejected',30:'Manual Review'};
+
+    customers.splice(0,customers.length,...(data.users||[]).map(user=>{
+      const key=String(user.id);
+      const records=recordsByUser[key]||[];
+      const latest=records[records.length-1];
+      const identity=(identitiesByUser[key]||[]).slice(-1)[0];
+      const ocr=typeof identity?.ocr_result==='string'?(()=>{try{return JSON.parse(identity.ocr_result)}catch(_){return {}}})():identity?.ocr_result||{};
+      const quota=quotaByUser[key]||{};
+      const total=quota.total_credit??latest?.total_credit??0;
+      const cityCode=identity?.residential_city_code;
+      return {
+        id:user.id,
+        name:user.name||identity?.name||ocr.name||'', registeredName:user.name||identity?.name||ocr.name||'',
+        mobile:'Encrypted', whatsAccount:'--',
+        idCard:identity?.id_card||ocr.idCard||'--', registeredIdCard:identity?.id_card||ocr.idCard||'--',
+        creditStatus:creditStatusFromRecord(latest), totalCredit:dbNumber(total), usedCredit:dbNumber(quota.used_credit), lockedCredit:dbNumber(quota.locked_credit),
+        blacklist:Number(user.blacklist_flag||0), walletType:'-', walletAccount:'-', regTime:dbDate(user.create_time),
+        city:regionNames[String(cityCode)]||cityCode||'--', occupation:(basicByUser[key]||[]).slice(-1)[0]?.occupation||'--', income:(basicByUser[key]||[]).slice(-1)[0]?.monthly_income||'--',
+        profileStep:Number(latest?.step||0)>=1000?Number(latest.step)/1000:Number(latest?.step||0), email:user.email||'--', userState:user.state,
+        gestureFailedCount:user.gesture_failed_count||0, authTime:dbDate(user.auth_time), portrait:user.portrait||'--', isDel:0,
+        createTime:dbDate(user.create_time), modifyTime:dbDate(user.modify_time), creditReviewTime:dbDate(latest?.review_time), creditReviewRemark:latest?.reject_reason||latest?.remark||''
+      };
+    }));
+
+    Object.keys(userCreditRecords).forEach(key=>delete userCreditRecords[key]);
+    Object.entries(recordsByUser).forEach(([userId,records])=>{
+      const quota=quotaByUser[userId]||{};
+      userCreditRecords[userId]=records.map(r=>({
+        id:r.id,creditNo:`CR-${r.id}`,userId:r.user_id,state:r.state,stateLabel:recordStateLabel[Number(r.state)]||`State ${r.state}`,
+        step:r.step,submitTime:dbDate(r.submit_time),reviewType:r.review_type||'-',reviewState:r.review_state,
+        reviewStateLabel:reviewLabel[Number(r.review_state)]||`State ${r.review_state}`,reviewTime:dbDate(r.review_time),rejectReason:r.reject_reason||'',
+        totalCredit:dbNumber(r.total_credit),usedCredit:dbNumber(quota.used_credit),lockedCredit:dbNumber(quota.locked_credit),approvedTime:dbDate(r.approved_time),
+        expireTime:dbDate(r.expire_time),nextApplicableTime:dbDate(r.next_applicable_time),remark:r.remark||'',createdAt:dbDate(r.create_time),modifyTime:dbDate(r.modify_time)
+      }));
+    });
+    Object.keys(creditBasicInfo).forEach(key=>delete creditBasicInfo[key]);
+    Object.entries(basicByUser).forEach(([userId,rows])=>{const b=rows[rows.length-1];creditBasicInfo[userId]={
+      id:b.id,userId:b.user_id,creditId:b.credit_id,educationLevel:b.education_level,maritalStatus:b.marital_status,childrenCount:b.children_count,
+      email:b.email||'--',occupation:b.occupation||'--',monthlyIncome:b.monthly_income||'--',industry:b.industry||'--',payPeriod:b.pay_period||'--',
+      workYears:b.work_years||'--',existingLoan:Boolean(b.existing_loan),totalLoanAmount:dbNumber(b.total_loan_amount),salaryDay:b.salary_day||'--'
+    };});
+    Object.keys(creditIdentity).forEach(key=>delete creditIdentity[key]);
+    Object.entries(identitiesByUser).forEach(([userId,rows])=>{const i=rows[rows.length-1];const o=typeof i.ocr_result==='string'?(()=>{try{return JSON.parse(i.ocr_result)}catch(_){return {}}})():i.ocr_result||{};creditIdentity[userId]={
+      id:i.id,userId:i.user_id,creditId:i.credit_id,name:i.name||o.name||'',idCard:i.id_card||o.idCard||'',frontImg:i.front_img||'--',backImg:i.back_img||'--',
+      residentialProvinceCode:regionNames[String(i.residential_province_code)]||i.residential_province_code||'--',residentialCityCode:regionNames[String(i.residential_city_code)]||i.residential_city_code||'--',
+      residentialAddress:i.residential_address||o.residentialAddress||'--',birthday:i.birthday||o.birthday||'--',icIssueDate:i.ic_issue_date||o.icIssueDate||'--',
+      gender:i.gender||o.gender||'--',ocrResult:o&&Object.keys(o).length?'VERIFIED':(i.ocr_result||'--')
+    };});
+    Object.keys(creditContacts).forEach(key=>delete creditContacts[key]);
+    Object.entries(contactsByUser).forEach(([userId,rows])=>{creditContacts[userId]=rows.map(c=>({
+      id:c.id,userId:c.user_id,creditId:c.credit_id,relationship:c.relationship||'--',contactName:c.contact_name||'--',contactMobile:c.contact_mobile||'--'
+    }));});
 
     loanApplications = data.applications.map(a=>({
       id:a.id, applyNo:a.apply_no, userId:a.user_id, productId:a.product_id,
@@ -7218,7 +7288,8 @@ async function loadTestDatabaseData() {
       remainingPrincipal:dbNumber(b.remaining_principal), remainingInterestFee:dbNumber(b.remaining_interest_fee),
       remainingServiceFee:dbNumber(b.remaining_service_fee), remainingOverdueFee:dbNumber(b.remaining_overdue_fee),
       overdueDays:b.overdue_days, status:b.overdue_days>0?'Overdue':dbState(b.state,{10:'Active',20:'Active',30:'Paid',40:'Closed'}),
-      settledType:String(b.settled_type||'NONE').toUpperCase(), settledTime:dbDate(b.settled_time)
+      settledType:String(b.settled_type||'NONE').toUpperCase(), settledTime:dbDate(b.settled_time),
+      batchingTime:dbDate(b.batching_time)
     }));
 
     disbursements = data.disbursements.map(d=>({
@@ -7263,7 +7334,7 @@ async function loadTestDatabaseData() {
         customers.push(customer);
       }
       customer.totalCredit=dbNumber(q.total_credit); customer.usedCredit=dbNumber(q.used_credit); customer.lockedCredit=dbNumber(q.locked_credit);
-      userCreditRecords[q.user_id]=[{id:q.credit_id,creditNo:`CR-${q.credit_id}`,userId:q.user_id,mobile:customer.mobile,state:2,faceState:2,step:5,submitTime:dbDate(q.create_time),reviewType:'DATABASE',reviewState:1,reviewTime:dbDate(q.approved_time),rejectReason:'',totalCredit:dbNumber(q.total_credit),usedCredit:dbNumber(q.used_credit),lockedCredit:dbNumber(q.locked_credit),approvedTime:dbDate(q.approved_time),expireTime:'',nextApplicableTime:dbDate(q.next_loan_applicable_time),remark:'Loaded from loan_credit_quota',isDel:0,createdAt:dbDate(q.create_time),modifyTime:dbDate(q.modify_time)}];
+      if(!userCreditRecords[q.user_id]?.length) userCreditRecords[q.user_id]=[{id:q.credit_id,creditNo:`CR-${q.credit_id}`,userId:q.user_id,mobile:customer.mobile,state:30,stateLabel:'Approved',faceState:2,step:5000,submitTime:dbDate(q.create_time),reviewType:'DATABASE',reviewState:10,reviewStateLabel:'Approved',reviewTime:dbDate(q.approved_time),rejectReason:'',totalCredit:dbNumber(q.total_credit),usedCredit:dbNumber(q.used_credit),lockedCredit:dbNumber(q.locked_credit),approvedTime:dbDate(q.approved_time),expireTime:'',nextApplicableTime:dbDate(q.next_loan_applicable_time),remark:'Loaded from loan_credit_quota',isDel:0,createdAt:dbDate(q.create_time),modifyTime:dbDate(q.modify_time)}];
     });
 
     customerWalletBindings.splice(0,customerWalletBindings.length,...data.paymentAccounts.map(a=>({
@@ -7273,9 +7344,11 @@ async function loadTestDatabaseData() {
       identifier_unique:a.identifier_sign, is_snapshot:a.is_snapshot, created_at:dbDate(a.create_time), updated_at:dbDate(a.modify_time)
     })));
 
-    const active=document.querySelector('.page.active')?.id?.replace('page-','');
-    if(active) navigate(active);
-    toast(`Test database connected · ${data.applications.length+data.vouchers.length+data.bills.length+data.disbursements.length} loan records loaded`,'success');
+    if(refreshUi) {
+      const active=document.querySelector('.page.active')?.id?.replace('page-','');
+      if(active) navigate(active);
+      toast(`Test database connected · ${data.applications.length+data.vouchers.length+data.bills.length+data.disbursements.length} loan records loaded`,'success');
+    }
   } catch (error) {
     console.error(error);
     toast('Test database unavailable — showing Demo data','error');
