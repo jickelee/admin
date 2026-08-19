@@ -11,8 +11,11 @@ function required(name: string) {
   return value;
 }
 
-function nullable(value: unknown) {
-  return value === "" || value == null ? null : value;
+function nullable(value: unknown): string | number | null {
+  if (value === "" || value == null) return null;
+  if (typeof value === "string" || typeof value === "number") return value;
+  if (typeof value === "boolean") return value ? 1 : 0;
+  throw new Error("Invalid database value");
 }
 
 function integer(value: unknown, name: string) {
