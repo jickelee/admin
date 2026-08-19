@@ -21,6 +21,9 @@ const TABLE_QUERIES = {
   termRules: "SELECT * FROM loan_product_term_rule WHERE is_del = 0 ORDER BY product_id,min_loan_amount,id",
   vouchers: "SELECT * FROM loan_voucher WHERE is_del = 0 ORDER BY create_time DESC",
   bills: "SELECT * FROM loan_voucher_bill WHERE is_del = 0 ORDER BY voucher_no,term_seq",
+  repaymentOrders: "SELECT * FROM loan_repayment_order WHERE is_del = 0 ORDER BY create_time DESC",
+  repaymentAllocations: "SELECT * FROM loan_repayment_allocation WHERE is_del = 0 ORDER BY repayment_no,bill_no,id",
+  repaymentLogs: "SELECT * FROM loan_repayment_log WHERE is_del = 0 ORDER BY repayment_no,create_time DESC,id DESC",
   couponTemplates: "SELECT * FROM loan_coupon_template WHERE is_del = 0 ORDER BY create_time DESC,id DESC",
   couponInstances: "SELECT * FROM loan_coupon_instance WHERE is_del = 0 ORDER BY create_time DESC,id DESC",
 } as const;

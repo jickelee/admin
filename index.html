@@ -7210,16 +7210,53 @@ async function loadTestDatabaseData() {
       id:b.id, billNo:b.bill_no, loanOrderNo:b.voucher_no, voucherNo:b.voucher_no,
       userId:b.user_id, productId:b.product_id, custName:`Customer #${b.user_id}`,
       installmentNo:b.term_seq, totalInstallments:b.term, periodStart:dbDate(b.start_date), dueDate:dbDate(b.repay_date),
-      payablePrincipal:dbNumber(b.principal), payableInterestFee:dbNumber(b.accrued_interest_fee),
-      payableServiceFee:dbNumber(b.accrued_service_fee), payableOverdueFee:dbNumber(b.accrued_overdue_fee),
-      billAmount:dbNumber(b.accrued_amount), paidAmount:dbNumber(b.paid_amount), remainingAmount:dbNumber(b.remaining_amount),
+      payablePrincipal:dbNumber(b.payable_principal ?? b.principal), payableInterestFee:dbNumber(b.payable_interest_amount ?? b.accrued_interest_fee),
+      payableServiceFee:dbNumber(b.payable_service_fee ?? b.accrued_service_fee), payableOverdueFee:dbNumber(b.payable_overdue_fee ?? b.accrued_overdue_fee),
+      billAmount:dbNumber(b.payable_amount ?? b.accrued_amount), paidAmount:dbNumber(b.paid_amount), remainingAmount:dbNumber(b.remaining_amount),
       paidPrincipal:dbNumber(b.paid_principal), paidInterest:dbNumber(b.paid_interest),
       paidServiceFee:dbNumber(b.paid_service_fee), paidOverdueFee:dbNumber(b.paid_overdue_fee),
-      remainingPrincipal:dbNumber(b.remaining_principal), remainingInterestFee:dbNumber(b.remaining_interest_fee),
+      remainingPrincipal:dbNumber(b.remaining_principal), remainingInterestFee:dbNumber(b.remaining_interest ?? b.remaining_interest_fee),
       remainingServiceFee:dbNumber(b.remaining_service_fee), remainingOverdueFee:dbNumber(b.remaining_overdue_fee),
       overdueDays:b.overdue_days, status:b.overdue_days>0?'Overdue':dbState(b.state,{10:'Active',20:'Active',30:'Paid',40:'Closed'}),
       settledType:String(b.settled_type||'NONE').toUpperCase(), settledTime:dbDate(b.settled_time)
     }));
+
+    const repaymentBillSnapshots=(data.repaymentBills||[]).reduce((totals,bill)=>{
+      const key=String(bill.repayment_no||'');
+      totals[key]=(totals[key]||0)+dbNumber(bill.bill_remaining_amount);
+      return totals;
+    },{});
+    repayments=(data.repaymentOrders||[]).map(r=>({
+      id:r.id, repaymentNo:r.repayment_no, voucherNo:r.voucher_no, userId:r.user_id,
+      remainingAmount:repaymentBillSnapshots[String(r.repayment_no)]??dbNumber(r.payable_amount)+dbNumber(r.coupon_amount),
+      payableAmount:dbNumber(r.payable_amount), couponNo:r.coupon_no||'', couponAmount:dbNumber(r.coupon_amount),
+      repaySuccessTime:dbDate(r.repay_success_time), repaymentType:String(r.repay_type||'').toLowerCase(),
+      partible:String(r.repay_type||'').toUpperCase()==='PARTIAL',
+      state:({0:0,1:20,2:-1,3:-1})[Number(r.pay_state)]??Number(r.pay_state),
+      paymentInstitutionCode:r.pay_channel||r.wallet_type||'--', payerName:r.wallet_real_name||'--',
+      payerAccount:r.wallet_account||'--', repaidAmount:dbNumber(r.repay_amount),
+      callbackTime:'-', repaidTime:dbDate(r.repay_success_time), payTxnNo:r.pay_txn_no||r.channel_pay_no||'',
+      failReason:r.fail_reason||'', expireTime:dbDate(r.expire_time), reconcileState:r.reconcile_state,
+      reconciledTime:dbDate(r.reconciled_time), isDel:Number(r.is_del||0),
+      createTime:dbDate(r.create_time), modifyTime:dbDate(r.modify_time)
+    }));
+
+    Object.keys(repaymentAllocations).forEach(key=>delete repaymentAllocations[key]);
+    (data.repaymentAllocations||[]).forEach(row=>{
+      const repaymentNo=String(row.repayment_no||'');
+      const rows=repaymentAllocations[repaymentNo]||(repaymentAllocations[repaymentNo]=[]);
+      let allocation=rows.find(item=>item.billNo===row.bill_no);
+      if(!allocation){
+        allocation={id:row.id,repaymentNo,voucherNo:row.voucher_no,billNo:row.bill_no,userId:row.user_id,
+          termSeq:row.term_seq,allocatedAmount:0,allocatedOverdueFee:0,allocatedInterest:0,
+          allocatedServiceFee:0,allocatedPrincipal:0,createTime:dbDate(row.create_time),modifyTime:dbDate(row.modify_time)};
+        rows.push(allocation);
+      }
+      const amount=dbNumber(row.allocated_amount);
+      allocation.allocatedAmount+=amount;
+      const feeKey={Principal:'allocatedPrincipal',Interest:'allocatedInterest',ServiceFee:'allocatedServiceFee',OverdueFee:'allocatedOverdueFee'}[row.fee_type];
+      if(feeKey) allocation[feeKey]+=amount;
+    });
 
     disbursements = data.disbursements.map(d=>({
       id:d.id, disbNo:d.disbursement_no, applyNo:d.apply_no, userId:d.user_id, productId:d.product_id,

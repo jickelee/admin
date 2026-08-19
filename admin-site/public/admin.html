@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <script>if(location.protocol==='file:') location.replace('http://localhost:3000/');</script>
 <meta charset="UTF-8">
@@ -1741,7 +1741,7 @@
           <div class="row g-3">
             <div class="col-md-5"><label class="form-label" style="font-size:13px;font-weight:600;">Product Name <span class="text-danger">*</span></label><input class="form-control form-control-sm" id="lp-name" maxlength="100" placeholder="e.g. 15-day 2-installment cash loan"></div>
             <div class="col-md-2"><label class="form-label" style="font-size:13px;font-weight:600;">Currency <span class="text-danger">*</span></label><input class="form-control form-control-sm" id="lp-currency" maxlength="10" value="PKR"></div>
-            <div class="col-md-2"><label class="form-label" style="font-size:13px;font-weight:600;">User Type</label><select class="form-select form-select-sm" id="lp-user-type"><option value="ALL">ALL</option><option value="NEW">NEW</option><option value="OLD">OLD</option></select></div>
+            <div class="col-md-2"><label class="form-label" style="font-size:13px;font-weight:600;">User Tag</label><select class="form-select form-select-sm" id="lp-user-type"><option value="">Not Limited</option><option value="ALL">ALL</option><option value="NEW">NEW</option><option value="OLD">OLD</option></select></div>
             <div class="col-md-2"><label class="form-label" style="font-size:13px;font-weight:600;">Risk Level</label><select class="form-select form-select-sm" id="lp-risk"><option value="">Not Limited</option><option value="NORMAL">NORMAL</option><option value="HIGH">HIGH</option><option value="LOW">LOW</option></select></div>
             <div class="col-md-1"><label class="form-label" style="font-size:13px;font-weight:600;">Sort <span class="text-danger">*</span></label><input type="number" class="form-control form-control-sm" id="lp-sort" min="0" step="1" value="0"></div>
             <div class="col-md-2"><label class="form-label" style="font-size:13px;font-weight:600;">Status <span class="text-danger">*</span></label><select class="form-select form-select-sm" id="lp-status"><option value="10">Enabled</option><option value="-10">Disabled</option></select></div>
@@ -1780,7 +1780,7 @@
             <div class="col-md-2"><label class="form-label" style="font-size:13px;font-weight:600;">Early Settlement <span class="text-danger">*</span></label><select class="form-select form-select-sm" id="lp-early-settlement"><option value="1">Enabled</option><option value="0">Disabled</option></select></div>
             <div class="col-md-2"><label class="form-label" style="font-size:13px;font-weight:600;">Partial Repayment <span class="text-danger">*</span></label><select class="form-select form-select-sm" id="lp-partial-repay"><option value="1">Enabled</option><option value="0">Disabled</option></select></div>
             <div class="col-md-2"><label class="form-label" style="font-size:13px;font-weight:600;">Minimum Partial Amount</label><div class="input-group input-group-sm"><span class="input-group-text">PKR</span><input type="number" class="form-control" id="lp-min-partial" min="0" step="0.01" placeholder="Leave blank for no limit"></div></div>
-            <div class="col-md-5"><label class="form-label" style="font-size:13px;font-weight:600;">Repayment Allocation Rule <span class="text-danger">*</span></label><select class="form-select form-select-sm" id="lp-allocation-rule"><option value="OVERDUE_FEE_FIRST">OVERDUE_FEE_FIRST — Overdue fee → Interest → Service fee → Principal</option><option value="PRINCIPAL_FIRST">PRINCIPAL_FIRST — Principal → Interest → Service fee → Overdue fee</option></select></div>
+            <div class="col-md-5"><label class="form-label" style="font-size:13px;font-weight:600;">Repayment Allocation Rule (JSON)</label><textarea class="form-control form-control-sm font-monospace" id="lp-allocation-rule" rows="3" placeholder="{}"></textarea><div style="font-size:11px;color:#94a3b8;margin-top:3px;">Stored exactly as loan_product.repay_allocation_rule.</div></div>
             <div class="col-md-4"><label class="form-label" style="font-size:13px;font-weight:600;">Rounding Type <span class="text-danger">*</span></label><select class="form-select form-select-sm" id="lp-rounding-rule"><option value="DOWN">DOWN — Round down</option><option value="HALF_UP">HALF_UP — Round to nearest</option><option value="UP">UP — Round up</option></select></div>
           </div>
         </div>
@@ -2228,7 +2228,7 @@
 // ============================================================
 // i18n
 // ============================================================
-let currentLang = 'en';
+let currentLang = 'zh';
 const i18n = {
   en: {
     'logo.sub':'Admin Platform','nav.overview':'Overview','nav.dashboard':'Dashboard','nav.business':'Business','nav.customers':'Customers','nav.applications':'Loan Applications','nav.loans':'Loan Vouchers','nav.repayments':'Repayments','nav.overdue':'Overdue','nav.coupons':'Coupons','nav.system':'System','nav.users':'User Management','nav.roles':'Role Management','nav.permissions':'Permission Management','nav.auditlog':'Audit Log',
@@ -2353,7 +2353,14 @@ const phraseZh = {
   'BILL INFO':'账单信息','AMOUNT SUMMARY':'金额汇总','Bill No.':'账单号','Loan Voucher':'借款借据','Installment':'期次','Period':'周期','Settled At':'结清时间',
   'Payable Principal':'应还本金','Payable Interest':'应还利息','Payable Service Fee':'应还服务费','Payable Overdue Fee':'应还逾期费','Total Bill Amount':'账单总额','Overdue Days':'逾期天数',
   'REPAYMENT ORDER':'还款订单','PAYMENT DETAILS':'支付信息','Repayment No.':'还款单号','Channel':'渠道','Reconcile':'对账状态','Pay Time':'支付时间','Channel Txn No.':'渠道流水号',
-  'Summary':'摘要','Fee Allocation':'费用分配',
+  'Summary':'摘要','Fee Allocation':'费用分配','Bill Allocation':'账单分配明细','Payment Logs':'支付日志',
+  'Repay Loan ID':'还款借据 ID','Payable Total':'应还合计','Payable Overdue':'应还逾期费',
+  'Payable Service':'应还服务费','Allocated Total':'分配合计','Allocated Overdue':'分配逾期费',
+  'Allocated Interest':'分配利息','Allocated Service':'分配服务费','Allocated Principal':'分配本金',
+  'Created':'创建时间','Updated':'更新时间','Coupon Used':'优惠券抵扣','Final Payable':'最终应还',
+  'Partible':'支持部分还款','Institution':'支付机构','Payer':'付款人','Payer Account':'付款账号',
+  'Repaid':'实还金额','Redeemed':'抵扣金额','Callback':'回调时间','Payment Txn':'支付流水号',
+  'Failure Type':'失败类型','No fee allocation data':'暂无账单分配明细','No repayment log data':'暂无支付日志',
   'APPLICATION BASIC INFO':'申请基础信息','IDENTITY VERIFICATION':'身份认证','EMERGENCY CONTACTS':'紧急联系人','CREDIT & WALLET':'授信 & 钱包','BASIC INFO':'基础信息','LOAN INFO':'借款信息','STATUS & PAYMENT':'状态 & 支付',
   'This adjustment requires supervisor approval before taking effect.':'该费用调整需要主管审批后才会生效。',
   'Hold Ctrl/Cmd to select multiple':'按住 Ctrl/Cmd 可多选','Uppercase letters, underscores only. Cannot be changed after creation.':'仅支持大写字母和下划线，创建后不可修改。',
@@ -2780,6 +2787,157 @@ Object.assign(phraseZh, {
   ,'Agent workload is not limited. Any active agent can receive cases.':'坐席不设案件负载上限，任一启用坐席均可接收案件。'
 });
 
+// Secondary and tertiary screens are rendered from JavaScript templates. Keep
+// their complete vocabulary here so details, edit forms, drawers and feedback
+// are translated just as consistently as the top-level navigation.
+Object.assign(phraseZh, {
+  'Admin Platform':'运营后台','Overview':'概览','Dashboard':'仪表盘','Business':'业务管理',
+  'Finance & Ops':'财务与运营','Configuration':'产品配置','System':'系统管理',
+  'Customers':'客户管理','Loan Applications':'借款申请','Loan Vouchers':'借款借据',
+  'Loan Bills':'借款账单','Disbursements':'放款记录','Repayments':'还款管理',
+  'Coupons':'优惠券','Fee Adjustments':'费用调整','Account Transactions':'账户流水',
+  'Reconciliation':'对账管理','Loan Products':'资金产品','Payment Institutions':'支付机构',
+  'Amount Term Rules':'金额期数规则','App Resources':'App 资源位','User Management':'用户管理',
+  'Role Management':'角色管理','Permission Management':'权限管理','Audit Log':'审计日志',
+  'Notifications':'通知','Super Admin':'超级管理员','Collapse sidebar':'收起侧边栏','Expand sidebar':'展开侧边栏',
+  'Prev':'上一页','Next':'下一页','All':'全部','All Status':'全部状态','All Channels':'全部渠道',
+  'All Risk Status':'全部风控状态','All Fee Types':'全部费用类型','All Results':'全部结果',
+  'All Modules':'全部模块','Overdue Only':'仅逾期','Not Overdue':'未逾期',
+  'Active':'启用','Disabled':'禁用','Invalid':'无效','Expired':'已过期','Cancelled':'已取消',
+  'Draft':'草稿','Submitted':'已提交','Pending Approval':'待审批','Approved':'已通过',
+  'Submit Failed':'提交失败','Uninitiated':'未发起','Quick Approved':'快速审核通过',
+  'Early Settled':'提前结清','Written Off':'已核销','Partially Repaid':'部分还款','Repaid':'已还款',
+  'Not Effective':'未生效','Unused':'未使用','Locked':'已锁定','Used':'已使用',
+  'Disbursing':'放款中','Disbursed':'已放款','Failed':'失败','Success':'成功',
+  'Interest':'利息','ServiceFee':'服务费','OverdueFee':'逾期费','Manual':'人工',
+  'Create Template':'新建模板','Coupon Templates':'优惠券模板','Limit Increase':'提额券',
+  'Repayment':'还款','Operations':'运营','Finance':'财务','Collection':'催收',
+  'Risk Reviewer':'风控审核员','Customer Service':'客服','System Administrator':'系统管理员',
+  'Permission Name':'权限名称','Code':'编码','Type':'类型','Route Path':'路由路径','Sort':'排序','Actions':'操作',
+  'Customer ID':'客户 ID','Application No.':'申请单号','Application Status':'申请状态',
+  'Voucher No.':'借据号','Voucher Status':'借据状态','Bill No.':'账单号','Repayment No.':'还款单号',
+  'Disbursement No.':'放款单号','Payment Txn No.':'支付流水号','Record ID':'记录 ID','Product ID':'产品 ID',
+  'Full Name':'姓名','Name':'名称','Mobile':'手机号','WhatsApp':'WhatsApp','Email':'邮箱',
+  'ID Card':'身份证件','ID Card No.':'身份证件号','Birthday':'出生日期','Gender':'性别',
+  'Marital':'婚姻状况','Education':'教育程度','Occupation':'职业','Industry':'行业',
+  'Income (PKR)':'收入（PKR）','Salary Day':'发薪日','Work Years':'工作年限','Children':'子女数',
+  'City':'城市','City Code':'城市编码','Province Code':'省份编码','Address':'地址',
+  'Auth Time':'认证时间','OCR Result':'OCR 结果','Portrait':'头像','Gesture Failed Count':'手势失败次数',
+  'User State':'用户状态','Credit Status':'授信状态','Total Limit':'总额度','Used':'已用额度',
+  'Available':'可用额度','Borrow Count':'借款次数','Existing Other Loans':'其他在贷',
+  'Blacklisted':'黑名单状态','Created At':'创建时间','Updated At':'更新时间','Expire Time':'到期时间',
+  'Loan Amount':'借款金额','Amount':'金额','Principal':'本金','Interest':'利息','Service Fee':'服务费',
+  'Overdue Fee':'逾期费','Total':'合计','Total Payable':'应还合计','Original Payable':'原应还金额',
+  'Display Payable':'展示应还金额','Final Payable':'最终应还金额','Theoretical Repayable':'理论应还金额',
+  'Total Paid':'已还合计','Repaid Amount':'已还金额','Total Remaining':'剩余应还',
+  'Remaining Principal':'剩余本金','Remaining Interest':'剩余利息','Remaining Service Fee':'剩余服务费',
+  'Remaining Overdue Fee':'剩余逾期费','Paid Principal':'已还本金','Paid Interest':'已还利息',
+  'Paid Service Fee':'已还服务费','Paid Overdue Fee':'已还逾期费','Waiver Amount':'减免金额',
+  'Rounding Waiver':'舍入减免','Fee Cap Amount':'费用封顶金额','Fee Capped':'是否封顶','Fee Capped Time':'封顶时间',
+  'Daily Interest Rate':'日利率','Daily Service Rate':'日服务费率','Daily Overdue Rate':'日逾期费率',
+  'Installment':'期次','Installments':'分期期数','Term':'期数','Period':'周期','Pay Period':'还款周期',
+  'Total Days':'总天数','Schedule':'还款计划','Current Repay Date':'当前还款日','Cooling-off End':'冷静期结束时间',
+  'Overdue Days':'逾期天数','Settlement Type':'结清类型','Settled At':'结清时间','Partible':'支持部分还款',
+  'Repayment Type':'还款类型','Repay Loan ID':'还款借据 ID','Repaid Time':'还款时间',
+  'Payer Name':'付款人','Payer Account':'付款账号','Payment Institution':'支付机构','Payment Account ID':'支付账户 ID',
+  'Pre-check Status':'预检状态','Risk Status':'风控状态','Quick Review':'快速审核','Review Time':'审核时间',
+  'Reject Reason':'拒绝原因','Disbursement Status':'放款状态','Disbursement Time':'放款时间',
+  'Batching Time':'批处理时间','Last Batching Time':'最近批处理时间','Reason':'原因','Submitted By':'提交人',
+  'Status':'状态','State':'状态','Fee Type':'费用类型','Adj Type':'调整类型','Limit Coupon':'提额券',
+  'Repayment Coupon':'还款优惠券','Coupon':'优惠券','Yes':'是','No':'否','Unknown':'未知',
+  'Passed':'已通过','Normal Review':'普通审核','Early Settlement':'提前结清','Normal Repayment':'正常还款',
+  'BASIC INFO':'基本信息','APPLICATION INFO':'申请信息','CREDIT INFO':'授信信息',
+  'IDENTITY INFORMATION':'身份信息','CONTACT INFORMATION':'联系人信息','LOAN INFO':'借款信息',
+  'STATUS & PAYMENT':'状态与支付','REVIEW & DISBURSEMENT':'审核与放款','AMOUNT BREAKDOWN':'金额明细',
+  'REPAYMENT INFORMATION':'还款信息','AUDIT INFORMATION':'审计信息','OPERATION RECORDS':'操作记录',
+  'Create User':'新建用户','Edit User':'编辑用户','Create Role':'新建角色','Edit Role':'编辑角色',
+  'Add Permission':'新增权限','Edit Permission':'编辑权限','Reset Password':'重置密码','Assign Permissions':'分配权限',
+  'Create Adjustment':'创建调整','Approve':'通过','Reject':'拒绝','Delete':'删除','Disable':'禁用','Enable':'启用',
+  'Detail':'详情','View Detail':'查看详情','Back':'返回','Submit':'提交','Confirm':'确认','Void':'作废',
+  'Search username / name...':'搜索用户名 / 姓名…','Search role...':'搜索角色…',
+  'Application No / Customer ID...':'申请单号 / 客户 ID…','Order No / Customer...':'账单号 / 客户…',
+  'Disbursement / Application / Customer ID / RRN...':'放款单号 / 申请单号 / 客户 ID / RRN…',
+  'Adj No / Loan No...':'调整单号 / 借据号…','Txn No / Loan No / Mobile...':'流水号 / 借据号 / 手机号…',
+  'Operator / Action...':'操作人 / 操作内容…','Coupon No / Mobile...':'券号 / 手机号…',
+  'Voucher / Application / Customer ID...':'借据号 / 申请单号 / 客户 ID…',
+  'Repayment No / Loan No...':'还款单号 / 借据号…','Order No / Customer ID...':'订单号 / 客户 ID…',
+  'No data':'暂无数据','No records':'暂无记录','Loading...':'加载中…','Loading…':'加载中…',
+  'Operation successful':'操作成功','Operation failed':'操作失败','Please try again':'请重试',
+  'Required':'必填','This field is required':'此项为必填项','Please select':'请选择','Please enter':'请输入'
+});
+Object.assign(phraseZh, {
+  '(Optional)':'（选填）','0 selected':'已选择 0 项','Adjustment':'调整','Adjustment Type':'调整类型',
+  'Add Institution':'新增机构','Add Loan Product':'新增资金产品','Add Payment Institution':'新增支付机构',
+  'Assign':'分配','Assign Collector':'分配催收员','Assign Role(s)':'分配角色','Assigned Collector':'当前催收员',
+  'Amount (PKR)':'金额（PKR）','Amount Step':'金额步长','Amount Step (PKR)':'金额步长（PKR）',
+  'Available Terms':'可选期数','Default Term':'默认期数','Period Days':'每期天数','Installment Count Range':'期数范围',
+  'Basic Information':'基本信息','Loan Amount & Term':'借款金额与期限','Rates & Cooling-off':'费率与冷静期',
+  'Repayment Rules':'还款规则','Early Repayment':'提前还款','Partial Repayment':'部分还款',
+  'Open Early Settlement':'开放提前结清','Open Days Before Due':'到期前开放天数','Minimum Partial Amount':'最低部分还款金额',
+  'Repayment Allocation Rule':'还款分配规则','Rounding Type':'舍入方式','Risk Level':'风险等级','User Type':'客户类型',
+  'Product Name':'产品名称','Currency':'币种','Min':'最低','Max':'最高','Min Loan Amount (PKR)':'最低借款金额（PKR）',
+  'Max Loan Amount (PKR)':'最高借款金额（PKR）','Minimum Loan Amount':'最低借款金额','Maximum Loan Amount':'最高借款金额',
+  'Min Remaining Principal (PKR)':'最低剩余本金（PKR）','Minimum Remaining Principal (PKR)':'最低剩余本金（PKR）',
+  'Cooling-off Hours':'冷静期时长','Fee Free':'免手续费','Eligibility':'适用条件','Returning Users':'老客户',
+  'New Users Only':'仅新客户','Not Limited':'不限','Remark':'备注','Remarks':'备注','Notes':'备注','Note':'说明',
+  'Institution Code':'机构编码','Related Institution Code':'关联机构编码','Institution Type':'机构类型',
+  'Partner Name':'合作方名称','Partner Email':'合作方邮箱','Display Name':'展示名称','IBFT IMD':'IBFT IMD',
+  'Directory Status':'目录状态','Customer Selectable':'客户可选','Logo URL':'Logo 地址',
+  'EXCLUDED institutions remain in the directory for audit history but cannot be selected by customers.':'被排除的机构仍保留在目录中供审计追溯，但客户无法选择。',
+  'Whether customers can select this institution in the App.':'控制客户能否在 App 中选择该机构。',
+  'Institution icon displayed in the App.':'机构在 App 中展示的图标。',
+  'Stored as a string to preserve leading zeros; maximum 11 digits.':'按字符串保存以保留前导零，最多 11 位。',
+  'Resource Slots':'资源位配置','Change Log':'变更记录','Slot Key':'资源位标识','Slot Name (Display)':'资源位名称（展示）',
+  'Slot Type':'资源位类型','Display Text (optional)':'展示文案（选填）','Image URL':'图片地址','Link Type':'跳转类型',
+  'Target URL / Route':'目标地址 / 路由','Target Audience':'目标人群','Effective Start':'生效时间','Effective End':'失效时间',
+  'Effective Time':'生效时间','Change Note':'变更说明','Unique key used by the app to fetch this slot.':'App 获取资源位时使用的唯一标识。',
+  'Banner':'横幅','Popup':'弹窗','Entry Icon':'入口图标','Float Button':'悬浮按钮','Tab Item':'页签项',
+  'Native Page':'原生页面','External URL':'外部链接','System Push':'系统推送','Button / Action':'按钮 / 操作',
+  'All Actions':'全部操作','All Directory Status':'全部目录状态','All Institution Types':'全部机构类型',
+  'All Reasons':'全部原因','All Sources':'全部来源','All Types':'全部类型','All User Types':'全部客户类型','All Users':'全部用户',
+  'Batch Issue Coupons':'批量发券','Import customer list':'导入客户名单','Select CSV':'选择 CSV 文件',
+  'Download template':'下载模板','Load demo list':'载入演示名单','Template validation failed':'模板校验失败',
+  'Validation Failed':'校验失败','Validation':'校验结果','Duplicate Ignored':'重复数据已忽略','Process Failed':'处理失败',
+  'No file selected':'未选择文件','One import task creates one coupon for every valid customer.':'每次导入任务会为每位有效客户创建一张优惠券。',
+  'Invalid rows will not be issued. Please correct the file and import it again; partial issuance is not allowed.':'存在无效数据时不会发券，请修正文件后重新导入；不支持部分发放。',
+  'Maximum available amount after increase is PKR 50,000.':'提额后最高可用额度为 PKR 50,000。',
+  'Coupon Template':'优惠券模板','Template Name':'模板名称','Increase Amount (PKR)':'提额金额（PKR）',
+  'Credit Amount (PKR)':'授信金额（PKR）','Promise Amount (PKR)':'承诺还款金额（PKR）',
+  'Contact Method':'联系方式','Contact Result':'联系结果','Next Follow-up Date':'下次跟进日期',
+  'Contacted (No Promise)':'已联系（未承诺）','Promised to Pay':'承诺还款','Refused to Pay':'拒绝还款','Invalid Number':'号码无效',
+  'Phone Call':'电话','Field Visit':'上门','Assign Permissions —':'分配权限 —','Save Permissions':'保存权限',
+  'Save Institution':'保存机构','Save Product':'保存产品','Save Template':'保存模板','Save Record':'保存记录',
+  'Submit for Approval':'提交审批','Confirm Rejection':'确认拒绝','Rejection Reason':'拒绝原因',
+  'Rejection reason is required.':'请填写拒绝原因。','Reset password for':'重置密码：','Confirm Reset':'确认重置',
+  'Review Customer Credit':'客户授信审核','Review Remark':'审核备注','Review Adjustment':'审核费用调整',
+  'This adjustment requires supervisor approval before taking effect.':'本次调整需主管审批通过后生效。',
+  'Promise to Pay Details':'承诺还款详情','Operation Log':'操作记录','Wallets':'绑定钱包',
+  'Refund':'退款','Reversal':'冲正','In':'入账','Out':'出账','In / Out':'入账 / 出账','No Action':'无需操作',
+  'Completed':'已完成','Processing':'处理中','Quarantined':'已隔离','Quarantine mail':'隔离邮件',
+  'File & Mail':'文件与邮件','Differences':'差异项','Difference Detail':'差异详情','Reconciliation Task':'对账任务',
+  'Reconciliation Tasks':'对账任务','Reconciliation Details':'对账详情','Reconciliation Audit':'对账审计',
+  'Reconciliation Audit Log':'对账审计日志','Authorized Resend':'授权重发','Authorized Signatory':'授权签署人',
+  'Sender not whitelisted':'发件人不在白名单','Unsafe attachment':'附件存在风险','Download attachment':'下载附件',
+  'Download PDF':'下载 PDF','Print':'打印','Export':'导出','Principal only · full repayment · actual payment > 50% principal.':'仅本金 · 全额还款 · 实付金额大于本金的 50%。',
+  'DOWN — Round down':'DOWN — 向下取整','HALF_UP — Round to nearest':'HALF_UP — 四舍五入','UP — Round up':'UP — 向上取整',
+  'OVERDUE_FEE_FIRST — Overdue fee → Interest → Service fee → Principal':'逾期费优先 — 逾期费 → 利息 → 服务费 → 本金',
+  'PRINCIPAL_FIRST — Principal → Interest → Service fee → Overdue fee':'本金优先 — 本金 → 利息 → 服务费 → 逾期费',
+  'Default term is configured in Amount Term Rules. Maximum total days is calculated from max term × period days.':'默认期数在“金额期数规则”中配置；最长总天数按最大期数 × 每期天数计算。',
+  'Number of installments the customer can choose from.':'客户可选择的分期期数。',
+  'When a customer applies for a loan, the system matches the requested amount against these rules to determine available installment options. Only one active rule applies per amount. Rules are matched in order; the first matching active rule wins.':'客户申请借款时，系统按顺序匹配金额规则以确定可选期数；同一金额仅应用首条匹配且启用的规则。',
+  'PKR 2,000–30,000, in increments of PKR 1,000.':'PKR 2,000–30,000，按 PKR 1,000 递增。',
+  'Loan Agreement':'借款协议','LOAN AGREEMENT':'借款协议','LOAN TERMS':'借款条款','TERMS & CONDITIONS':'条款与条件',
+  'PARTIES':'协议双方','LENDER':'出借方','BORROWER (E-SIGNATURE)':'借款人（电子签名）','Borrower':'借款人','Lender':'出借方',
+  'Digitally Verified':'电子签名已验证','The Borrower agrees to repay the loan amount plus all applicable fees according to the installment schedule set forth in this agreement.':'借款人同意按照本协议约定的分期计划偿还借款本金及全部适用费用。',
+  'The Borrower authorizes Anole Financial Services to deduct repayment amounts from the registered wallet account on due dates.':'借款人授权 Anole Financial Services 在到期日从已登记钱包账户扣收应还款项。',
+  'The Borrower confirms that all information provided during the application process is accurate and complete.':'借款人确认申请过程中提交的全部信息真实、准确且完整。',
+  'Early repayment is permitted subject to the Early Settlement terms applicable at the time of settlement.':'借款人可提前还款，具体以结清时适用的提前结清条款为准。',
+  'In the event of late payment, an overdue penalty shall be charged at the rate specified in the Loan Terms section above, calculated on a daily basis on the outstanding balance.':'如发生逾期，将按上述借款条款约定的费率，以未偿余额为基数按日计收逾期费用。',
+  'This agreement is governed by the laws of Pakistan. Any disputes shall be submitted to the competent courts of Karachi.':'本协议适用巴基斯坦法律，任何争议应提交卡拉奇有管辖权的法院处理。',
+  'This document was electronically signed and is legally binding under Pakistan Electronic Transactions Ordinance 2002.':'本文件已通过电子方式签署，并依据《巴基斯坦 2002 年电子交易条例》具有法律约束力。',
+  '— Keep Current —':'— 保持当前设置 —','— Root (Top Level) —':'— 根节点（顶级）—'
+});
+
 const phraseEn = Object.fromEntries(Object.entries(phraseZh).map(([en, zh]) => [zh, en]));
 
 function localizePhrase(text) {
@@ -2804,6 +2962,12 @@ function localizePhrase(text) {
   if (!translated && currentLang === 'en' && /天/.test(trimmed)) translated = trimmed.replace(/天/g, 'days');
   if (!translated && currentLang === 'zh' && /\b\d+\s*d\b/.test(trimmed)) translated = trimmed.replace(/\b(\d+)\s*d\b/g, '$1天');
   if (!translated && currentLang === 'zh' && /^e\.g\.\s*/i.test(trimmed)) translated = trimmed.replace(/^e\.g\.\s*/i, '例如 ');
+  if (!translated && currentLang === 'zh' && /^Unknown \((.+)\)$/.test(trimmed)) translated = trimmed.replace(/^Unknown/, '未知');
+  if (!translated && currentLang === 'zh' && /^Step (.+)$/.test(trimmed)) translated = trimmed.replace(/^Step /, '步骤 ');
+  if (!translated && currentLang === 'zh' && /^Showing (.+) of (.+)$/.test(trimmed)) translated = trimmed.replace(/^Showing (.+) of (.+)$/, '显示 $1，共 $2 条');
+  if (!translated && currentLang === 'zh' && /^(\d+) case\(s\)$/.test(trimmed)) translated = trimmed.replace(/ case\(s\)$/, ' 个案件');
+  if (!translated && currentLang === 'zh' && /^(\d+) installment\(s\)$/.test(trimmed)) translated = trimmed.replace(/ installment\(s\)$/, ' 期');
+  if (!translated && currentLang === 'zh' && /^(\d+) repayment\(s\)$/.test(trimmed)) translated = trimmed.replace(/ repayment\(s\)$/, ' 笔还款');
   if (!translated) return source;
   return source.replace(trimmed, translated);
 }
@@ -2825,13 +2989,15 @@ function localizeHardcoded(root=document.body) {
     const next = localizePhrase(node.nodeValue);
     if (next !== node.nodeValue) node.nodeValue = next;
   });
-  root.querySelectorAll?.('input[placeholder], textarea[placeholder], button[title]').forEach(el => {
+  root.querySelectorAll?.('input[placeholder], textarea[placeholder], [title], [aria-label]').forEach(el => {
     if (el.placeholder) el.placeholder = localizePhrase(el.placeholder);
     if (el.title) el.title = localizePhrase(el.title);
+    if (el.getAttribute('aria-label')) el.setAttribute('aria-label', localizePhrase(el.getAttribute('aria-label')));
   });
 }
 
 function applyI18n() {
+  document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
   // text content
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
@@ -2868,6 +3034,7 @@ if (document.body) {
 
 function toggleLang() {
   currentLang = currentLang === 'en' ? 'zh' : 'en';
+  document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
   applyI18n();
   // re-render current page so table headers update
   const activePage = document.querySelector('.page.active')?.id?.replace('page-','');
@@ -4365,6 +4532,7 @@ function renderRepayments(list) {
       <td><code style="font-size:12px;">${r.repaymentNo}</code></td>
       <td><code style="font-size:12px;">${r.voucherNo}</code></td>
       <td><strong>#${r.userId}</strong></td>
+      <td style="font-weight:600;">${repaymentMoney(r.originalPayableAmount)}</td>
       <td style="font-weight:600;">${repaymentMoney(r.remainingAmount)}</td>
       <td style="font-weight:600;">${repaymentMoney(r.payableAmount)}</td>
       <td style="font-weight:600;color:#16a34a;">${repaymentMoney(r.repaidAmount)}</td>
@@ -4378,9 +4546,9 @@ function renderRepayments(list) {
       <td><button class="btn btn-sm btn-outline-primary action-btn" onclick="viewRepaymentDetail('${r.repaymentNo}')"><i class="bi bi-eye"></i> ${t('btn.detail')}</button></td>
     </tr>`).join('');
   document.getElementById('repay-table-container').innerHTML = `
-    <div class="table-scroll"><table class="table table-hover mb-0" style="min-width:1900px;">
-      <thead><tr><th>${t('th.repaymentNo')}</th><th>Voucher No.</th><th>Customer ID</th><th>Remaining Amount</th><th>Payable Amount</th><th>Repaid Amount</th><th>Coupon</th><th>${t('th.repayType')}</th><th>Partible</th><th>Payment Institution</th><th>${t('th.status')}</th><th>Payment Txn No.</th><th>Repaid Time</th><th>${t('th.actions')}</th></tr></thead>
-      <tbody>${rows || '<tr><td colspan="14"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+    <div class="table-scroll"><table class="table table-hover mb-0" style="min-width:2000px;">
+      <thead><tr><th>${t('th.repaymentNo')}</th><th>Voucher No.</th><th>Customer ID</th><th>Original Payable</th><th>Remaining Amount</th><th>Final Payable</th><th>Repaid Amount</th><th>Coupon</th><th>${t('th.repayType')}</th><th>Partible</th><th>Payment Institution</th><th>${t('th.status')}</th><th>Payment Txn No.</th><th>Repaid Time</th><th>${t('th.actions')}</th></tr></thead>
+      <tbody>${rows || '<tr><td colspan="15"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
     </table></div>`;
 }
 
@@ -5794,9 +5962,10 @@ function renderPaymentInstitutions() {
 }
 
 function openPaymentInstitutionModal(id) {
-  editingPaymentInstitutionId = id || null;
+  editingPaymentInstitutionId = id == null ? null : Number(id);
   document.getElementById('paymentInstitutionModalTitle').textContent = id ? 'Edit Payment Institution' : 'Add Payment Institution';
-  const p = id ? paymentInstitutions.find(x => x.id === id) : null;
+  const p = id ? paymentInstitutions.find(x => Number(x.id) === Number(id)) : null;
+  if (id && !p) { toast('Payment institution not found','error'); return; }
   document.getElementById('pi-code').value = p?.institutionCode || '';
   document.getElementById('pi-code').disabled = Boolean(p);
   document.getElementById('pi-related-code').value = p?.relatedInstitutionCode || '';
@@ -5811,7 +5980,7 @@ function openPaymentInstitutionModal(id) {
   new bootstrap.Modal(document.getElementById('paymentInstitutionModal')).show();
 }
 
-function savePaymentInstitution() {
+async function savePaymentInstitution() {
   const institutionCode = document.getElementById('pi-code').value.trim().toUpperCase();
   const relatedInstitutionCode = document.getElementById('pi-related-code').value.trim().toUpperCase();
   const sort = Number(document.getElementById('pi-sort').value);
@@ -5827,30 +5996,28 @@ function savePaymentInstitution() {
   if (!Number.isInteger(sort) || sort < 0) { toast('Sort must be a non-negative integer','error'); return; }
   if (!/^\d{1,11}$/.test(ibftImd)) { toast('IBFT IMD must contain 1 to 11 digits','error'); return; }
   if (directoryStatus === 'EXCLUDED') isCustomerSelectable = false;
-  const now = new Date().toISOString().slice(0,16).replace('T',' ');
   const data = { institutionCode, relatedInstitutionCode, partnerName, displayName, institutionType, ibftImd, directoryStatus, isCustomerSelectable, logoUrl, sort };
-  if (editingPaymentInstitutionId) { Object.assign(paymentInstitutions.find(x => x.id === editingPaymentInstitutionId), data, { updatedAt:now }); toast('Payment institution updated'); }
-  else { paymentInstitutions.push({ id:nextPaymentInstitutionId++, ...data, createdAt:now, updatedAt:now }); toast('Payment institution created'); }
+  try { await saveConfigToDatabase('paymentInstitution',editingPaymentInstitutionId?'update':'create',editingPaymentInstitutionId,data); }
+  catch (error) { toast(error.message,'error'); return; }
   bootstrap.Modal.getInstance(document.getElementById('paymentInstitutionModal')).hide();
-  renderPaymentInstitutions();
+  await loadTestDatabaseData(true);
+  toast(editingPaymentInstitutionId ? 'Payment institution updated' : 'Payment institution created');
 }
 
-function togglePaymentInstitutionStatus(id) {
-  const institution = paymentInstitutions.find(x => x.id === id); if (!institution) return;
-  institution.directoryStatus = institution.directoryStatus === 'ENABLED' ? 'EXCLUDED' : 'ENABLED';
-  if (institution.directoryStatus === 'EXCLUDED') institution.isCustomerSelectable = false;
-  institution.updatedAt = new Date().toISOString().slice(0,16).replace('T',' ');
-  toast(`${institution.directoryStatus === 'ENABLED' ? 'Institution enabled' : 'Institution excluded'}: ${institution.displayName}`);
-  renderPaymentInstitutions();
+async function togglePaymentInstitutionStatus(id) {
+  const institution = paymentInstitutions.find(x => Number(x.id) === Number(id)); if (!institution) return;
+  try { await saveConfigToDatabase('paymentInstitution','toggle',id); await loadTestDatabaseData(true); }
+  catch (error) { toast(error.message,'error'); return; }
+  toast(`${institution.directoryStatus === 'ENABLED' ? 'Institution excluded' : 'Institution enabled'}: ${institution.displayName}`);
 }
 
 // ============================================================
 // LOAN PRODUCTS
 // ============================================================
 let loanProducts = [
-  { id:1, productName:'15-day 2-installment Cash Loan', status:1, currency:'PKR', minLoanAmount:2000, maxLoanAmount:30000, amountStep:1000, minInstallmentCount:2, maxInstallmentCount:2, periodDays:15, dailyInterestRate:0.006750, dailyServiceRate:0.000750, overdueRate:0.020000, coolingOffHours:24, coolingOffFeeFree:1, earlyRepayEnabled:1, earlyRepayOpenDays:3, earlySettlementEnabled:1, partialRepayEnabled:1, minPartialRepayAmount:500, repayAllocationRule:'OVERDUE_FEE_FIRST', roundingRule:'DOWN', userType:'ALL', riskLevel:'NORMAL', sortNo:10, remark:'Main cash loan product', createdAt:'2024-01-01 09:00', updatedAt:'2024-06-01 10:20' },
-  { id:2, productName:'15-day Flexible Installment Loan', status:1, currency:'PKR', minLoanAmount:5000, maxLoanAmount:100000, amountStep:1000, minInstallmentCount:2, maxInstallmentCount:6, periodDays:15, dailyInterestRate:0.005500, dailyServiceRate:0.001000, overdueRate:0.020000, coolingOffHours:24, coolingOffFeeFree:1, earlyRepayEnabled:1, earlyRepayOpenDays:3, earlySettlementEnabled:1, partialRepayEnabled:1, minPartialRepayAmount:null, repayAllocationRule:'OVERDUE_FEE_FIRST', roundingRule:'DOWN', userType:'OLD', riskLevel:'LOW', sortNo:20, remark:'For returning low-risk customers', createdAt:'2024-04-15 11:00', updatedAt:'2024-06-03 16:45' },
-  { id:3, productName:'New Customer Trial Loan', status:0, currency:'PKR', minLoanAmount:2000, maxLoanAmount:10000, amountStep:1000, minInstallmentCount:1, maxInstallmentCount:2, periodDays:15, dailyInterestRate:0.006750, dailyServiceRate:0.000750, overdueRate:0.020000, coolingOffHours:24, coolingOffFeeFree:1, earlyRepayEnabled:1, earlyRepayOpenDays:3, earlySettlementEnabled:1, partialRepayEnabled:0, minPartialRepayAmount:null, repayAllocationRule:'OVERDUE_FEE_FIRST', roundingRule:'DOWN', userType:'NEW', riskLevel:'NORMAL', sortNo:30, remark:'Pilot product', createdAt:'2024-06-01 10:00', updatedAt:'2024-06-01 10:00' },
+  { id:1, productName:'15-day 2-installment Cash Loan', status:10, currency:'PKR', minLoanAmount:2000, maxLoanAmount:30000, amountStep:1000, minInstallmentCount:2, maxInstallmentCount:2, periodDays:15, dailyInterestRate:0.006750, dailyServiceRate:0.000750, overdueRate:0.020000, coolingOffHours:24, coolingOffFeeFree:1, earlyRepayEnabled:1, earlyRepayOpenDays:3, earlySettlementEnabled:1, partialRepayEnabled:1, minPartialRepayAmount:500, repayAllocationRule:'{}', roundingRule:'DOWN', userType:'', riskLevel:'NORMAL', sortNo:10, remark:'Main cash loan product', createdAt:'2024-01-01 09:00', updatedAt:'2024-06-01 10:20' },
+  { id:2, productName:'15-day Flexible Installment Loan', status:10, currency:'PKR', minLoanAmount:5000, maxLoanAmount:100000, amountStep:1000, minInstallmentCount:2, maxInstallmentCount:6, periodDays:15, dailyInterestRate:0.005500, dailyServiceRate:0.001000, overdueRate:0.020000, coolingOffHours:24, coolingOffFeeFree:1, earlyRepayEnabled:1, earlyRepayOpenDays:3, earlySettlementEnabled:1, partialRepayEnabled:1, minPartialRepayAmount:null, repayAllocationRule:'{}', roundingRule:'DOWN', userType:'OLD', riskLevel:'LOW', sortNo:20, remark:'For returning low-risk customers', createdAt:'2024-04-15 11:00', updatedAt:'2024-06-03 16:45' },
+  { id:3, productName:'New Customer Trial Loan', status:-10, currency:'PKR', minLoanAmount:2000, maxLoanAmount:10000, amountStep:1000, minInstallmentCount:1, maxInstallmentCount:2, periodDays:15, dailyInterestRate:0.006750, dailyServiceRate:0.000750, overdueRate:0.020000, coolingOffHours:24, coolingOffFeeFree:1, earlyRepayEnabled:1, earlyRepayOpenDays:3, earlySettlementEnabled:1, partialRepayEnabled:0, minPartialRepayAmount:null, repayAllocationRule:'{}', roundingRule:'DOWN', userType:'NEW', riskLevel:'NORMAL', sortNo:30, remark:'Pilot product', createdAt:'2024-06-01 10:00', updatedAt:'2024-06-01 10:00' },
 ];
 let nextLoanProductId = 4, editingLoanProductId = null;
 
@@ -5889,35 +6056,40 @@ function renderLoanProducts() {
 function setLoanProductField(id, value) { document.getElementById(id).value = value == null ? '' : value; }
 
 function openLoanProductModal(id) {
-  editingLoanProductId = id || null;
+  editingLoanProductId = id == null ? null : Number(id);
   document.getElementById('loanProductModalTitle').textContent = id ? 'Edit Loan Product' : 'Add Loan Product';
-  const p = id ? loanProducts.find(x => x.id === id) : null;
-  const values = p || { productName:'', status:1, currency:'PKR', minLoanAmount:'', maxLoanAmount:'', amountStep:1000, minInstallmentCount:1, maxInstallmentCount:1, periodDays:'', dailyInterestRate:0, dailyServiceRate:0, overdueRate:0, coolingOffHours:24, coolingOffFeeFree:1, earlyRepayEnabled:1, earlyRepayOpenDays:3, earlySettlementEnabled:1, partialRepayEnabled:1, minPartialRepayAmount:'', repayAllocationRule:'OVERDUE_FEE_FIRST', roundingRule:'DOWN', userType:'ALL', riskLevel:'', sortNo:0, remark:'' };
+  const p = id ? loanProducts.find(x => Number(x.id) === Number(id)) : null;
+  if (id && !p) { toast('Product record not found','error'); return; }
+  const values = p || { productName:'', status:10, currency:'PKR', minLoanAmount:'', maxLoanAmount:'', amountStep:1000, minInstallmentCount:1, maxInstallmentCount:1, periodDays:'', dailyInterestRate:0, dailyServiceRate:0, overdueRate:0, coolingOffHours:24, coolingOffFeeFree:1, earlyRepayEnabled:1, earlyRepayOpenDays:3, earlySettlementEnabled:1, partialRepayEnabled:1, minPartialRepayAmount:'', repayAllocationRule:'{}', roundingRule:'DOWN', userType:'', riskLevel:'', sortNo:0, remark:'' };
   const fields = {'lp-name':'productName','lp-currency':'currency','lp-user-type':'userType','lp-risk':'riskLevel','lp-sort':'sortNo','lp-status':'status','lp-remark':'remark','lp-min-amount':'minLoanAmount','lp-max-amount-input':'maxLoanAmount','lp-amount-step':'amountStep','lp-period-days':'periodDays','lp-min-installments':'minInstallmentCount','lp-max-installments':'maxInstallmentCount','lp-interest-rate':'dailyInterestRate','lp-service-rate':'dailyServiceRate','lp-overdue-rate':'overdueRate','lp-cooling-hours':'coolingOffHours','lp-cooling-free':'coolingOffFeeFree','lp-early-repay':'earlyRepayEnabled','lp-early-open-days':'earlyRepayOpenDays','lp-early-settlement':'earlySettlementEnabled','lp-partial-repay':'partialRepayEnabled','lp-min-partial':'minPartialRepayAmount','lp-allocation-rule':'repayAllocationRule','lp-rounding-rule':'roundingRule'};
   Object.entries(fields).forEach(([field, key]) => setLoanProductField(field, values[key]));
   new bootstrap.Modal(document.getElementById('loanProductModal')).show();
 }
 
-function saveLoanProduct() {
+async function saveLoanProduct() {
   const value = id => document.getElementById(id).value.trim();
   const number = id => Number(value(id));
   const nullableNumber = id => value(id) === '' ? null : Number(value(id));
-  const data = { productName:value('lp-name'), currency:value('lp-currency').toUpperCase(), userType:value('lp-user-type'), riskLevel:value('lp-risk'), sortNo:number('lp-sort'), status:number('lp-status'), remark:value('lp-remark'), minLoanAmount:number('lp-min-amount'), maxLoanAmount:number('lp-max-amount-input'), amountStep:number('lp-amount-step'), minInstallmentCount:number('lp-min-installments'), maxInstallmentCount:number('lp-max-installments'), periodDays:number('lp-period-days'), dailyInterestRate:number('lp-interest-rate'), dailyServiceRate:number('lp-service-rate'), overdueRate:number('lp-overdue-rate'), coolingOffHours:number('lp-cooling-hours'), coolingOffFeeFree:number('lp-cooling-free'), earlyRepayEnabled:number('lp-early-repay'), earlyRepayOpenDays:number('lp-early-open-days'), earlySettlementEnabled:number('lp-early-settlement'), partialRepayEnabled:number('lp-partial-repay'), minPartialRepayAmount:nullableNumber('lp-min-partial'), repayAllocationRule:value('lp-allocation-rule'), roundingRule:value('lp-rounding-rule') };
+  let allocationRule;
+  try { allocationRule = JSON.stringify(JSON.parse(value('lp-allocation-rule') || '{}')); }
+  catch (_) { toast('Repayment allocation rule must be valid JSON','error'); return; }
+  const data = { productName:value('lp-name'), currency:value('lp-currency').toUpperCase(), userType:value('lp-user-type'), riskLevel:value('lp-risk'), sortNo:number('lp-sort'), status:number('lp-status'), remark:value('lp-remark'), minLoanAmount:number('lp-min-amount'), maxLoanAmount:number('lp-max-amount-input'), amountStep:number('lp-amount-step'), minInstallmentCount:number('lp-min-installments'), maxInstallmentCount:number('lp-max-installments'), periodDays:number('lp-period-days'), dailyInterestRate:number('lp-interest-rate'), dailyServiceRate:number('lp-service-rate'), overdueRate:number('lp-overdue-rate'), coolingOffHours:number('lp-cooling-hours'), coolingOffFeeFree:number('lp-cooling-free'), earlyRepayEnabled:number('lp-early-repay'), earlyRepayOpenDays:number('lp-early-open-days'), earlySettlementEnabled:number('lp-early-settlement'), partialRepayEnabled:number('lp-partial-repay'), minPartialRepayAmount:nullableNumber('lp-min-partial'), repayAllocationRule:allocationRule, roundingRule:value('lp-rounding-rule') };
   const requiredNumbers = ['minLoanAmount','maxLoanAmount','amountStep','minInstallmentCount','maxInstallmentCount','periodDays','dailyInterestRate','dailyServiceRate','overdueRate','coolingOffHours','earlyRepayOpenDays'];
   if (!data.productName || !data.currency || requiredNumbers.some(k => !Number.isFinite(data[k])) || data.amountStep <= 0 || data.periodDays <= 0) { toast('Please fill all required product fields','error'); return; }
   if (data.minLoanAmount >= data.maxLoanAmount) { toast('Minimum loan amount must be less than maximum loan amount','error'); return; }
   if (data.minInstallmentCount > data.maxInstallmentCount) { toast('Minimum installments cannot exceed maximum installments','error'); return; }
-  const now = new Date().toISOString().slice(0,16).replace('T',' ');
-  if (editingLoanProductId) { Object.assign(loanProducts.find(x => x.id === editingLoanProductId), data, { updatedAt:now }); toast('Product updated'); }
-  else { loanProducts.push({ id:nextLoanProductId++, ...data, createdAt:now, updatedAt:now }); toast('Product created'); }
+  try { await saveConfigToDatabase('loanProduct',editingLoanProductId?'update':'create',editingLoanProductId,data); }
+  catch (error) { toast(error.message,'error'); return; }
   bootstrap.Modal.getInstance(document.getElementById('loanProductModal')).hide();
-  renderLoanProducts();
+  await loadTestDatabaseData(true);
+  toast(editingLoanProductId ? 'Product updated' : 'Product created');
 }
 
-function toggleLoanProduct(id) {
-  const product = loanProducts.find(x => x.id === id); if (!product) return;
-  product.status = product.status===10 ? -10 : 10; product.updatedAt = new Date().toISOString().slice(0,16).replace('T',' ');
-  toast(`${product.status===10 ? 'Product enabled' : 'Product disabled'}: ${product.productName}`); renderLoanProducts();
+async function toggleLoanProduct(id) {
+  const product = loanProducts.find(x => Number(x.id) === Number(id)); if (!product) return;
+  try { await saveConfigToDatabase('loanProduct','toggle',id); await loadTestDatabaseData(true); }
+  catch (error) { toast(error.message,'error'); return; }
+  toast(`${product.status===10 ? 'Product disabled' : 'Product enabled'}: ${product.productName}`);
 }
 
 // ============================================================
@@ -5970,10 +6142,11 @@ function renderAmountRules() {
 }
 
 function openAmountRuleModal(id) {
-  editingRuleId = id || null;
+  editingRuleId = id == null ? null : Number(id);
   document.getElementById('ruleModalTitle').textContent = id ? 'Edit Amount Term Rule' : 'Add Amount Term Rule';
   if (id) {
-    const r = amountRules.find(x=>x.id===id);
+    const r = amountRules.find(x=>Number(x.id)===Number(id));
+    if (!r) { toast('Amount term rule not found','error'); return; }
     document.getElementById('ar-product').value = r.productId;
     document.getElementById('ar-min').value = r.minAmount;
     document.getElementById('ar-max').value = r.maxAmount;
@@ -5988,43 +6161,42 @@ function openAmountRuleModal(id) {
   new bootstrap.Modal(document.getElementById('amountRuleModal')).show();
 }
 
-function saveAmountRule() {
-  const min = +document.getElementById('ar-min').value;
-  const max = +document.getElementById('ar-max').value;
-  const terms = document.getElementById('ar-terms').value.trim();
-  const def = +document.getElementById('ar-default').value;
-  const productId = +document.getElementById('ar-product').value;
-  if (!productId || !min || !max || !terms || !def) { toast('Please fill all required fields', 'error'); return; }
+async function saveAmountRule() {
+  const minValue = document.getElementById('ar-min').value.trim();
+  const maxValue = document.getElementById('ar-max').value.trim();
+  const min = Number(minValue);
+  const max = Number(maxValue);
+  const terms = document.getElementById('ar-terms').value.split(',').map(x=>x.trim()).filter(Boolean).join(',');
+  const defValue = document.getElementById('ar-default').value.trim();
+  const def = Number(defValue);
+  const productId = Number(document.getElementById('ar-product').value);
+  if (!productId || minValue==='' || maxValue==='' || !terms || defValue==='' || !Number.isFinite(min) || !Number.isFinite(max) || !Number.isFinite(def)) { toast('Please fill all required fields', 'error'); return; }
+  if (min < 0 || max < 0) { toast('Loan amount cannot be negative', 'error'); return; }
   if (min >= max) { toast('Min amount must be less than Max amount', 'error'); return; }
-  const now = new Date().toISOString().slice(0,16).replace('T',' ');
+  if (!terms.split(',').includes(String(def))) { toast('Default term must be included in available terms', 'error'); return; }
+  const data = { productId, minAmount:min, maxAmount:max, availableTerms:terms, defaultTerm:def, enabled:+document.getElementById('ar-active').value };
   if (editingRuleId) {
-    const r = amountRules.find(x=>x.id===editingRuleId);
-    Object.assign(r, { productId, minAmount:min, maxAmount:max, availableTerms:terms, defaultTerm:def,
-      enabled:+document.getElementById('ar-active').value, updatedAt:now });
-    toast('Rule updated');
-  } else {
-    amountRules.push({ id:nextRuleId++, productId, minAmount:min, maxAmount:max, availableTerms:terms, defaultTerm:def,
-      enabled:+document.getElementById('ar-active').value,
-      createdAt:now, updatedAt:now });
-    toast('Rule created');
+    const r = amountRules.find(x=>Number(x.id)===Number(editingRuleId));
+    if (!r) { toast('Amount term rule not found','error'); return; }
   }
+  try { await saveConfigToDatabase('termRule',editingRuleId?'update':'create',editingRuleId,data); }
+  catch (error) { toast(error.message,'error'); return; }
   bootstrap.Modal.getInstance(document.getElementById('amountRuleModal')).hide();
-  renderAmountRules();
+  await loadTestDatabaseData(true);
+  toast(editingRuleId ? 'Rule updated' : 'Rule created');
 }
 
-function toggleRule(id) {
-  const r = amountRules.find(x=>x.id===id);
-  r.enabled = r.enabled ? 0 : 1;
-  r.updatedAt = new Date().toISOString().slice(0,16).replace('T',' ');
-  toast(`Rule ${r.enabled ? 'activated' : 'deactivated'}`);
-  renderAmountRules();
+async function toggleRule(id) {
+  const r = amountRules.find(x=>Number(x.id)===Number(id)); if (!r) return;
+  try { await saveConfigToDatabase('termRule','toggle',id); await loadTestDatabaseData(true); }
+  catch (error) { toast(error.message,'error'); return; }
+  toast(`Rule ${r.enabled ? 'deactivated' : 'activated'}`);
 }
 
 function deleteRule(id) {
-  showConfirm('Delete this amount term rule?', () => {
-    amountRules = amountRules.filter(x=>x.id!==id);
-    toast('Rule deleted');
-    renderAmountRules();
+  showConfirm('Delete this amount term rule?', async () => {
+    try { await saveConfigToDatabase('termRule','delete',id); await loadTestDatabaseData(true); toast('Rule deleted'); }
+    catch (error) { toast(error.message,'error'); }
   });
 }
 
@@ -6183,58 +6355,73 @@ const repaymentAllocations = {
     { id:1, repaymentNo:'RP20240601001', voucherNo:'LN2024060405', billNo:'LB2024060405001', userId:1005, termSeq:1, allocatedAmount:7400, allocatedOverdueFee:0, allocatedInterest:1350, allocatedServiceFee:50, allocatedPrincipal:6000, isDel:0, createTime:'2024-05-16 10:05', modifyTime:'2024-05-16 10:05' },
   ],
 };
+const repaymentLogs = {};
+
+function maskRepaymentAccount(value) {
+  const text=String(value||'');
+  if(!text||text==='--') return '--';
+  return text.length<=4?'••••':`${text.slice(0,2)}••••${text.slice(-4)}`;
+}
 
 // Add Repayment Detail button and modal
 function viewRepaymentDetail(no) {
   const r = repayments.find(x => x.repaymentNo === no);
+  if(!r){toast('Repayment record not found','error');return;}
   const allocs = repaymentAllocations[no] || [];
+  const logs = repaymentLogs[no] || [];
 
   const summaryHtml = `<div class="row g-3">
     <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
       <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">REPAYMENT ORDER</div>
       ${detailRow('Repayment No.',r.repaymentNo)}${detailRow('Voucher No.',r.voucherNo)}
       ${detailRow('Customer ID','#'+r.userId)}
-      ${detailRow('Remaining Amount',repaymentMoney(r.remainingAmount))}${detailRow('Payable Amount',repaymentMoney(r.payableAmount))}${detailRow('Repaid Amount',repaymentMoney(r.repaidAmount))}
+      ${detailRow('Repay Loan ID',r.repayLoanId||'-')}${detailRow('Current Repay Date',r.currentRepayDate)}
+      ${detailRow('Original Payable',repaymentMoney(r.originalPayableAmount))}${detailRow('Waiver Amount',repaymentMoney(r.waiverAmount))}${detailRow('Final Payable',repaymentMoney(r.payableAmount))}${detailRow('Repaid Amount',repaymentMoney(r.repaidAmount))}
+      ${detailRow('Principal',repaymentMoney(r.payablePrincipal))}${detailRow('Interest',repaymentMoney(r.payableInterest))}${detailRow('Service Fee',repaymentMoney(r.payableServiceFee))}${detailRow('Overdue Fee',repaymentMoney(r.payableOverdueFee))}
       ${detailRow('Coupon',r.couponNo?`${r.couponNo} / ${fmtMoney(r.couponAmount)}`:'-')}
       ${detailRow('Repayment Type',r.repaymentType)}${detailRow('Partible',r.partible?'Yes':'No')}${detailRow('State',r.state+' / '+repaymentStateLabel(r.state))}
-      ${detailRow('Created At',r.createTime)}${detailRow('Updated At',r.modifyTime)}
+      ${detailRow('Batching Time',r.batchingTime)}${detailRow('Created At',r.createTime)}${detailRow('Updated At',r.modifyTime)}
     </div></div>
     <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
       <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">PAYMENT DETAILS</div>
-      ${detailRow('Payment Institution',r.paymentInstitutionCode)}${detailRow('Payer Name',r.payerName)}${detailRow('Payer Account',r.payerAccount)}${detailRow('Payment Txn No.',r.payTxnNo||'-')}${detailRow('Callback Time',r.callbackTime)}${detailRow('Repay Success Time',r.repaySuccessTime)}${detailRow('Repaid Time',r.repaidTime)}${detailRow('Failure Reason',r.failReason||'-')}${detailRow('Expire Time',r.expireTime)}
+      ${detailRow('Payment Institution',r.paymentInstitutionCode)}${detailRow('Payer Name',r.payerName)}${detailRow('Payer Account',maskRepaymentAccount(r.payerAccount))}${detailRow('Payment Txn No.',r.payTxnNo||'-')}${detailRow('Repaid Time',r.repaidTime)}${detailRow('Expire Time',r.expireTime)}
     </div></div>
   </div>`;
 
-  const feeAllocHtml = allocs.length ? `<table class="table table-hover mb-0" style="font-size:13px;">
-    <thead><tr><th>ID</th><th>Bill No.</th><th>Period</th><th>Principal</th><th>Interest</th><th>Service Fee</th><th>Overdue Fee</th><th>Allocated Amount</th><th>Time</th></tr></thead>
+  const feeAllocHtml = allocs.length ? `<div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12px;min-width:1700px;">
+    <thead><tr><th>ID</th><th>Repay Loan ID</th><th>Voucher No.</th><th>Bill No.</th><th>Customer</th><th>Period</th><th>Payable Total</th><th>Payable Overdue</th><th>Payable Interest</th><th>Payable Service</th><th>Payable Principal</th><th>Allocated Total</th><th>Allocated Overdue</th><th>Allocated Interest</th><th>Allocated Service</th><th>Allocated Principal</th><th>Created</th><th>Updated</th></tr></thead>
     <tbody>${allocs.map(a=>`<tr>
       <td><code style="font-size:11px;">${a.id}</code></td>
+      <td><code style="font-size:11px;">${a.repaymentLoanId||'-'}</code></td>
+      <td><code style="font-size:11px;">${a.voucherNo}</code></td>
       <td><code style="font-size:11px;">${a.billNo}</code></td>
+      <td>#${a.userId}</td>
       <td style="font-size:12.5px;">P${a.termSeq}</td>
-      <td>PKR ${a.allocatedPrincipal.toLocaleString()}</td>
-      <td>PKR ${a.allocatedInterest.toLocaleString()}</td>
-      <td>PKR ${a.allocatedServiceFee.toLocaleString()}</td>
-      <td>PKR ${a.allocatedOverdueFee.toLocaleString()}</td>
-      <td style="font-weight:600;">PKR ${a.allocatedAmount.toLocaleString()}</td>
+      <td>${repaymentMoney(a.payableAmount)}</td><td>${repaymentMoney(a.payableOverdueFee)}</td><td>${repaymentMoney(a.payableInterest)}</td><td>${repaymentMoney(a.payableServiceFee)}</td><td>${repaymentMoney(a.payablePrincipal)}</td>
+      <td style="font-weight:600;">${repaymentMoney(a.allocatedAmount)}</td><td>${repaymentMoney(a.allocatedOverdueFee)}</td><td>${repaymentMoney(a.allocatedInterest)}</td><td>${repaymentMoney(a.allocatedServiceFee)}</td><td>${repaymentMoney(a.allocatedPrincipal)}</td>
       <td style="font-size:12px;color:#94a3b8;">${a.createTime}</td>
+      <td style="font-size:12px;color:#94a3b8;">${a.modifyTime}</td>
     </tr>`).join('')}</tbody>
-  </table>` : '<div class="empty-state"><i class="bi bi-diagram-3"></i>No fee allocation data</div>';
+  </table></div>` : '<div class="empty-state"><i class="bi bi-diagram-3"></i>No fee allocation data</div>';
+
+  const logHtml=logs.length?`<div class="table-scroll"><table class="table table-hover mb-0" style="font-size:12px;min-width:1800px;"><thead><tr><th>ID</th><th>Voucher No.</th><th>Original Payable</th><th>Coupon</th><th>Coupon Used</th><th>Final Payable</th><th>Type</th><th>Partible</th><th>Result</th><th>Institution</th><th>Payer</th><th>Payer Account</th><th>Repaid</th><th>Redeemed</th><th>Callback</th><th>Payment Txn</th><th>Failure Type</th><th>Created</th><th>Updated</th></tr></thead><tbody>${logs.map(log=>`<tr><td><code>${log.id}</code></td><td><code>${log.voucherNo}</code></td><td>${repaymentMoney(log.originalPayableAmount)}</td><td><code>${log.couponNo||'-'}</code></td><td>${repaymentMoney(log.couponUsedAmount)}</td><td>${repaymentMoney(log.finalPayableAmount)}</td><td>${log.repaymentType}</td><td>${log.partible?'Yes':'No'}</td><td>${log.success?'<span class="status-badge badge-active">Success</span>':'<span class="status-badge badge-disabled">Failed</span>'}</td><td>${log.paymentInstitutionCode}</td><td>${log.payerName}</td><td>${maskRepaymentAccount(log.payerAccount)}</td><td style="font-weight:600;">${repaymentMoney(log.repaidAmount)}</td><td>${repaymentMoney(log.redeemedAmount)}</td><td>${log.callbackTime}</td><td><code>${log.payTxnNo||'-'}</code></td><td>${log.failReasonType||'-'}</td><td>${log.createTime}</td><td>${log.modifyTime}</td></tr>`).join('')}</tbody></table></div>`:'<div class="empty-state"><i class="bi bi-clock-history"></i>No repayment log data</div>';
 
   // Use loan detail modal body for repayment
   document.querySelector('#loanDetailModal .modal-title').textContent = 'Repayment Order Detail';
   document.getElementById('loan-detail-body').innerHTML = `
     <ul class="nav nav-tabs mb-3" id="repay-detail-tabs">
       <li class="nav-item"><a class="nav-link active" href="#" onclick="switchRepayDetailTab('summary',this)">Summary</a></li>
-      <li class="nav-item"><a class="nav-link" href="#" onclick="switchRepayDetailTab('fees',this)">Fee Allocation (${allocs.length})</a></li>
+      <li class="nav-item"><a class="nav-link" href="#" onclick="switchRepayDetailTab('fees',this)">Bill Allocation (${allocs.length})</a></li>
+      <li class="nav-item"><a class="nav-link" href="#" onclick="switchRepayDetailTab('logs',this)">Payment Logs (${logs.length})</a></li>
     </ul>
     <div id="rdt-summary">${summaryHtml}</div>
-    <div id="rdt-fees" style="display:none;">${feeAllocHtml}</div>`;
+    <div id="rdt-fees" style="display:none;">${feeAllocHtml}</div><div id="rdt-logs" style="display:none;">${logHtml}</div>`;
   new bootstrap.Modal(document.getElementById('loanDetailModal')).show();
 }
 function switchRepayDetailTab(tab, el) {
   document.querySelectorAll('#repay-detail-tabs .nav-link').forEach(a => a.classList.remove('active'));
   el.classList.add('active');
-  ['summary','fees'].forEach(t => {
+  ['summary','fees','logs'].forEach(t => {
     const el2 = document.getElementById('rdt-'+t);
     if (el2) el2.style.display = t === tab ? '' : 'none';
   });
@@ -7104,6 +7291,13 @@ const dbNumber = value => Number(value || 0);
 const dbDate = value => value ? String(value).replace('T',' ').replace(/\.000Z$/,'') : '-';
 const dbState = (value, labels, fallback='Unknown') => labels[Number(value)] || `${fallback} (${value})`;
 
+async function saveConfigToDatabase(entity,operation,id,data={}) {
+  const response = await fetch('/api/config', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({entity,operation,id,data}) });
+  const result = await response.json().catch(()=>({}));
+  if (!response.ok) throw new Error(result.message || `Database update failed (HTTP ${response.status})`);
+  return result;
+}
+
 // Single source of truth: com.zariya.shared.enums.* (枚举文档.md, 2026-08-17).
 // Business records keep the database value; labels are resolved only at render time.
 const BUSINESS_ENUMS = {
@@ -7262,17 +7456,58 @@ async function loadTestDatabaseData(refreshUi=true) {
       id:b.id, billNo:b.bill_no, loanOrderNo:b.voucher_no, voucherNo:b.voucher_no,
       userId:b.user_id, productId:b.product_id, custName:`Customer #${b.user_id}`,
       installmentNo:b.term_seq, totalInstallments:b.term, periodStart:dbDate(b.start_date), dueDate:dbDate(b.repay_date),
-      payablePrincipal:dbNumber(b.principal), payableInterestFee:dbNumber(b.accrued_interest_fee),
-      payableServiceFee:dbNumber(b.accrued_service_fee), payableOverdueFee:dbNumber(b.accrued_overdue_fee),
-      billAmount:dbNumber(b.accrued_amount), paidAmount:dbNumber(b.paid_amount), remainingAmount:dbNumber(b.remaining_amount),
+      payablePrincipal:dbNumber(b.payable_principal ?? b.principal), payableInterestFee:dbNumber(b.payable_interest_amount ?? b.accrued_interest_fee),
+      payableServiceFee:dbNumber(b.payable_service_fee ?? b.accrued_service_fee), payableOverdueFee:dbNumber(b.payable_overdue_fee ?? b.accrued_overdue_fee),
+      billAmount:dbNumber(b.payable_amount ?? b.accrued_amount), paidAmount:dbNumber(b.paid_amount), remainingAmount:dbNumber(b.remaining_amount),
       paidPrincipal:dbNumber(b.paid_principal), paidInterest:dbNumber(b.paid_interest),
       paidServiceFee:dbNumber(b.paid_service_fee), paidOverdueFee:dbNumber(b.paid_overdue_fee),
-      remainingPrincipal:dbNumber(b.remaining_principal), remainingInterestFee:dbNumber(b.remaining_interest_fee),
+      remainingPrincipal:dbNumber(b.remaining_principal), remainingInterestFee:dbNumber(b.remaining_interest ?? b.remaining_interest_fee),
       remainingServiceFee:dbNumber(b.remaining_service_fee), remainingOverdueFee:dbNumber(b.remaining_overdue_fee),
       overdueDays:b.overdue_days, status:Number(b.state),
       settledType:String(b.settled_type||'NONE').toUpperCase(), settledTime:dbDate(b.settled_time),
       batchingTime:dbDate(b.batching_time)
     }));
+
+    repayments=(data.repaymentOrders||[]).map(r=>({
+      id:r.id, repaymentNo:r.repayment_no, voucherNo:r.voucher_no, userId:r.user_id,
+      repayLoanId:r.repay_loan_id, currentRepayDate:dbDate(r.current_repay_date),
+      originalPayableAmount:dbNumber(r.original_payable_amount), waiverAmount:dbNumber(r.waiver_amount),
+      payablePrincipal:dbNumber(r.payable_principal), payableInterest:dbNumber(r.payable_interest_fee),
+      payableServiceFee:dbNumber(r.payable_service_fee), payableOverdueFee:dbNumber(r.payable_overdue_fee),
+      payableAmount:dbNumber(r.final_payable_amount), remainingAmount:Math.max(0,dbNumber(r.final_payable_amount)-dbNumber(r.repaid_amount)),
+      couponNo:r.coupon_no||'', couponAmount:dbNumber(r.coupon_used_amount),
+      repaymentType:String(r.repayment_type||'').toLowerCase(), partible:Boolean(r.partible), state:Number(r.state),
+      paymentInstitutionCode:r.payment_institution_code||'--', payerName:r.payer_name||'--',
+      payerAccount:r.payer_account||'--', repaidAmount:dbNumber(r.repaid_amount),
+      repaidTime:dbDate(r.repaid_time), payTxnNo:r.pay_txn_no||'', batchingTime:dbDate(r.batching_time),
+      expireTime:dbDate(r.expire_time), isDel:Number(r.is_del||0),
+      createTime:dbDate(r.create_time), modifyTime:dbDate(r.modify_time)
+    }));
+
+    Object.keys(repaymentAllocations).forEach(key=>delete repaymentAllocations[key]);
+    (data.repaymentAllocations||[]).forEach(row=>{
+      const repaymentNo=String(row.repayment_no||'');
+      const rows=repaymentAllocations[repaymentNo]||(repaymentAllocations[repaymentNo]=[]);
+      rows.push({id:row.id,repaymentLoanId:row.repayment_loan_id,repaymentNo,voucherNo:row.voucher_no,
+        billNo:row.bill_no,userId:row.user_id,termSeq:row.term_seq,payableAmount:dbNumber(row.payable_amount),
+        payableOverdueFee:dbNumber(row.payable_overdue_fee),payableInterest:dbNumber(row.payable_interest),
+        payableServiceFee:dbNumber(row.payable_service_fee),payablePrincipal:dbNumber(row.payable_principal),
+        allocatedAmount:dbNumber(row.allocated_amount),allocatedOverdueFee:dbNumber(row.allocated_overdue_fee),
+        allocatedInterest:dbNumber(row.allocated_interest),allocatedServiceFee:dbNumber(row.allocated_service_fee),
+        allocatedPrincipal:dbNumber(row.allocated_principal),createTime:dbDate(row.create_time),modifyTime:dbDate(row.modify_time)});
+    });
+
+    Object.keys(repaymentLogs).forEach(key=>delete repaymentLogs[key]);
+    (data.repaymentLogs||[]).forEach(row=>{
+      const repaymentNo=String(row.repayment_no||'');
+      const rows=repaymentLogs[repaymentNo]||(repaymentLogs[repaymentNo]=[]);
+      rows.push({id:row.id,repaymentNo,voucherNo:row.voucher_no,originalPayableAmount:dbNumber(row.original_payable_amount),
+        couponNo:row.coupon_no||'',couponUsedAmount:dbNumber(row.coupon_used_amount),finalPayableAmount:dbNumber(row.final_payable_amount),
+        repaymentType:row.repayment_type||'--',partible:Boolean(row.partible),success:Boolean(row.success),
+        paymentInstitutionCode:row.payment_institution_code||'--',payerName:row.payer_name||'--',payerAccount:row.payer_account||'--',
+        repaidAmount:dbNumber(row.repaid_amount),redeemedAmount:dbNumber(row.redeemed_amount),callbackTime:dbDate(row.callback_time),
+        payTxnNo:row.pay_txn_no||'',failReasonType:row.fail_reason_type||'',createTime:dbDate(row.create_time),modifyTime:dbDate(row.modify_time)});
+    });
 
     const normalizeCouponType=value=>String(value||'').toLowerCase()==='increaselimit'?'LimitIncrease':String(value||'').toLowerCase()==='repayment'?'Repayment':String(value||'');
     couponTemplates.splice(0,couponTemplates.length,...(data.couponTemplates||[]).map(tpl=>({
@@ -7322,30 +7557,33 @@ async function loadTestDatabaseData(refreshUi=true) {
     }));
 
     paymentInstitutions = data.paymentInstitutions.map(p=>({
-      id:p.id, institutionCode:p.institution_code, relatedInstitutionCode:p.related_institution_code,
+      id:Number(p.id), institutionCode:p.institution_code, relatedInstitutionCode:p.related_institution_code,
       partnerName:p.institution_name, displayName:p.display_name, institutionType:p.institution_type,
       ibftImd:p.ibft_imd||'', directoryStatus:p.enabled?'ENABLED':'EXCLUDED', isCustomerSelectable:Boolean(p.selectable),
       logoUrl:p.logo||'', sort:p.sort, isDel:0, createdAt:dbDate(p.create_time), updatedAt:dbDate(p.modify_time)
     }));
+    nextPaymentInstitutionId = Math.max(0,...paymentInstitutions.map(p=>Number(p.id)||0)) + 1;
 
     loanProducts = data.products.map(p=>({
-      id:p.id, productName:p.product_name, status:p.state===10?1:0, currency:p.currency,
+      id:Number(p.id), productName:p.product_name, status:Number(p.state), currency:p.currency,
       minLoanAmount:dbNumber(p.min_loan_amount), maxLoanAmount:dbNumber(p.max_loan_amount), amountStep:dbNumber(p.amount_step),
       minInstallmentCount:p.min_term, maxInstallmentCount:p.max_term, periodDays:p.period_days,
       dailyInterestRate:dbNumber(p.daily_interest_rate), dailyServiceRate:dbNumber(p.daily_service_rate), overdueRate:dbNumber(p.overdue_rate),
       coolingOffHours:p.cooling_off_hours, coolingOffFeeFree:p.cooling_off_fee_free,
       earlyRepayEnabled:p.enable_early_repay, earlyRepayOpenDays:p.early_repay_open_days,
       earlySettlementEnabled:p.enable_early_settlement, partialRepayEnabled:p.enable_partial_repay,
-      minPartialRepayAmount:dbNumber(p.min_partial_repay_amount), repayAllocationRule:typeof p.repay_allocation_rule==='string'?p.repay_allocation_rule:JSON.stringify(p.repay_allocation_rule||{}),
-      roundingRule:p.rounding_type, userType:p.user_tag||'ALL', riskLevel:p.risk_level||'', sortNo:p.sort_no,
+      minPartialRepayAmount:p.min_partial_repay_amount == null ? null : dbNumber(p.min_partial_repay_amount), repayAllocationRule:typeof p.repay_allocation_rule==='string'?p.repay_allocation_rule:JSON.stringify(p.repay_allocation_rule||{}),
+      roundingRule:p.rounding_type||'', userType:p.user_tag||'', riskLevel:p.risk_level||'', sortNo:p.sort_no,
       remark:p.remark||'', createdAt:dbDate(p.create_time), updatedAt:dbDate(p.modify_time)
     }));
 
     amountRules = data.termRules.map(r=>({
-      id:r.id, productId:r.product_id, minAmount:dbNumber(r.min_loan_amount), maxAmount:dbNumber(r.max_loan_amount),
+      id:Number(r.id), productId:Number(r.product_id), minAmount:dbNumber(r.min_loan_amount), maxAmount:dbNumber(r.max_loan_amount),
       availableTerms:r.available_terms||'', defaultTerm:r.default_term, enabled:Number(r.enabled),
       createdAt:dbDate(r.create_time), updatedAt:dbDate(r.modify_time)
     }));
+    nextLoanProductId = Math.max(0,...loanProducts.map(p=>Number(p.id)||0)) + 1;
+    nextRuleId = Math.max(0,...amountRules.map(r=>Number(r.id)||0)) + 1;
 
     data.creditQuotas.forEach(q=>{
       let customer=customers.find(c=>String(c.id)===String(q.user_id));
