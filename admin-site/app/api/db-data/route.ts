@@ -23,7 +23,6 @@ const TABLE_QUERIES = {
   bills: "SELECT * FROM loan_voucher_bill WHERE is_del = 0 ORDER BY voucher_no,term_seq",
   couponTemplates: "SELECT * FROM loan_coupon_template WHERE is_del = 0 ORDER BY create_time DESC,id DESC",
   couponInstances: "SELECT * FROM loan_coupon_instance WHERE is_del = 0 ORDER BY create_time DESC,id DESC",
-  couponLogs: "SELECT * FROM loan_coupon_log WHERE is_del = 0 ORDER BY create_time DESC,id DESC",
 } as const;
 
 function required(name: string): string {
