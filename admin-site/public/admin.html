@@ -659,18 +659,11 @@
             <input type="text" class="form-control form-control-sm" placeholder="Application No / Customer ID..." style="width:220px;" id="application-search" oninput="filterApplications()">
             <select class="form-select form-select-sm" style="width:160px;" id="application-status-filter" onchange="filterApplications()">
               <option value="">All Status</option>
-              <option value="PendingReview">PendingReview</option>
-              <option value="Approved">Approved</option>
-              <option value="Rejected">Rejected</option>
-              <option value="Disbursing">Disbursing</option>
-              <option value="DisbursementFailed">DisbursementFailed</option>
-              <option value="Disbursed">Disbursed</option>
+              <option value="-10">Rejected</option><option value="-2">Submit Failed</option><option value="-1">Cancelled</option><option value="0">Draft</option><option value="10">Submitted</option><option value="20">Pending Approval</option><option value="30">Approved</option>
             </select>
             <select class="form-select form-select-sm" style="width:140px;" id="application-risk-filter" onchange="filterApplications()">
               <option value="">All Risk Status</option>
-              <option value="Pending">Pending</option>
-              <option value="Approved">Approved</option>
-              <option value="Rejected">Rejected</option>
+              <option value="-10">Rejected</option><option value="0">Uninitiated</option><option value="10">Quick Approved</option><option value="20">Approved</option>
             </select>
           </div>
         </div>
@@ -691,11 +684,7 @@
             <input type="text" class="form-control form-control-sm" placeholder="Voucher / Application / Customer ID..." style="width:240px;" id="loan-search" oninput="filterLoans()">
             <select class="form-select form-select-sm" style="width:160px;" id="loan-status-filter" onchange="filterLoans()">
               <option value="" data-i18n="filter.allStatus">All Status</option>
-              <option value="CoolingOff">CoolingOff</option>
-              <option value="Active">Active</option>
-              <option value="Overdue">Overdue</option>
-              <option value="Paid">Paid</option>
-              <option value="WrittenOff">WrittenOff</option>
+              <option value="10">Active</option><option value="50">Settled</option><option value="60">Early Settled</option><option value="100">Written Off</option>
             </select>
           </div>
         </div>
@@ -720,10 +709,7 @@
             <input type="text" class="form-control form-control-sm" data-i18n-ph="filter.searchRepayPh" placeholder="Repayment No / Loan No..." style="width:200px;" id="repay-search" oninput="filterRepayments()">
             <select class="form-select form-select-sm" style="width:130px;" id="repay-status-filter" onchange="filterRepayments()">
               <option value="" data-i18n="filter.allStatus">All Status</option>
-              <option value="Success">Success</option>
-              <option value="Pending">Pending</option>
-              <option value="Failed">Failed</option>
-              <option value="Cancelled">Cancelled</option>
+              <option value="-10">Expired</option><option value="-1">Invalid</option><option value="0">Pending</option><option value="10">Partially Repaid</option><option value="20">Repaid</option>
             </select>
             <select class="form-select form-select-sm" style="width:130px;" id="repay-channel-filter" onchange="filterRepayments()">
               <option value="" data-i18n="filter.allChannels">All Channels</option>
@@ -761,12 +747,7 @@
             <input type="text" class="form-control form-control-sm" data-i18n-ph="filter.searchCouponPh" placeholder="Coupon No / Mobile..." style="width:190px;" id="coupon-search" oninput="filterCoupons()">
             <select class="form-select form-select-sm" style="width:130px;" id="coupon-status-filter" onchange="filterCoupons()">
               <option value="" data-i18n="filter.allStatus">All Status</option>
-              <option value="Unused">Unused</option>
-              <option value="Locked">Locked</option>
-              <option value="Used">Used</option>
-              <option value="Returned">Returned</option>
-              <option value="Expired">Expired</option>
-              <option value="Invalid">Invalid</option>
+              <option value="-10">Expired</option><option value="-1">Invalid</option><option value="0">Not Effective</option><option value="10">Unused</option><option value="15">Locked</option><option value="20">Used</option>
             </select>
             <button class="btn btn-primary btn-sm" id="coupon-issue-btn" style="border-radius:8px;" onclick="openIssueCouponModal()">
               <i class="bi bi-plus-lg me-1"></i><span data-i18n="btn.issueCoupon">Issue Coupon</span>
@@ -834,14 +815,7 @@
             <input type="text" class="form-control form-control-sm" placeholder="Order No / Customer..." style="width:200px;" id="bill-search" oninput="filterBills()">
             <select class="form-select form-select-sm" style="width:160px;" id="bill-status-filter" onchange="filterBills()">
               <option value="">All Status</option>
-              <option value="CoolingOff">CoolingOff</option>
-              <option value="Active">Active</option>
-              <option value="PartiallyPaid">PartiallyPaid</option>
-              <option value="Overdue">Overdue</option>
-              <option value="OverduePartiallyPaid">OverduePartiallyPaid</option>
-              <option value="Paid">Paid</option>
-              <option value="earlysettled">EarlySettled</option>
-              <option value="WrittenOff">WrittenOff</option>
+              <option value="10">Unbilled</option><option value="20">Pending Repayment</option><option value="30">Overdue</option><option value="40">Repaid</option><option value="50">Early Settled</option><option value="100">Written Off</option>
             </select>
             <select class="form-select form-select-sm" style="width:110px;" id="bill-overdue-filter" onchange="filterBills()">
               <option value="">All</option>
@@ -867,10 +841,7 @@
             <input type="text" class="form-control form-control-sm" placeholder="Disbursement / Application / Customer ID / RRN..." style="width:300px;" id="disb-search" oninput="filterDisbursements()">
             <select class="form-select form-select-sm" style="width:140px;" id="disb-status-filter" onchange="filterDisbursements()">
               <option value="">All Status</option>
-              <option value="Success">Success</option>
-              <option value="Pending">Pending</option>
-              <option value="Failed">Failed</option>
-              <option value="Cancelled">Cancelled</option>
+              <option value="-20">Failed</option><option value="-1">Cancelled</option><option value="0">Pending</option><option value="10">Disbursing</option><option value="20">Disbursed</option>
             </select>
             <select class="form-select form-select-sm" style="width:130px;" id="disb-channel-filter" onchange="filterDisbursements()">
               <option value="">All Channels</option>
@@ -1039,8 +1010,8 @@
             <input id="lp-search" class="form-control form-control-sm" style="width:220px;" data-i18n-ph="filter.searchProductPh" placeholder="Search product name..." oninput="renderLoanProducts()">
             <select id="lp-status-filter" class="form-select form-select-sm" style="width:140px;" onchange="renderLoanProducts()">
               <option value="" data-i18n="filter.allStatus">All Status</option>
-              <option value="1" data-i18n="filter.active">Active</option>
-              <option value="0" data-i18n="filter.disabled">Disabled</option>
+              <option value="10" data-i18n="filter.active">Enabled</option>
+              <option value="-10" data-i18n="filter.disabled">Disabled</option>
             </select>
             <select id="lp-user-filter" class="form-select form-select-sm" style="width:150px;" onchange="renderLoanProducts()">
               <option value="">All User Types</option><option value="ALL">ALL</option><option value="NEW">NEW</option><option value="OLD">OLD</option>
@@ -1774,7 +1745,7 @@
             <div class="col-md-2"><label class="form-label" style="font-size:13px;font-weight:600;">User Type</label><select class="form-select form-select-sm" id="lp-user-type"><option value="ALL">ALL</option><option value="NEW">NEW</option><option value="OLD">OLD</option></select></div>
             <div class="col-md-2"><label class="form-label" style="font-size:13px;font-weight:600;">Risk Level</label><select class="form-select form-select-sm" id="lp-risk"><option value="">Not Limited</option><option value="NORMAL">NORMAL</option><option value="HIGH">HIGH</option><option value="LOW">LOW</option></select></div>
             <div class="col-md-1"><label class="form-label" style="font-size:13px;font-weight:600;">Sort <span class="text-danger">*</span></label><input type="number" class="form-control form-control-sm" id="lp-sort" min="0" step="1" value="0"></div>
-            <div class="col-md-2"><label class="form-label" style="font-size:13px;font-weight:600;">Status <span class="text-danger">*</span></label><select class="form-select form-select-sm" id="lp-status"><option value="1">Active</option><option value="0">Disabled</option></select></div>
+            <div class="col-md-2"><label class="form-label" style="font-size:13px;font-weight:600;">Status <span class="text-danger">*</span></label><select class="form-select form-select-sm" id="lp-status"><option value="10">Enabled</option><option value="-10">Disabled</option></select></div>
             <div class="col-md-10"><label class="form-label" style="font-size:13px;font-weight:600;">Remark</label><input class="form-control form-control-sm" id="lp-remark" maxlength="500" placeholder="Product description for back-office reference"></div>
           </div>
         </div>
@@ -3743,7 +3714,7 @@ function renderCustomers(list) {
         <div class="${c.name?'masked-value':''}" style="font-weight:600;">${c.name?maskName(c.name):(currentLang==='zh'?'未完成身份认证':'Identity not completed')}</div>
         <div class="masked-value" style="font-size:11.5px;color:#94a3b8;">${maskMobile(c.mobile)}</div>
       </td>
-      <td>${c.creditStatus === 'Approved' ? `<span class="status-badge badge-active">${c.creditStatus}</span>` : c.creditStatus === 'Pending' ? `<span class="status-badge badge-pending">${c.creditStatus}</span>` : c.creditStatus === 'Rejected' ? `<span class="status-badge badge-disabled">${c.creditStatus}</span>` : `<span class="status-badge" style="background:#f1f5f9;color:#64748b;">${c.creditStatus}</span>`}</td>
+      <td>${enumBadge('creditState',c.creditStatus)}</td>
       <td><span class="role-tag" style="font-size:11px;">${currentLang==='zh'?localizePhrase(step):step}</span><div style="font-size:11px;color:#94a3b8;margin-top:3px;">Step ${credit?.step||'-'} · ${credit?.reviewType||'-'}</div></td>
       <td>
         <div style="font-size:13px;">Limit: <strong>${fmtMoney(c.totalCredit)}</strong></div>
@@ -3756,7 +3727,7 @@ function renderCustomers(list) {
       <td>
         <div class="d-flex gap-1">
           <button class="btn btn-sm btn-outline-primary action-btn" onclick="viewCustDetail('${c.id}')"><i class="bi bi-eye"></i> ${t('btn.detail')}</button>
-          ${c.creditStatus === 'Pending' ? `<button class="btn btn-sm btn-outline-success action-btn" onclick="openCustomerCreditReview('${c.id}',true)">${currentLang==='zh'?'通过':'Approve'}</button><button class="btn btn-sm btn-outline-danger action-btn" onclick="openCustomerCreditReview('${c.id}',false)">${currentLang==='zh'?'拒绝':'Reject'}</button>` : ''}
+          ${c.creditStatus === 10 ? `<button class="btn btn-sm btn-outline-success action-btn" onclick="openCustomerCreditReview('${c.id}',true)">${currentLang==='zh'?'通过':'Approve'}</button><button class="btn btn-sm btn-outline-danger action-btn" onclick="openCustomerCreditReview('${c.id}',false)">${currentLang==='zh'?'拒绝':'Reject'}</button>` : ''}
           <button class="btn btn-sm ${c.blacklist ? 'btn-outline-success' : 'btn-outline-danger'} action-btn" onclick="toggleBlacklist('${c.id}')">
             ${c.blacklist ? `<i class="bi bi-unlock"></i> ${t('btn.unblock')}` : `<i class="bi bi-slash-circle"></i> ${t('btn.blacklist')}`}
           </button>
@@ -3855,8 +3826,7 @@ loanApplications.forEach(a=>Object.assign(a,{
 }));
 
 function applicationBadge(s) {
-  const colors={PendingReview:'background:#fef3c7;color:#92400e;',Approved:'background:#dbeafe;color:#1d4ed8;',Rejected:'background:#fee2e2;color:#b91c1c;',Disbursing:'background:#e0e7ff;color:#4338ca;',DisbursementFailed:'background:#fee2e2;color:#b91c1c;',Disbursed:'background:#dcfce7;color:#15803d;'};
-  return `<span class="status-badge" style="${colors[s]||'background:#f1f5f9;color:#64748b;'}">${s}</span>`;
+  return enumBadge('loanApplyState',s);
 }
 
 function renderApplicationTermPlan(termInfos) {
@@ -3893,11 +3863,11 @@ function renderApplications(list) {
     <td>${a.couponNo?`<code style="font-size:11px;">${a.couponNo}</code><div style="font-size:11px;color:#16a34a;">+ PKR ${a.couponAmount.toLocaleString()}</div>`:'-'}</td>
     <td>${a.term} × ${a.periodDays}d</td>
     <td>${a.quickReview?'<span class="status-badge" style="background:#dcfce7;color:#15803d;">Yes</span>':'No'}</td>
-    <td>${applicationBadge(a.riskState)}</td>
+    <td>${enumBadge('loanRiskState',a.riskState)}</td>
     <td>${applicationBadge(a.state)}</td>
-    <td>${a.disbursementNo?`<code style="font-size:11px;">${a.disbursementNo}</code><div>${applicationBadge(a.disbursementState)}</div>`:'-'}</td>
+    <td>${a.disbursementNo?`<code style="font-size:11px;">${a.disbursementNo}</code><div>${enumBadge('disbursementState',a.disbursementState)}</div>`:'-'}</td>
     <td style="font-size:12px;color:#94a3b8;">${a.createdAt}</td>
-    <td><div class="d-flex gap-1 flex-wrap"><button class="btn btn-sm btn-outline-primary action-btn" onclick="viewApplicationDetail('${a.applyNo}')"><i class="bi bi-eye"></i> ${t('btn.detail')}</button>${a.state==='PendingReview'?`<button class="btn btn-sm btn-outline-success action-btn" onclick="reviewApplication('${a.applyNo}',true)">Approve</button><button class="btn btn-sm btn-outline-danger action-btn" onclick="reviewApplication('${a.applyNo}',false)">Reject</button>`:''}</div></td>
+    <td><div class="d-flex gap-1 flex-wrap"><button class="btn btn-sm btn-outline-primary action-btn" onclick="viewApplicationDetail('${a.applyNo}')"><i class="bi bi-eye"></i> ${t('btn.detail')}</button>${a.state===20?`<button class="btn btn-sm btn-outline-success action-btn" onclick="reviewApplication('${a.applyNo}',true)">Approve</button><button class="btn btn-sm btn-outline-danger action-btn" onclick="reviewApplication('${a.applyNo}',false)">Reject</button>`:''}</div></td>
   </tr>`).join('');
   document.getElementById('application-table-container').innerHTML=`<div class="table-scroll"><table class="table table-hover mb-0"><thead><tr><th>Application No.</th><th>Customer ID</th><th>Product</th><th>Amount</th><th>Limit Coupon</th><th>Term</th><th>Quick Review</th><th>Risk</th><th>Status</th><th>Disbursement</th><th>Applied At</th><th>Actions</th></tr></thead><tbody>${rows||'<tr><td colspan="12"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody></table></div>`;
 }
@@ -3906,7 +3876,7 @@ function filterApplications() {
   const q=document.getElementById('application-search').value.toLowerCase();
   const s=document.getElementById('application-status-filter').value;
   const r=document.getElementById('application-risk-filter').value;
-  renderApplications(loanApplications.filter(a=>(!q||a.applyNo.toLowerCase().includes(q)||String(a.userId).includes(q))&&(!s||a.state===s)&&(!r||a.riskState===r)));
+  renderApplications(loanApplications.filter(a=>(!q||a.applyNo.toLowerCase().includes(q)||String(a.userId).includes(q))&&(!s||String(a.state)===s)&&(!r||String(a.riskState)===r)));
 }
 
 function viewApplicationDetail(no) {
@@ -3915,7 +3885,7 @@ function viewApplicationDetail(no) {
   document.querySelector('#loanDetailModal .modal-title').textContent=currentLang==='zh'?'借款申请详情':'Loan Application Detail';
   document.getElementById('loan-detail-body').innerHTML=`<div class="row g-3">
     <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">APPLICATION</div>${detailRow('Record ID','#'+a.id)}${detailRow('Application No.',a.applyNo)}${detailRow('Customer ID','#'+a.userId)}${detailRow('Product ID','#'+a.productId)}${detailRow('Loan Amount',fmtMoney(a.loanAmount))}${detailRow('Limit Coupon',a.couponNo?`${a.couponNo} / ${fmtMoney(a.couponAmount)}`:'-')}${detailRow('Term',a.term+' × '+a.periodDays+' days')}${detailRow('Total Days',a.totalDays)}${detailRow('Created At',a.createdAt)}${detailRow('Updated At',a.modifyTime)}</div></div>
-    <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">REVIEW & DISBURSEMENT</div>${detailRow('Application Status',a.state)}${detailRow('Pre-check Status',a.preState)}${detailRow('Risk Status',a.riskState)}${detailRow('Quick Review',a.quickReview?'Yes':'No')}${detailRow('Review Time',a.reviewTime||'-')}${detailRow('Reject Reason',a.rejectReason||'-')}${detailRow('Payment Account ID',a.paymentAccountId?'#'+a.paymentAccountId:'-')}${detailRow('Disbursement Status',a.disbursementState)}${detailRow('Disbursement No.',a.disbursementNo||'-')}${detailRow('Disbursement Time',a.disbursementTime||'-')}</div></div>
+    <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">REVIEW & DISBURSEMENT</div>${detailRow('Application Status',enumText('loanApplyState',a.state))}${detailRow('Pre-check Status',a.preState===0?(currentLang==='zh'?'验证通过':'Passed'):`Unknown (${a.preState})`)}${detailRow('Risk Status',enumText('loanRiskState',a.riskState))}${detailRow('Quick Review',a.quickReview?'Yes':'No')}${detailRow('Review Time',a.reviewTime||'-')}${detailRow('Reject Reason',a.rejectReason||'-')}${detailRow('Payment Account ID',a.paymentAccountId?'#'+a.paymentAccountId:'-')}${detailRow('Disbursement Status',enumText('disbursementState',a.disbursementState))}${detailRow('Disbursement No.',a.disbursementNo||'-')}${detailRow('Disbursement Time',a.disbursementTime||'-')}</div></div>
     <div class="col-12"><div style="background:#f8fafc;border-radius:8px;padding:16px;"><div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">AMOUNT SNAPSHOT</div><div class="row"><div class="col-md-6">${detailRow('Daily Interest Rate',a.dailyInterestRate)}${detailRow('Daily Service Rate',a.dailyServiceRate)}${detailRow('Daily Overdue Rate',a.dailyOverdueRate)}${detailRow('Total Interest',fmtMoney(a.totalInterest))}${detailRow('Total Service Fee',fmtMoney(a.totalServiceFee))}</div><div class="col-md-6">${detailRow('Theoretical Repayable',fmtMoney(a.totalRepayAmount))}${detailRow('Rounding Waiver',fmtMoney(a.roundingWaiver))}${detailRow('Display Payable',fmtMoney(a.displayPayable))}${detailRow('Schedule',a.startDate+' ~ '+a.endDate)}</div></div></div></div>
   </div>`;
   new bootstrap.Modal(document.getElementById('loanDetailModal')).show();
@@ -3923,13 +3893,13 @@ function viewApplicationDetail(no) {
 
 function reviewApplication(no,approved) {
   const a=loanApplications.find(x=>x.applyNo===no);
-  if (!a || a.state!=='PendingReview') return;
+  if (!a || a.state!==20) return;
   if (!approved) {
     openApplicationRejection(no);
     return;
   }
-  a.riskState='Approved';
-  a.state='Approved';
+  a.riskState=20;
+  a.state=30;
   a.reviewTime=new Date().toISOString().slice(0,16).replace('T',' ');
   a.rejectReason='';
   filterApplications();
@@ -3940,7 +3910,7 @@ let currentRejectedApplicationNo=null;
 
 function openApplicationRejection(no) {
   const a=loanApplications.find(x=>x.applyNo===no);
-  if (!a || a.state!=='PendingReview') return;
+  if (!a || a.state!==20) return;
   currentRejectedApplicationNo=no;
   const zh=currentLang==='zh';
   document.getElementById('application-reject-title').textContent=zh?'拒绝借款申请':'Reject Loan Application';
@@ -3962,8 +3932,8 @@ function submitApplicationRejection() {
   const reason=reasonInput.value.trim();
   reasonInput.classList.toggle('is-invalid',!reason);
   if (!a || !reason) return;
-  a.riskState='Rejected';
-  a.state='Rejected';
+  a.riskState=-10;
+  a.state=-10;
   a.reviewTime=new Date().toISOString().slice(0,16).replace('T',' ');
   a.rejectReason=reason;
   bootstrap.Modal.getInstance(document.getElementById('applicationRejectModal'))?.hide();
@@ -3976,7 +3946,7 @@ let currentCustomerCreditReview = null;
 
 function openCustomerCreditReview(customerId, approved) {
   const customer=customers.find(c=>String(c.id)===String(customerId));
-  if (!customer || customer.creditStatus!=='Pending') return;
+  if (!customer || customer.creditStatus!==10) return;
   currentCustomerCreditReview={customerId,approved};
   const zh=currentLang==='zh';
   document.getElementById('customer-credit-review-title').textContent=approved?(zh?'通过客户授信':'Approve Customer Credit'):(zh?'拒绝客户授信':'Reject Customer Credit');
@@ -4014,14 +3984,14 @@ function submitCustomerCreditReview() {
   document.getElementById('customer-credit-review-validation').textContent=currentLang==='zh'?(approved?'请选择授信金额并填写审核备注。':'请填写拒绝原因。'):'Please complete all required fields.';
   if (!amountValid||!reason) return;
 
-  customer.creditStatus=approved?'Approved':'Rejected';
+  customer.creditStatus=approved?30:-10;
   customer.creditReviewTime=new Date().toISOString().slice(0,16).replace('T',' ');
   customer.creditReviewRemark=reason;
   customer.creditRejectReason=approved?'':reason;
   const creditRecord=latestCustomerCreditRecord(customerId);
   if (creditRecord) {
-    creditRecord.state=approved?2:4;
-    creditRecord.step=4;
+    creditRecord.state=approved?30:-10;
+    creditRecord.step=5000;
     creditRecord.reviewState=approved?1:2;
     creditRecord.reviewTime=customer.creditReviewTime;
     creditRecord.rejectReason=approved?'':reason;
@@ -4107,8 +4077,7 @@ const loanStatusColor = {
   Rejected:'badge-disabled', WrittenOff:'background:#f1f5f9;color:#64748b;'
 };
 function loanBadge(s) {
-  const c = loanStatusColor[s] || '';
-  return `<span class="status-badge" style="${c.includes(':')?c:''}" ${!c.includes(':') ? `class="status-badge ${c}"` : ''}>${s}</span>`;
+  return enumBadge('voucherState',s);
 }
 
 function formatBorrowCount(count) {
@@ -4134,7 +4103,7 @@ function renderLoans(list) {
         <td>${loanBadge(l.status)}</td>
         <td style="color:#16a34a;">PKR ${l.paidAmount.toLocaleString()}</td>
         <td style="color:${l.remainingAmount>0?'#dc2626':'#16a34a'};">PKR ${l.remainingAmount.toLocaleString()}</td>
-        <td>${l.settledType}</td>
+        <td>${({none:'Not Settled',normal:'Normal Settlement',coolingOff:'Cooling-off Settlement',early:'Early Settlement'})[l.settledType]||l.settledType}</td>
         <td>
           <div class="d-flex gap-1 flex-wrap">
             <button class="btn btn-sm btn-outline-primary action-btn" onclick="viewLoanDetail('${l.no}')"><i class="bi bi-eye"></i> ${t('btn.detail')}</button>
@@ -4197,7 +4166,7 @@ function filterLoans() {
   const st = document.getElementById('loan-status-filter').value;
   renderLoans(loanVouchers.filter(l =>
     (!q || l.no.toLowerCase().includes(q) || l.applyNo.toLowerCase().includes(q) || String(l.userId).includes(q)) &&
-    (!st || l.status === st)
+    (!st || String(l.status) === st)
   ));
 }
 
@@ -4377,7 +4346,7 @@ function repayBadge(s) {
   return `<span class="status-badge ${c.includes(':')?'':c}" style="${c.includes(':')?c:''}">${localizePhrase(s)}</span>`;
 }
 function repaymentStateLabel(state) {
-  return ({0:'Pending',1:'Success',2:'Failed',3:'Cancelled'})[state] || 'Pending';
+  return enumText('repaymentOrderState',state);
 }
 function repaymentLoanStatusBadge(s) {
   const styles = { Paid:'badge-active', Pending:'badge-pending', Overdue:'badge-disabled', PartiallyPaid:'background:#eff6ff;color:#2563eb;' };
@@ -4424,7 +4393,7 @@ function filterRepayments() {
   const ch = document.getElementById('repay-channel-filter').value;
   renderRepayments(repayments.filter(r =>
     (!q || r.repaymentNo.toLowerCase().includes(q) || r.voucherNo.toLowerCase().includes(q) || r.payTxnNo.toLowerCase().includes(q) || String(r.userId).includes(q)) &&
-    (!st || repaymentStateLabel(r.state) === st) && (!ch || r.paymentInstitutionCode === ch)
+    (!st || String(r.state) === st) && (!ch || r.paymentInstitutionCode === ch)
   ));
 }
 
@@ -4545,7 +4514,7 @@ function switchCouponTab(tab, el) {
   searchInput.placeholder=tab==='template'?(currentLang==='zh'?'模板名称 / 模板 ID...':'Template name / ID...'):(currentLang==='zh'?'券号 / 客户 ID...':'Coupon No / Customer ID...');
   statusFilter.innerHTML=tab==='template'
     ? `<option value="">${currentLang==='zh'?'全部券类型':'All Coupon Types'}</option><option value="LimitIncrease">${currentLang==='zh'?'提额券':'Limit Increase'}</option><option value="Repayment">${currentLang==='zh'?'还款优惠券':'Repayment'}</option>`
-    : `<option value="">${currentLang==='zh'?'全部状态':'All Status'}</option><option value="Unused">Unused</option><option value="Locked">Locked</option><option value="Used">Used</option><option value="Returned">Returned</option><option value="Expired">Expired</option><option value="Invalid">Invalid</option>`;
+    : `<option value="">${currentLang==='zh'?'全部状态':'All Status'}</option><option value="-10">Expired</option><option value="-1">Invalid</option><option value="0">Not Effective</option><option value="10">Unused</option><option value="15">Locked</option><option value="20">Used</option>`;
   const issueBtn = document.getElementById('coupon-issue-btn');
   const createTemplateBtn = document.getElementById('coupon-template-create-btn');
   if (issueBtn) issueBtn.style.display = ['usage','template'].includes(tab) ? 'none' : '';
@@ -4555,8 +4524,7 @@ function switchCouponTab(tab, el) {
 
 const couponStatusColor = { Active:'badge-active', Inactive:'badge-disabled', Unused:'badge-active', Locked:'badge-pending', Used:'background:#e0e7ff;color:#4338ca;', Returned:'background:#fff7ed;color:#c2410c;', Expired:'badge-disabled', Invalid:'background:#f1f5f9;color:#64748b;' };
 function couponBadge(s) {
-  const c = couponStatusColor[s] || '';
-  return `<span class="status-badge" style="${c.includes(':')?c:''}" ${!c.includes(':') ? `class="status-badge ${c}"` : ''}>${s}</span>`;
+  return enumBadge('couponState',s);
 }
 
 function renderCoupons(list) {
@@ -4570,26 +4538,25 @@ function renderCoupons(list) {
   const isLimit = activeCouponTab === 'limit';
   const rows = data.map(c => `
     <tr>
+      <td><code>#${c.id}</code></td>
       <td><code style="font-size:12px;">${c.no}</code></td>
       <td><div style="font-size:12px;font-weight:600;">${c.couponName}</div><code style="font-size:10px;">#${c.templateId}</code></td>
       <td><strong>#${c.userId}</strong></td>
-      <td style="font-weight:600;color:${isLimit?'#16a34a':'inherit'};">PKR ${(isLimit ? c.increaseAmount : c.amount).toLocaleString()}</td>
-      ${!isLimit ? `<td style="font-size:13px;">PKR ${c.minRepay.toLocaleString()}</td>` : ''}
-      ${!isLimit ? `<td><span class="role-tag" style="font-size:11px;">Principal</span></td><td><span class="role-tag" style="font-size:11px;">Full only</span></td><td><code style="font-size:11px;">${c.boundLoan||findOpenVoucherForCoupon(c.userId)||'-'}</code></td><td style="font-size:12px;">&gt; 50%</td>` : ''}
+      <td style="font-weight:600;color:${isLimit?'#16a34a':'inherit'};">${fmtMoney(c.couponAmount)}</td>
+      <td><code style="font-size:11px;">${c.productId == null ? '--' : '#'+c.productId}</code></td>
       <td>${couponBadge(c.status)}</td>
       <td style="font-size:12px;color:#94a3b8;">${c.effectiveStart} ~ ${c.effectiveEnd}</td>
-      ${isLimit ? `<td><code style="font-size:11px;">${c.linkedOrder||'-'}</code></td>` : ''}
-      <td style="font-size:12px;color:#94a3b8;">${c.usedTime !== '-' ? c.usedTime : '-'}</td>
-      <td>
-        ${c.status === 'Unused' ? `<button class="btn btn-sm btn-outline-danger action-btn" onclick="invalidateCoupon('${c.no}')"><i class="bi bi-x-circle"></i> ${t('btn.void')}</button>` : ''}
-      </td>
+      <td><code style="font-size:11px;">${c.bizNo||'--'}</code></td>
+      <td style="font-size:12px;color:#94a3b8;">${c.lockedTime||'--'}</td>
+      <td style="font-size:12px;color:#94a3b8;">${c.usedTime||'--'}</td>
+      <td style="font-size:12px;color:#94a3b8;">${c.createTime||'--'}</td>
+      <td style="font-size:12px;color:#94a3b8;">${c.modifyTime||'--'}</td>
+      <td>${c.isDel}</td>
     </tr>`).join('');
-  const extraCols = !isLimit ? `<th>Deducts</th><th>Repayment</th><th>Bound Voucher</th><th>Min Actual Payment / Principal</th>` : '';
-  const linkedOrderCol = isLimit ? `<th>${currentLang==='zh'?'申请单号':'Application No.'}</th>` : '';
   document.getElementById('coupon-table-container').innerHTML = `
-    <div class="table-scroll"><table class="table table-hover mb-0">
-      <thead><tr><th>${t('th.couponNo')}</th><th>Template</th><th>Customer ID</th><th>${isLimit?(currentLang==='zh'?'提额金额 (PKR)':'Increase (PKR)'):t('th.amountPKR')}</th>${!isLimit?`<th>${t('th.minRepay')}</th>`:''}${extraCols}<th>${t('th.status')}</th><th>${t('th.effectivePeriod')}</th>${linkedOrderCol}<th>${t('th.usedTime')}</th><th>${t('th.actions')}</th></tr></thead>
-      <tbody>${rows || `<tr><td colspan="${isLimit?9:13}"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>`}</tbody>
+    <div class="table-scroll"><table class="table table-hover mb-0" style="min-width:1500px;">
+      <thead><tr><th>ID</th><th>Coupon No.</th><th>Template / ID</th><th>Customer ID</th><th>Coupon Amount</th><th>Product ID</th><th>State</th><th>Effect / Expire Time</th><th>Biz No.</th><th>Locked Time</th><th>Used Time</th><th>Create Time</th><th>Modify Time</th><th>Is Del</th></tr></thead>
+      <tbody>${rows || `<tr><td colspan="14"><div class="empty-state"><i class="bi bi-database"></i>No coupon instances in database</div></td></tr>`}</tbody>
     </table></div>`;
 }
 
@@ -4597,11 +4564,11 @@ function renderCouponTemplates(list) {
   const data=list||couponTemplates;
   document.getElementById('coupon-count-label').textContent=t('count.showing')(data.length,data.length);
   document.getElementById('coupon-table-container').innerHTML=`<div class="table-scroll"><table class="table table-hover mb-0" style="min-width:1250px;">
-    <thead><tr><th>ID</th><th>Coupon Name</th><th>Coupon Type</th><th>Coupon Amount</th><th>Product ID</th><th>Effective Time</th><th>Expire Time</th><th>Issued Count</th><th>Rule Config</th><th>Created At</th><th>Updated At</th><th>Actions</th></tr></thead>
+    <thead><tr><th>ID</th><th>Coupon Name</th><th>Coupon Type</th><th>Coupon Amount</th><th>Product ID</th><th>Effect Time</th><th>Expire Time</th><th>Issued Count</th><th>Rule Config</th><th>Is Del</th><th>Create Time</th><th>Modify Time</th><th>Actions</th></tr></thead>
     <tbody>${data.map(tpl=>`<tr>
-      <td><code>#${tpl.id}</code></td><td style="font-weight:600;">${tpl.couponName}</td><td><span class="role-tag">${tpl.couponType}</span></td><td>${fmtMoney(tpl.couponAmount)}</td><td><code>#${tpl.productId}</code></td><td>${tpl.effectTime}</td><td>${tpl.expireTime}</td><td>${tpl.issuedCount}</td><td><code style="font-size:11px;">${JSON.stringify(tpl.ruleConfig)}</code></td><td>${tpl.createTime||tpl.effectTime}</td><td>${tpl.modifyTime||tpl.effectTime}</td>
+      <td><code>#${tpl.id}</code></td><td style="font-weight:600;">${tpl.couponName}</td><td><span class="role-tag">${tpl.couponType}</span></td><td>${fmtMoney(tpl.couponAmount)}</td><td><code>${tpl.productId == null ? '--' : '#'+tpl.productId}</code></td><td>${tpl.effectTime}</td><td>${tpl.expireTime}</td><td>${tpl.issuedCount}</td><td><code style="font-size:11px;">${JSON.stringify(tpl.ruleConfig)}</code></td><td>${tpl.isDel}</td><td>${tpl.createTime}</td><td>${tpl.modifyTime}</td>
       <td><button class="btn btn-sm btn-outline-primary action-btn" onclick="openCouponTemplateModal(${tpl.id})"><i class="bi bi-pencil"></i> Edit</button></td>
-    </tr>`).join('')}</tbody></table></div>`;
+    </tr>`).join('')||'<tr><td colspan="13"><div class="empty-state"><i class="bi bi-database"></i>No coupon templates in database</div></td></tr>'}</tbody></table></div>`;
 }
 
 function updateCouponTemplateRuleFields(){
@@ -4657,7 +4624,7 @@ function filterCoupons() {
   if (activeCouponTab === 'usage') {
     renderCouponUsage(couponUsageRecords.filter(u =>
       (!q || u.couponNo.toLowerCase().includes(q) || String(u.userId).includes(q) || u.bizNo.toLowerCase().includes(q)) &&
-      (!st || u.status === st)
+      (!st || String(u.status) === st)
     ));
     return;
   }
@@ -4670,7 +4637,7 @@ function filterCoupons() {
   const src = activeCouponTab === 'limit' ? limitIncreaseCoupons : repayCoupons;
   renderCoupons(src.filter(c =>
     (!q || c.no.toLowerCase().includes(q) || String(c.userId).includes(q) || c.couponName.toLowerCase().includes(q)) &&
-    (!st || c.status === st)
+    (!st || String(c.status) === st)
   ));
 }
 
@@ -4678,7 +4645,7 @@ function invalidateCoupon(no) {
   showConfirm(`Void coupon ${no}? It will be marked as Invalid.`, () => {
     const src = activeCouponTab === 'limit' ? limitIncreaseCoupons : repayCoupons;
     const c = src.find(x=>x.no===no);
-    if (c) c.status = 'Invalid';
+    if (c) c.status = -1;
     toast('Coupon voided');
     filterCoupons();
   });
@@ -4780,7 +4747,7 @@ function validateCouponImportRows(){
     else seen.add(r.customerId);
     if(!customer)errors.push('Customer not found');
     if(customer?.blacklist)errors.push('Blacklisted');
-    if(type==='limit'&&customer&&customer.creditStatus!=='Approved')errors.push('Credit not approved');
+    if(type==='limit'&&customer&&customer.creditStatus!==30)errors.push('Credit not approved');
     const boundLoan=type==='repay'&&customer?findOpenVoucherForCoupon(r.customerId):'';
     if(type==='repay'&&customer&&!boundLoan)errors.push('No open voucher');
     Object.assign(r,{customer,boundLoan,errors,valid:errors.length===0});
@@ -4828,7 +4795,7 @@ function saveIssueCoupon() {
   const issued=[];
   couponImportRows.forEach(r=>{
     const no=(type==='limit'?'LI':'RC')+new Date().getFullYear()+String(nextCouponId++).padStart(4,'0');
-    const common={no,templateId,couponName:template?.couponName||'',productId:template?.productId||null,userId:r.customerId,custName:r.customer.name,mobile:r.customer.mobile,status:'Unused',effectiveStart:start.replace('T',' '),effectiveEnd:end.replace('T',' '),usedTime:'-'};
+    const common={no,templateId,couponName:template?.couponName||'',productId:template?.productId||null,userId:r.customerId,custName:r.customer.name,mobile:r.customer.mobile,status:10,effectiveStart:start.replace('T',' '),effectiveEnd:end.replace('T',' '),usedTime:'-'};
     if(type==='limit')limitIncreaseCoupons.unshift({...common,increaseAmount:amount,linkedOrder:''});
     else repayCoupons.unshift({...common,amount,minRepay:threshold,deductType:'Principal',repayType:'Full only',boundLoan:r.boundLoan,minPaymentRatio:'>50%'});
     issued.push(no);
@@ -4979,9 +4946,7 @@ function renderBills(list) {
   const data = list || loanBills;
   document.getElementById('bill-count-label').textContent = t('count.showing')(data.length, data.length);
   const rows = data.map(b => {
-    const sc = {CoolingOff:'background:#e0e7ff;color:#4338ca;',Active:'badge-active',PartiallyPaid:'badge-pending',Overdue:'badge-disabled',OverduePartiallyPaid:'background:#fee2e2;color:#dc2626;',Paid:'background:#dcfce7;color:#15803d;',earlysettled:'background:#f0fdf4;color:#166534;',WrittenOff:'background:#f1f5f9;color:#64748b;'};
-    const c=sc[b.status]||'';
-    const badge=`<span class="status-badge" style="${c.includes(':')?c:''}" ${!c.includes(':') ? `class="status-badge ${c}"` : ''}>${b.status}</span>`;
+    const badge=enumBadge('voucherBillState',b.status);
     return `<tr>
       <td><code style="font-size:12px;">${b.billNo}</code></td>
       <td><code style="font-size:11.5px;color:#94a3b8;">${b.voucherNo}</code></td>
@@ -5006,7 +4971,7 @@ function filterBills() {
   const q=document.getElementById('bill-search').value.toLowerCase();
   const s=document.getElementById('bill-status-filter').value;
   const o=document.getElementById('bill-overdue-filter').value;
-  renderBills(loanBills.filter(b=>(!q||b.billNo.toLowerCase().includes(q)||b.voucherNo.toLowerCase().includes(q)||String(b.userId).includes(q))&&(!s||b.status===s)&&(o===''||String(b.overdueDays>0?1:0)===o)));
+  renderBills(loanBills.filter(b=>(!q||b.billNo.toLowerCase().includes(q)||b.voucherNo.toLowerCase().includes(q)||String(b.userId).includes(q))&&(!s||String(b.status)===s)&&(o===''||String(b.overdueDays>0?1:0)===o)));
 }
 // viewBillDetail: replaced by tabbed version below
 
@@ -5039,9 +5004,7 @@ disbursements.forEach(d=>{
 function renderDisbursements(list) {
   const data=list||disbursements;
   document.getElementById('disb-count-label').textContent=t('count.showing')(data.length,data.length);
-  const sc={Success:'badge-active',Pending:'badge-pending',Failed:'badge-disabled',Cancelled:'background:#f1f5f9;color:#64748b;'};
   const rows=data.map(d=>{
-    const c=sc[d.status]||'';
     return `<tr>
       <td><code style="font-size:12px;">${d.disbNo}</code></td>
       <td><code style="font-size:11.5px;color:#94a3b8;">${d.applyNo}</code></td>
@@ -5051,7 +5014,7 @@ function renderDisbursements(list) {
       <td><span class="role-tag" style="font-size:11px;">${d.channel}</span></td>
       <td style="font-size:11.5px;color:#64748b;font-family:monospace;">${d.paymentAccountId==="-"?'-':'#'+d.paymentAccountId}</td>
       <td><code style="font-size:11px;">${d.channelTxnNo||'-'}</code></td>
-      <td><span class="status-badge ${c.includes(':')?'':c}" style="${c.includes(':')?c:''}">${d.status}</span></td>
+      <td>${enumBadge('disbursementState',d.status)}</td>
       <td style="font-size:12px;color:#94a3b8;">${d.successTime||'-'}</td>
       <td style="font-size:12px;color:#94a3b8;">${d.callbackTime||'-'}</td>
       <td style="font-size:11.5px;color:${d.failReason?'#dc2626':'#94a3b8'};max-width:180px;">${d.failReason||'-'}</td>
@@ -5068,7 +5031,7 @@ function filterDisbursements() {
   const q=document.getElementById('disb-search').value.toLowerCase();
   const s=document.getElementById('disb-status-filter').value;
   const c=document.getElementById('disb-channel-filter').value;
-  renderDisbursements(disbursements.filter(d=>(!q||d.disbNo.toLowerCase().includes(q)||d.applyNo.toLowerCase().includes(q)||d.channelTxnNo.toLowerCase().includes(q)||String(d.userId).includes(q))&&(!s||d.status===s)&&(!c||d.channel===c)));
+  renderDisbursements(disbursements.filter(d=>(!q||d.disbNo.toLowerCase().includes(q)||d.applyNo.toLowerCase().includes(q)||d.channelTxnNo.toLowerCase().includes(q)||String(d.userId).includes(q))&&(!s||String(d.status)===s)&&(!c||d.channel===c)));
 }
 
 // ============================================================
@@ -5505,26 +5468,29 @@ couponUsageRecords.forEach(u=>{
 function renderCouponUsage(list) {
   const data=list||couponUsageRecords;
   document.getElementById('coupon-count-label').textContent=t('count.showing')(data.length,data.length);
-  const sc={Used:'background:#e0e7ff;color:#4338ca;',Locked:'badge-pending',Expired:'badge-disabled',Returned:'background:#f1f5f9;color:#64748b;'};
   const rows=data.map(u=>{
-    const c=sc[u.status]||'';
     return `<tr>
+      <td><code>#${u.id}</code></td>
       <td><code style="font-size:12px;">${u.couponNo}</code></td>
+      <td><code>#${u.templateId}</code></td>
       <td><span class="role-tag" style="${u.couponType==='LimitIncreaseCoupon'?'background:#eef1fd;color:#3a5bdf;':'background:#fce7f3;color:#9d174d;'} font-size:11px;">${currentLang==='zh'?(u.couponType==='LimitIncreaseCoupon'?'提额券':'还款优惠券'):u.couponType}</span></td>
       <td><strong>#${u.userId}</strong></td>
       <td><code style="font-size:11px;">${u.bizNo||'-'}</code></td>
-      <td>PKR ${u.lockedAmount.toLocaleString()}</td>
-      <td style="font-weight:600;">PKR ${u.usedAmount.toLocaleString()}</td>
-      <td><span class="role-tag" style="font-size:11px;">${u.deductType}</span></td>
-      <td><span class="status-badge" style="${c.includes(':')?c:''}" ${!c.includes(':') ? `class="status-badge ${c}"` : ''}>${u.status}</span></td>
-      <td style="font-size:12px;color:#94a3b8;">${u.usedTime||u.returnedTime||'-'}</td>
-      <td style="font-size:12px;color:#94a3b8;max-width:120px;">${u.returnReason||'-'}</td>
+      <td style="font-weight:600;">${fmtMoney(u.usedAmount)}</td>
+      <td><span class="role-tag" style="font-size:11px;">${u.deductType||'--'}</span></td>
+      <td>${enumBadge('couponState',u.status)}</td>
+      <td style="font-size:12px;color:#94a3b8;">${u.usedTime||'--'}</td>
+      <td style="font-size:12px;color:#94a3b8;">${u.returnedTime||'--'}</td>
+      <td style="font-size:12px;color:#94a3b8;max-width:160px;">${u.returnReason||'--'}</td>
+      <td style="font-size:12px;color:#94a3b8;">${u.createTime||'--'}</td>
+      <td style="font-size:12px;color:#94a3b8;">${u.modifyTime||'--'}</td>
+      <td>${u.isDel}</td>
     </tr>`;
   }).join('');
   document.getElementById('coupon-table-container').innerHTML=`
     <div class="table-scroll"><table class="table table-hover mb-0">
-      <thead><tr><th>${t('th.couponNo2')}</th><th>${t('th.couponType2')}</th><th>Customer ID</th><th>Business No.</th><th>${t('th.lockedAmt')}</th><th>${t('th.usedAmt')}</th><th>${t('th.deductType2')}</th><th>${t('th.status')}</th><th>${t('th.usedTime')}</th><th>Return Reason</th></tr></thead>
-      <tbody>${rows||'<tr><td colspan="10"><div class="empty-state"><i class="bi bi-search"></i>No results</div></td></tr>'}</tbody>
+      <thead><tr><th>ID</th><th>Coupon No.</th><th>Template ID</th><th>Coupon Type</th><th>Customer ID</th><th>Biz No.</th><th>Used Amount</th><th>Deduct Fee Type</th><th>State</th><th>Used Time</th><th>Back Time</th><th>Back Reason Type</th><th>Create Time</th><th>Modify Time</th><th>Is Del</th></tr></thead>
+      <tbody>${rows||'<tr><td colspan="15"><div class="empty-state"><i class="bi bi-database"></i>No coupon logs in database</div></td></tr>'}</tbody>
     </table></div>`;
 }
 
@@ -5622,12 +5588,7 @@ Object.entries(creditChangeLogs).forEach(([userId,logs])=>logs.forEach(log=>Obje
 Object.values(creditChangeLogs).flat().forEach(log=>{ delete log.beforeTotal; delete log.afterTotal; delete log.createdAt; });
 
 function walletStatusBadge(status) {
-  const styles = {
-    VERIFIED:'background:#dcfce7;color:#16a34a;',
-    FAILED:'background:#fee2e2;color:#dc2626;',
-    UNKNOWN:'background:#f1f5f9;color:#64748b;'
-  };
-  return `<span class="status-badge" style="${styles[status] || styles.UNKNOWN}">${status}</span>`;
+  return enumBadge('paymentAccountState',status);
 }
 
 let currentCustDetailId=null;
@@ -5653,7 +5614,7 @@ function renderCustDetailTab(tab,id) {
       </div></div>
       <div class="col-md-6"><div style="background:#f8fafc;border-radius:8px;padding:16px;">
         <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:12px;">CREDIT OVERVIEW</div>
-        ${detailRow('Credit Status',c.creditStatus)}${detailRow('Total Limit',fmtMoney(c.totalCredit))}${detailRow('Used',fmtMoney(c.usedCredit))}${detailRow('Locked',fmtMoney(c.lockedCredit||0))}${detailRow('Available',fmtMoney(Math.max(0,c.totalCredit-c.usedCredit-(c.lockedCredit||0))))}${detailRow('Review Time',c.creditReviewTime||'-')}${detailRow(c.creditStatus==='Rejected'?'Reject Reason':'Review Remark',c.creditReviewRemark||'-')}${detailRow('Blacklisted',c.blacklist?'🚫 Yes':'✅ No')}
+        ${detailRow('Credit Status',enumText('creditState',c.creditStatus))}${detailRow('Total Limit',fmtMoney(c.totalCredit))}${detailRow('Used',fmtMoney(c.usedCredit))}${detailRow('Locked',fmtMoney(c.lockedCredit||0))}${detailRow('Available',fmtMoney(Math.max(0,c.totalCredit-c.usedCredit-(c.lockedCredit||0))))}${detailRow('Review Time',c.creditReviewTime||'-')}${detailRow(c.creditStatus===-10?'Reject Reason':'Review Remark',c.creditReviewRemark||'-')}${detailRow('Blacklisted',c.blacklist?'🚫 Yes':'✅ No')}
       </div></div></div>`;
   } else if(tab==='credit') {
     const bi = (typeof creditBasicInfo !== 'undefined') ? creditBasicInfo[id] : null;
@@ -5674,7 +5635,7 @@ function renderCustDetailTab(tab,id) {
         <div class="col-md-3">${detailRow('Work Years',bi.workYears)}</div>
         <div class="col-md-6">${detailRow('Email',bi.email)}</div>
         <div class="col-md-6">${detailRow('Salary Day',bi.salaryDay)}</div>
-        <div class="col-12">${detailRow('Existing Other Loans',bi.existingLoan?'Yes — PKR '+bi.totalLoanAmount:'No')}</div>
+        <div class="col-12">${detailRow('Existing Other Loans',bi.existingLoan?`Yes — ${String(bi.totalLoanAmount).includes('PKR')?bi.totalLoanAmount:'PKR '+bi.totalLoanAmount}`:'No')}</div>
       </div></div>` : '';
     body.innerHTML = biHtml;
   } else if(tab==='identity') {
@@ -5740,8 +5701,8 @@ function renderCustDetailTab(tab,id) {
     const logs=creditChangeLogs[id];
     const recs = (typeof userCreditRecords !== 'undefined' && userCreditRecords[id]) ? userCreditRecords[id] : [];
     const reviewStateLabel = {0:'Not Started',1:'Approved',2:'Rejected',3:'Manual Review'};
-    const creditStateLabel = {0:'Incomplete',1:'Pending Review',2:'Approved',3:'Expired',4:'Rejected',5:'Blacklisted'};
-    const creditStepLabel = {1:'Basic Info',2:'Contact Info',3:'Identity Info',4:'Credit Quota',5:'Wallet Binding'};
+    const creditStateLabel = Object.fromEntries(Object.keys(BUSINESS_ENUMS.creditState).map(v=>[v,enumText('creditState',v)]));
+    const creditStepLabel = Object.fromEntries(Object.keys(BUSINESS_ENUMS.creditStep).map(v=>[v,enumText('creditStep',v)]));
     const latest = recs[recs.length - 1];
     const recsHtml = recs.length ? `
       <div class="d-flex align-items-center justify-content-between mb-2">
@@ -5914,7 +5875,7 @@ function renderLoanProducts() {
   const userType = document.getElementById('lp-user-filter')?.value || '';
   const data = loanProducts.filter(p => !q || p.productName.toLowerCase().includes(q)).filter(p => status === '' || String(p.status) === status).filter(p => !userType || p.userType === userType).sort((a,b) => a.sortNo - b.sortNo);
   document.getElementById('lp-total').textContent = loanProducts.length;
-  document.getElementById('lp-active').textContent = loanProducts.filter(p => p.status).length;
+  document.getElementById('lp-active').textContent = loanProducts.filter(p => p.status===10).length;
   document.getElementById('lp-max-amount').textContent = `PKR ${Math.max(0, ...loanProducts.map(p => p.maxLoanAmount)).toLocaleString()}`;
   document.getElementById('lp-count-label').textContent = t('count.showing')(data.length, data.length);
   const rows = data.map(p => {
@@ -5929,8 +5890,8 @@ function renderLoanProducts() {
       <td style="min-width:210px;">${features}<div style="font-size:11px;color:#94a3b8;margin-top:4px;">${localizePhrase('Cooling-off Hours')}: ${p.coolingOffHours}${currentLang==='zh'?'小时':'h'} · ${p.coolingOffFeeFree ? localizePhrase('Fee Free') : '—'}</div></td>
       <td style="min-width:180px;font-size:11px;"><code>${p.repayAllocationRule}</code><div style="color:#94a3b8;margin-top:4px;"><code>${p.roundingRule}</code></div></td>
       <td style="min-width:110px;"><span class="role-tag">${p.userType}</span><div style="font-size:11px;color:#64748b;margin-top:5px;">${p.riskLevel || localizePhrase('Not Limited')}</div></td>
-      <td style="text-align:center;">${p.sortNo}</td><td>${p.status ? `<span class="status-badge badge-active">${t('filter.active')}</span>` : `<span class="status-badge badge-disabled">${t('filter.disabled')}</span>`}</td>
-      <td style="min-width:130px;font-size:12px;color:#94a3b8;">${p.updatedAt}</td><td style="min-width:155px;"><div class="d-flex gap-1"><button class="btn btn-sm btn-outline-primary action-btn" onclick="openLoanProductModal(${p.id})"><i class="bi bi-pencil"></i> ${t('btn.edit')}</button><button class="btn btn-sm ${p.status?'btn-outline-warning':'btn-outline-success'} action-btn" onclick="toggleLoanProduct(${p.id})">${p.status?t('btn.disable'):t('btn.enable')}</button></div></td>
+      <td style="text-align:center;">${p.sortNo}</td><td>${enumBadge('productState',p.status)}</td>
+      <td style="min-width:130px;font-size:12px;color:#94a3b8;">${p.updatedAt}</td><td style="min-width:155px;"><div class="d-flex gap-1"><button class="btn btn-sm btn-outline-primary action-btn" onclick="openLoanProductModal(${p.id})"><i class="bi bi-pencil"></i> ${t('btn.edit')}</button><button class="btn btn-sm ${p.status===10?'btn-outline-warning':'btn-outline-success'} action-btn" onclick="toggleLoanProduct(${p.id})">${p.status===10?t('btn.disable'):t('btn.enable')}</button></div></td>
     </tr>`;
   }).join('');
   document.getElementById('loan-product-table-container').innerHTML = `<div class="table-scroll"><table class="table table-hover mb-0" style="min-width:1820px;"><thead><tr><th>${localizePhrase('Product ID')}</th><th>${localizePhrase('Product Name')}</th><th>${localizePhrase('Amount Range')}</th><th>${localizePhrase('Installment Plan')}</th><th>${localizePhrase('Loan Cycle')}</th><th>${localizePhrase('Daily Rates')}</th><th>${localizePhrase('Repayment Features')}</th><th>${localizePhrase('Repayment Allocation Rule')}</th><th>${localizePhrase('Applicable Users')}</th><th>${localizePhrase('Sort')}</th><th>${localizePhrase('Status')}</th><th>${localizePhrase('Updated At')}</th><th>${localizePhrase('Actions')}</th></tr></thead><tbody>${rows || `<tr><td colspan="13"><div class="empty-state"><i class="bi bi-box-seam"></i>${localizePhrase('No products found')}</div></td></tr>`}</tbody></table></div>`;
@@ -5966,8 +5927,8 @@ function saveLoanProduct() {
 
 function toggleLoanProduct(id) {
   const product = loanProducts.find(x => x.id === id); if (!product) return;
-  product.status = product.status ? 0 : 1; product.updatedAt = new Date().toISOString().slice(0,16).replace('T',' ');
-  toast(`${product.status ? 'Product activated' : 'Product deactivated'}: ${product.productName}`); renderLoanProducts();
+  product.status = product.status===10 ? -10 : 10; product.updatedAt = new Date().toISOString().slice(0,16).replace('T',' ');
+  toast(`${product.status===10 ? 'Product enabled' : 'Product disabled'}: ${product.productName}`); renderLoanProducts();
 }
 
 // ============================================================
@@ -7154,6 +7115,29 @@ const dbNumber = value => Number(value || 0);
 const dbDate = value => value ? String(value).replace('T',' ').replace(/\.000Z$/,'') : '-';
 const dbState = (value, labels, fallback='Unknown') => labels[Number(value)] || `${fallback} (${value})`;
 
+// Single source of truth: com.zariya.shared.enums.* (枚举文档.md, 2026-08-17).
+// Business records keep the database value; labels are resolved only at render time.
+const BUSINESS_ENUMS = {
+  userState:{'-5':['Banned','已禁用'],'-1':['Unregistered','已注销'],'0':['Unactivated','未激活'],'10':['Valid','正常']},
+  creditState:{'-10':['Rejected','审核驳回'],'0':['Not Applied','未申请'],'5':['Applying','申请中'],'10':['Reviewing','审核中'],'20':['Crediting','审核通过授信中'],'30':['Credited','已授信']},
+  creditStep:{'0':['Not Started','未发起'],'1000':['Basic Information','基础信息'],'2000':['Contacts','联系人'],'3000':['Identity Verification','身份认证'],'5000':['Face Verification','人脸认证']},
+  loanApplyState:{'-10':['Rejected','已拒绝'],'-2':['Submit Failed','提交失败'],'-1':['Cancelled','已取消'],'0':['Draft','待提交'],'10':['Submitted','已提交'],'20':['Pending Approval','待审批'],'30':['Approved','已通过']},
+  loanRiskState:{'-10':['Rejected','未通过'],'0':['Uninitiated','未发起'],'10':['Quick Approved','快速通过'],'20':['Approved','已通过']},
+  disbursementState:{'-20':['Failed','放款失败'],'-1':['Cancelled','已取消'],'0':['Pending','未发起'],'10':['Disbursing','放款中'],'20':['Disbursed','已放款']},
+  repaymentOrderState:{'-10':['Expired','已过期'],'-1':['Invalid','已失效'],'0':['Pending','待还款'],'10':['Partially Repaid','部分还款'],'20':['Repaid','已还款']},
+  paymentAccountState:{'-10':['Invalid','已失效'],'-1':['Invalid (New Binding)','新绑定验证无效'],'0':['Unknown','未知'],'10':['Valid','有效']},
+  couponState:{'-10':['Expired','已过期'],'-1':['Invalid','已失效'],'0':['Not Effective','未生效'],'10':['Unused','未使用'],'15':['Locked','已锁定'],'20':['Used','已使用']},
+  voucherState:{'10':['Active','生效中'],'50':['Settled','已结清'],'60':['Early Settled','提前结清'],'100':['Written Off','已核销']},
+  voucherBillState:{'10':['Unbilled','未出账'],'20':['Pending Repayment','待还款'],'30':['Overdue','已逾期'],'40':['Repaid','已还款'],'50':['Early Settled','提前结清'],'100':['Written Off','已核销']},
+  productState:{'-10':['Disabled','禁用'],'10':['Enabled','启用']}
+};
+function enumText(type,value){const item=BUSINESS_ENUMS[type]?.[String(value)];return item?(currentLang==='zh'?item[1]:item[0]):`Unknown (${value})`;}
+function enumBadge(type,value){
+  const n=Number(value); const success=[20,30,40,50,60].includes(n); const danger=n<0||n===30||n===100;
+  const style=success?'background:#dcfce7;color:#15803d;':danger?'background:#fee2e2;color:#b91c1c;':n===0?'background:#f1f5f9;color:#64748b;':'background:#e0e7ff;color:#4338ca;';
+  return `<span class="status-badge" style="${style}">${enumText(type,value)}</span>`;
+}
+
 async function loadTestDatabaseData(refreshUi=true) {
   try {
     const response = await fetch('/api/db-data', { cache:'no-store' });
@@ -7163,6 +7147,13 @@ async function loadTestDatabaseData(refreshUi=true) {
     // Customer master and onboarding data are loaded from the database on every
     // request. Do not retain the seeded demo profiles after a successful load.
     const regionNames=Object.fromEntries((data.pakRegions||[]).map(r=>[String(r.code),r.name_en||r.name_ur||r.code]));
+    const fieldEnumMap=(data.fieldEnums||[]).reduce((map,row)=>{
+      const key=String(row.dict_key); (map[key]||(map[key]={}))[String(row.val)]=row.desc_en; return map;
+    },{});
+    const fieldEnumText=(key,value)=>{
+      if(value===null||value===undefined||value==='') return '--';
+      return fieldEnumMap[key]?.[String(value)]||String(value);
+    };
     const groupByUser=rows=>(rows||[]).reduce((map,row)=>{
       const key=String(row.user_id); (map[key]||(map[key]=[])).push(row); return map;
     },{});
@@ -7171,8 +7162,8 @@ async function loadTestDatabaseData(refreshUi=true) {
     const identitiesByUser=groupByUser(data.creditIdentity);
     const contactsByUser=groupByUser(data.creditContacts);
     const quotaByUser=Object.fromEntries((data.creditQuotas||[]).map(q=>[String(q.user_id),q]));
-    const creditStatusFromRecord=record=>({5:'Not Applied',10:'Pending',20:'Pending',30:'Approved',40:'Rejected',50:'Expired'}[Number(record?.state)]||'Not Applied');
-    const recordStateLabel={5:'Incomplete',10:'Submitted',20:'Pending Review',30:'Approved',40:'Rejected',50:'Expired'};
+    const creditStatusFromRecord=record=>Number(record?.state ?? 0);
+    const recordStateLabel=BUSINESS_ENUMS.creditState;
     const reviewLabel={0:'Not Started',10:'Approved',20:'Rejected',30:'Manual Review'};
 
     customers.splice(0,customers.length,...(data.users||[]).map(user=>{
@@ -7191,7 +7182,9 @@ async function loadTestDatabaseData(refreshUi=true) {
         idCard:identity?.id_card||ocr.idCard||'--', registeredIdCard:identity?.id_card||ocr.idCard||'--',
         creditStatus:creditStatusFromRecord(latest), totalCredit:dbNumber(total), usedCredit:dbNumber(quota.used_credit), lockedCredit:dbNumber(quota.locked_credit),
         blacklist:Number(user.blacklist_flag||0), walletType:'-', walletAccount:'-', regTime:dbDate(user.create_time),
-        city:regionNames[String(cityCode)]||cityCode||'--', occupation:(basicByUser[key]||[]).slice(-1)[0]?.occupation||'--', income:(basicByUser[key]||[]).slice(-1)[0]?.monthly_income||'--',
+        city:regionNames[String(cityCode)]||cityCode||'--',
+        occupation:fieldEnumText('occupation',(basicByUser[key]||[]).slice(-1)[0]?.occupation),
+        income:fieldEnumText('monthlyIncome',(basicByUser[key]||[]).slice(-1)[0]?.monthly_income),
         profileStep:Number(latest?.step||0)>=1000?Number(latest.step)/1000:Number(latest?.step||0), email:user.email||'--', userState:user.state,
         gestureFailedCount:user.gesture_failed_count||0, authTime:dbDate(user.auth_time), portrait:user.portrait||'--', isDel:0,
         createTime:dbDate(user.create_time), modifyTime:dbDate(user.modify_time), creditReviewTime:dbDate(latest?.review_time), creditReviewRemark:latest?.reject_reason||latest?.remark||''
@@ -7202,7 +7195,7 @@ async function loadTestDatabaseData(refreshUi=true) {
     Object.entries(recordsByUser).forEach(([userId,records])=>{
       const quota=quotaByUser[userId]||{};
       userCreditRecords[userId]=records.map(r=>({
-        id:r.id,creditNo:`CR-${r.id}`,userId:r.user_id,state:r.state,stateLabel:recordStateLabel[Number(r.state)]||`State ${r.state}`,
+        id:r.id,creditNo:`CR-${r.id}`,userId:r.user_id,state:Number(r.state),stateLabel:enumText('creditState',r.state),
         step:r.step,submitTime:dbDate(r.submit_time),reviewType:r.review_type||'-',reviewState:r.review_state,
         reviewStateLabel:reviewLabel[Number(r.review_state)]||`State ${r.review_state}`,reviewTime:dbDate(r.review_time),rejectReason:r.reject_reason||'',
         totalCredit:dbNumber(r.total_credit),usedCredit:dbNumber(quota.used_credit),lockedCredit:dbNumber(quota.locked_credit),approvedTime:dbDate(r.approved_time),
@@ -7211,9 +7204,11 @@ async function loadTestDatabaseData(refreshUi=true) {
     });
     Object.keys(creditBasicInfo).forEach(key=>delete creditBasicInfo[key]);
     Object.entries(basicByUser).forEach(([userId,rows])=>{const b=rows[rows.length-1];creditBasicInfo[userId]={
-      id:b.id,userId:b.user_id,creditId:b.credit_id,educationLevel:b.education_level,maritalStatus:b.marital_status,childrenCount:b.children_count,
-      email:b.email||'--',occupation:b.occupation||'--',monthlyIncome:b.monthly_income||'--',industry:b.industry||'--',payPeriod:b.pay_period||'--',
-      workYears:b.work_years||'--',existingLoan:Boolean(b.existing_loan),totalLoanAmount:dbNumber(b.total_loan_amount),salaryDay:b.salary_day||'--'
+      id:b.id,userId:b.user_id,creditId:b.credit_id,
+      educationLevel:fieldEnumText('educationLevel',b.education_level),maritalStatus:fieldEnumText('maritalStatus',b.marital_status),childrenCount:b.children_count,
+      email:b.email||'--',occupation:fieldEnumText('occupation',b.occupation),monthlyIncome:fieldEnumText('monthlyIncome',b.monthly_income),
+      industry:fieldEnumText('industry',b.industry),payPeriod:fieldEnumText('payPeriod',b.pay_period),workYears:b.work_years||'--',
+      existingLoan:Boolean(b.existing_loan),totalLoanAmount:fieldEnumText('totalLoanAmount',b.total_loan_amount),salaryDay:b.salary_day||'--'
     };});
     Object.keys(creditIdentity).forEach(key=>delete creditIdentity[key]);
     Object.entries(identitiesByUser).forEach(([userId,rows])=>{const i=rows[rows.length-1];const o=typeof i.ocr_result==='string'?(()=>{try{return JSON.parse(i.ocr_result)}catch(_){return {}}})():i.ocr_result||{};creditIdentity[userId]={
@@ -7224,7 +7219,7 @@ async function loadTestDatabaseData(refreshUi=true) {
     };});
     Object.keys(creditContacts).forEach(key=>delete creditContacts[key]);
     Object.entries(contactsByUser).forEach(([userId,rows])=>{creditContacts[userId]=rows.map(c=>({
-      id:c.id,userId:c.user_id,creditId:c.credit_id,relationship:c.relationship||'--',contactName:c.contact_name||'--',contactMobile:c.contact_mobile||'--'
+      id:c.id,userId:c.user_id,creditId:c.credit_id,relationship:fieldEnumText('relationship',c.relationship),contactName:c.contact_name||'--',contactMobile:c.contact_mobile||'--'
     }));});
 
     loanApplications = data.applications.map(a=>({
@@ -7238,12 +7233,10 @@ async function loadTestDatabaseData(refreshUi=true) {
       totalInterest:dbNumber(a.total_interest), totalServiceFee:dbNumber(a.total_service_fee),
       totalRepayAmount:dbNumber(a.total_payable_amount), roundingWaiver:dbNumber(a.waiver_amount),
       displayPayable:dbNumber(a.display_payable_amount), startDate:dbDate(a.start_date), endDate:dbDate(a.end_date),
-      quickReview:Boolean(a.quick_review), state:dbState(a.state,{10:'PendingReview',20:'Approved',30:'Disbursed',40:'Rejected'}),
-      preState:a.disbursement_state===20?'Passed':dbState(a.pre_state,{0:'Pending',10:'Passed',20:'Failed'}),
-      riskState:a.disbursement_state===20?'Approved':dbState(a.risk_state,{0:'Pending',10:'Approved',20:'Rejected'}),
+      quickReview:Boolean(a.quick_review), state:Number(a.state), preState:Number(a.pre_state), riskState:Number(a.risk_state),
       termInfos:typeof a.term_infos==='string'?a.term_infos:JSON.stringify(a.term_infos||[]),
       rejectReason:a.reject_reason||'', reviewTime:dbDate(a.review_time), paymentAccountId:a.payment_account_id,
-      disbursementState:dbState(a.disbursement_state,{10:'Pending',20:'Success',30:'Failed',40:'Cancelled'}),
+      disbursementState:Number(a.disbursement_state),
       disbursementTime:dbDate(a.disbursement_time), disbursementNo:a.disbursement_no||'',
       isDel:0, createdAt:dbDate(a.create_time), modifyTime:dbDate(a.modify_time)
     }));
@@ -7259,7 +7252,7 @@ async function loadTestDatabaseData(refreshUi=true) {
       planningInterestFee:dbNumber(v.planing_interest_fee), planningServiceFee:dbNumber(v.planing_service_fee),
       planningRepayAmount:dbNumber(v.planing_repay_amount), totalInterest:dbNumber(v.total_interest_fee),
       totalFee:dbNumber(v.total_service_fee), totalRepay:dbNumber(v.total_amount), totalOverdueFee:dbNumber(v.total_overdue_fee),
-      status:dbState(v.state,{10:'Active',20:'Paid',30:'Overdue',40:'WrittenOff'}),
+      status:Number(v.state),
       channel:data.disbursements.find(d=>d.disbursement_no===v.disbursement_no)?.disbursement_channel||'--',
       disbursedAt:dbDate(v.create_time), firstDue:dbDate(data.bills.find(b=>b.voucher_no===v.voucher_no)?.repay_date),
       finalDue:dbDate(v.end_date), paidAmount:dbNumber(v.paid_amount), remainingAmount:dbNumber(v.remaining_amount),
@@ -7287,17 +7280,72 @@ async function loadTestDatabaseData(refreshUi=true) {
       paidServiceFee:dbNumber(b.paid_service_fee), paidOverdueFee:dbNumber(b.paid_overdue_fee),
       remainingPrincipal:dbNumber(b.remaining_principal), remainingInterestFee:dbNumber(b.remaining_interest_fee),
       remainingServiceFee:dbNumber(b.remaining_service_fee), remainingOverdueFee:dbNumber(b.remaining_overdue_fee),
-      overdueDays:b.overdue_days, status:b.overdue_days>0?'Overdue':dbState(b.state,{10:'Active',20:'Active',30:'Paid',40:'Closed'}),
+      overdueDays:b.overdue_days, status:Number(b.state),
       settledType:String(b.settled_type||'NONE').toUpperCase(), settledTime:dbDate(b.settled_time),
       batchingTime:dbDate(b.batching_time)
     }));
+
+    couponTemplates.splice(0,couponTemplates.length,...(data.couponTemplates||[]).map(tpl=>({
+      id:tpl.id,
+      couponName:tpl.coupon_name,
+      couponType:tpl.coupon_type,
+      couponAmount:dbNumber(tpl.coupon_amount),
+      productId:tpl.product_id,
+      effectTime:dbDate(tpl.effect_time),
+      expireTime:dbDate(tpl.expire_time),
+      issuedCount:Number(tpl.issued_count||0),
+      ruleConfig:typeof tpl.rule_config==='string'?(()=>{try{return JSON.parse(tpl.rule_config)}catch(_){return tpl.rule_config}})():tpl.rule_config,
+      isDel:Number(tpl.is_del||0),
+      createTime:dbDate(tpl.create_time),
+      modifyTime:dbDate(tpl.modify_time)
+    })));
+
+    const couponInstances=(data.couponInstances||[]).map(c=>({
+      id:c.id,
+      no:c.coupon_no,
+      templateId:c.template_id,
+      couponName:c.coupon_name,
+      couponType:c.coupon_type,
+      userId:c.user_id,
+      couponAmount:dbNumber(c.coupon_amount),
+      productId:c.product_id,
+      status:Number(c.state),
+      effectiveStart:dbDate(c.effect_time),
+      effectiveEnd:dbDate(c.expire_time),
+      bizNo:c.biz_no||'',
+      lockedTime:dbDate(c.locked_time),
+      usedTime:dbDate(c.used_time),
+      isDel:Number(c.is_del||0),
+      createTime:dbDate(c.create_time),
+      modifyTime:dbDate(c.modify_time)
+    }));
+    limitIncreaseCoupons.splice(0,limitIncreaseCoupons.length,...couponInstances.filter(c=>c.couponType==='LimitIncrease'));
+    repayCoupons.splice(0,repayCoupons.length,...couponInstances.filter(c=>c.couponType==='Repayment'));
+
+    couponUsageRecords.splice(0,couponUsageRecords.length,...(data.couponLogs||[]).map(log=>({
+      id:log.id,
+      couponNo:log.coupon_no,
+      templateId:log.template_id,
+      couponType:log.coupon_type,
+      userId:log.user_id,
+      bizNo:log.biz_no||'',
+      usedAmount:dbNumber(log.used_amount),
+      deductType:log.deduct_fee_type||'',
+      status:Number(log.state),
+      usedTime:dbDate(log.used_time),
+      returnedTime:dbDate(log.back_time),
+      returnReason:log.back_reason_type||'',
+      isDel:Number(log.is_del||0),
+      createTime:dbDate(log.create_time),
+      modifyTime:dbDate(log.modify_time)
+    })));
 
     disbursements = data.disbursements.map(d=>({
       id:d.id, disbNo:d.disbursement_no, applyNo:d.apply_no, userId:d.user_id, productId:d.product_id,
       custName:`Customer #${d.user_id}`, channel:d.disbursement_channel, walletName:d.disbursement_channel,
       walletAcc:'Protected account', amount:dbNumber(d.disbursed_amount), applyAmount:dbNumber(d.apply_amount),
       disbursedAmount:dbNumber(d.disbursed_amount), paymentAccountId:d.payment_account_id,
-      channelTxnNo:d.channel_txn_no||'', status:dbState(d.state,{10:'Pending',20:'Success',30:'Failed',40:'Cancelled'}),
+      channelTxnNo:d.channel_txn_no||'', status:Number(d.state),
       failReason:d.fail_reason||'', requestTime:dbDate(d.request_time), successTime:dbDate(d.success_time), callbackTime:dbDate(d.callback_time)
     }));
 
@@ -7330,7 +7378,7 @@ async function loadTestDatabaseData(refreshUi=true) {
     data.creditQuotas.forEach(q=>{
       let customer=customers.find(c=>String(c.id)===String(q.user_id));
       if(!customer){
-        customer={id:q.user_id,name:`Customer #${q.user_id}`,registeredName:`Customer #${q.user_id}`,mobile:'--',idCard:'--',registeredIdCard:'--',creditStatus:'Approved',totalCredit:0,usedCredit:0,blacklist:0,walletType:'-',walletAccount:'-',regTime:dbDate(q.create_time),city:'--',occupation:'--',income:'--',profileStep:5,email:'--',userState:1,isDel:0,createTime:dbDate(q.create_time),modifyTime:dbDate(q.modify_time)};
+        customer={id:q.user_id,name:`Customer #${q.user_id}`,registeredName:`Customer #${q.user_id}`,mobile:'--',idCard:'--',registeredIdCard:'--',creditStatus:30,totalCredit:0,usedCredit:0,blacklist:0,walletType:'-',walletAccount:'-',regTime:dbDate(q.create_time),city:'--',occupation:'--',income:'--',profileStep:5000,email:'--',userState:10,isDel:0,createTime:dbDate(q.create_time),modifyTime:dbDate(q.modify_time)};
         customers.push(customer);
       }
       customer.totalCredit=dbNumber(q.total_credit); customer.usedCredit=dbNumber(q.used_credit); customer.lockedCredit=dbNumber(q.locked_credit);
@@ -7340,24 +7388,52 @@ async function loadTestDatabaseData(refreshUi=true) {
     customerWalletBindings.splice(0,customerWalletBindings.length,...data.paymentAccounts.map(a=>({
       id:a.id, customer_id:a.user_id, payment_institution_id:a.institution_code,
       account_identifier_masked:`Protected •••• ${String(a.identifier_sign||'').slice(-4)}`,
-      account_status:a.state===10?'VERIFIED':'UNKNOWN', verification_time:dbDate(a.verification_time),
+      account_status:Number(a.state), verification_time:dbDate(a.verification_time),
       identifier_unique:a.identifier_sign, is_snapshot:a.is_snapshot, created_at:dbDate(a.create_time), updated_at:dbDate(a.modify_time)
     })));
 
     if(refreshUi) {
       const active=document.querySelector('.page.active')?.id?.replace('page-','');
       if(active) navigate(active);
-      toast(`Test database connected · ${data.applications.length+data.vouchers.length+data.bills.length+data.disbursements.length} loan records loaded`,'success');
+      toast(`Test database connected · ${couponInstances.length} coupon instances loaded`,'success');
     }
   } catch (error) {
     console.error(error);
-    toast('Test database unavailable — showing Demo data','error');
+    toast('Database unavailable — coupon data cannot be loaded','error');
   }
 }
 
 // ============================================================
 // INIT
 // ============================================================
+function normalizeDemoEnumValues(){
+  const map=(value,values,fallback)=>typeof value==='number'?value:(values[value]??fallback);
+  customers.forEach(c=>{c.creditStatus=map(c.creditStatus,{'Not Applied':0,Pending:10,Approved:30,Rejected:-10},0);c.userState=map(c.userState,{0:0,1:10},10);});
+  loanApplications.forEach(a=>{
+    a.state=map(a.state,{PendingReview:20,Approved:30,Rejected:-10,Disbursing:30,DisbursementFailed:30,Disbursed:30},0);
+    a.preState=map(a.preState,{Passed:0},0);
+    a.riskState=map(a.riskState,{Pending:0,Approved:20,Rejected:-10},0);
+    a.disbursementState=map(a.disbursementState,{'-':0,Pending:0,Success:20,Failed:-20,Cancelled:-1},0);
+  });
+  loanOrders.forEach(v=>{v.status=map(v.status,{Active:10,Overdue:10,CoolingOff:10,Paid:50,WrittenOff:100,PendingApproval:10,PendingDisbursement:10,Rejected:10},10);v.settledType=String(v.settledType||'none').replace(/^NONE$/i,'none').replace(/^NORMAL$/i,'normal').replace(/^COOLING_OFF$/i,'coolingOff').replace(/^EARLY$/i,'early');});
+  repayments.forEach(r=>{r.state=({0:0,1:20,2:-1,3:-1})[r.state]??r.state;r.repaymentType=r.repaymentType==='early_settlement'?'earlySettlement':'normal';});
+  if(typeof limitIncreaseCoupons!=='undefined') limitIncreaseCoupons.forEach(c=>c.status=map(c.status,{Expired:-10,Invalid:-1,Inactive:-1,Unused:10,Active:10,Locked:15,Used:20,Returned:10},10));
+  if(typeof repayCoupons!=='undefined') repayCoupons.forEach(c=>c.status=map(c.status,{Expired:-10,Invalid:-1,Inactive:-1,Unused:10,Active:10,Locked:15,Used:20,Returned:10},10));
+  if(typeof couponUsageRecords!=='undefined') couponUsageRecords.forEach(c=>c.status=map(c.status,{Expired:-10,Invalid:-1,Unused:10,Locked:15,Used:20,Returned:10},10));
+  loanBills.forEach(b=>{b.status=map(b.status,{CoolingOff:10,Active:20,PartiallyPaid:20,Overdue:30,OverduePartiallyPaid:30,Paid:40,earlysettled:50,WrittenOff:100},20);b.settledType=String(b.settledType||'none').toLowerCase()==='normal'?'normal':'none';});
+  disbursements.forEach(d=>{d.status=map(d.status,{Failed:-20,Cancelled:-1,Pending:0,Disbursing:10,Success:20},0);d.disbursedAmount=d.status===20?d.amount:0;});
+  customerWalletBindings.forEach(w=>w.account_status=map(w.account_status,{FAILED:-10,INVALID:-10,UNKNOWN:0,VERIFIED:10},0));
+  loanProducts.forEach(p=>p.status=({0:-10,1:10})[p.status]??p.status);
+  Object.values(userCreditRecords).flat().forEach(r=>{r.state=map(r.state,{0:0,1:5,2:30,4:-10},0);r.step=map(r.step,{1:1000,2:2000,3:3000,4:5000,5:5000},0);});
+}
+// Coupon pages are database-only. Remove the legacy seeded rows before the
+// asynchronous database request so unavailable/empty databases never fall
+// back to fabricated coupon data.
+couponTemplates.splice(0,couponTemplates.length);
+limitIncreaseCoupons.splice(0,limitIncreaseCoupons.length);
+repayCoupons.splice(0,repayCoupons.length);
+couponUsageRecords.splice(0,couponUsageRecords.length);
+normalizeDemoEnumValues();
 document.addEventListener('shown.bs.modal', e => localizeHardcoded(e.target));
 const i18nObserver = new MutationObserver(records => {
   if (currentLang !== 'zh') return;
