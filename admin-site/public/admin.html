@@ -737,7 +737,6 @@
       <ul class="nav nav-tabs mb-3" id="coupon-tabs">
         <li class="nav-item"><a class="nav-link active" href="#" onclick="switchCouponTab('limit',this)" data-i18n="coupon.limitTab">Limit Increase Coupons</a></li>
         <li class="nav-item"><a class="nav-link" href="#" onclick="switchCouponTab('repay',this)" data-i18n="coupon.repayTab">Repayment Coupons</a></li>
-        <li class="nav-item"><a class="nav-link" href="#" onclick="switchCouponTab('usage',this)" data-i18n="coupon.usageTab">Usage Records</a></li>
         <li class="nav-item"><a class="nav-link" href="#" onclick="switchCouponTab('template',this)">Coupon Templates</a></li>
       </ul>
       <div class="table-card">
@@ -1934,7 +1933,7 @@
           <div class="col-md-4"><label class="form-label" style="font-size:13px;font-weight:600;">Default Amount (PKR) <span class="text-danger">*</span></label><input type="number" class="form-control form-control-sm" id="ct-amount" min="1"></div>
           <div class="col-md-4"><label class="form-label" style="font-size:13px;font-weight:600;">Product ID <span class="text-danger">*</span></label><input type="number" class="form-control form-control-sm" id="ct-product" min="1"></div>
           <div class="col-md-6"><label class="form-label" style="font-size:13px;font-weight:600;">Effective Time <span class="text-danger">*</span></label><input type="datetime-local" class="form-control form-control-sm" id="ct-start"></div>
-          <div class="col-md-6"><label class="form-label" style="font-size:13px;font-weight:600;">Expiry Time <span class="text-danger">*</span></label><input type="datetime-local" class="form-control form-control-sm" id="ct-end"></div>
+          <div class="col-md-6"><label class="form-label" style="font-size:13px;font-weight:600;">Expiry Time <span class="text-muted">(Optional)</span></label><input type="datetime-local" class="form-control form-control-sm" id="ct-end"></div>
           <div class="col-md-6" id="ct-limit-rule"><label class="form-label" style="font-size:13px;font-weight:600;">Amount Step (PKR)</label><input type="number" class="form-control form-control-sm" id="ct-step" min="100" step="100" value="100"><div style="font-size:11px;color:#718096;margin-top:3px;">Maximum available amount after increase is PKR 50,000.</div></div>
           <div class="col-md-6" id="ct-repay-rule" style="display:none;"><label class="form-label" style="font-size:13px;font-weight:600;">Minimum Remaining Principal (PKR)</label><input type="number" class="form-control form-control-sm" id="ct-min-principal" min="1"><div style="font-size:11px;color:#718096;margin-top:3px;">Principal only · full repayment · actual payment &gt; 50% principal.</div></div>
         </div>
@@ -2902,7 +2901,7 @@ let roles = [
   { id:3, code:'CUSTOMER_SERVICE', name:'Customer Service',  description:'Customer info view and basic support operations',                  userCount:3,  status:'Active',   sort:3, perms:['dashboard','customer','customer:list','customer:list:view','loan','loan:application','loan:application:view','loan:voucher','loan:voucher:view','loan:repayment','loan:repayment:view'] },
   { id:4, code:'COLLECTION',       name:'Collection Agent',  description:'Collection workbench and repayment follow-up',                    userCount:3,  status:'Active',   sort:4, perms:['dashboard','customer','customer:list','customer:list:view','loan','loan:repayment','loan:repayment:view'] },
   { id:5, code:'FINANCE',          name:'Finance',           description:'Fee adjustments, reconciliation, and financial reports',           userCount:2,  status:'Active',   sort:5, perms:['dashboard','loan','loan:voucher','loan:voucher:view','loan:repayment','loan:repayment:view','loan:adjustment','loan:adjustment:create','loan:adjustment:approve'] },
-  { id:6, code:'OPERATIONS',       name:'Operations',        description:'Coupon management and product configuration',                      userCount:2,  status:'Active',   sort:6, perms:['dashboard','coupon','coupon:limit_increase','coupon:limit_increase:view','coupon:limit_increase:issue','coupon:limit_increase:void','coupon:repay','coupon:repay:view','coupon:repay:issue','coupon:repay:void','coupon:usage','coupon:usage:view','coupon:template','coupon:template:view','coupon:template:create','coupon:template:edit','loan','loan:application','loan:application:view','loan:voucher','loan:voucher:view'] },
+  { id:6, code:'OPERATIONS',       name:'Operations',        description:'Coupon management and product configuration',                      userCount:2,  status:'Active',   sort:6, perms:['dashboard','coupon','coupon:limit_increase','coupon:limit_increase:view','coupon:limit_increase:issue','coupon:limit_increase:void','coupon:repay','coupon:repay:view','coupon:repay:issue','coupon:repay:void','coupon:template','coupon:template:view','coupon:template:create','coupon:template:edit','loan','loan:application','loan:application:view','loan:voucher','loan:voucher:view'] },
 ];
 
 let permissions = [
@@ -2947,8 +2946,6 @@ let permissions = [
       { id:321, parentId:32, code:'coupon:repay:view', name:'View', type:'Button', route:'', sort:1, status:'Active', expanded:false },
       { id:322, parentId:32, code:'coupon:repay:issue', name:'Issue Coupon', type:'Button', route:'', sort:2, status:'Active', expanded:false },
       { id:323, parentId:32, code:'coupon:repay:void', name:'Void Coupon', type:'Button', route:'', sort:3, status:'Active', expanded:false },
-    { id:33, parentId:30, code:'coupon:usage', name:'Coupon Usage Records', type:'Menu', route:'/coupon/usage', sort:3, status:'Active', expanded:true },
-      { id:331, parentId:33, code:'coupon:usage:view', name:'View', type:'Button', route:'', sort:1, status:'Active', expanded:false },
     { id:34, parentId:30, code:'coupon:template', name:'Coupon Templates', type:'Menu', route:'/coupon/templates', sort:4, status:'Active', expanded:true },
       { id:341, parentId:34, code:'coupon:template:view', name:'View', type:'Button', route:'', sort:1, status:'Active', expanded:false },
       { id:342, parentId:34, code:'coupon:template:create', name:'Create', type:'Button', route:'', sort:2, status:'Active', expanded:false },
@@ -3010,7 +3007,7 @@ Object.assign(roles.find(r => r.code === 'RISK_REVIEWER'), {
   perms:['dashboard','customer','customer:list','customer:list:view','customer:credit','customer:credit:view','customer:credit:review','loan','loan:application','loan:application:view','loan:application:review','loan:bill','loan:bill:view']
 });
 Object.assign(roles.find(r => r.code === 'CUSTOMER_SERVICE'), {
-  perms:['dashboard','customer','customer:list','customer:list:view','loan','loan:application','loan:application:view','loan:voucher','loan:voucher:view','loan:bill','loan:bill:view','loan:repayment','loan:repayment:view','coupon','coupon:usage','coupon:usage:view']
+  perms:['dashboard','customer','customer:list','customer:list:view','loan','loan:application','loan:application:view','loan:voucher','loan:voucher:view','loan:bill','loan:bill:view','loan:repayment','loan:repayment:view']
 });
 Object.assign(roles.find(r => r.code === 'COLLECTION'), {
   perms:['dashboard','customer','customer:list','customer:list:view','loan','loan:bill','loan:bill:view','loan:repayment','loan:repayment:view']
@@ -3019,7 +3016,7 @@ Object.assign(roles.find(r => r.code === 'FINANCE'), {
   perms:['dashboard','loan','loan:voucher','loan:voucher:view','loan:bill','loan:bill:view','loan:disbursement','loan:disbursement:view','loan:repayment','loan:repayment:view','loan:adjustment','loan:adjustment:create','loan:adjustment:approve','finance','finance:transaction','finance:transaction:view','finance:transaction:export','finance:reconciliation','finance:reconciliation:view','finance:reconciliation:export','finance:reconciliation:download','finance:reconciliation:mark_handled','finance:reconciliation:audit']
 });
 Object.assign(roles.find(r => r.code === 'OPERATIONS'), {
-  perms:['dashboard','loan','loan:application','loan:application:view','loan:voucher','loan:voucher:view','coupon','coupon:limit_increase','coupon:limit_increase:view','coupon:limit_increase:issue','coupon:limit_increase:void','coupon:repay','coupon:repay:view','coupon:repay:issue','coupon:repay:void','coupon:usage','coupon:usage:view','config','config:loan_product','config:loan_product:view','config:loan_product:create','config:loan_product:edit','config:loan_product:toggle_status','config:payment_institution','config:payment_institution:view','config:payment_institution:create','config:payment_institution:edit','config:payment_institution:toggle_status','config:amount_term_rule','config:amount_term_rule:view','config:amount_term_rule:create','config:amount_term_rule:edit','config:amount_term_rule:delete']
+  perms:['dashboard','loan','loan:application','loan:application:view','loan:voucher','loan:voucher:view','coupon','coupon:limit_increase','coupon:limit_increase:view','coupon:limit_increase:issue','coupon:limit_increase:void','coupon:repay','coupon:repay:view','coupon:repay:issue','coupon:repay:void','config','config:loan_product','config:loan_product:view','config:loan_product:create','config:loan_product:edit','config:loan_product:toggle_status','config:payment_institution','config:payment_institution:view','config:payment_institution:create','config:payment_institution:edit','config:payment_institution:toggle_status','config:amount_term_rule','config:amount_term_rule:view','config:amount_term_rule:create','config:amount_term_rule:edit','config:amount_term_rule:delete']
 });
 
 let nextUserId = 16, nextRoleId = 7, nextPermId = 1000;
@@ -4506,7 +4503,7 @@ function switchCouponTab(tab, el) {
   activeCouponTab = tab;
   document.querySelectorAll('#coupon-tabs .nav-link').forEach(a => a.classList.remove('active'));
   el.classList.add('active');
-  const titleMap = { limit: t('coupon.limitTab'), repay: t('coupon.repayTab'), usage: t('coupon.usageTab'), template: currentLang==='zh'?'优惠券模板':'Coupon Templates' };
+  const titleMap = { limit: t('coupon.limitTab'), repay: t('coupon.repayTab'), template: currentLang==='zh'?'优惠券模板':'Coupon Templates' };
   document.getElementById('coupon-tab-title').textContent = titleMap[tab] || tab;
   const searchInput=document.getElementById('coupon-search');
   const statusFilter=document.getElementById('coupon-status-filter');
@@ -4517,7 +4514,7 @@ function switchCouponTab(tab, el) {
     : `<option value="">${currentLang==='zh'?'全部状态':'All Status'}</option><option value="-10">Expired</option><option value="-1">Invalid</option><option value="0">Not Effective</option><option value="10">Unused</option><option value="15">Locked</option><option value="20">Used</option>`;
   const issueBtn = document.getElementById('coupon-issue-btn');
   const createTemplateBtn = document.getElementById('coupon-template-create-btn');
-  if (issueBtn) issueBtn.style.display = ['usage','template'].includes(tab) ? 'none' : '';
+  if (issueBtn) issueBtn.style.display = tab==='template' ? 'none' : '';
   if (createTemplateBtn) createTemplateBtn.style.display = tab==='template' ? '' : 'none';
   filterCoupons();
 }
@@ -4566,7 +4563,7 @@ function renderCouponTemplates(list) {
   document.getElementById('coupon-table-container').innerHTML=`<div class="table-scroll"><table class="table table-hover mb-0" style="min-width:1250px;">
     <thead><tr><th>ID</th><th>Coupon Name</th><th>Coupon Type</th><th>Coupon Amount</th><th>Product ID</th><th>Effect Time</th><th>Expire Time</th><th>Issued Count</th><th>Rule Config</th><th>Is Del</th><th>Create Time</th><th>Modify Time</th><th>Actions</th></tr></thead>
     <tbody>${data.map(tpl=>`<tr>
-      <td><code>#${tpl.id}</code></td><td style="font-weight:600;">${tpl.couponName}</td><td><span class="role-tag">${tpl.couponType}</span></td><td>${fmtMoney(tpl.couponAmount)}</td><td><code>${tpl.productId == null ? '--' : '#'+tpl.productId}</code></td><td>${tpl.effectTime}</td><td>${tpl.expireTime}</td><td>${tpl.issuedCount}</td><td><code style="font-size:11px;">${JSON.stringify(tpl.ruleConfig)}</code></td><td>${tpl.isDel}</td><td>${tpl.createTime}</td><td>${tpl.modifyTime}</td>
+      <td><code>#${tpl.id}</code></td><td style="font-weight:600;">${tpl.couponName}</td><td><span class="role-tag">${tpl.couponType}</span></td><td>${fmtMoney(tpl.couponAmount)}</td><td><code>${tpl.productId == null ? '--' : '#'+tpl.productId}</code></td><td>${tpl.effectTime}</td><td>${tpl.expireTime||'--'}</td><td>${tpl.issuedCount}</td><td><code style="font-size:11px;">${JSON.stringify(tpl.ruleConfig)}</code></td><td>${tpl.isDel}</td><td>${tpl.createTime}</td><td>${tpl.modifyTime}</td>
       <td><button class="btn btn-sm btn-outline-primary action-btn" onclick="openCouponTemplateModal(${tpl.id})"><i class="bi bi-pencil"></i> Edit</button></td>
     </tr>`).join('')||'<tr><td colspan="13"><div class="empty-state"><i class="bi bi-database"></i>No coupon templates in database</div></td></tr>'}</tbody></table></div>`;
 }
@@ -4579,7 +4576,7 @@ function updateCouponTemplateRuleFields(){
 }
 
 function openCouponTemplateModal(id){
-  const tpl=id?couponTemplates.find(x=>x.id===id):null;
+  const tpl=id?couponTemplates.find(x=>String(x.id)===String(id)):null;
   document.getElementById('ct-modal-title').textContent=tpl?'Edit Coupon Template':'Create Coupon Template';
   document.getElementById('ct-id').value=tpl?.id||'';
   document.getElementById('ct-name').value=tpl?.couponName||'';
@@ -4605,13 +4602,12 @@ function saveCouponTemplate(){
   const end=document.getElementById('ct-end').value;
   const step=+document.getElementById('ct-step').value;
   const minPrincipal=+document.getElementById('ct-min-principal').value;
-  if(!name||amount<=0||productId<=0||!start||!end){toast('Please complete all required template fields','error');return;}
-  if(new Date(start)>=new Date(end)){toast('Expiry time must be later than effective time','error');return;}
+  if(!name||amount<=0||productId<=0||!start){toast('Please complete all required template fields','error');return;}
+  if(end&&new Date(start)>=new Date(end)){toast('Expiry time must be later than effective time','error');return;}
   if(type==='LimitIncrease'&&(amount%100!==0||step<=0||step%100!==0)){toast('Limit increase amount and step must be multiples of 100','error');return;}
-  if(type==='Repayment'&&minPrincipal<=0){toast('Minimum remaining principal must be positive','error');return;}
   const now=new Date().toISOString().slice(0,16).replace('T',' ');
-  const values={couponName:name,couponType:type,couponAmount:amount,productId,effectTime:start.replace('T',' '),expireTime:end.replace('T',' '),modifyTime:now,ruleConfig:type==='LimitIncrease'?{amountStep:step,maxBorrowAmount:50000}:{minRemainingPrincipal:minPrincipal,deductType:'Principal',repayType:'Full',minPaymentRatioExclusive:0.5}};
-  if(id)Object.assign(couponTemplates.find(x=>x.id===id),values);
+  const values={couponName:name,couponType:type,couponAmount:amount,productId,effectTime:start.replace('T',' '),expireTime:end?end.replace('T',' '):'',modifyTime:now,ruleConfig:type==='LimitIncrease'?{amountStep:step,maxBorrowAmount:50000}:{minRemainingPrincipal:minPrincipal||null,deductType:'Principal',repayType:'Full',minPaymentRatioExclusive:0.5}};
+  if(id)Object.assign(couponTemplates.find(x=>String(x.id)===String(id)),values);
   else couponTemplates.unshift({id:nextCouponTemplateId++,issuedCount:0,isDel:0,createTime:now,...values});
   bootstrap.Modal.getInstance(document.getElementById('couponTemplateModal')).hide();
   toast(id?'Template updated':'Template created');
@@ -4621,13 +4617,6 @@ function saveCouponTemplate(){
 function filterCoupons() {
   const q = document.getElementById('coupon-search').value.toLowerCase();
   const st = document.getElementById('coupon-status-filter').value;
-  if (activeCouponTab === 'usage') {
-    renderCouponUsage(couponUsageRecords.filter(u =>
-      (!q || u.couponNo.toLowerCase().includes(q) || String(u.userId).includes(q) || u.bizNo.toLowerCase().includes(q)) &&
-      (!st || String(u.status) === st)
-    ));
-    return;
-  }
   if (activeCouponTab === 'template') {
     renderCouponTemplates(couponTemplates.filter(tpl=>
       tpl.isDel===0&&(!q||tpl.couponName.toLowerCase().includes(q)||String(tpl.id).includes(q))&&(!st||tpl.couponType===st)
@@ -4665,7 +4654,7 @@ function openIssueCouponModal() {
 function updateIssueCouponForm() {
   const isLimit = document.getElementById('ic-type').value === 'limit';
   const templateSelect=document.getElementById('ic-template');
-  const eligibleTemplates=couponTemplates.filter(tpl=>tpl.isDel===0&&tpl.couponType===(isLimit?'LimitIncrease':'Repayment')&&new Date(tpl.expireTime)>new Date());
+  const eligibleTemplates=couponTemplates.filter(tpl=>tpl.isDel===0&&tpl.couponType===(isLimit?'LimitIncrease':'Repayment')&&(!tpl.expireTime||new Date(tpl.expireTime)>new Date()));
   templateSelect.innerHTML=eligibleTemplates.map(tpl=>`<option value="${tpl.id}">${tpl.couponName} (#${tpl.id})</option>`).join('');
   document.getElementById('ic-amount-label').innerHTML = `${isLimit ? (currentLang === 'zh' ? '提额金额 (PKR，100 的倍数)' : 'Increase Amount (PKR, multiples of 100)') : 'Coupon Amount (PKR)'} <span class="text-danger">*</span>`;
   document.getElementById('ic-threshold-group').style.display = isLimit ? 'none' : '';
@@ -4684,11 +4673,11 @@ function updateIssueCouponForm() {
 }
 
 function applySelectedCouponTemplate(){
-  const tpl=couponTemplates.find(x=>x.id===+document.getElementById('ic-template').value);
+  const tpl=couponTemplates.find(x=>String(x.id)===document.getElementById('ic-template').value);
   if(!tpl)return;
   document.getElementById('ic-amount').value=tpl.couponAmount;
   document.getElementById('ic-start').value=tpl.effectTime.replace(' ','T');
-  document.getElementById('ic-end').value=tpl.expireTime.replace(' ','T');
+  document.getElementById('ic-end').value=(tpl.expireTime||'').replace(' ','T');
   if(tpl.couponType==='Repayment')document.getElementById('ic-threshold').value=tpl.ruleConfig.minRemainingPrincipal||'';
 }
 
@@ -7285,14 +7274,15 @@ async function loadTestDatabaseData(refreshUi=true) {
       batchingTime:dbDate(b.batching_time)
     }));
 
+    const normalizeCouponType=value=>String(value||'').toLowerCase()==='increaselimit'?'LimitIncrease':String(value||'').toLowerCase()==='repayment'?'Repayment':String(value||'');
     couponTemplates.splice(0,couponTemplates.length,...(data.couponTemplates||[]).map(tpl=>({
-      id:tpl.id,
+      id:Number(tpl.id),
       couponName:tpl.coupon_name,
-      couponType:tpl.coupon_type,
+      couponType:normalizeCouponType(tpl.coupon_type),
       couponAmount:dbNumber(tpl.coupon_amount),
-      productId:tpl.product_id,
+      productId:Number(tpl.product_id),
       effectTime:dbDate(tpl.effect_time),
-      expireTime:dbDate(tpl.expire_time),
+      expireTime:tpl.expire_time?dbDate(tpl.expire_time):'',
       issuedCount:Number(tpl.issued_count||0),
       ruleConfig:typeof tpl.rule_config==='string'?(()=>{try{return JSON.parse(tpl.rule_config)}catch(_){return tpl.rule_config}})():tpl.rule_config,
       isDel:Number(tpl.is_del||0),
@@ -7301,14 +7291,14 @@ async function loadTestDatabaseData(refreshUi=true) {
     })));
 
     const couponInstances=(data.couponInstances||[]).map(c=>({
-      id:c.id,
+      id:Number(c.id),
       no:c.coupon_no,
-      templateId:c.template_id,
+      templateId:Number(c.template_id),
       couponName:c.coupon_name,
-      couponType:c.coupon_type,
+      couponType:normalizeCouponType(c.coupon_type),
       userId:c.user_id,
       couponAmount:dbNumber(c.coupon_amount),
-      productId:c.product_id,
+      productId:Number(c.product_id),
       status:Number(c.state),
       effectiveStart:dbDate(c.effect_time),
       effectiveEnd:dbDate(c.expire_time),
@@ -7321,24 +7311,6 @@ async function loadTestDatabaseData(refreshUi=true) {
     }));
     limitIncreaseCoupons.splice(0,limitIncreaseCoupons.length,...couponInstances.filter(c=>c.couponType==='LimitIncrease'));
     repayCoupons.splice(0,repayCoupons.length,...couponInstances.filter(c=>c.couponType==='Repayment'));
-
-    couponUsageRecords.splice(0,couponUsageRecords.length,...(data.couponLogs||[]).map(log=>({
-      id:log.id,
-      couponNo:log.coupon_no,
-      templateId:log.template_id,
-      couponType:log.coupon_type,
-      userId:log.user_id,
-      bizNo:log.biz_no||'',
-      usedAmount:dbNumber(log.used_amount),
-      deductType:log.deduct_fee_type||'',
-      status:Number(log.state),
-      usedTime:dbDate(log.used_time),
-      returnedTime:dbDate(log.back_time),
-      returnReason:log.back_reason_type||'',
-      isDel:Number(log.is_del||0),
-      createTime:dbDate(log.create_time),
-      modifyTime:dbDate(log.modify_time)
-    })));
 
     disbursements = data.disbursements.map(d=>({
       id:d.id, disbNo:d.disbursement_no, applyNo:d.apply_no, userId:d.user_id, productId:d.product_id,
@@ -7419,7 +7391,6 @@ function normalizeDemoEnumValues(){
   repayments.forEach(r=>{r.state=({0:0,1:20,2:-1,3:-1})[r.state]??r.state;r.repaymentType=r.repaymentType==='early_settlement'?'earlySettlement':'normal';});
   if(typeof limitIncreaseCoupons!=='undefined') limitIncreaseCoupons.forEach(c=>c.status=map(c.status,{Expired:-10,Invalid:-1,Inactive:-1,Unused:10,Active:10,Locked:15,Used:20,Returned:10},10));
   if(typeof repayCoupons!=='undefined') repayCoupons.forEach(c=>c.status=map(c.status,{Expired:-10,Invalid:-1,Inactive:-1,Unused:10,Active:10,Locked:15,Used:20,Returned:10},10));
-  if(typeof couponUsageRecords!=='undefined') couponUsageRecords.forEach(c=>c.status=map(c.status,{Expired:-10,Invalid:-1,Unused:10,Locked:15,Used:20,Returned:10},10));
   loanBills.forEach(b=>{b.status=map(b.status,{CoolingOff:10,Active:20,PartiallyPaid:20,Overdue:30,OverduePartiallyPaid:30,Paid:40,earlysettled:50,WrittenOff:100},20);b.settledType=String(b.settledType||'none').toLowerCase()==='normal'?'normal':'none';});
   disbursements.forEach(d=>{d.status=map(d.status,{Failed:-20,Cancelled:-1,Pending:0,Disbursing:10,Success:20},0);d.disbursedAmount=d.status===20?d.amount:0;});
   customerWalletBindings.forEach(w=>w.account_status=map(w.account_status,{FAILED:-10,INVALID:-10,UNKNOWN:0,VERIFIED:10},0));
@@ -7432,7 +7403,6 @@ function normalizeDemoEnumValues(){
 couponTemplates.splice(0,couponTemplates.length);
 limitIncreaseCoupons.splice(0,limitIncreaseCoupons.length);
 repayCoupons.splice(0,repayCoupons.length);
-couponUsageRecords.splice(0,couponUsageRecords.length);
 normalizeDemoEnumValues();
 document.addEventListener('shown.bs.modal', e => localizeHardcoded(e.target));
 const i18nObserver = new MutationObserver(records => {
